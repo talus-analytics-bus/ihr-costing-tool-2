@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/talus-analytics/ihr-costing-tool-2/issues"
   },
-  "homepage": "https://github.com/talus-analytics/ihr-costing-tool-2#readme"
+  "homepage": "https://github.com/talus-analytics/ihr-costing-tool-2#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "express": "^4.15.3",
+    "http": "0.0.0",
+    "path": "^0.12.7"
+  }
 }
