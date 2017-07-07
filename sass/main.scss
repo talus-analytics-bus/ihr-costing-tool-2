@@ -1,0 +1,61 @@
+@import 'helpers/classes';
+@import 'helpers/colors';
+@import 'helpers/mixins';
+@import 'helpers/vendors';
+
+@import 'components/navbar';
+@import 'components/footer';
+
+@import 'pages/home';
+
+body { 
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+}
+#page-content {
+	position: relative;
+	z-index: 10;
+}
+.link {
+	cursor: pointer;
+	&:hover { text-decoration: underline; }
+}
+.radio {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+// re-color for bootstrap buttons
+.btn-primary {
+	background-color: $light-blue;
+	border-color: darken($light-blue, 8%);
+	&:hover {
+		background-color: darken($light-blue, 5%);
+		border-color: darken($light-blue, 16%);
+	}
+}
+.btn-warning {
+	background-color: $dark-orange;
+	border-color: darken($dark-orange, 8%);
+	&:hover {
+		background-color: darken($dark-orange, 5%);
+		border-color: darken($dark-orange, 16%);
+	}
+}
+select.form-control { width: auto; }
+.container { position: relative; }
+
+// notional data warnings
+.notional-warning {
+	color: #c91414;
+	font-weight: 600;
+}
+
+// re-style for bootstrap multiselect
+.btn b.caret { margin-left: 3px; }
+.multiselect-container label { @include noselect; }
+.multiselect {
+	background-color: $light-blue;
+	border-color: #666;
+	color: white;
+}
