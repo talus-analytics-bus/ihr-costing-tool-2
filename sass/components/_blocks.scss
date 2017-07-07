@@ -100,4 +100,21 @@
 .input-block-container {
   margin-left: 500px;
   padding-left: 30px;
+  width: 90%;
 }
+.input-block-description {
+  display: inline-block;
+  margin: 5px 10px 20px;
+}
+.input-block-container {
+  margin-left: 500px;
+  padding-left: 30px;
+  .block {
+    display: none;
+    padding-bottom: 70px;
+    border-bottom: none;
+    &.no-reset { padding-bottom: 30px; }
+  }
+  .block-description { font-style: italic; }
+}
+input.non-default { background-color: #ffdbdb; }
