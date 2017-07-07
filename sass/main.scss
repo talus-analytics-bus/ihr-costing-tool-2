@@ -43,7 +43,12 @@ body {
 	}
 }
 select.form-control { width: auto; }
-.container { position: relative; }
+.container:not(.home-container) { 
+	position: relative; 
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	padding: 20px 25px 40px;
+}
 
 // notional data warnings
 .notional-warning {
