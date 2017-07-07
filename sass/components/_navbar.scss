@@ -4,6 +4,17 @@
   z-index: 100;
   margin-bottom: 0px;
 }
+.ihr-navbar {
+  padding: 0 0 0 70px;
+  background-color: #d0d0d0;
+  .nav-link {
+    padding: .5em 1em !important;
+  }
+  .nav-item.active,
+  .nav-item:hover {
+    background-color: #f6f6f6;
+  }
+}
 .header-wrapper {
   position: relative;
   padding: 20px;
