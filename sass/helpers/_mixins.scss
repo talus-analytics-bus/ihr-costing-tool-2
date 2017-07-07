@@ -51,6 +51,24 @@
   -moz-background-clip: padding;
   background-clip: padding-box; 
 }
+@mixin transform ($value) {
+  -moz-transform: $value;
+  -o-transform: $value;
+  -ms-transform: $value;
+  -webkit-transform: $value;
+  transform: $value;
+}
+@mixin transition ($value) {
+  -moz-transition: $value;
+  -o-transition: $value;
+  -webkit-transition: $value;
+  transition: $value;
+}
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
 @mixin border-left-radius ($radius: 10px) {
   -webkit-border-top-left-radius: $radius;
   -moz-border-top-left-radius: $radius;
