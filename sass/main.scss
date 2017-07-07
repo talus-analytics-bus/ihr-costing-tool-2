@@ -48,6 +48,11 @@ select.form-control { width: auto; }
 	position: relative; 
 	padding: 20px 50px;
 }
+.container-wide {
+	display: inline-block;
+	max-width: none;
+	border: none;
+}
 // .container:not(.home-container) { 
 // 	border-left: 1px solid #ccc;
 // 	border-right: 1px solid #ccc;

@@ -23,7 +23,7 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/who', () => {
-			loadPage('who');
+			loadPage('who', App.initWho);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/default', () => {
