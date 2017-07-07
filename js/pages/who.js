@@ -1,5 +1,9 @@
 (() => {
 	App.initWho = () => {
+
+		/*Initialize country picker map*/
+		App.createCountryMap();
+
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
 		// colors for the block links, depending on status	
 		var blockModeColors = {
