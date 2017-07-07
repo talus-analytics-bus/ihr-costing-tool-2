@@ -10,14 +10,36 @@ const Routing = {};
 		});
 	};
 
+	// TODO add URL params that define which tab or indicator the user is
+	// on so that the back button works as expected
 	Routing.initializeRoutes = () => {
 		// setup crossroads for routing
 		crossroads.addRoute('/', () => {
 			loadPage('home', App.initHome);
+			window.scrollTo(0, 0);
 		});
-		crossroads.addRoute('/login', () => {
-			loadTemplate('login');
-			App.initLogin();
+		crossroads.addRoute('/overview', () => {
+			loadPage('overview');
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/who', () => {
+			loadPage('who');
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/default', () => {
+			loadPage('default');
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/jee', () => {
+			loadPage('jee');
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/costs', () => {
+			loadPage('costs');
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/results', () => {
+			loadPage('results');
 			window.scrollTo(0, 0);
 		});
 
@@ -35,6 +57,7 @@ const Routing = {};
 	}
 
 	function setNavigationBar(pageName, ...data) {
+		if (pageName === 'home') pageName = '';
 		d3.selectAll('.nav-item').classed('active', function() {
 			return $(this).attr('page') === pageName;
 		});
@@ -45,27 +68,4 @@ const Routing = {};
 	function loadTemplate(page, data) {
 		$('#page-content').html(Routing.templates[page](data));
 	}
-
-	// // Code for PHP login
-	// function loadPage(pageName, pageFunction, ...data) {
-	// 	$.noty.closeAll();
-	// 	if (App.disableLoginCheck) {
-	// 		loadPageLoggedIn(pageName, pageFunction, ...data);
-	// 	} else {
-	// 		$.get('php/login_check.php', (res) => {
-	// 			const loginData = $.parseJSON(res);
-	// 			if (loginData.error) {
-	// 				hasher.setHash('login');
-	// 				noty({ layout: 'center', type: 'warning', text: loginData.error });
-	// 			} else {
-	// 				loadPageLoggedIn(pageName, pageFunction, ...data);
-	// 			}
-	// 		});
-	// 	}
-	// }
-	// function loadPageLoggedIn(pageName, func, ...data) {
-	// 	loadTemplate(pageName);
-	// 	setNavigationBar(pageName, ...data);
-	// 	if (func) func(...data);
-	// }
 })();

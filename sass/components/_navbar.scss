@@ -10,6 +10,9 @@
   .nav-link {
     padding: .5em 1em !important;
   }
+  .nav-item {
+    cursor: pointer;
+  }
   .nav-item.active,
   .nav-item:hover {
     background-color: #f6f6f6;

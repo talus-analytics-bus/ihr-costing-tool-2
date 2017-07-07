@@ -30,26 +30,26 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item active" page="home">
-					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				<li class="nav-item active" page="">
+					<a class="nav-link">Home</a>
 				</li>
 				<li class="nav-item" page="overview">
-					<a class="nav-link" href="#">Overview</a>
+					<a class="nav-link">Overview</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Who Am I?</a>
+				<li class="nav-item" page="who">
+					<a class="nav-link">Who Am I?</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Default Values</a>
+				<li class="nav-item" page="default">
+					<a class="nav-link">Default Values</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">JEE Assessment Status</a>
+				<li class="nav-item" page="jee">
+					<a class="nav-link">JEE Assessment Status</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Costs</a>
+				<li class="nav-item" page="costs">
+					<a class="nav-link">Costs</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Results</a>
+				<li class="nav-item" page="results">
+					<a class="nav-link">Results</a>
 				</li>
 			</ul>
 		</div>
@@ -94,11 +94,55 @@
 	<!-- TEMPLATES -->
 	<!-- Home page tempate -->
 	<script id="home-template" type="text/x-handlebars-template">
-		<div class="home-container container"></div>
+		<div class="home-container container">
+			<h1>Placeholder: Home page</h1>
+		</div>
+	</script>
+
+	<!-- Overview page tempate -->
+	<script id="overview-template" type="text/x-handlebars-template">
+		<div class="overview-container container">
+			<h1>Placeholder: Overview page</h1>
+		</div>
+	</script>
+	
+	<!-- Who Am I? page tempate -->
+	<script id="who-template" type="text/x-handlebars-template">
+		<div class="who-container container">
+			<h1>Placeholder: Who Am I? page</h1>
+		</div>
+	</script>
+	
+	<!-- Default Values page tempate -->
+	<script id="default-template" type="text/x-handlebars-template">
+		<div class="default-container container">
+			<h1>Placeholder: Default Values page</h1>
+		</div>
+	</script>
+
+	<!-- JEE Assessment Status page tempate -->
+	<script id="jee-template" type="text/x-handlebars-template">
+		<div class="jee-container container">
+			<h1>Placeholder: JEE Assessment Status page</h1>
+		</div>
+	</script>
+	
+	<!-- Costs page tempate -->
+	<script id="costs-template" type="text/x-handlebars-template">
+		<div class="costs-container container">
+			<h1>Placeholder: Costs page</h1>
+		</div>
+	</script>
+	
+	<!-- Results page tempate -->
+	<script id="results-template" type="text/x-handlebars-template">
+		<div class="results-container container">
+			<h1>Placeholder: Results page</h1>
+		</div>
 	</script>
 	
 	<!-- Login template (not currently used) -->
-	<script id="login-template" type="text/x-handlebars-template">
+	<!-- <script id="login-template" type="text/x-handlebars-template">
 		<div class="login-container container">
 			<div class="login-box">
 				<div class="login-input-container">
@@ -112,11 +156,7 @@
 				<div class="login-button btn btn-primary">Login</div>
 			</div>
 		</div>
-	</script>
-
-	<!-- Home -->
-	<script id="home-template" type="text/x-handlebars-template">
-	</script>
+	</script> -->
 </body>
 
 <!-- General Libraries -->
@@ -143,8 +183,8 @@
 <!--<script src="build/lib.min.js"></script>-->
 
 <!-- Project Specific Files -->
-<script src="js/routing.js"></script>
 <script src="js/app.js"></script>
+<script src="js/routing.js"></script>
 <script src="js/init.js"></script>
 <!-- <script src="build/bundle.min.js"></script> -->
 </body>
