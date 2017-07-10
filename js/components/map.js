@@ -141,17 +141,14 @@
         .on('click', function () {
           // zoom out on click
           const curThis = d3.zoomTransform(d3.select('svg').node());
-          console.log('minus')
           curThis.k -= 0.5;
           if (curThis.k < 1) {
            curThis.k = 1;
            curThis.x = 0; 
            curThis.y = 0; 
-           console.log('ding')
           }
           else if (curThis.k > 9) {
            curThis.k = 9; 
-           console.log('ding')
           }
           move(curThis);
         });
@@ -194,34 +191,41 @@
         .attr('class', 'pan-img')
         .attr('x', 23)
         .attr('y', 3)
-        .attr('xlink:href', 'img/map/chevron-up.png');
+        .attr('xlink:href', 'img/map/chevron-up.png')
         // .on('dblclick', function() { d3.event.stopPropagation(); })
-        // .on('click', function() { pan(0, 1); });
+        .on('click', function() { pan(0, 1); });
       panIconContainer.append('image')
         .attr('class', 'pan-img')
         .attr('x', 3)
         .attr('y', 23)
-        .attr('xlink:href', 'img/map/chevron-left.png');
+        .attr('xlink:href', 'img/map/chevron-left.png')
         // .on('dblclick', function() { d3.event.stopPropagation(); })
-        // .on('click', function() { pan(1, 0); });
+        .on('click', function() { pan(1, 0); });
       panIconContainer.append('image')
         .attr('class', 'pan-img')
         .attr('x', 43)
         .attr('y', 23)
-        .attr('xlink:href', 'img/map/chevron-right.png');
+        .attr('xlink:href', 'img/map/chevron-right.png')
         // .on('dblclick', function() { d3.event.stopPropagation(); })
-        // .on('click', function() {pan(-1, 0); });
+        .on('click', function() {pan(-1, 0); });
       panIconContainer.append('image')
         .attr('class', 'pan-img')
         .attr('x', 23)
         .attr('y', 43)
-        .attr('xlink:href', 'img/map/chevron-down.png');
+        .attr('xlink:href', 'img/map/chevron-down.png')
         // .on('dblclick', function() { d3.event.stopPropagation(); })
-        // .on('click', function() { pan(0, -1); });
+        .on('click', function() { pan(0, -1); });
 
         $('.pan-img').attr('width', '14').attr('height', '14'); // firefox fix
     }
 
+    function pan(dx, dy) {
+      // pan on click
+      const curThis = d3.zoomTransform(d3.select('svg').node());
+      curThis.x += dx*100;
+      curThis.y += dy*100;
+      move(curThis);      
+    };
 
     // let all country strokes appear to be 0.25px at any zoom level
     const initCountryStrokeWidth = 0.25;
@@ -235,11 +239,9 @@
       if (curThis) {
         t = [curThis.x, curThis.y];
         s = curThis.k;
-        console.log(curThis);
       } else {
         t = [d3.event.transform.x,d3.event.transform.y];
         s = d3.event.transform.k;
-        console.log(d3.event.transform)
       }
 
       var h = height / 4;
