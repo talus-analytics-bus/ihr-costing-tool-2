@@ -505,5 +505,20 @@
 		// 	.attr('value', function(d) { return d.abbr; })
 		// 	.text(function(d) { return d.name; });
 		// }
+
+		/*
+		*	initCountryTab
+		*	Initialize the country picker dropdown on the country tab in Who Am I?
+		*/
+		initCountryTab = () => {
+			const countryList = []; // TODO
+			d3.select('.country-dropdown').selectAll('.country-option')
+				.data(countryList)
+				.enter().append('li')
+					.attr('class', 'county-option')
+					.append('a')
+						// .attr('href', d => `#center/${d.center_id}`)
+						.text(function(d) {d.name});
+		};		
 	};
 })();
