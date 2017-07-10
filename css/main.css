@@ -321,6 +321,9 @@
 input.non-default {
   background-color: #ffdbdb; }
 
+.map-container {
+  float: right; }
+
 .country {
   fill: #f0f0f0;
   stroke: #555;
@@ -418,6 +421,10 @@ div.tooltip {
 .home-start-button {
   font-size: 1.1em;
   margin-top: 20px; }
+
+/* Country picker tab */
+.country-dropdown {
+  float: left; }
 
 .results-container {
   font-family: 'Open Sans', sans-serif;
