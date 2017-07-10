@@ -7,7 +7,7 @@
     App.zoom = zoom;
     const mapContainer = d3.select('.map-container');
 
-    let width = 700;
+    let width = 600;
     var height = width / 2;
     var topo,projection,path,svg,g;
     // var tooltip = mapContainer.append("div").attr("class", "tooltip hidden");
