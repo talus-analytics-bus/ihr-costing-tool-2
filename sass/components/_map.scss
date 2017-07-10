@@ -67,3 +67,4 @@ div.tooltip {
   @include opacity(0.6);
   cursor: pointer;
 }
+.pan-img:hover { @include opacity(1); }
