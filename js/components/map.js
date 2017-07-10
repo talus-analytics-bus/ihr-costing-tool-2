@@ -22,12 +22,12 @@
       path = d3.geoPath().projection(projection);
 
       svg = mapContainer.append("svg")
-          .attr("width", width)
-          .attr("height", height)
-          .call(zoom)
-          .append("g");
+        .attr("width", width)
+        .attr("height", height)
+        .call(zoom)
+        .append("g");
 
-              // add background
+    // add blue background (ocean)
     svg.append('rect')
       .attr('width',width)
       .attr('height',height)
@@ -76,7 +76,8 @@
           .attr("class", "country")
           .attr("d", path)
           .attr("id", function(d,i) { return d.id; })
-          .attr("title", function(d,i) { return d.properties.name; });
+          .attr("title", function(d,i) { return d.properties.name; })
+          .on('click', countryClick);
 
       //offsets for tooltips
       var offsetL = mapContainer.offsetLeft+20;
@@ -106,7 +107,7 @@
       draw(topo);
     }
 
-
+    const initCountryStrokeWidth = 0.25;
     function move() {
 
       var t = [d3.event.transform.x,d3.event.transform.y];
@@ -127,16 +128,32 @@
       g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
       //adjust the country hover stroke width based on zoom level
-      d3.selectAll(".country").style("stroke-width", 1.5 / s);
-
+      d3.selectAll(".country").style("stroke-width", initCountryStrokeWidth / s); // assumes init s is = 1.189207115002721
     }
 
-    //geo translation on mouse click in map
+    // select country on click
     function click() {
-      var latlon = projection.invert(d3.mouse(this));
-      console.log(latlon);
+      // clicked
+      // if country is not selected,
+      // rmv selected from all other countries
+      // class country selected
+
+      // if country is selected,
+      // rmv selected from this country
+
     }
 
+    /*
+    * countryClick
+    * When country is clicked, toggle the currently selected country
+    */
+    function countryClick () {
+      const activeClass = "active";
+      var alreadyIsActive = d3.select(this).classed(activeClass);
+      svg.selectAll(".country")
+        .classed(activeClass, false);
+      d3.select(this).classed(activeClass, !alreadyIsActive);
+    };
 
     //function to add points and text to the map (used in plotting capitals)
     function addpoint(lon,lat,text) {
