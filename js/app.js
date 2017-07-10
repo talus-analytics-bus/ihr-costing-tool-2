@@ -23,8 +23,16 @@ const App = {};
 			maxWidth: 320,
 		});
 		
-		// launch callback fcn in arguments
-		callback();
+		// load country params data
+		d3.queue()
+		.defer(d3.json, 'data/country-params.json')
+		.await((error, countryParams) => {
+
+			App.countryParams = countryParams;
+			
+			// launch callback fcn in arguments
+			callback();
+		});
 	}
 	
 	App.initResults = () => {
