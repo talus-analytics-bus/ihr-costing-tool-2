@@ -273,6 +273,21 @@
       svg.selectAll(".country")
         .classed(activeClass, false);
       d3.select(this).classed(activeClass, !alreadyIsActive);
+
+      // if was already active, change dropdown menu selection to "Select country"
+      if (!alreadyIsActive) {
+        d3.select(this).each(function(d){
+          // get country params data that matches code
+          const countryParam = _.findWhere(App.countryParams, {abbreviation: d.properties.code});
+          d3.select('.country-dropdown.dropdown > button')
+            .text(countryParam.name);
+        });
+      } else {
+        d3.select('.country-dropdown.dropdown > button')
+            .text('Choose country');
+      }
+      // else, change dropdown menu selection to current country name
+
     };
   };
 })();
