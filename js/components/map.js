@@ -1,26 +1,19 @@
 (() => {
   App.createCountryMap = () => {
-    d3.select(window).on("resize", throttle);
+    // d3.select(window).on("resize", throttle);
 
     var zoom = d3.zoom()
         .scaleExtent([1, 9])
         .on("zoom", move);
-
 
     const mapContainer = d3.select('.map-container');
 
     // var width = mapContainer.offsetWidth;
     let width = 700;
     var height = width / 2;
-
-
-
     var topo,projection,path,svg,g;
-
     var graticule = d3.geoGraticule();
-
     var tooltip = mapContainer.append("div").attr("class", "tooltip hidden");
-
     setup(width,height);
 
     function setup(width,height){
@@ -113,10 +106,10 @@
 
 
     function redraw() {
-      width = mapContainer.offsetWidth;
+      // width = width;
       height = width / 2;
       d3.select('svg').remove();
-      setup(width,height);
+      setup(width, height);
       draw(topo);
     }
 
@@ -148,13 +141,13 @@
 
     }
 
-    var throttleTimer;
-    function throttle() {
-      window.clearTimeout(throttleTimer);
-        throttleTimer = window.setTimeout(function() {
-          redraw();
-        }, 200);
-    }
+    // var throttleTimer;
+    // function throttle() {
+    //   window.clearTimeout(throttleTimer);
+    //     throttleTimer = window.setTimeout(function() {
+    //       redraw();
+    //     }, 200);
+    // }
 
 
     //geo translation on mouse click in map
