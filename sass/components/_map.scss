@@ -41,11 +41,29 @@ div.tooltip {
 .graticule {
   fill: none;
   stroke: none;
-  // stroke: #bbb;
   stroke-width: .5px;
   stroke-opacity: .5;
 }
 .equator {
   stroke: #ccc;
   stroke-width: 1px;
+}
+.map-background {
+  fill: #A3C3D8;
+}
+
+/* Map Controls */
+.glossy {
+  fill: rgba(255,255,255,0.9);
+  stroke: #555;
+  stroke-width: 0.25;
+}
+.plus-icon, .minus-icon {
+  @include opacity(0.6);
+  cursor: pointer;
+}
+.plus-icon:hover, .minus-icon:hover { @include opacity(1); }
+.pan-img {
+  @include opacity(0.6);
+  cursor: pointer;
 }
