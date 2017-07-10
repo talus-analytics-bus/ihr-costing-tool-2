@@ -44,6 +44,9 @@
 .dataTables_filter input {
   width: 250px !important; }
 
+.cost-partition-chart .node {
+  cursor: pointer; }
+
 /* --- Nav Bar --- */
 .navbar {
   position: relative;
