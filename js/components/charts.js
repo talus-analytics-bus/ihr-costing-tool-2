@@ -4,7 +4,7 @@ const Charts = {};
 
 	Charts.buildCostPartitionChart = (selector) => {
 
-		const width = 800, height = 400;
+		const width = 800, height = 500;
 		const margin = {top: 50, right: 50, bottom: 50, left: 50};
 
 		const chartContainer = d3.select(selector)
@@ -16,6 +16,7 @@ const Charts = {};
 
 		// Vector containigng number of nodes in each row top --> bottom
 		const nodes = [1, 3, 42, 6];
+		const nodeSizes = [20, 15, 6, 10]
 
 		y = (i) => {
 			return (i/(nodes.length-1))*height;
@@ -29,8 +30,8 @@ const Charts = {};
 			for(let j = 0; j < nodes[i]; j++) {
 
 				chart.append('circle')
-					.attr('class', 'point')
-					.attr('r', 6)
+					.attr('class', 'node')
+					.attr('r', nodeSizes[i])
 					.attr('cx', x(i,j))
 					.attr('cy', y(i));
 
