@@ -1,12 +1,12 @@
 /* --- Block Link Content --- */
 .block-link-container {
   float: left;
-  width: 500px;
+  width: 365px;
 }
 .block-link {
   position: relative;
   color: #555;
-  padding: 20px 30px 20px 50px;
+  padding: 10px 30px 10px 50px;
   border-right: $border-light-minimal;
   border-bottom: $border-light-minimal;
   border-left: $border-light-minimal;
@@ -54,7 +54,7 @@
 }
 .block-link-arrow {
   position: absolute;
-  top: 25px;
+  top: 15px;
   left: 19px;
   width: 15px;
   height: 15px;
@@ -97,18 +97,14 @@
 .extra-block {
   border-top: $border-light-minimal;
 }
-.input-block-container {
-  margin-left: 500px;
-  padding-left: 30px;
-  width: 90%;
-}
 .input-block-description {
   display: inline-block;
   margin: 5px 10px 20px;
 }
 .input-block-container {
-  margin-left: 500px;
-  padding-left: 30px;
+  margin-left: 365px;
+  padding-left: 75px;
+  width: 90%;
   .block {
     display: none;
     padding-bottom: 70px;
