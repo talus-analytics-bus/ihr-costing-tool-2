@@ -62,15 +62,16 @@
           .attr("d", path)
           .attr("id", function(d,i) { return d.id; })
           .attr("title", function(d,i) { return d.properties.name; })
-          .on('click', countryClick);
+          .on('click', countryClick)
+          .each(function(d){
+            // add tooltips to country shapes
+            $(this).tooltipster({
+              trigger: 'hover',
+              maxWidth: 600,
+              content: d.properties.name,
+            });
 
-      // add tooltips to country shapes
-      $('.country').tooltipster({
-        trigger: 'hover',
-        maxWidth: 600,
-        content: 'Hello, world!',
-      });
-
+          });
       // //offsets for tooltips
       // var offsetL = mapContainer.offsetLeft+20;
       // var offsetT = mapContainer.offsetTop+10;
