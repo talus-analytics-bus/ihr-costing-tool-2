@@ -16,4 +16,11 @@ const App = {};
 		callback();
 	}
 	
+	App.initResults = () => {
+
+		const selector = '.cost-partition-chart';
+		Charts.buildCostPartitionChart(selector);
+
+	};
+
 })();
