@@ -9,7 +9,7 @@
     let width = 700;
     var height = width / 2;
     var topo,projection,path,svg,g;
-    var tooltip = mapContainer.append("div").attr("class", "tooltip hidden");
+    // var tooltip = mapContainer.append("div").attr("class", "tooltip hidden");
     setup(width,height);
 
     function setup(width,height){
@@ -64,24 +64,31 @@
           .attr("title", function(d,i) { return d.properties.name; })
           .on('click', countryClick);
 
-      //offsets for tooltips
-      var offsetL = mapContainer.offsetLeft+20;
-      var offsetT = mapContainer.offsetTop+10;
+      // add tooltips to country shapes
+      $('.country').tooltipster({
+        trigger: 'hover',
+        maxWidth: 600,
+        content: 'Hello, world!',
+      });
 
-      //tooltips
-      country
-        .on("mousemove", function(d,i) {
+      // //offsets for tooltips
+      // var offsetL = mapContainer.offsetLeft+20;
+      // var offsetT = mapContainer.offsetTop+10;
 
-          var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+      // //tooltips
+      // country
+      //   .on("mousemove", function(d,i) {
 
-          tooltip.classed("hidden", false)
-                 .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-                 .html(d.properties.name);
+      //     var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-          })
-          .on("mouseout",  function(d,i) {
-            tooltip.classed("hidden", true);
-          });
+      //     tooltip.classed("hidden", false)
+      //            .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+      //            .html(d.properties.name);
+
+      //     })
+      //     .on("mouseout",  function(d,i) {
+      //       tooltip.classed("hidden", true);
+      //     });
 
       // add zoom and pan controls group to map
       const zoomRectWidth = 20,
