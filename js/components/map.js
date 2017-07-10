@@ -112,9 +112,10 @@
         .attr('width', 16)
         .attr('height', 16)
         .on('click', function () {
-          // TODO zoom in
-          move();
-          
+          // zoom in on click
+          const curThis = d3.zoomTransform(d3.select('svg').node());
+          curThis.k += 0.5;
+          move(curThis);
         });
       mapControls.append('image')
         .attr('class', 'minus-icon')
@@ -125,8 +126,11 @@
         .attr('width', 16)
         .attr('height', 16)
         .on('click', function () {
-          // TODO zoom out
-        });;
+          // zoom out on click
+          const curThis = d3.zoomTransform(d3.select('svg').node());
+          curThis.k -= 0.5;
+          move(curThis);
+        });
     }
 
     // let all country strokes appear to be 0.25px at any zoom level
@@ -136,14 +140,20 @@
     * move
     * Translate/scale map whenever pan or zoom occur
     */
-    function move() {
+    function move(curThis) {
+      let t, s;
+      if (curThis) {
+        t = [curThis.x, curThis.y];
+        s = curThis.k;
+        console.log(curThis);
+      } else {
+        console.log(d3.event.transform)
+        t = [d3.event.transform.x,d3.event.transform.y];
+        s = d3.event.transform.k;
+      }
 
-      console.log(d3.zoomTransform(this));
-
-      var t = [d3.event.transform.x,d3.event.transform.y];
-      var s = d3.event.transform.k;
+      var h = height / 4;
       zscale = s;
-      var h = height/4;
 
       t[0] = Math.min(
         (width/height)  * (s - 1), 
