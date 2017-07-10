@@ -12,6 +12,17 @@ const App = {};
 			hasher.setHash($(this).attr('page'));
 		});
 
+		// activate tooltipster
+		$.tooltipster.setDefaults({
+			plugins: ['follower'],
+			contentAsHTML: true,
+			trigger: 'hover',
+			anchor: 'top-center',
+			 offset: [5, -25],
+			theme: 'tooltipster-shadow',
+			maxWidth: 320,
+		});
+		
 		// launch callback fcn in arguments
 		callback();
 	}

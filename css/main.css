@@ -398,6 +398,11 @@ div.tooltip {
   opacity: 0.6;
   cursor: pointer; }
 
+.pan-img:hover {
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1; }
+
 .home-veil {
   background-color: rgba(255, 255, 255, 0.9);
   margin: 80px 0 20px;
