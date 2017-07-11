@@ -6,7 +6,7 @@ const Charts = {};
 
 		// Chart setup
 
-		const width = 800, height = 250;
+		const width = 800, height = 300;
 		const margin = {top: 50, right: 0, bottom: 50, left: 0};
 
 		const chartContainer = d3.select(selector)
@@ -30,6 +30,44 @@ const Charts = {};
 		});
 		uniqCategories.forEach((cat) => { 
 			categories.push({ name: cat, total: _.reduce(_.pluck(_.filter(data, d => d.category == cat) , 'cost'), (q,r) => (+q)+(+r)) }); 
+		});
+
+		// Plot the paths between each node
+
+		// Type <--> Indicator Linkages
+		types.forEach((typ, i) => {
+			indicators.forEach((ind, j) => {
+				cost = Math.round(_.reduce(_.pluck(_.filter(data, d => d.type == typ & d.indicator == ind), 'cost'), (q,r) => (+q)+(+r)));
+				if (cost != 0) {
+					const xtyp = (i+1)/(types.length+1)*width;
+					const ytyp = 0;
+					const xind = (j+1)/(indicators.length+1)*width;
+					const yind = height/2;
+
+					chart.append('path')
+						.attr('class', 'node-link')
+						.attr('d', `M ${xtyp} ${ytyp} C ${xtyp} ${(yind+ytyp)/2}, ${xind} ${(yind+ytyp)/2}, ${xind} ${yind}`)
+				}
+			});
+		});
+
+		// Indicator <--> Category Linkages
+		types.forEach((typ) => {
+			indicators.forEach((ind, j) => {
+				categories.forEach((cat, k) => {
+					cost = Math.round(_.reduce(_.pluck(_.filter(data, d => d.type == typ & d.indicator == ind & d.category == cat), 'cost'), (q,r) => (+q)+(+r)));
+					if (cost != 0) {
+						const xcat = (k+1)/(categories.length+1)*width;
+						const ycat = height;
+						const xind = (j+1)/(indicators.length+1)*width;
+						const yind = height/2;
+
+						chart.append('path')
+							.attr('class', 'node-link')
+							.attr('d', `M ${xcat} ${ycat} C ${xcat} ${(yind+ycat)/2}, ${xind} ${(yind+ycat)/2}, ${xind} ${yind}`)
+					}
+				});
+			});
 		});
 
 		// Plot the nodes corresponding to type / expense category / indicator
@@ -61,24 +99,6 @@ const Charts = {};
 				.attr('r', calcRadius(cat.total))
 				.attr('cx', (k+1)/(categories.length+1)*width)
 				.attr('cy', height)
-		});
-
-		// Plot the paths between each node
-
-		types.forEach((typ, i) => {
-			indicators.forEach((ind, j) => {
-				cost = Math.round(_.reduce(_.pluck(_.filter(data, d => d.type == typ & d.indicator == ind), 'cost'), (q,r) => (+q)+(+r)));
-				if (cost != 0) {
-					const xtyp = (i+1)/(types.length+1)*width;
-					const ytyp = 0;
-					const xind = (j+1)/(indicators.length+1)*width;
-					const yind = height/2;
-
-					chart.append('path')
-						.attr('class', 'node-link')
-						.attr('d', `M ${xtyp} ${ytyp} C ${xtyp} ${(yind+ytyp)/2}, ${xind} ${(yind+ytyp)/2}, ${xind} ${yind}`)
-				}
-			});
 		});
 
 		/* Vector containing number of nodes in each row top --> bottom
