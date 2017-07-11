@@ -506,4 +506,10 @@ select.form-control {
 .btn {
   cursor: pointer; }
 
+/* Scrollable dropdown menus */
+.scrollable-dropdown {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden; }
+
 /*# sourceMappingURL=main.css.map */
