@@ -44,7 +44,6 @@ const App = {};
 			.defer(d3.csv, 'data/notional_cost_data.csv')
 			.await((error, notional_data) => {
 				if (error) throw error;
-				
 				Charts.buildCostPartitionChart(selector, notional_data);
 			});
 
