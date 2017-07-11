@@ -3,6 +3,7 @@
 
 		/*Initialize country picker map*/
 		App.createCountryMap();
+		initCountryTab();
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
 		// colors for the block links, depending on status	
@@ -505,20 +506,38 @@
 		// 	.attr('value', function(d) { return d.abbr; })
 		// 	.text(function(d) { return d.name; });
 		// }
+	};
 
-		/*
-		*	initCountryTab
-		*	Initialize the country picker dropdown on the country tab in Who Am I?
-		*/
-		initCountryTab = () => {
-			const countryList = []; // TODO
-			d3.select('.country-dropdown').selectAll('.country-option')
-				.data(countryList)
-				.enter().append('li')
-					.attr('class', 'county-option')
-					.append('a')
-						// .attr('href', d => `#center/${d.center_id}`)
-						.text(function(d) {d.name});
-		};		
+	/*
+	*	initCountryTab
+	*	Initialize the country picker dropdown on the country tab in Who Am I?
+	*/
+	initCountryTab = () => {
+		d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
+			.data(App.countryParams)
+			.enter()
+				.append('a')
+					.attr('class','country-option dropdown-item')
+					.text(function(d) { return d.name})
+					.on('click', function (d) {
+						d3.select('.country-dropdown.dropdown > button').text(d.name);
+						countryDropdownToggle(d.abbreviation);
+					});
+	};
+
+	/*
+	*	countryDropdownToggle
+	*	Set the map's active country to the dropdown selection
+	*/
+	countryDropdownToggle = (countryCode) => {
+		console.log(countryCode)
+		d3.selectAll(".country")
+        	.classed('active', false);
+		d3.selectAll('.country')
+			.each(function(d){
+				if (d.properties.code === countryCode) {
+					d3.select(this).classed('active',true);
+				}
+			});
 	};
 })();

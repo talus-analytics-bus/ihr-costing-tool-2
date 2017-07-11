@@ -77,3 +77,10 @@ select.form-control { width: auto; }
 .btn {
 	cursor: pointer;
 }
+
+/* Scrollable dropdown menus */
+.scrollable-dropdown {
+	height: auto;
+	max-height: 200px;
+	overflow-x: hidden;
+}
