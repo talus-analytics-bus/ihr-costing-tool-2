@@ -38,6 +38,10 @@ const Routing = {};
 			loadPage('costs');
 			window.scrollTo(0, 0);
 		});
+		crossroads.addRoute('/scores', () => {
+			loadPage('scores');
+			window.scrollTo(0, 0);
+		});
 		crossroads.addRoute('/results', () => {
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);

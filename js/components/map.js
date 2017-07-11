@@ -95,7 +95,7 @@
       // add zoom and pan controls group to map
       const rectWidth = 20,
         zoomRectHeight = 48;
-      const zoomRectPadding = {top: 40, right: 40}
+      const zoomRectPadding = {top: 20, right: 20}
       const zoomIconContainer = svg.append('g')
         .attr('transform', `translate(${width - rectWidth - zoomRectPadding.right}, ${zoomRectPadding.top})`);
 
@@ -153,79 +153,79 @@
           move(curThis);
         });
     
-    // add pan icons
-      const panIconContainer = svg.append('g')
-        .attr('transform', `translate(${width - 80}, 100)`);
-        // .attr('transform', 'translate(' + (width - 75) + ',80)');
-      const panRectHeight = 20;
-      panIconContainer.append('rect')
-        .attr('class', 'glossy')
-        .attr('width', rectWidth)
-        .attr('height', panRectHeight)
-        .attr('x', 20);
-      panIconContainer.append('rect')
-        .attr('class', 'glossy')
-        .attr('width', rectWidth)
-        .attr('height', panRectHeight)
-        .attr('y', 20);
-      panIconContainer.append('rect')
-        .attr('class', 'glossy')
-        .attr('width', rectWidth)
-        .attr('height', panRectHeight)
-        .attr('x', 40)
-        .attr('y', 20);
-      panIconContainer.append('rect')
-        .attr('class', 'glossy')
-        .attr('width', rectWidth)
-        .attr('height', panRectHeight)
-        .attr('x', 20)
-        .attr('y', 40);
-      panIconContainer.append('rect')
-        .attr('class', 'glossy')
-        .attr('width', rectWidth)
-        .attr('height', panRectHeight)
-        .style('stroke', 'none')
-        .attr('x', 20)
-        .attr('y', 20);
-      panIconContainer.append('image')
-        .attr('class', 'pan-img')
-        .attr('x', 23)
-        .attr('y', 3)
-        .attr('xlink:href', 'img/map/chevron-up.png')
-        // .on('dblclick', function() { d3.event.stopPropagation(); })
-        .on('click', function() { pan(0, 1); });
-      panIconContainer.append('image')
-        .attr('class', 'pan-img')
-        .attr('x', 3)
-        .attr('y', 23)
-        .attr('xlink:href', 'img/map/chevron-left.png')
-        // .on('dblclick', function() { d3.event.stopPropagation(); })
-        .on('click', function() { pan(1, 0); });
-      panIconContainer.append('image')
-        .attr('class', 'pan-img')
-        .attr('x', 43)
-        .attr('y', 23)
-        .attr('xlink:href', 'img/map/chevron-right.png')
-        // .on('dblclick', function() { d3.event.stopPropagation(); })
-        .on('click', function() {pan(-1, 0); });
-      panIconContainer.append('image')
-        .attr('class', 'pan-img')
-        .attr('x', 23)
-        .attr('y', 43)
-        .attr('xlink:href', 'img/map/chevron-down.png')
-        // .on('dblclick', function() { d3.event.stopPropagation(); })
-        .on('click', function() { pan(0, -1); });
+    // // add pan icons
+    //   const panIconContainer = svg.append('g')
+    //     .attr('transform', `translate(${width - 80}, 100)`);
+    //     // .attr('transform', 'translate(' + (width - 75) + ',80)');
+    //   const panRectHeight = 20;
+    //   panIconContainer.append('rect')
+    //     .attr('class', 'glossy')
+    //     .attr('width', rectWidth)
+    //     .attr('height', panRectHeight)
+    //     .attr('x', 20);
+    //   panIconContainer.append('rect')
+    //     .attr('class', 'glossy')
+    //     .attr('width', rectWidth)
+    //     .attr('height', panRectHeight)
+    //     .attr('y', 20);
+    //   panIconContainer.append('rect')
+    //     .attr('class', 'glossy')
+    //     .attr('width', rectWidth)
+    //     .attr('height', panRectHeight)
+    //     .attr('x', 40)
+    //     .attr('y', 20);
+    //   panIconContainer.append('rect')
+    //     .attr('class', 'glossy')
+    //     .attr('width', rectWidth)
+    //     .attr('height', panRectHeight)
+    //     .attr('x', 20)
+    //     .attr('y', 40);
+    //   panIconContainer.append('rect')
+    //     .attr('class', 'glossy')
+    //     .attr('width', rectWidth)
+    //     .attr('height', panRectHeight)
+    //     .style('stroke', 'none')
+    //     .attr('x', 20)
+    //     .attr('y', 20);
+    //   panIconContainer.append('image')
+    //     .attr('class', 'pan-img')
+    //     .attr('x', 23)
+    //     .attr('y', 3)
+    //     .attr('xlink:href', 'img/map/chevron-up.png')
+    //     // .on('dblclick', function() { d3.event.stopPropagation(); })
+    //     .on('click', function() { pan(0, 1); });
+    //   panIconContainer.append('image')
+    //     .attr('class', 'pan-img')
+    //     .attr('x', 3)
+    //     .attr('y', 23)
+    //     .attr('xlink:href', 'img/map/chevron-left.png')
+    //     // .on('dblclick', function() { d3.event.stopPropagation(); })
+    //     .on('click', function() { pan(1, 0); });
+    //   panIconContainer.append('image')
+    //     .attr('class', 'pan-img')
+    //     .attr('x', 43)
+    //     .attr('y', 23)
+    //     .attr('xlink:href', 'img/map/chevron-right.png')
+    //     // .on('dblclick', function() { d3.event.stopPropagation(); })
+    //     .on('click', function() {pan(-1, 0); });
+    //   panIconContainer.append('image')
+    //     .attr('class', 'pan-img')
+    //     .attr('x', 23)
+    //     .attr('y', 43)
+    //     .attr('xlink:href', 'img/map/chevron-down.png')
+    //     // .on('dblclick', function() { d3.event.stopPropagation(); })
+    //     .on('click', function() { pan(0, -1); });
 
-        $('.pan-img').attr('width', '14').attr('height', '14'); // firefox fix
+    //     $('.pan-img').attr('width', '14').attr('height', '14'); // firefox fix
     }
 
-    function pan(dx, dy) {
-      // pan on click
-      const curThis = d3.zoomTransform(d3.select('svg').node());
-      curThis.x += dx*100;
-      curThis.y += dy*100;
-      move(curThis);      
-    };
+    // function pan(dx, dy) {
+    //   // pan on click
+    //   const curThis = d3.zoomTransform(d3.select('svg').node());
+    //   curThis.x += dx*100;
+    //   curThis.y += dy*100;
+    //   move(curThis);      
+    // };
 
     // let all country strokes appear to be 0.25px at any zoom level
     const initCountryStrokeWidth = 0.25;
