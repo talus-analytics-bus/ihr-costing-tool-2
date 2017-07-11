@@ -1,0 +1,757 @@
+indicator,type,category,cost
+P.1.1,capital,Consumable Materials,18274.32
+P.1.1,capital,Physical Infrastructure,0.00
+P.1.1,capital,Durable Equipment,21156.70
+P.1.1,capital,Technology,3190.69
+P.1.1,capital,Human Capabilities,58562.70
+P.1.1,capital,Tools and Processes,10982.10
+P.1.1,recurring,Consumable Materials,13024.16
+P.1.1,recurring,Physical Infrastructure,10730.94
+P.1.1,recurring,Durable Equipment,0.00
+P.1.1,recurring,Technology,21200.21
+P.1.1,recurring,Human Capabilities,0.00
+P.1.1,recurring,Tools and Processes,35031.92
+P.1.1,startup,Consumable Materials,3742.20
+P.1.1,startup,Physical Infrastructure,12398.24
+P.1.1,startup,Durable Equipment,5786.22
+P.1.1,startup,Technology,0.00
+P.1.1,startup,Human Capabilities,23761.76
+P.1.1,startup,Tools and Processes,2931.14
+P.1.2,capital,Consumable Materials,0.00
+P.1.2,capital,Physical Infrastructure,11062.89
+P.1.2,capital,Durable Equipment,18162.83
+P.1.2,capital,Technology,42950.23
+P.1.2,capital,Human Capabilities,7382.80
+P.1.2,capital,Tools and Processes,31886.09
+P.1.2,recurring,Consumable Materials,0.00
+P.1.2,recurring,Physical Infrastructure,0.00
+P.1.2,recurring,Durable Equipment,32107.18
+P.1.2,recurring,Technology,18103.21
+P.1.2,recurring,Human Capabilities,7122.16
+P.1.2,recurring,Tools and Processes,0.00
+P.1.2,startup,Consumable Materials,17934.11
+P.1.2,startup,Physical Infrastructure,0.00
+P.1.2,startup,Durable Equipment,18832.57
+P.1.2,startup,Technology,0.00
+P.1.2,startup,Human Capabilities,16578.06
+P.1.2,startup,Tools and Processes,0.00
+P.2.1,capital,Consumable Materials,7458.93
+P.2.1,capital,Physical Infrastructure,35326.60
+P.2.1,capital,Durable Equipment,0.00
+P.2.1,capital,Technology,888.51
+P.2.1,capital,Human Capabilities,25903.17
+P.2.1,capital,Tools and Processes,6979.95
+P.2.1,recurring,Consumable Materials,19018.84
+P.2.1,recurring,Physical Infrastructure,3076.32
+P.2.1,recurring,Durable Equipment,8388.46
+P.2.1,recurring,Technology,28950.14
+P.2.1,recurring,Human Capabilities,21812.82
+P.2.1,recurring,Tools and Processes,19567.37
+P.2.1,startup,Consumable Materials,0.00
+P.2.1,startup,Physical Infrastructure,0.00
+P.2.1,startup,Durable Equipment,12308.20
+P.2.1,startup,Technology,5662.17
+P.2.1,startup,Human Capabilities,4393.23
+P.2.1,startup,Tools and Processes,29565.42
+P.3.1,capital,Consumable Materials,0.00
+P.3.1,capital,Physical Infrastructure,21640.07
+P.3.1,capital,Durable Equipment,17244.18
+P.3.1,capital,Technology,0.00
+P.3.1,capital,Human Capabilities,26844.26
+P.3.1,capital,Tools and Processes,27016.72
+P.3.1,recurring,Consumable Materials,4083.62
+P.3.1,recurring,Physical Infrastructure,8620.38
+P.3.1,recurring,Durable Equipment,21476.15
+P.3.1,recurring,Technology,0.00
+P.3.1,recurring,Human Capabilities,14225.81
+P.3.1,recurring,Tools and Processes,0.00
+P.3.1,startup,Consumable Materials,0.00
+P.3.1,startup,Physical Infrastructure,0.00
+P.3.1,startup,Durable Equipment,6403.81
+P.3.1,startup,Technology,19325.88
+P.3.1,startup,Human Capabilities,5373.79
+P.3.1,startup,Tools and Processes,0.00
+P.3.2,capital,Consumable Materials,31431.26
+P.3.2,capital,Physical Infrastructure,21240.01
+P.3.2,capital,Durable Equipment,9083.72
+P.3.2,capital,Technology,0.00
+P.3.2,capital,Human Capabilities,5631.60
+P.3.2,capital,Tools and Processes,17335.75
+P.3.2,recurring,Consumable Materials,16667.86
+P.3.2,recurring,Physical Infrastructure,22516.08
+P.3.2,recurring,Durable Equipment,22293.73
+P.3.2,recurring,Technology,0.00
+P.3.2,recurring,Human Capabilities,16953.88
+P.3.2,recurring,Tools and Processes,23152.44
+P.3.2,startup,Consumable Materials,9148.38
+P.3.2,startup,Physical Infrastructure,38308.07
+P.3.2,startup,Durable Equipment,47273.63
+P.3.2,startup,Technology,39959.04
+P.3.2,startup,Human Capabilities,7404.99
+P.3.2,startup,Tools and Processes,17441.50
+P3.3,capital,Consumable Materials,28017.73
+P3.3,capital,Physical Infrastructure,29958.37
+P3.3,capital,Durable Equipment,18089.66
+P3.3,capital,Technology,25506.76
+P3.3,capital,Human Capabilities,31056.29
+P3.3,capital,Tools and Processes,590.03
+P3.3,recurring,Consumable Materials,13718.67
+P3.3,recurring,Physical Infrastructure,10838.28
+P3.3,recurring,Durable Equipment,23354.75
+P3.3,recurring,Technology,24743.53
+P3.3,recurring,Human Capabilities,38482.20
+P3.3,recurring,Tools and Processes,40054.99
+P3.3,startup,Consumable Materials,19959.76
+P3.3,startup,Physical Infrastructure,0.00
+P3.3,startup,Durable Equipment,28616.86
+P3.3,startup,Technology,0.00
+P3.3,startup,Human Capabilities,25619.18
+P3.3,startup,Tools and Processes,12148.15
+P.3.4,capital,Consumable Materials,10773.14
+P.3.4,capital,Physical Infrastructure,0.00
+P.3.4,capital,Durable Equipment,0.00
+P.3.4,capital,Technology,0.00
+P.3.4,capital,Human Capabilities,18786.59
+P.3.4,capital,Tools and Processes,0.00
+P.3.4,recurring,Consumable Materials,0.00
+P.3.4,recurring,Physical Infrastructure,21213.40
+P.3.4,recurring,Durable Equipment,10928.70
+P.3.4,recurring,Technology,0.00
+P.3.4,recurring,Human Capabilities,33448.83
+P.3.4,recurring,Tools and Processes,0.00
+P.3.4,startup,Consumable Materials,21409.58
+P.3.4,startup,Physical Infrastructure,395.43
+P.3.4,startup,Durable Equipment,2181.60
+P.3.4,startup,Technology,9794.67
+P.3.4,startup,Human Capabilities,32306.74
+P.3.4,startup,Tools and Processes,20635.73
+P.4.1,capital,Consumable Materials,15467.48
+P.4.1,capital,Physical Infrastructure,0.00
+P.4.1,capital,Durable Equipment,18366.08
+P.4.1,capital,Technology,23331.10
+P.4.1,capital,Human Capabilities,8744.39
+P.4.1,capital,Tools and Processes,0.00
+P.4.1,recurring,Consumable Materials,16946.81
+P.4.1,recurring,Physical Infrastructure,18655.32
+P.4.1,recurring,Durable Equipment,10731.78
+P.4.1,recurring,Technology,0.00
+P.4.1,recurring,Human Capabilities,34094.70
+P.4.1,recurring,Tools and Processes,2090.60
+P.4.1,startup,Consumable Materials,14994.65
+P.4.1,startup,Physical Infrastructure,9610.87
+P.4.1,startup,Durable Equipment,10026.38
+P.4.1,startup,Technology,12542.57
+P.4.1,startup,Human Capabilities,817.06
+P.4.1,startup,Tools and Processes,0.00
+P.4.2,capital,Consumable Materials,1867.28
+P.4.2,capital,Physical Infrastructure,5795.14
+P.4.2,capital,Durable Equipment,0.00
+P.4.2,capital,Technology,13847.50
+P.4.2,capital,Human Capabilities,0.00
+P.4.2,capital,Tools and Processes,32208.55
+P.4.2,recurring,Consumable Materials,14077.29
+P.4.2,recurring,Physical Infrastructure,18798.31
+P.4.2,recurring,Durable Equipment,33518.78
+P.4.2,recurring,Technology,0.00
+P.4.2,recurring,Human Capabilities,0.00
+P.4.2,recurring,Tools and Processes,41731.89
+P.4.2,startup,Consumable Materials,0.00
+P.4.2,startup,Physical Infrastructure,35880.71
+P.4.2,startup,Durable Equipment,0.00
+P.4.2,startup,Technology,6948.93
+P.4.2,startup,Human Capabilities,11900.88
+P.4.2,startup,Tools and Processes,0.00
+P.4.3,capital,Consumable Materials,28100.63
+P.4.3,capital,Physical Infrastructure,11588.60
+P.4.3,capital,Durable Equipment,22278.82
+P.4.3,capital,Technology,11673.21
+P.4.3,capital,Human Capabilities,6866.54
+P.4.3,capital,Tools and Processes,0.00
+P.4.3,recurring,Consumable Materials,12460.13
+P.4.3,recurring,Physical Infrastructure,28009.35
+P.4.3,recurring,Durable Equipment,3810.06
+P.4.3,recurring,Technology,16733.25
+P.4.3,recurring,Human Capabilities,26967.91
+P.4.3,recurring,Tools and Processes,0.00
+P.4.3,startup,Consumable Materials,21385.62
+P.4.3,startup,Physical Infrastructure,4151.32
+P.4.3,startup,Durable Equipment,23037.82
+P.4.3,startup,Technology,16370.07
+P.4.3,startup,Human Capabilities,5975.15
+P.4.3,startup,Tools and Processes,10397.18
+P.5.1,capital,Consumable Materials,0.00
+P.5.1,capital,Physical Infrastructure,27169.06
+P.5.1,capital,Durable Equipment,4372.14
+P.5.1,capital,Technology,25390.37
+P.5.1,capital,Human Capabilities,0.00
+P.5.1,capital,Tools and Processes,35250.82
+P.5.1,recurring,Consumable Materials,11336.37
+P.5.1,recurring,Physical Infrastructure,13780.88
+P.5.1,recurring,Durable Equipment,8873.31
+P.5.1,recurring,Technology,0.00
+P.5.1,recurring,Human Capabilities,11214.48
+P.5.1,recurring,Tools and Processes,8520.09
+P.5.1,startup,Consumable Materials,27654.69
+P.5.1,startup,Physical Infrastructure,54940.20
+P.5.1,startup,Durable Equipment,12520.97
+P.5.1,startup,Technology,9404.02
+P.5.1,startup,Human Capabilities,5175.22
+P.5.1,startup,Tools and Processes,6468.23
+P.6.1,capital,Consumable Materials,21595.18
+P.6.1,capital,Physical Infrastructure,1299.73
+P.6.1,capital,Durable Equipment,2985.94
+P.6.1,capital,Technology,7809.12
+P.6.1,capital,Human Capabilities,0.00
+P.6.1,capital,Tools and Processes,17452.29
+P.6.1,recurring,Consumable Materials,9090.25
+P.6.1,recurring,Physical Infrastructure,24493.49
+P.6.1,recurring,Durable Equipment,6245.80
+P.6.1,recurring,Technology,26153.30
+P.6.1,recurring,Human Capabilities,22745.50
+P.6.1,recurring,Tools and Processes,0.00
+P.6.1,startup,Consumable Materials,17710.91
+P.6.1,startup,Physical Infrastructure,3082.26
+P.6.1,startup,Durable Equipment,0.00
+P.6.1,startup,Technology,22798.51
+P.6.1,startup,Human Capabilities,2267.63
+P.6.1,startup,Tools and Processes,17210.80
+P.6.2,capital,Consumable Materials,19013.96
+P.6.2,capital,Physical Infrastructure,34338.27
+P.6.2,capital,Durable Equipment,12481.86
+P.6.2,capital,Technology,16136.89
+P.6.2,capital,Human Capabilities,17796.16
+P.6.2,capital,Tools and Processes,0.00
+P.6.2,recurring,Consumable Materials,10884.87
+P.6.2,recurring,Physical Infrastructure,24028.66
+P.6.2,recurring,Durable Equipment,11844.90
+P.6.2,recurring,Technology,5663.25
+P.6.2,recurring,Human Capabilities,32931.31
+P.6.2,recurring,Tools and Processes,20101.38
+P.6.2,startup,Consumable Materials,17423.35
+P.6.2,startup,Physical Infrastructure,23665.72
+P.6.2,startup,Durable Equipment,16725.30
+P.6.2,startup,Technology,18846.09
+P.6.2,startup,Human Capabilities,3620.78
+P.6.2,startup,Tools and Processes,38340.62
+P.7.1,capital,Consumable Materials,21569.01
+P.7.1,capital,Physical Infrastructure,29425.05
+P.7.1,capital,Durable Equipment,22747.37
+P.7.1,capital,Technology,19779.80
+P.7.1,capital,Human Capabilities,4160.88
+P.7.1,capital,Tools and Processes,0.00
+P.7.1,recurring,Consumable Materials,9949.12
+P.7.1,recurring,Physical Infrastructure,687.36
+P.7.1,recurring,Durable Equipment,0.00
+P.7.1,recurring,Technology,33917.43
+P.7.1,recurring,Human Capabilities,13037.87
+P.7.1,recurring,Tools and Processes,15310.80
+P.7.1,startup,Consumable Materials,2446.56
+P.7.1,startup,Physical Infrastructure,3807.72
+P.7.1,startup,Durable Equipment,44329.21
+P.7.1,startup,Technology,12835.24
+P.7.1,startup,Human Capabilities,19917.74
+P.7.1,startup,Tools and Processes,18233.63
+P.7.2,capital,Consumable Materials,0.00
+P.7.2,capital,Physical Infrastructure,12866.24
+P.7.2,capital,Durable Equipment,8939.19
+P.7.2,capital,Technology,5435.23
+P.7.2,capital,Human Capabilities,15010.02
+P.7.2,capital,Tools and Processes,21700.14
+P.7.2,recurring,Consumable Materials,33653.37
+P.7.2,recurring,Physical Infrastructure,557.79
+P.7.2,recurring,Durable Equipment,8522.05
+P.7.2,recurring,Technology,26185.13
+P.7.2,recurring,Human Capabilities,7758.08
+P.7.2,recurring,Tools and Processes,11726.49
+P.7.2,startup,Consumable Materials,18390.32
+P.7.2,startup,Physical Infrastructure,0.00
+P.7.2,startup,Durable Equipment,29715.64
+P.7.2,startup,Technology,0.00
+P.7.2,startup,Human Capabilities,0.00
+P.7.2,startup,Tools and Processes,10756.53
+D.1.1,capital,Consumable Materials,0.00
+D.1.1,capital,Physical Infrastructure,23282.85
+D.1.1,capital,Durable Equipment,486.23
+D.1.1,capital,Technology,0.00
+D.1.1,capital,Human Capabilities,16036.88
+D.1.1,capital,Tools and Processes,2028.10
+D.1.1,recurring,Consumable Materials,5520.81
+D.1.1,recurring,Physical Infrastructure,26682.93
+D.1.1,recurring,Durable Equipment,10097.60
+D.1.1,recurring,Technology,13189.06
+D.1.1,recurring,Human Capabilities,22737.45
+D.1.1,recurring,Tools and Processes,18846.36
+D.1.1,startup,Consumable Materials,5707.28
+D.1.1,startup,Physical Infrastructure,9641.11
+D.1.1,startup,Durable Equipment,20801.02
+D.1.1,startup,Technology,34087.07
+D.1.1,startup,Human Capabilities,7925.61
+D.1.1,startup,Tools and Processes,10194.09
+D.1.2,capital,Consumable Materials,1695.88
+D.1.2,capital,Physical Infrastructure,4211.92
+D.1.2,capital,Durable Equipment,40646.38
+D.1.2,capital,Technology,2017.08
+D.1.2,capital,Human Capabilities,24235.32
+D.1.2,capital,Tools and Processes,2413.47
+D.1.2,recurring,Consumable Materials,14823.90
+D.1.2,recurring,Physical Infrastructure,5214.50
+D.1.2,recurring,Durable Equipment,27585.38
+D.1.2,recurring,Technology,11976.20
+D.1.2,recurring,Human Capabilities,10001.46
+D.1.2,recurring,Tools and Processes,2126.61
+D.1.2,startup,Consumable Materials,27264.13
+D.1.2,startup,Physical Infrastructure,25738.14
+D.1.2,startup,Durable Equipment,8869.60
+D.1.2,startup,Technology,33228.56
+D.1.2,startup,Human Capabilities,14836.71
+D.1.2,startup,Tools and Processes,25904.17
+D.1.3,capital,Consumable Materials,25488.84
+D.1.3,capital,Physical Infrastructure,8950.18
+D.1.3,capital,Durable Equipment,14263.74
+D.1.3,capital,Technology,5107.55
+D.1.3,capital,Human Capabilities,0.00
+D.1.3,capital,Tools and Processes,0.00
+D.1.3,recurring,Consumable Materials,0.00
+D.1.3,recurring,Physical Infrastructure,6636.14
+D.1.3,recurring,Durable Equipment,0.00
+D.1.3,recurring,Technology,23999.54
+D.1.3,recurring,Human Capabilities,9673.09
+D.1.3,recurring,Tools and Processes,13416.40
+D.1.3,startup,Consumable Materials,3640.89
+D.1.3,startup,Physical Infrastructure,12740.94
+D.1.3,startup,Durable Equipment,23665.38
+D.1.3,startup,Technology,28648.92
+D.1.3,startup,Human Capabilities,9025.57
+D.1.3,startup,Tools and Processes,0.00
+D.1.4,capital,Consumable Materials,12725.44
+D.1.4,capital,Physical Infrastructure,20184.25
+D.1.4,capital,Durable Equipment,0.00
+D.1.4,capital,Technology,0.00
+D.1.4,capital,Human Capabilities,0.00
+D.1.4,capital,Tools and Processes,9688.75
+D.1.4,recurring,Consumable Materials,0.00
+D.1.4,recurring,Physical Infrastructure,1141.71
+D.1.4,recurring,Durable Equipment,32818.39
+D.1.4,recurring,Technology,26813.23
+D.1.4,recurring,Human Capabilities,18093.73
+D.1.4,recurring,Tools and Processes,9294.91
+D.1.4,startup,Consumable Materials,0.00
+D.1.4,startup,Physical Infrastructure,20153.23
+D.1.4,startup,Durable Equipment,0.00
+D.1.4,startup,Technology,2676.98
+D.1.4,startup,Human Capabilities,23515.49
+D.1.4,startup,Tools and Processes,18203.63
+D.2.1,capital,Consumable Materials,4743.62
+D.2.1,capital,Physical Infrastructure,0.00
+D.2.1,capital,Durable Equipment,12212.64
+D.2.1,capital,Technology,15206.87
+D.2.1,capital,Human Capabilities,28239.58
+D.2.1,capital,Tools and Processes,29098.81
+D.2.1,recurring,Consumable Materials,0.00
+D.2.1,recurring,Physical Infrastructure,11927.75
+D.2.1,recurring,Durable Equipment,7627.63
+D.2.1,recurring,Technology,20858.75
+D.2.1,recurring,Human Capabilities,23598.41
+D.2.1,recurring,Tools and Processes,259.90
+D.2.1,startup,Consumable Materials,17056.12
+D.2.1,startup,Physical Infrastructure,41296.49
+D.2.1,startup,Durable Equipment,4958.12
+D.2.1,startup,Technology,1080.82
+D.2.1,startup,Human Capabilities,12778.03
+D.2.1,startup,Tools and Processes,11595.19
+D.2.2,capital,Consumable Materials,22904.91
+D.2.2,capital,Physical Infrastructure,0.00
+D.2.2,capital,Durable Equipment,17613.55
+D.2.2,capital,Technology,416.58
+D.2.2,capital,Human Capabilities,0.00
+D.2.2,capital,Tools and Processes,267.82
+D.2.2,recurring,Consumable Materials,0.00
+D.2.2,recurring,Physical Infrastructure,15524.23
+D.2.2,recurring,Durable Equipment,0.00
+D.2.2,recurring,Technology,22279.65
+D.2.2,recurring,Human Capabilities,0.00
+D.2.2,recurring,Tools and Processes,24526.80
+D.2.2,startup,Consumable Materials,0.00
+D.2.2,startup,Physical Infrastructure,19493.00
+D.2.2,startup,Durable Equipment,0.00
+D.2.2,startup,Technology,10129.23
+D.2.2,startup,Human Capabilities,0.00
+D.2.2,startup,Tools and Processes,0.00
+D.2.3,capital,Consumable Materials,3444.84
+D.2.3,capital,Physical Infrastructure,754.65
+D.2.3,capital,Durable Equipment,7952.29
+D.2.3,capital,Technology,9719.70
+D.2.3,capital,Human Capabilities,28341.29
+D.2.3,capital,Tools and Processes,3115.81
+D.2.3,recurring,Consumable Materials,41523.84
+D.2.3,recurring,Physical Infrastructure,42.44
+D.2.3,recurring,Durable Equipment,0.00
+D.2.3,recurring,Technology,19541.24
+D.2.3,recurring,Human Capabilities,19793.95
+D.2.3,recurring,Tools and Processes,22516.33
+D.2.3,startup,Consumable Materials,3422.60
+D.2.3,startup,Physical Infrastructure,11830.17
+D.2.3,startup,Durable Equipment,6040.34
+D.2.3,startup,Technology,18107.18
+D.2.3,startup,Human Capabilities,3217.92
+D.2.3,startup,Tools and Processes,8310.63
+D.2.4,capital,Consumable Materials,10350.32
+D.2.4,capital,Physical Infrastructure,0.00
+D.2.4,capital,Durable Equipment,0.00
+D.2.4,capital,Technology,0.00
+D.2.4,capital,Human Capabilities,16709.12
+D.2.4,capital,Tools and Processes,0.00
+D.2.4,recurring,Consumable Materials,9336.25
+D.2.4,recurring,Physical Infrastructure,0.00
+D.2.4,recurring,Durable Equipment,0.00
+D.2.4,recurring,Technology,50667.56
+D.2.4,recurring,Human Capabilities,12056.66
+D.2.4,recurring,Tools and Processes,44041.18
+D.2.4,startup,Consumable Materials,9795.09
+D.2.4,startup,Physical Infrastructure,0.00
+D.2.4,startup,Durable Equipment,39999.02
+D.2.4,startup,Technology,35688.48
+D.2.4,startup,Human Capabilities,30496.99
+D.2.4,startup,Tools and Processes,0.00
+D.3.1,capital,Consumable Materials,10473.23
+D.3.1,capital,Physical Infrastructure,14324.30
+D.3.1,capital,Durable Equipment,2527.19
+D.3.1,capital,Technology,37526.27
+D.3.1,capital,Human Capabilities,14573.54
+D.3.1,capital,Tools and Processes,0.00
+D.3.1,recurring,Consumable Materials,18609.31
+D.3.1,recurring,Physical Infrastructure,15058.07
+D.3.1,recurring,Durable Equipment,9601.87
+D.3.1,recurring,Technology,9534.66
+D.3.1,recurring,Human Capabilities,12938.01
+D.3.1,recurring,Tools and Processes,13344.25
+D.3.1,startup,Consumable Materials,23461.52
+D.3.1,startup,Physical Infrastructure,5922.06
+D.3.1,startup,Durable Equipment,0.00
+D.3.1,startup,Technology,13288.34
+D.3.1,startup,Human Capabilities,0.00
+D.3.1,startup,Tools and Processes,0.00
+D.3.2,capital,Consumable Materials,17962.53
+D.3.2,capital,Physical Infrastructure,16071.77
+D.3.2,capital,Durable Equipment,7798.71
+D.3.2,capital,Technology,30713.24
+D.3.2,capital,Human Capabilities,0.00
+D.3.2,capital,Tools and Processes,17089.73
+D.3.2,recurring,Consumable Materials,0.00
+D.3.2,recurring,Physical Infrastructure,0.00
+D.3.2,recurring,Durable Equipment,0.00
+D.3.2,recurring,Technology,20125.53
+D.3.2,recurring,Human Capabilities,0.00
+D.3.2,recurring,Tools and Processes,4182.47
+D.3.2,startup,Consumable Materials,16852.69
+D.3.2,startup,Physical Infrastructure,0.00
+D.3.2,startup,Durable Equipment,10253.49
+D.3.2,startup,Technology,0.00
+D.3.2,startup,Human Capabilities,0.00
+D.3.2,startup,Tools and Processes,12803.24
+D.4.1,capital,Consumable Materials,0.00
+D.4.1,capital,Physical Infrastructure,28519.40
+D.4.1,capital,Durable Equipment,26158.28
+D.4.1,capital,Technology,16156.55
+D.4.1,capital,Human Capabilities,0.00
+D.4.1,capital,Tools and Processes,3856.77
+D.4.1,recurring,Consumable Materials,0.00
+D.4.1,recurring,Physical Infrastructure,0.00
+D.4.1,recurring,Durable Equipment,11263.91
+D.4.1,recurring,Technology,0.00
+D.4.1,recurring,Human Capabilities,3739.65
+D.4.1,recurring,Tools and Processes,0.00
+D.4.1,startup,Consumable Materials,15703.02
+D.4.1,startup,Physical Infrastructure,3294.33
+D.4.1,startup,Durable Equipment,21330.97
+D.4.1,startup,Technology,32439.57
+D.4.1,startup,Human Capabilities,784.11
+D.4.1,startup,Tools and Processes,25134.48
+D.4.2,capital,Consumable Materials,34548.22
+D.4.2,capital,Physical Infrastructure,15030.32
+D.4.2,capital,Durable Equipment,17568.01
+D.4.2,capital,Technology,0.00
+D.4.2,capital,Human Capabilities,0.00
+D.4.2,capital,Tools and Processes,20785.42
+D.4.2,recurring,Consumable Materials,0.00
+D.4.2,recurring,Physical Infrastructure,0.00
+D.4.2,recurring,Durable Equipment,13058.67
+D.4.2,recurring,Technology,12798.60
+D.4.2,recurring,Human Capabilities,25619.53
+D.4.2,recurring,Tools and Processes,2658.48
+D.4.2,startup,Consumable Materials,12249.11
+D.4.2,startup,Physical Infrastructure,14249.31
+D.4.2,startup,Durable Equipment,16533.15
+D.4.2,startup,Technology,16984.76
+D.4.2,startup,Human Capabilities,14378.56
+D.4.2,startup,Tools and Processes,11182.84
+D.4.3,capital,Consumable Materials,199.83
+D.4.3,capital,Physical Infrastructure,3062.70
+D.4.3,capital,Durable Equipment,2218.53
+D.4.3,capital,Technology,38235.84
+D.4.3,capital,Human Capabilities,14425.44
+D.4.3,capital,Tools and Processes,0.00
+D.4.3,recurring,Consumable Materials,20739.45
+D.4.3,recurring,Physical Infrastructure,496.77
+D.4.3,recurring,Durable Equipment,0.00
+D.4.3,recurring,Technology,21993.07
+D.4.3,recurring,Human Capabilities,6391.87
+D.4.3,recurring,Tools and Processes,0.00
+D.4.3,startup,Consumable Materials,17619.47
+D.4.3,startup,Physical Infrastructure,0.00
+D.4.3,startup,Durable Equipment,0.00
+D.4.3,startup,Technology,5492.41
+D.4.3,startup,Human Capabilities,2335.50
+D.4.3,startup,Tools and Processes,12210.25
+R.1.1,capital,Consumable Materials,29568.98
+R.1.1,capital,Physical Infrastructure,0.00
+R.1.1,capital,Durable Equipment,42463.57
+R.1.1,capital,Technology,24824.64
+R.1.1,capital,Human Capabilities,14880.88
+R.1.1,capital,Tools and Processes,8959.74
+R.1.1,recurring,Consumable Materials,8299.99
+R.1.1,recurring,Physical Infrastructure,8405.02
+R.1.1,recurring,Durable Equipment,25030.21
+R.1.1,recurring,Technology,17560.78
+R.1.1,recurring,Human Capabilities,13428.28
+R.1.1,recurring,Tools and Processes,0.00
+R.1.1,startup,Consumable Materials,0.00
+R.1.1,startup,Physical Infrastructure,86.92
+R.1.1,startup,Durable Equipment,16183.59
+R.1.1,startup,Technology,19211.86
+R.1.1,startup,Human Capabilities,6388.14
+R.1.1,startup,Tools and Processes,16727.71
+R.1.2,capital,Consumable Materials,7427.27
+R.1.2,capital,Physical Infrastructure,0.00
+R.1.2,capital,Durable Equipment,16156.90
+R.1.2,capital,Technology,4101.45
+R.1.2,capital,Human Capabilities,14900.69
+R.1.2,capital,Tools and Processes,18437.94
+R.1.2,recurring,Consumable Materials,27622.79
+R.1.2,recurring,Physical Infrastructure,14188.01
+R.1.2,recurring,Durable Equipment,781.94
+R.1.2,recurring,Technology,8753.13
+R.1.2,recurring,Human Capabilities,0.00
+R.1.2,recurring,Tools and Processes,9544.37
+R.1.2,startup,Consumable Materials,539.56
+R.1.2,startup,Physical Infrastructure,15536.83
+R.1.2,startup,Durable Equipment,5960.64
+R.1.2,startup,Technology,20104.08
+R.1.2,startup,Human Capabilities,1385.73
+R.1.2,startup,Tools and Processes,41745.73
+R.2.1,capital,Consumable Materials,0.00
+R.2.1,capital,Physical Infrastructure,0.00
+R.2.1,capital,Durable Equipment,23904.02
+R.2.1,capital,Technology,0.00
+R.2.1,capital,Human Capabilities,12167.55
+R.2.1,capital,Tools and Processes,21243.47
+R.2.1,recurring,Consumable Materials,24621.63
+R.2.1,recurring,Physical Infrastructure,39116.12
+R.2.1,recurring,Durable Equipment,25675.22
+R.2.1,recurring,Technology,13456.79
+R.2.1,recurring,Human Capabilities,12473.15
+R.2.1,recurring,Tools and Processes,4604.14
+R.2.1,startup,Consumable Materials,29740.42
+R.2.1,startup,Physical Infrastructure,17522.54
+R.2.1,startup,Durable Equipment,22533.66
+R.2.1,startup,Technology,20494.00
+R.2.1,startup,Human Capabilities,11955.84
+R.2.1,startup,Tools and Processes,19524.01
+R.2.2,capital,Consumable Materials,18432.10
+R.2.2,capital,Physical Infrastructure,0.00
+R.2.2,capital,Durable Equipment,11201.62
+R.2.2,capital,Technology,0.00
+R.2.2,capital,Human Capabilities,30493.90
+R.2.2,capital,Tools and Processes,22900.10
+R.2.2,recurring,Consumable Materials,6010.99
+R.2.2,recurring,Physical Infrastructure,0.00
+R.2.2,recurring,Durable Equipment,25392.04
+R.2.2,recurring,Technology,47455.09
+R.2.2,recurring,Human Capabilities,9439.70
+R.2.2,recurring,Tools and Processes,8205.72
+R.2.2,startup,Consumable Materials,9392.66
+R.2.2,startup,Physical Infrastructure,10200.33
+R.2.2,startup,Durable Equipment,37734.46
+R.2.2,startup,Technology,26141.37
+R.2.2,startup,Human Capabilities,10544.08
+R.2.2,startup,Tools and Processes,2323.45
+R.2.3,capital,Consumable Materials,0.00
+R.2.3,capital,Physical Infrastructure,10006.47
+R.2.3,capital,Durable Equipment,18469.75
+R.2.3,capital,Technology,16787.07
+R.2.3,capital,Human Capabilities,0.00
+R.2.3,capital,Tools and Processes,17975.64
+R.2.3,recurring,Consumable Materials,0.00
+R.2.3,recurring,Physical Infrastructure,17195.15
+R.2.3,recurring,Durable Equipment,0.00
+R.2.3,recurring,Technology,14350.64
+R.2.3,recurring,Human Capabilities,351.73
+R.2.3,recurring,Tools and Processes,26655.26
+R.2.3,startup,Consumable Materials,7280.90
+R.2.3,startup,Physical Infrastructure,8767.64
+R.2.3,startup,Durable Equipment,139.88
+R.2.3,startup,Technology,21682.22
+R.2.3,startup,Human Capabilities,15476.62
+R.2.3,startup,Tools and Processes,2185.88
+R.2.4,capital,Consumable Materials,14771.37
+R.2.4,capital,Physical Infrastructure,0.00
+R.2.4,capital,Durable Equipment,0.00
+R.2.4,capital,Technology,6664.19
+R.2.4,capital,Human Capabilities,9278.65
+R.2.4,capital,Tools and Processes,22035.43
+R.2.4,recurring,Consumable Materials,0.00
+R.2.4,recurring,Physical Infrastructure,12243.39
+R.2.4,recurring,Durable Equipment,21658.79
+R.2.4,recurring,Technology,17049.02
+R.2.4,recurring,Human Capabilities,0.00
+R.2.4,recurring,Tools and Processes,33680.37
+R.2.4,startup,Consumable Materials,0.00
+R.2.4,startup,Physical Infrastructure,28762.61
+R.2.4,startup,Durable Equipment,0.00
+R.2.4,startup,Technology,2200.03
+R.2.4,startup,Human Capabilities,1902.03
+R.2.4,startup,Tools and Processes,9581.45
+R.3.1,capital,Consumable Materials,3533.79
+R.3.1,capital,Physical Infrastructure,22731.95
+R.3.1,capital,Durable Equipment,0.00
+R.3.1,capital,Technology,7573.69
+R.3.1,capital,Human Capabilities,15095.65
+R.3.1,capital,Tools and Processes,0.00
+R.3.1,recurring,Consumable Materials,13457.63
+R.3.1,recurring,Physical Infrastructure,5922.23
+R.3.1,recurring,Durable Equipment,1676.84
+R.3.1,recurring,Technology,10263.37
+R.3.1,recurring,Human Capabilities,18504.43
+R.3.1,recurring,Tools and Processes,0.00
+R.3.1,startup,Consumable Materials,13059.30
+R.3.1,startup,Physical Infrastructure,0.00
+R.3.1,startup,Durable Equipment,6926.40
+R.3.1,startup,Technology,13939.52
+R.3.1,startup,Human Capabilities,0.00
+R.3.1,startup,Tools and Processes,20973.18
+R.4.1,capital,Consumable Materials,47729.57
+R.4.1,capital,Physical Infrastructure,3681.94
+R.4.1,capital,Durable Equipment,0.00
+R.4.1,capital,Technology,30767.93
+R.4.1,capital,Human Capabilities,0.00
+R.4.1,capital,Tools and Processes,53.70
+R.4.1,recurring,Consumable Materials,14438.57
+R.4.1,recurring,Physical Infrastructure,20819.56
+R.4.1,recurring,Durable Equipment,0.00
+R.4.1,recurring,Technology,25456.59
+R.4.1,recurring,Human Capabilities,31963.19
+R.4.1,recurring,Tools and Processes,24062.82
+R.4.1,startup,Consumable Materials,41690.70
+R.4.1,startup,Physical Infrastructure,1769.31
+R.4.1,startup,Durable Equipment,39631.07
+R.4.1,startup,Technology,567.50
+R.4.1,startup,Human Capabilities,0.00
+R.4.1,startup,Tools and Processes,0.00
+R.4.2,capital,Consumable Materials,0.00
+R.4.2,capital,Physical Infrastructure,0.00
+R.4.2,capital,Durable Equipment,0.00
+R.4.2,capital,Technology,5651.83
+R.4.2,capital,Human Capabilities,21344.44
+R.4.2,capital,Tools and Processes,30511.25
+R.4.2,recurring,Consumable Materials,14235.86
+R.4.2,recurring,Physical Infrastructure,0.00
+R.4.2,recurring,Durable Equipment,4007.54
+R.4.2,recurring,Technology,0.00
+R.4.2,recurring,Human Capabilities,14101.74
+R.4.2,recurring,Tools and Processes,7765.68
+R.4.2,startup,Consumable Materials,0.00
+R.4.2,startup,Physical Infrastructure,7523.19
+R.4.2,startup,Durable Equipment,10550.97
+R.4.2,startup,Technology,37195.85
+R.4.2,startup,Human Capabilities,17817.18
+R.4.2,startup,Tools and Processes,0.00
+R.5.1,capital,Consumable Materials,6162.91
+R.5.1,capital,Physical Infrastructure,11705.91
+R.5.1,capital,Durable Equipment,2462.89
+R.5.1,capital,Technology,15838.08
+R.5.1,capital,Human Capabilities,17184.33
+R.5.1,capital,Tools and Processes,17991.48
+R.5.1,recurring,Consumable Materials,0.00
+R.5.1,recurring,Physical Infrastructure,0.00
+R.5.1,recurring,Durable Equipment,17084.74
+R.5.1,recurring,Technology,14041.91
+R.5.1,recurring,Human Capabilities,30217.28
+R.5.1,recurring,Tools and Processes,0.00
+R.5.1,startup,Consumable Materials,3597.56
+R.5.1,startup,Physical Infrastructure,21829.24
+R.5.1,startup,Durable Equipment,16416.53
+R.5.1,startup,Technology,1542.53
+R.5.1,startup,Human Capabilities,4164.45
+R.5.1,startup,Tools and Processes,20244.62
+R.5.2,capital,Consumable Materials,43334.07
+R.5.2,capital,Physical Infrastructure,18099.75
+R.5.2,capital,Durable Equipment,8963.66
+R.5.2,capital,Technology,0.00
+R.5.2,capital,Human Capabilities,20643.13
+R.5.2,capital,Tools and Processes,30375.68
+R.5.2,recurring,Consumable Materials,0.00
+R.5.2,recurring,Physical Infrastructure,6814.08
+R.5.2,recurring,Durable Equipment,0.00
+R.5.2,recurring,Technology,35417.78
+R.5.2,recurring,Human Capabilities,16264.69
+R.5.2,recurring,Tools and Processes,18143.71
+R.5.2,startup,Consumable Materials,22584.40
+R.5.2,startup,Physical Infrastructure,13132.92
+R.5.2,startup,Durable Equipment,18367.32
+R.5.2,startup,Technology,6534.34
+R.5.2,startup,Human Capabilities,0.00
+R.5.2,startup,Tools and Processes,31147.97
+R.5.3,capital,Consumable Materials,7275.01
+R.5.3,capital,Physical Infrastructure,0.00
+R.5.3,capital,Durable Equipment,19712.04
+R.5.3,capital,Technology,17823.43
+R.5.3,capital,Human Capabilities,5014.13
+R.5.3,capital,Tools and Processes,12050.48
+R.5.3,recurring,Consumable Materials,0.00
+R.5.3,recurring,Physical Infrastructure,23879.56
+R.5.3,recurring,Durable Equipment,19276.04
+R.5.3,recurring,Technology,11834.73
+R.5.3,recurring,Human Capabilities,8424.78
+R.5.3,recurring,Tools and Processes,2037.04
+R.5.3,startup,Consumable Materials,10147.37
+R.5.3,startup,Physical Infrastructure,21723.75
+R.5.3,startup,Durable Equipment,25317.28
+R.5.3,startup,Technology,0.00
+R.5.3,startup,Human Capabilities,6152.24
+R.5.3,startup,Tools and Processes,0.00
+R.5.4,capital,Consumable Materials,0.00
+R.5.4,capital,Physical Infrastructure,47320.67
+R.5.4,capital,Durable Equipment,26390.60
+R.5.4,capital,Technology,6929.63
+R.5.4,capital,Human Capabilities,0.00
+R.5.4,capital,Tools and Processes,0.00
+R.5.4,recurring,Consumable Materials,15463.06
+R.5.4,recurring,Physical Infrastructure,27119.47
+R.5.4,recurring,Durable Equipment,0.00
+R.5.4,recurring,Technology,10965.77
+R.5.4,recurring,Human Capabilities,19835.79
+R.5.4,recurring,Tools and Processes,14734.36
+R.5.4,startup,Consumable Materials,0.00
+R.5.4,startup,Physical Infrastructure,369.66
+R.5.4,startup,Durable Equipment,6364.49
+R.5.4,startup,Technology,0.00
+R.5.4,startup,Human Capabilities,25451.19
+R.5.4,startup,Tools and Processes,20930.22
+R.5.5,capital,Consumable Materials,0.00
+R.5.5,capital,Physical Infrastructure,7368.03
+R.5.5,capital,Durable Equipment,29921.26
+R.5.5,capital,Technology,0.00
+R.5.5,capital,Human Capabilities,0.00
+R.5.5,capital,Tools and Processes,0.00
+R.5.5,recurring,Consumable Materials,0.00
+R.5.5,recurring,Physical Infrastructure,22952.51
+R.5.5,recurring,Durable Equipment,0.00
+R.5.5,recurring,Technology,0.00
+R.5.5,recurring,Human Capabilities,44377.14
+R.5.5,recurring,Tools and Processes,17506.47
+R.5.5,startup,Consumable Materials,3253.20
+R.5.5,startup,Physical Infrastructure,0.00
+R.5.5,startup,Durable Equipment,34703.12
+R.5.5,startup,Technology,28693.54
+R.5.5,startup,Human Capabilities,6737.81
+R.5.5,startup,Tools and Processes,0.00
