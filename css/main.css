@@ -45,7 +45,14 @@
   width: 250px !important; }
 
 .cost-partition-chart .node {
-  cursor: pointer; }
+  cursor: pointer;
+  fill: #fff;
+  stroke: rgba(0, 0, 255, 0.6);
+  stroke-width: 2px; }
+.cost-partition-chart .node-link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 15px; }
 
 /* --- Nav Bar --- */
 .navbar {
