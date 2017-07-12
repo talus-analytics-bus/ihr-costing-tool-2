@@ -1,1 +1,822 @@
-{"name": "Total", "cost": 2098770.0878647463, "children": [{"name": "National Legislation, Policy and Financing", "cost": 112458.95147806281, "children": [{"name": "P.1.1", "cost": 34781.571347017394, "children": [{"name": "Capital", "cost": 5804.670436821547}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 28976.90091019585}]}, {"name": "P.1.2", "cost": 77677.38013104541, "children": [{"name": "Capital", "cost": 33543.52718665959}, {"name": "Recurring", "cost": 42758.40597347384}, {"name": "Startup", "cost": 1375.4469709119858}]}]}, {"name": "IHR Coordination, Communication and Advocacy", "cost": 43802.311013350285, "children": [{"name": "P2.1", "cost": 43802.311013350285, "children": [{"name": "Capital", "cost": 16161.04125857172}, {"name": "Recurring", "cost": 27641.269754778565}, {"name": "Startup", "cost": 0}]}]}, {"name": "Antimicrobial Resistance", "cost": 123020.81627341913, "children": [{"name": "P.3.1", "cost": 26580.504810668248, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 3953.3909367514198}, {"name": "Startup", "cost": 22627.113873916827}]}, {"name": "P.3.2", "cost": 11248.97263727379, "children": [{"name": "Capital", "cost": 3816.9901367332295}, {"name": "Recurring", "cost": 7431.982500540559}, {"name": "Startup", "cost": 0}]}, {"name": "P3.3", "cost": 38741.0896013364, "children": [{"name": "Capital", "cost": 27543.911727165647}, {"name": "Recurring", "cost": 9451.501935640026}, {"name": "Startup", "cost": 1745.6759385307323}]}, {"name": "P.3.4", "cost": 46450.249224140694, "children": [{"name": "Capital", "cost": 863.8456745887579}, {"name": "Recurring", "cost": 31500.516652046794}, {"name": "Startup", "cost": 14085.886897505145}]}]}, {"name": "Z", "cost": 63520.5101433176, "children": [{"name": "o", "cost": 63520.5101433176, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 17004.027653640027}, {"name": "Startup", "cost": 46516.482489677575}]}]}, {"name": "P.4.1", "cost": 251951.44651584906, "children": [{"name": "P", "cost": 67815.49767495158, "children": [{"name": "Capital", "cost": 24766.237059030616}, {"name": "Recurring", "cost": 11814.442587869395}, {"name": "Startup", "cost": 31234.818028051563}]}, {"name": ".", "cost": 48349.70946479313, "children": [{"name": "Capital", "cost": 20594.93853084604}, {"name": "Recurring", "cost": 14546.275626433115}, {"name": "Startup", "cost": 13208.49530751397}]}, {"name": "4", "cost": 41938.07248369785, "children": [{"name": "Capital", "cost": 27044.91191848801}, {"name": "Recurring", "cost": 14893.160565209839}, {"name": "Startup", "cost": 0}]}, {"name": ".", "cost": 74494.10983053646, "children": [{"name": "Capital", "cost": 27700.650762437395}, {"name": "Recurring", "cost": 46793.459068099066}, {"name": "Startup", "cost": 0}]}, {"name": "2", "cost": 19354.05706187003, "children": [{"name": "Capital", "cost": 8337.665418916375}, {"name": "Recurring", "cost": 1911.4828659686664}, {"name": "Startup", "cost": 9104.908776984988}]}]}, {"name": "Food Safety", "cost": 19529.651363455196, "children": [{"name": "P.5.1", "cost": 19529.651363455196, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 11132.051048788764}, {"name": "Startup", "cost": 8397.600314666433}]}]}, {"name": "Biosafety and Biosecurity", "cost": 128091.28271047198, "children": [{"name": "P.6.1", "cost": 73402.92306324426, "children": [{"name": "Capital", "cost": 37116.08147858601}, {"name": "Recurring", "cost": 9293.731675877367}, {"name": "Startup", "cost": 26993.109908780876}]}, {"name": "P.6.2", "cost": 54688.35964722771, "children": [{"name": "Capital", "cost": 10603.607600001815}, {"name": "Recurring", "cost": 31272.35735757675}, {"name": "Startup", "cost": 12812.39468964915}]}]}, {"name": "Immunization", "cost": 52711.942292172855, "children": [{"name": "P.7.1", "cost": 16457.061013723505, "children": [{"name": "Capital", "cost": 5300.969582608557}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 11156.09143111495}]}, {"name": "P.7.2", "cost": 36254.88127844935, "children": [{"name": "Capital", "cost": 20043.217477054663}, {"name": "Recurring", "cost": 1671.3876425570943}, {"name": "Startup", "cost": 14540.276158837598}]}]}, {"name": "National Laboratory System", "cost": 224199.2407876968, "children": [{"name": "D.1.1", "cost": 54919.55145569426, "children": [{"name": "Capital", "cost": 32250.749699726053}, {"name": "Recurring", "cost": 8727.144491695211}, {"name": "Startup", "cost": 13941.657264272995}]}, {"name": "D.1.2", "cost": 62012.2049144302, "children": [{"name": "Capital", "cost": 23869.378105044656}, {"name": "Recurring", "cost": 11396.331684033019}, {"name": "Startup", "cost": 26746.495125352525}]}, {"name": "D.1.3", "cost": 94985.06534335937, "children": [{"name": "Capital", "cost": 29305.707640806835}, {"name": "Recurring", "cost": 16832.387707681195}, {"name": "Startup", "cost": 48846.96999487133}]}, {"name": "D.1.4", "cost": 12282.419074212972, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 12282.419074212972}, {"name": "Startup", "cost": 0}]}]}, {"name": "Real Time Surveillance", "cost": 138525.1370101675, "children": [{"name": "D.2.1", "cost": 48238.12645549826, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 18045.50347109429}, {"name": "Startup", "cost": 30192.622984403974}]}, {"name": "D.2.2", "cost": 24099.808087209247, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 2822.5443192740504}, {"name": "Startup", "cost": 21277.263767935197}]}, {"name": "D.2.3", "cost": 26950.490805559013, "children": [{"name": "Capital", "cost": 4806.460215553405}, {"name": "Recurring", "cost": 13833.019149696804}, {"name": "Startup", "cost": 8311.011440308805}]}, {"name": "D.2.4", "cost": 39236.71166190098, "children": [{"name": "Capital", "cost": 27957.895656792516}, {"name": "Recurring", "cost": 9979.937472368409}, {"name": "Startup", "cost": 1298.87853274006}]}]}, {"name": "Reporting", "cost": 98636.32907310448, "children": [{"name": "D.3.1", "cost": 46472.550509626424, "children": [{"name": "Capital", "cost": 29607.76849969433}, {"name": "Recurring", "cost": 16864.782009932096}, {"name": "Startup", "cost": 0}]}, {"name": "D.3.2", "cost": 52163.77856347807, "children": [{"name": "Capital", "cost": 16912.95842968413}, {"name": "Recurring", "cost": 27854.247838778556}, {"name": "Startup", "cost": 7396.572295015381}]}]}, {"name": "Workforce Deployment", "cost": 39211.990256347846, "children": [{"name": "D.4.1", "cost": 12097.241713839201, "children": [{"name": "Capital", "cost": 4351.724787456787}, {"name": "Recurring", "cost": 2219.2282628896173}, {"name": "Startup", "cost": 5526.288663492797}]}, {"name": "D.4.2", "cost": 8344.729817618949, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 4375.349263446584}, {"name": "Startup", "cost": 3969.380554172365}]}, {"name": "D.4.3", "cost": 18770.0187248897, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 18504.91418895552}, {"name": "Startup", "cost": 265.10453593417515}]}]}, {"name": "Preparedness", "cost": 73633.49090896489, "children": [{"name": "R.1.1", "cost": 69934.01880064489, "children": [{"name": "Capital", "cost": 14732.894050809498}, {"name": "Recurring", "cost": 39615.97326404564}, {"name": "Startup", "cost": 15585.151485789745}]}, {"name": "R.1.2", "cost": 3699.472108319993, "children": [{"name": "Capital", "cost": 898.8454482714023}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 2800.6266600485906}]}]}, {"name": "Emergency Response Operations", "cost": 168977.4553087093, "children": [{"name": "R.2.1", "cost": 34883.54137803042, "children": [{"name": "Capital", "cost": 19788.422222290646}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 15095.119155739774}]}, {"name": "R.2.2", "cost": 28851.29695504182, "children": [{"name": "Capital", "cost": 8374.341287796715}, {"name": "Recurring", "cost": 7075.815546407466}, {"name": "Startup", "cost": 13401.140120837641}]}, {"name": "R.2.3", "cost": 45736.7912600729, "children": [{"name": "Capital", "cost": 6206.258110081215}, {"name": "Recurring", "cost": 10094.590280547887}, {"name": "Startup", "cost": 29435.942869443803}]}, {"name": "R.2.4", "cost": 59505.82571556413, "children": [{"name": "Capital", "cost": 19419.8249748777}, {"name": "Recurring", "cost": 6681.654454281434}, {"name": "Startup", "cost": 33404.346286405}]}]}, {"name": "Linking Public Health and Security Authorities", "cost": 43840.769897697784, "children": [{"name": "R.3.1", "cost": 43840.769897697784, "children": [{"name": "Capital", "cost": 5028.879557849593}, {"name": "Recurring", "cost": 33918.14198278052}, {"name": "Startup", "cost": 4893.74835706767}]}]}, {"name": "Medical Countermeasures and Personnel Deployment", "cost": 98570.44054974697, "children": [{"name": "R.4.1", "cost": 29072.47369082535, "children": [{"name": "Capital", "cost": 15986.7502063844}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 13085.72348444095}]}, {"name": "R.4.2", "cost": 69497.96685892162, "children": [{"name": "Capital", "cost": 28128.583577823036}, {"name": "Recurring", "cost": 23171.186014716062}, {"name": "Startup", "cost": 18198.197266382514}]}]}, {"name": "Risk Communication", "cost": 211910.564053189, "children": [{"name": "R.5.1", "cost": 43853.56075496759, "children": [{"name": "Capital", "cost": 3253.402242892599}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 40600.158512074995}]}, {"name": "R.5.2", "cost": 87645.11835372001, "children": [{"name": "Capital", "cost": 39703.996860940366}, {"name": "Recurring", "cost": 7294.6541067865255}, {"name": "Startup", "cost": 40646.46738599312}]}, {"name": "R.5.3", "cost": 8096.165297539478, "children": [{"name": "Capital", "cost": 1067.8283213446066}, {"name": "Recurring", "cost": 7028.336976194872}, {"name": "Startup", "cost": 0}]}, {"name": "R.5.4", "cost": 34281.585960500706, "children": [{"name": "Capital", "cost": 7415.929805708719}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 26865.65615479199}]}, {"name": "R.5.5", "cost": 38034.13368646123, "children": [{"name": "Capital", "cost": 4812.783882134726}, {"name": "Recurring", "cost": 23939.27711286013}, {"name": "Startup", "cost": 9282.072691466377}]}]}, {"name": "Points of Entry", "cost": 42354.78688611377, "children": [{"name": "PoE.1", "cost": 25639.26706414391, "children": [{"name": "Capital", "cost": 13301.221794139525}, {"name": "Recurring", "cost": 7004.267908496946}, {"name": "Startup", "cost": 5333.777361507438}]}, {"name": "PoE.2", "cost": 16715.51982196986, "children": [{"name": "Capital", "cost": 3749.0890744007756}, {"name": "Recurring", "cost": 0}, {"name": "Startup", "cost": 12966.430747569086}]}]}, {"name": "Chemical Events", "cost": 66589.19575667832, "children": [{"name": "CE.1", "cost": 34049.821889711726, "children": [{"name": "Capital", "cost": 7867.310894998496}, {"name": "Recurring", "cost": 26182.51099471323}, {"name": "Startup", "cost": 0}]}, {"name": "CE.2", "cost": 32539.373866966605, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 16847.011155048447}, {"name": "Startup", "cost": 15692.362711918158}]}]}, {"name": "Radiation Emergencies", "cost": 97233.77558623074, "children": [{"name": "RE.1", "cost": 45683.420344788916, "children": [{"name": "Capital", "cost": 0}, {"name": "Recurring", "cost": 17845.192516136383}, {"name": "Startup", "cost": 27838.227828652536}]}, {"name": "RE.2", "cost": 51550.35524144183, "children": [{"name": "Capital", "cost": 3324.9582401356292}, {"name": "Recurring", "cost": 11794.421762112901}, {"name": "Startup", "cost": 36430.9752391933}]}]}]}
+{
+  "name": "Total Cost",
+  "cost": 1751432.901660319,
+  "children": [
+    {
+      "name": "National Legislation, Policy and Financing",
+      "cost": 72446.1358629482,
+      "children": [
+        {
+          "name": "P.1.1",
+          "cost": 40353.739612715304,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 24118.56456532615
+            },
+            {
+              "name": "Recurring",
+              "cost": 9176.591809640346
+            },
+            {
+              "name": "Startup",
+              "cost": 7058.583237748811
+            }
+          ]
+        },
+        {
+          "name": "P.1.2",
+          "cost": 32092.396250232887,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 10144.53702434015
+            },
+            {
+              "name": "Recurring",
+              "cost": 983.3237958463978
+            },
+            {
+              "name": "Startup",
+              "cost": 20964.53543004634
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "IHR Coordination, Communication and Advocacy",
+      "cost": 21099.34028109993,
+      "children": [
+        {
+          "name": "P2.1",
+          "cost": 21099.34028109993,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 21099.34028109993
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Antimicrobial Resistance",
+      "cost": 149478.85722563067,
+      "children": [
+        {
+          "name": "P.3.1",
+          "cost": 16235.434387007956,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 12076.383926485812
+            },
+            {
+              "name": "Recurring",
+              "cost": 4159.050460522143
+            }
+          ]
+        },
+        {
+          "name": "P.3.2",
+          "cost": 55423.19217557095,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 35879.12513516676
+            },
+            {
+              "name": "Recurring",
+              "cost": 11945.733051595202
+            },
+            {
+              "name": "Startup",
+              "cost": 7598.333988808983
+            }
+          ]
+        },
+        {
+          "name": "P.3.3",
+          "cost": 44167.3645265881,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 17606.042022416408
+            },
+            {
+              "name": "Startup",
+              "cost": 26561.32250417169
+            }
+          ]
+        },
+        {
+          "name": "P.3.4",
+          "cost": 33652.86613646365,
+          "children": [
+            {
+              "name": "Startup",
+              "cost": 33652.86613646365
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zoonotic Disease",
+      "cost": 56896.37137515468,
+      "children": [
+        {
+          "name": "P.4.1",
+          "cost": 14874.678886764968,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 1423.7171368727686
+            },
+            {
+              "name": "Startup",
+              "cost": 13450.9617498922
+            }
+          ]
+        },
+        {
+          "name": "P.4.2",
+          "cost": 22978.74127145574,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 22978.74127145574
+            }
+          ]
+        },
+        {
+          "name": "P.4.3",
+          "cost": 19042.951216933972,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 8598.294562383204
+            },
+            {
+              "name": "Recurring",
+              "cost": 5912.836081230409
+            },
+            {
+              "name": "Startup",
+              "cost": 4531.820573320359
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Food Safety",
+      "cost": 24634.969847961554,
+      "children": [
+        {
+          "name": "P.5.1",
+          "cost": 24634.969847961554,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 21052.730806668078
+            },
+            {
+              "name": "Startup",
+              "cost": 3582.2390412934756
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Biosafety and Biosecurity",
+      "cost": 63167.19555761097,
+      "children": [
+        {
+          "name": "P.6.1",
+          "cost": 24106.664096454107,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 13904.072157632092
+            },
+            {
+              "name": "Startup",
+              "cost": 10202.591938822015
+            }
+          ]
+        },
+        {
+          "name": "P.6.2",
+          "cost": 39060.53146115686,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 12672.326837718709
+            },
+            {
+              "name": "Recurring",
+              "cost": 77.4101989295159
+            },
+            {
+              "name": "Startup",
+              "cost": 26310.794424508633
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Immunization",
+      "cost": 19014.860098610974,
+      "children": [
+        {
+          "name": "P.7.1",
+          "cost": 5246.401976524774,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 30.099966111612957
+            },
+            {
+              "name": "Startup",
+              "cost": 5216.302010413161
+            }
+          ]
+        },
+        {
+          "name": "P.7.2",
+          "cost": 13768.458122086198,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 2503.0393062534276
+            },
+            {
+              "name": "Startup",
+              "cost": 11265.41881583277
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "National Laboratory System",
+      "cost": 186063.8100166867,
+      "children": [
+        {
+          "name": "D.1.1",
+          "cost": 35893.881649547526,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 13052.051493039977
+            },
+            {
+              "name": "Recurring",
+              "cost": 16499.137960053427
+            },
+            {
+              "name": "Startup",
+              "cost": 6342.69219645412
+            }
+          ]
+        },
+        {
+          "name": "D.1.2",
+          "cost": 68287.41551153621,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 46405.58511892658
+            },
+            {
+              "name": "Recurring",
+              "cost": 21881.830392609634
+            }
+          ]
+        },
+        {
+          "name": "D.1.3",
+          "cost": 44246.74835879705,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 32025.569019757633
+            },
+            {
+              "name": "Startup",
+              "cost": 12221.179339039414
+            }
+          ]
+        },
+        {
+          "name": "D.1.4",
+          "cost": 37635.76449680594,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 1444.2355523384995
+            },
+            {
+              "name": "Recurring",
+              "cost": 12165.66227309402
+            },
+            {
+              "name": "Startup",
+              "cost": 24025.86667137342
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Real Time Surveillance",
+      "cost": 94234.00491828941,
+      "children": [
+        {
+          "name": "D.2.1",
+          "cost": 2363.5440742470655,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 322.5858145813436
+            },
+            {
+              "name": "Startup",
+              "cost": 2040.958259665722
+            }
+          ]
+        },
+        {
+          "name": "D.2.2",
+          "cost": 27160.525301956553,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 27160.525301956553
+            }
+          ]
+        },
+        {
+          "name": "D.2.3",
+          "cost": 58674.156954811144,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 27220.36922144542
+            },
+            {
+              "name": "Recurring",
+              "cost": 4492.285520754818
+            },
+            {
+              "name": "Startup",
+              "cost": 26961.502212610903
+            }
+          ]
+        },
+        {
+          "name": "D.2.4",
+          "cost": 6035.778587274641,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 6035.778587274641
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reporting",
+      "cost": 31375.501071039856,
+      "children": [
+        {
+          "name": "D.3.1",
+          "cost": 15680.136020738799,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 7107.546729374735
+            },
+            {
+              "name": "Recurring",
+              "cost": 8572.589291364064
+            }
+          ]
+        },
+        {
+          "name": "D.3.2",
+          "cost": 15695.365050301058,
+          "children": [
+            {
+              "name": "Startup",
+              "cost": 15695.365050301058
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Workforce Deployment",
+      "cost": 93289.09009337763,
+      "children": [
+        {
+          "name": "D.4.2",
+          "cost": 60660.000232469414,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 37938.831247146634
+            },
+            {
+              "name": "Recurring",
+              "cost": 2285.597057474556
+            },
+            {
+              "name": "Startup",
+              "cost": 20435.57192784822
+            }
+          ]
+        },
+        {
+          "name": "D.4.3",
+          "cost": 32629.08986090821,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 10179.067544195721
+            },
+            {
+              "name": "Recurring",
+              "cost": 22450.02231671249
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Preparedness",
+      "cost": 95016.8835918357,
+      "children": [
+        {
+          "name": "R.1.1",
+          "cost": 68236.30761051884,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 20001.96310531232
+            },
+            {
+              "name": "Recurring",
+              "cost": 27084.822781303286
+            },
+            {
+              "name": "Startup",
+              "cost": 21149.521723903235
+            }
+          ]
+        },
+        {
+          "name": "R.1.2",
+          "cost": 26780.575981316877,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 3055.529240376063
+            },
+            {
+              "name": "Recurring",
+              "cost": 23303.911170501946
+            },
+            {
+              "name": "Startup",
+              "cost": 421.13557043886976
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Emergency Response Operations",
+      "cost": 172108.0273760538,
+      "children": [
+        {
+          "name": "R.2.1",
+          "cost": 69558.04673681372,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 67470.0305982563
+            },
+            {
+              "name": "Recurring",
+              "cost": 2088.0161385574156
+            }
+          ]
+        },
+        {
+          "name": "R.2.2",
+          "cost": 29539.874094776147,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 1731.8309073888176
+            },
+            {
+              "name": "Startup",
+              "cost": 27808.04318738733
+            }
+          ]
+        },
+        {
+          "name": "R.2.3",
+          "cost": 21823.4110169937,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 9937.699012129162
+            },
+            {
+              "name": "Startup",
+              "cost": 11885.71200486454
+            }
+          ]
+        },
+        {
+          "name": "R.2.4",
+          "cost": 51186.695527470234,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 23315.22687553928
+            },
+            {
+              "name": "Startup",
+              "cost": 27871.468651930958
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Linking Public Health and Security Authorities",
+      "cost": 30193.99407028424,
+      "children": [
+        {
+          "name": "R.3.1",
+          "cost": 30193.99407028424,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 20869.361798634585
+            },
+            {
+              "name": "Recurring",
+              "cost": 9324.632271649654
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Medical Countermeasures and Personnel Deployment",
+      "cost": 118277.7407496486,
+      "children": [
+        {
+          "name": "R.4.1",
+          "cost": 89319.63116396267,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 30426.450968778692
+            },
+            {
+              "name": "Recurring",
+              "cost": 29454.067485341082
+            },
+            {
+              "name": "Startup",
+              "cost": 29439.112709842895
+            }
+          ]
+        },
+        {
+          "name": "R.4.2",
+          "cost": 28958.109585685936,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 16169.456164556239
+            },
+            {
+              "name": "Recurring",
+              "cost": 12788.653421129697
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Risk Communication",
+      "cost": 296393.3632169693,
+      "children": [
+        {
+          "name": "R.5.1",
+          "cost": 39965.214691659574,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 16813.32844025592
+            },
+            {
+              "name": "Recurring",
+              "cost": 9305.172410132822
+            },
+            {
+              "name": "Startup",
+              "cost": 13846.713841270834
+            }
+          ]
+        },
+        {
+          "name": "R.5.2",
+          "cost": 80155.92518115192,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 22644.6245742682
+            },
+            {
+              "name": "Recurring",
+              "cost": 23889.025696662768
+            },
+            {
+              "name": "Startup",
+              "cost": 33622.27491022096
+            }
+          ]
+        },
+        {
+          "name": "R.5.3",
+          "cost": 113494.40792945781,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 43032.63264639316
+            },
+            {
+              "name": "Recurring",
+              "cost": 27911.222674796543
+            },
+            {
+              "name": "Startup",
+              "cost": 42550.55260826811
+            }
+          ]
+        },
+        {
+          "name": "R.5.4",
+          "cost": 11037.560554619584,
+          "children": [
+            {
+              "name": "Recurring",
+              "cost": 11037.560554619584
+            }
+          ]
+        },
+        {
+          "name": "R.5.5",
+          "cost": 51740.2548600804,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 12535.561915103686
+            },
+            {
+              "name": "Recurring",
+              "cost": 10325.062150352509
+            },
+            {
+              "name": "Startup",
+              "cost": 28879.63079462421
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Points of Entry",
+      "cost": 66082.71540228164,
+      "children": [
+        {
+          "name": "PoE.1",
+          "cost": 49607.360842817376,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 22260.826490857886
+            },
+            {
+              "name": "Recurring",
+              "cost": 16156.985955557333
+            },
+            {
+              "name": "Startup",
+              "cost": 11189.548396402153
+            }
+          ]
+        },
+        {
+          "name": "PoE.2",
+          "cost": 16475.35455946427,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 6747.868714966761
+            },
+            {
+              "name": "Startup",
+              "cost": 9727.485844497509
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chemical Events",
+      "cost": 80658.27544087992,
+      "children": [
+        {
+          "name": "CE.1",
+          "cost": 65582.77531835495,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 9979.250581210348
+            },
+            {
+              "name": "Recurring",
+              "cost": 25551.508140544407
+            },
+            {
+              "name": "Startup",
+              "cost": 30052.016596600188
+            }
+          ]
+        },
+        {
+          "name": "CE.2",
+          "cost": 15075.500122524965,
+          "children": [
+            {
+              "name": "Startup",
+              "cost": 15075.500122524965
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Radiation Emergencies",
+      "cost": 81001.76546395512,
+      "children": [
+        {
+          "name": "RE.1",
+          "cost": 15051.629478901006,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 8810.576306667934
+            },
+            {
+              "name": "Startup",
+              "cost": 6241.053172233073
+            }
+          ]
+        },
+        {
+          "name": "RE.2",
+          "cost": 65950.13598505412,
+          "children": [
+            {
+              "name": "Capital",
+              "cost": 28799.509538862454
+            },
+            {
+              "name": "Recurring",
+              "cost": 27642.222879656943
+            },
+            {
+              "name": "Startup",
+              "cost": 9508.403566534724
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
