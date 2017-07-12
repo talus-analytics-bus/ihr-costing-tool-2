@@ -69,7 +69,6 @@ const App = {};
 			'custom': 'rgba(252,248,227,1)'
 		};
 
-		console.log(blocksShowing)
 		// add "links" (tabs) to sidebar
 		var blockLinks = d3.select('.block-link-container').selectAll('.block-link')
 			.data(blocksShowing)
@@ -448,7 +447,7 @@ const App = {};
 		// };
 
 		var currBlockAbbr; // the block name abbreviation for the current block showing
-		showBlock(blocksShowing[0].abbr, false);
+		showBlock(blocksShowing[2].abbr, false);
 		blockLinks.each(function(d) { updateBlockStatus(d.abbr); });
 
 
