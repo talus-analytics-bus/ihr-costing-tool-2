@@ -103,7 +103,10 @@
 			const isChecked = curInput.property('checked');
 			d3.selectAll('.score-row').selectAll('input')
 				.property('checked', false);
+			d3.selectAll('.score-row')
+				.classed('active', false);
 			curInput.property('checked', !isChecked);
+			curRow.classed('active', !isChecked);
 		});
 	};
 })();

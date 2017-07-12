@@ -94,15 +94,20 @@
 		padding-left:10px;
 		padding-right:0;
 	}
-	.score-row._1:hover {
+	.score-row._1:hover,
+	.score-row._1.active {
 		background-color: rgba($jeeRed, 0.3);
 	}
 	.score-row._2:hover,
-	.score-row._3:hover {
+	.score-row._3:hover,
+	.score-row._2.active,
+	.score-row._3.active {
 		background-color: rgba($jeeYellow, 0.3);
 	}
 	.score-row._4:hover,
-	.score-row._5:hover {
+	.score-row._5:hover,
+	.score-row._4.active,
+	.score-row._5.active {
 		background-color: rgba($jeeGreen, 0.5);
 	}
 }
