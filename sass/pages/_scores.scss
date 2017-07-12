@@ -42,14 +42,23 @@
 	}
 }
 .score-picker-container {
-	margin-left: 60px;
+	margin-left: 50px;
+	width:100%;
+}
+.indicator-description {
+	margin-left: 10px;
 }
 .score-picker-table {
 	font-family: Helvetica;
-	.headers {
+	// .headers {
+	// 	font-weight: bold;
+	// }
+	.headers.score {
+		width: 250px;
 		font-weight: bold;
 	}
-	.header.score {
+	.headers.description {
+		font-weight: bold;
 		width: 250px;
 	}
 	.btn.toggle-score-descriptions {
@@ -62,9 +71,11 @@
 	}
 	.custom-radio .custom-control-indicator {
 		border-radius: 10%;
+		border: solid 1px gray;
 	}
 	.custom-radio .custom-control-input:checked~.custom-control-indicator {
 		background-image: none;
+		background-color: rgb(48, 113, 169);
 	}
 	.custom-control-input {
 		position: relative;
@@ -73,16 +84,16 @@
 		cursor: pointer;
 		transition: background-color .5s ease;
 	}
-	// td {
-	//   padding-top:10px;
-	//   padding-bottom:10px;
-	//   padding-right:10px;   
-	// }
+	td {
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-right:10px;   
+	}
 
-	// td:first-child {
-	//   padding-left:10px;
-	//   padding-right:0;
-	// }
+	td:first-child {
+		padding-left:10px;
+		padding-right:0;
+	}
 	.score-row._1:hover {
 		background-color: rgba($jeeRed, 0.3);
 	}
@@ -92,7 +103,7 @@
 	}
 	.score-row._4:hover,
 	.score-row._5:hover {
-		background-color: rgba($jeeGreen, 0.3);
+		background-color: rgba($jeeGreen, 0.5);
 	}
 }
 .btn-col {

@@ -96,5 +96,14 @@
 		const demoScoringHtml = $('.fake-block').html();
 		$('.p3-block').html(demoScoringHtml);
 
+		// add functionality to score picker table (click)
+		d3.selectAll('.score-row').on('click', function () {
+			const curRow = d3.select(this);
+			const curInput = curRow.select('input');
+			const isChecked = curInput.property('checked');
+			d3.selectAll('.score-row').selectAll('input')
+				.property('checked', false);
+			curInput.property('checked', !isChecked);
+		});
 	};
 })();
