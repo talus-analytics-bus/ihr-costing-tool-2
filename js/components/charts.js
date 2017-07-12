@@ -181,7 +181,7 @@ const Charts = {};
 
 		// Add the hover functionality
 
-		d3.selectAll('.type-node').on('mouseover', (typ) => {
+		d3.selectAll('.type-node').on('mouseover', function (typ) {
 			d3.select(this).attr('fill', typ.color);
 		});
 
