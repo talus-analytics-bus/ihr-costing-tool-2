@@ -39,7 +39,7 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/scores', () => {
-			loadPage('scores');
+			loadPage('scores', App.initScores);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/results', () => {
