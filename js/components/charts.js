@@ -1,5 +1,7 @@
 const Charts = {};
 
+let root, nodes, depths, nCols, nRows, indices;
+
 (() => {
 
 	Charts.buildCostPartitionChart = (selector, data) => {
@@ -223,8 +225,10 @@ const Charts = {};
 	// Adapted from https://bl.ocks.org/d3noob/43a860bc0024792f8803bba8ca0d5ecd
 	Charts.buildCostPartitionChart2 = (selector, treeData) => {
 
-		const width = 600, height = 500;
-		const margin = {top: 20, right: 100, bottom: 20, left: 100};
+		// Chart setup
+		const width = 800, height = 500;
+		//const margin = {top: 20, right: 100, bottom: 20, left: 100};
+		const margin = {top: 0, right: 0, bottom: 0, left: 0};
 
 		const chartContainer = d3.select(selector)
 			.attr('width', width + margin.left + margin.right)
@@ -232,7 +236,8 @@ const Charts = {};
 		const svg = chartContainer.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-		let i = 0, duration = 750, root;
+		// i variable allows each node to be uniquely identified so that enter() and exit() return the correct selections
+		let i = 0, duration = 750;
 
 		// declares a tree layout and assigns the size
 		const treemap = d3.tree().size([height, width]);
@@ -248,6 +253,7 @@ const Charts = {};
 		update(root);
 
 		// Collapse the node and all it's children
+		// This isn't used in the update function (collapsing only collapses the clicked node, not all it's children)
 		function collapse(d) {
 		  if(d.children) {
 		    d._children = d.children
@@ -259,14 +265,32 @@ const Charts = {};
 		function update(source) {
 
 		  // Assigns the x and y position for the nodes
-		  const treeData = treemap(root);
+		  //const treeData = treemap(root);
+		  //treeData = treemap(root);
 
 		  // Compute the new tree layout.
-		  const nodes = treeData.descendants(),
-		      links = treeData.descendants().slice(1);
+		  nodes = root.descendants(),
+		      links = root.descendants().slice(1);
+
+		  // Start custom node positioning
+
+		  depths = _.pluck(nodes, 'depth');
+		  nCols = root.height+1;
+		  nRows = (new Array(nCols)).fill(0);
+		  depths.forEach((d) => nRows[d]++);
+
+		  // The x and y declarations are the opposite of what I would have expected
+		  indices = (new Array(nCols)).fill(0);
+		  nodes.forEach((d) => {
+		  		d.y = ((d.depth+1) / (nCols+1)) * width;
+		  		d.x = ((++indices[d.depth]) / (nRows[d.depth]+1)) * height;
+		  });
+
+		  // End custom node positioning
 
 		  // Normalize for fixed-depth.
-		  nodes.forEach(function(d){ d.y = d.depth * 180});
+		  //nodes.forEach(function(d){ d.y = d.depth * 180});
+		  // (no longer necessary with custom x and y position assignments)
 
 		  // ****************** Nodes section ***************************
 
@@ -321,7 +345,7 @@ const Charts = {};
 
 
 		  // Remove any exiting nodes
-		  var nodeExit = node.exit().transition()
+		  const nodeExit = node.exit().transition()
 		      .duration(duration)
 		      .attr("transform", function(d) {
 		          return "translate(" + source.y + "," + source.x + ")";
