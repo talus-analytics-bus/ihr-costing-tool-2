@@ -1,0 +1,21 @@
+.indicator-progress-container {
+	.indicator-container {
+		margin-left: 60px;
+	}
+	.indicator-slot {
+		background: linear-gradient(#fff, #e6e7e8);
+	}
+	.indicator-name,
+	.indicator-score {
+		display: inline-block;
+	}
+	.indicator-name {
+	}
+	.indicator-score {
+		float: right;
+	}
+}
+.btn-col {
+	padding-left: 5px;
+	padding-right: 5px;
+}

@@ -11,6 +11,7 @@
 
 @import 'pages/home';
 @import 'pages/who';
+@import 'pages/scores';
 @import 'pages/results';
 
 body { 
@@ -83,4 +84,20 @@ select.form-control { width: auto; }
 	height: auto;
 	max-height: 200px;
 	overflow-x: hidden;
+}
+
+/* Header Styles */
+h1 {
+	color: #AA0000;
+	font-family: Helvetica;
+	font-weight: bold;
+	font-size: 2em;
+}
+h2 {
+
+}
+h3 {
+	font-family: Helvetica;
+	font-weight: bold;
+	font-size: 1.25em;
 }
