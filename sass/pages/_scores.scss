@@ -1,21 +1,118 @@
 .indicator-progress-container {
 	.indicator-container {
 		margin-left: 60px;
+		margin-bottom: 35px;
 	}
-	.indicator-slot {
+	.indicator-slot { 
+		width: 600px;
+		height: 40px;
+		padding: 0 20px;
+		border: 1px solid #CCCBCB;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.indicator-slot.full {
 		background: linear-gradient(#fff, #e6e7e8);
+	}
+	.indicator-slot.full:hover {
+		background: linear-gradient(#fff, #ccc);
+	}
+	.indicator-slot.empty {
+		font-style: italic;
+		color: gray;
+	}
+	.indicator-slot.empty:hover {
+		color: black;
+	}
+	.indicator-slot.active {
+		font-weight: bold;
+		color: black;
 	}
 	.indicator-name,
 	.indicator-score {
-		display: inline-block;
+		// display: flex;
+		// vertical-align: middle;
 	}
 	.indicator-name {
 	}
 	.indicator-score {
-		float: right;
+		// float: right;
+	}
+}
+.score-picker-container {
+	margin-left: 50px;
+	width:100%;
+}
+.indicator-description {
+	margin-left: 10px;
+}
+.score-picker-table {
+	font-family: Helvetica;
+	// .headers {
+	// 	font-weight: bold;
+	// }
+	.headers.score {
+		width: 250px;
+		font-weight: bold;
+	}
+	.headers.description {
+		font-weight: bold;
+		width: 250px;
+	}
+	.btn.toggle-score-descriptions {
+		margin-left: 5px;
+	}
+	.custom-control.custom-radio {
+		bottom: 5px;
+		margin-right: 5px;
+		padding-left: 0;
+	}
+	.custom-radio .custom-control-indicator {
+		border-radius: 10%;
+		border: solid 1px gray;
+	}
+	.custom-radio .custom-control-input:checked~.custom-control-indicator {
+		background-image: none;
+		background-color: rgb(48, 113, 169);
+	}
+	.custom-control-input {
+		position: relative;
+	}
+	.score-row {
+		cursor: pointer;
+		transition: background-color .5s ease;
+	}
+	td {
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-right:10px;   
+	}
+
+	td:first-child {
+		padding-left:10px;
+		padding-right:0;
+	}
+	.score-row._1:hover,
+	.score-row._1.active {
+		background-color: rgba($jeeRed, 0.3);
+	}
+	.score-row._2:hover,
+	.score-row._3:hover,
+	.score-row._2.active,
+	.score-row._3.active {
+		background-color: rgba($jeeYellow, 0.3);
+	}
+	.score-row._4:hover,
+	.score-row._5:hover,
+	.score-row._4.active,
+	.score-row._5.active {
+		background-color: rgba($jeeGreen, 0.5);
 	}
 }
 .btn-col {
 	padding-left: 5px;
 	padding-right: 5px;
+	min-height: none;
 }

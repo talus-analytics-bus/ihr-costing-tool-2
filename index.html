@@ -186,46 +186,85 @@
 					<div class='indicator-progress-container'>
 						<h3 class="indicator-progress">2 of 4 indicators scored</h3>
 						<div class="indicator-container">
-							<div class='indicator-slot'>
+							<div class='indicator-slot full'>
 								<div class='indicator-name'>Antimicrobial resistance (AMR) detection</div>
 								<div class='indicator-score'>2</div>
 							</div>
-							<div class='indicator-slot'>
-								<div class='indicator-name'>Antimicrobial resistance (AMR) detection</div>
-								<div class='indicator-score'>2</div>
+							<div class='indicator-slot full'>
+								<div class='indicator-name'>Surveillance of infections caused by AMR...</div>
+								<div class='indicator-score'>3</div>
+							</div>
+							<div class='indicator-slot empty active'>
+								<div class='indicator-name'>Healthcare associated infection (HCAI) prevention...</div>
+								<div class='indicator-score'>No score</div>
+							</div>
+							<div class='indicator-slot empty'>
+								<div class='indicator-name'>Antimicrobial stewardship activities</div>
+								<div class='indicator-score'>No score</div>
 							</div>
 						</div>
 					</div>
+					<h3 class='score-picker-header'>Assign score</h3>
 					<div class='score-picker-container'>
-						<span class='score-picker-header'>Assign score</span>
-						<span class='indicator-description'>Surveillance of infections caused by AMR pathogens</span>
+						<h4 class='indicator-description'>Healthcare associated infection (HCAI) prevention control programs</h4>
 						<table class='score-picker-table'>
-							<tr class='headers'>
-								<td>Scores</td>
-								<td>Score descriptions<button type="button" class="btn btn-secondary toggle-score-descriptions">Hide</button></td>
+							<tr class='headers-row'>
+								<td class='headers score'>Scores</td>
+								<td class='headers description'>Score descriptions<button type="button" class="btn btn-sm btn-secondary toggle-score-descriptions">Hide</button></td>
 							</tr>
-							<tr class='score-row 1'>
-								<td>No Capacity - 1</td>
-								<td>xxx</td>
+							<tr class='score-row _1'>
+								<td>
+									<label class="custom-control custom-radio">
+										<input type="radio" class="custom-control-input _1">
+										<span class="custom-control-indicator"></span>
+									</label>
+									1 - No Capacity
+								</td>
+								<td>No national plan for HCAI programs has been approved</td>
 							</tr>
-							<tr class='score-row 2'>
-								<td>Limited Capacity - 2</td>
-								<td>xxx</td>
+							<tr class='score-row _2'>
+								<td>
+									<label class="custom-control custom-radio">
+										<input type="radio" class="custom-control-input _2">
+										<span class="custom-control-indicator"></span>
+									</label>
+									2- Limited Capacity
+								</td>
+								<td>National plan for HCAI programs has been approved</td>
 							</tr>
-							<tr class='score-row 3'>
-								<td>Developed Capacity - 3</td>
-								<td>xxx</td>
+							<tr class='score-row _3'>
+								<td>
+									<label class="custom-control custom-radio">
+										<input type="radio" class="custom-control-input _3">
+										<span class="custom-control-indicator"></span>
+									</label>
+									3- Developed Capacity
+								</td>
+								<td>Designated facilities are conducting some HCAI programs</td>
 							</tr>
-							<tr class='score-row 4'>
-								<td>Demonstrated Capacity - 4</td>
-								<td>xxx</td>
+							<tr class='score-row _4'>
+								<td>
+									<label class="custom-control custom-radio">
+										<input type="radio" class="custom-control-input _4">
+										<span class="custom-control-indicator"></span>
+									</label>
+									4 - Demonstrated Capacity
+								</td>
+								<td>Designated facilities have conducted all HCAI programs for at least one year</td>
 							</tr>
-							<tr class='score-row 5'>
-								<td>Sustainable Capacity - 5</td>
-								<td>xxx</td>
+							<tr class='score-row _5'>
+								<td>
+									<label class="custom-control custom-radio">
+										<input type="radio" class="custom-control-input _5">
+										<span class="custom-control-indicator"></span>
+									</label>
+									5 - Sustainable Capacity
+								</td>
+								<td>Designated facilities have conducted all HCAI programs for five years with a system for continuous improvement</td>
 							</tr>
 						</table>
 					</div>
+					<div class='margin-top-30'></div>
 					<div class='nav-buttons-container'>
 						<div class='btn-row row'>
 							<div class='btn-col col-sm-6 right'>
@@ -235,7 +274,7 @@
 								<button type="button" class="btn btn-primary next-score">Next score</button>
 							</div>
 						</div>
-						<div class='btn-row-sep margin-bottom-10'></div>
+						<div class='margin-top-10'></div>
 						<div class='btn-row row'>
 							<div class='btn-col col-sm-6 right'>
 								<button type="button" class="btn btn-secondary cost-this">Cost this indicator</button>
