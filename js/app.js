@@ -38,7 +38,6 @@ const App = {};
 	App.initResults = () => {
 
 		const selector = '.cost-partition-chart';
-
 		// Load notional data and build chart
 		d3.queue()
 			.defer(d3.csv, 'data/notional_cost_data.csv')
@@ -46,6 +45,13 @@ const App = {};
 				if (error) throw error;
 				Charts.buildCostPartitionChart(selector, notional_data);
 			});
+
+		const selector2 = '.cost-partition-chart-2';
+		// Load notional data and build chart
+		d3.json('data/notional_cost_data_2.json', (error, notioanl_data) => {
+			if (error) throw error;
+			Charts.buildCostPartitionChart2(selector2, notioanl_data)
+		});
 
 	};
 
