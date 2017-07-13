@@ -104,11 +104,11 @@
 		*/
 		updateIndicatorScore = (indClass) => {
 			// get current indicator score selection
-			const newScore = $('input:checked').val();
+			let newScore = $('input:checked').val();
 			const indSlot = d3.select(`.indicator-slot.${indClass}`);
 
-			console.log(newScore)
-			if (newScore !== undefined) {
+			if (newScore === undefined) newScore = '';
+			if (newScore !== '') {
 				// if score is number, set to number
 				indSlot.select('.indicator-score')
 					.text(newScore);
@@ -133,6 +133,7 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
 			const flashColor = Colors.scoreColors[newScore];
+			console.log(flashColor)
 			$('.indicator-slot.p-3-3').css('background','none');
 			$('.indicator-slot.p-3-3').animate({
 				'background-color': flashColor
@@ -140,10 +141,10 @@
 				$('.indicator-slot.p-3-3').animate({
 					'background-color': 'none'
 				}, animationDuration, function() {
-			    // Animation complete.
-				$('.indicator-slot.p-3-3').css('background','');
+				    // Animation complete.
+				    $('.indicator-slot.p-3-3').css('background','');
 
-			});
+				});
 			});
 		};
 
