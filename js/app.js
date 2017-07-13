@@ -67,7 +67,7 @@ const App = {};
 	*	Initializes the tab blocks on the page being
 	*	initialized.
 	*/
-	App.setupTabs = (blocksShowing, blocks) => {
+	App.setupTabs = (blocksShowing, blocks, ccClass) => {
 		// colors for the block links, depending on status	
 		const blockModeColors = {
 			'': 'transparent',
@@ -85,7 +85,7 @@ const App = {};
 				.style('display', function(d) { return (d.level > 0) ? 'none' : 'block'; })
 				.classed('children-showing', function(d) { if (d.level === 0) return false; })
 				.attr('block-name', function(d) { return d.abbr; })
-				.on('click', function(d) { showBlock(d.abbr); });
+				.on('click', function(d) { hasher.setHash(`scores/${d.abbr}/1`) });
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')
 			.html(function(d) { return d.name; });
@@ -454,7 +454,7 @@ const App = {};
 		// };
 
 		var currBlockAbbr; // the block name abbreviation for the current block showing
-		showBlock(blocksShowing[2].abbr, false);
+		showBlock(ccClass, false);
 		blockLinks.each(function(d) { updateBlockStatus(d.abbr); });
 
 

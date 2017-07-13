@@ -11,6 +11,14 @@ const Util = {};
 	};
 
 	/*
+	*	getIndicatorId
+	*	For the given indicator class, returns its ID
+	*/
+	Util.getIndicatorId = (selector) => {
+		return selector.toUpperCase().split('-').join('.');
+	};
+
+	/*
 	*	truncateText
 	*	For the given string, truncate to specified number of
 	*	characters, and round down to the nearest whole word

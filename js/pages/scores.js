@@ -1,9 +1,13 @@
 (() => {
-	App.initScores = () => {
+	App.initScores = (ccClass, indClass) => {
 
-		// DEMO set scores for first and second indicators for AMR
-		User.setIndicatorScore('p.3.1', 1);
-		User.setIndicatorScore('p.3.2', 2);
+
+		ccId = Util.getIndicatorId(ccClass);
+		indId = Util.getIndicatorId(ccClass + '-' + indClass);
+
+		// // DEMO set scores for first and second indicators for AMR
+		// User.setIndicatorScore('p.3.1', 1);
+		// User.setIndicatorScore('p.3.2', 2);
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
 		// define blocks
@@ -94,12 +98,21 @@
 		styleScores();
 		
 		// call function to render the tabs
-		App.setupTabs(blocksShowing, blocks);
+		App.setupTabs(blocksShowing, blocks, ccClass);
+
+		// TODO if previous hash was this CC, don't slide
+		if (!App.prevHash) App.prevHash = '';
+		const prevHashArr = App.prevHash.split('/');
+
+		if (prevHashArr[0] !== 'scores' || prevHashArr[1] !== ccClass) {
+			$(`.${ccClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		}
 
 		// DEMO show the fake-block html in the AMR example
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
-		$('.p-3-block').html(demoScoringHtml);
+		console.log(`${ccClass.toLowerCase()}-block`)
+		$(`.${ccClass.toLowerCase()}-block`).html(demoScoringHtml);
 		$('.fake-block').html('');
 
 		/*
@@ -109,10 +122,10 @@
 		*/
 		updateIndicatorScore = (indId, newScore) => {
 			// get indicator class for selection
-			const indClass = Util.getIndicatorClass(indId);
+			// const indClass = Util.getIndicatorClass(indId);
 
 			// get current indicator score selection
-			const indSlot = d3.select(`.indicator-slot.${indClass}`);
+			const indSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
 
 			if (newScore === undefined) newScore = '';
 			if (newScore !== '') {
@@ -140,15 +153,16 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
 			const flashColor = Colors.scoreColors[newScore];
-			$('.indicator-slot.p-3-3').css('background','none');
-			$('.indicator-slot.p-3-3').animate({
+			console.log(`.indicator-slot.${ccClass}-${indClass}`)
+			$(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
+			$(`.indicator-slot.${ccClass}-${indClass}`).animate({
 				'background-color': flashColor
 			}, animationDuration, function() {
-				$('.indicator-slot.p-3-3').animate({
+				$(`.indicator-slot.${ccClass}-${indClass}`).animate({
 					'background-color': 'none'
 				}, animationDuration, function() {
 				    // Animation complete.
-				    $('.indicator-slot.p-3-3').css('background','');
+				    $(`.indicator-slot.${ccClass}-${indClass}`).css('background','');
 
 				});
 			});
@@ -199,11 +213,19 @@
 			const cc = App.getCoreCapacity(ccId);
 			block.select('.core-capacity-name').text(cc.name);
 
+			// set description of indicator and the score descriptions
+			const ind = App.getIndicator(indId);
+			$('.indicator-description').text(ind.name);
+			for (let i = 1; i < 6; i++) {
+				block.select(`.score-row._${i}`).select('td:nth-child(2)').text(ind.score_descriptions[`${i}`]);
+			}
+
 			// select indicator container that holds the slots
 			const indContainer = block.select('.indicator-container');
 
 			// add indicators to slots
 			const inds = cc.indicators;
+			console.log(inds)
 			const indSlots = indContainer.selectAll('.indicator-slot')
 				.data(inds)
 				.enter().append('div')
@@ -221,6 +243,10 @@
 						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
 						curSlot.classed(slotClass, true);
 
+					})
+					.on('click', function(d, i) {
+						console.log(`scores/${ccClass}/${i+1}`)
+						hasher.setHash(`scores/${ccClass}/${i+1}`);
 					});
 
 			// add indicator name
@@ -239,11 +265,12 @@
 			// set score picker to first unscored indicator OR
 			// first indicator if all scored
 			const emptySlot = block.select('.empty');
-			if (emptySlot.nodes().length > 0) {
+			if (emptySlot.nodes().length > 0 && indClass === undefined) {
 				emptySlot.classed('active', true);
 			} else {
+				if (indClass === undefined) indClass = '1';
 				indSlots.data(inds);
-				const activeSlot = d3.select('.indicator-slot');
+				const activeSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
 				activeSlot.classed('active', true);
 				// if active indicator has score, set that in the score
 				// picker
@@ -295,10 +322,10 @@
 			// TODO do this dynamically based on indicator ID
 			// TODO update indicator score in User
 			const indicatorScore = getNewIndicatorScore();
-			User.setIndicatorScore('P.3.3', indicatorScore);
+			User.setIndicatorScore(indId, indicatorScore);
 
 			// TODO update indicator score in summary table above, with animation
-			updateIndicatorScore('P.3.3', indicatorScore);
+			updateIndicatorScore(indId, indicatorScore);
 
 			// update progress message
 			updateIndicatorProgress();
@@ -312,6 +339,8 @@
 		// set titles for table cells to be equal to their text so
 		// the space can be reserved
 		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
+
+		App.prevHash = hasher.getHash();
 	};
 
 	/*
