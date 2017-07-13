@@ -96,7 +96,7 @@
 		const demoScoringHtml = $('.fake-block').html();
 		$('.p3-block').html(demoScoringHtml);
 		$('.fake-block').html('');
-
+		
 		/*
 		* updateIndicatorScore
 		* Updates the score in the summary box whenever an indicator's
@@ -129,6 +129,22 @@
 					.classed('full', false)
 					.classed('empty', true);
 			}
+
+			// flash the indicator slot the appropriate color
+			const animationDuration = 250; // msec
+			const flashColor = Colors.scoreColors[newScore];
+			$('.indicator-slot.p-3-3').css('background','none');
+			$('.indicator-slot.p-3-3').animate({
+				'background-color': flashColor
+			}, animationDuration, function() {
+				$('.indicator-slot.p-3-3').animate({
+					'background-color': 'none'
+				}, animationDuration, function() {
+			    // Animation complete.
+				$('.indicator-slot.p-3-3').css('background','');
+
+			});
+			});
 		};
 
 		// add functionality to score picker table (click)
