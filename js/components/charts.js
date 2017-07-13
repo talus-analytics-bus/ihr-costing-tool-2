@@ -1,7 +1,5 @@
 const Charts = {};
 
-let root, nodes, depths, nCols, nRows, indices;
-
 (() => {
 
 	Charts.buildCostPartitionChart = (selector, data) => {
@@ -243,7 +241,7 @@ let root, nodes, depths, nCols, nRows, indices;
 		//const treemap = d3.tree().size([height, width]);
 
 		// Assigns parent, children, height, depth
-		root = d3.hierarchy(treeData, function(d) { return d.children; });
+		let root = d3.hierarchy(treeData, function(d) { return d.children; });
 		root.x0 = height / 2;
 		root.y0 = 0;
 
@@ -269,18 +267,18 @@ let root, nodes, depths, nCols, nRows, indices;
 		  //treeData = treemap(root);
 
 		  // Compute the new tree layout.
-		  nodes = root.descendants(),
+		  const nodes = root.descendants(),
 		      links = root.descendants().slice(1);
 
 		  // Start custom node positioning
 
-		  depths = _.pluck(nodes, 'depth');
-		  nCols = root.height+1;
-		  nRows = (new Array(nCols)).fill(0);
+		  const depths = _.pluck(nodes, 'depth');
+		  const nCols = root.height+1;
+		  let nRows = (new Array(nCols)).fill(0);
 		  depths.forEach((d) => nRows[d]++);
 
 		  // The x and y declarations are the opposite of what I would have expected
-		  indices = (new Array(nCols)).fill(0);
+		  let indices = (new Array(nCols)).fill(0);
 		  nodes.forEach((d) => {
 		  		// Dynamic spacing
 		  		//d.y = ((d.depth+1) / (nCols+1)) * width;
@@ -496,6 +494,12 @@ let root, nodes, depths, nCols, nRows, indices;
 		    update(d);
 		  }
 		}
+
+	};
+
+	Charts.buildMinMaxBarChart = (selector, data) => {
+
+		// Find min/max indicators for total/startup/recurring/capital categories
 
 	};
 
