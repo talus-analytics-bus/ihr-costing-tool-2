@@ -54,12 +54,12 @@
 	// 	font-weight: bold;
 	// }
 	.headers.score {
-		width: 250px;
+		// width: 250px;
 		font-weight: bold;
 	}
 	.headers.description {
 		font-weight: bold;
-		width: 250px;
+		// width: 600px;
 	}
 	.btn.toggle-score-descriptions {
 		margin-left: 5px;
@@ -84,12 +84,25 @@
 		padding-top:10px;
 		padding-bottom:10px;
 		padding-right:10px;   
+		width: 700px;
 	}
 
 	td:first-child {
 		padding-left:10px;
 		padding-right:0;
+		width: 350px;
 	}
+
+	td::after {
+		display:block;
+		content:attr(content);
+		font-weight:bold;
+		height:1px;
+		color:transparent;
+		overflow:hidden;
+		visibility:hidden;
+	}
+
 	.score-row {
 		cursor: pointer;
 		transition: background-color .5s ease;

@@ -180,5 +180,9 @@
 			// TODO update whether all indicators are completely scored
 
 		});
+
+		// set titles for table cells to be equal to their text so
+		// the space can be reserved
+		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
 	};
 })();
