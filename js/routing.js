@@ -38,8 +38,14 @@ const Routing = {};
 			loadPage('costs');
 			window.scrollTo(0, 0);
 		});
-		crossroads.addRoute('/scores', () => {
-			loadPage('scores', App.initScores);
+		crossroads.addRoute('/scores/:{ccId}:/:{indId}:', (ccId, indId) => {
+			// // store previous hash
+			// App.prevHash = '';
+			// crossroads.routed.add(function(request, data) {
+			// 	App.prevHash = request;
+			// });
+
+			loadPage('scores', App.initScores, ccId, indId);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/results', () => {
@@ -52,6 +58,8 @@ const Routing = {};
 		hasher.initialized.add(parseHash);
 		hasher.changed.add(parseHash);
 		hasher.init();
+
+		
 	};
 
 	function loadPage(pageName, func, ...data) {
@@ -67,7 +75,9 @@ const Routing = {};
 		});
 	}
 
-	function parseHash(newHash) { crossroads.parse(newHash); }
+	function parseHash(newHash) { 
+		crossroads.parse(newHash);
+	}
 
 	function loadTemplate(page, data) {
 		$('#page-content').html(Routing.templates[page](data));

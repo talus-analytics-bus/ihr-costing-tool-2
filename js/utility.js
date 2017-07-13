@@ -11,6 +11,14 @@ const Util = {};
 	};
 
 	/*
+	*	getIndicatorId
+	*	For the given indicator class, returns its ID
+	*/
+	Util.getIndicatorId = (selector) => {
+		return selector.toUpperCase().split('-').join('.');
+	};
+
+	/*
 	*	truncateText
 	*	For the given string, truncate to specified number of
 	*	characters, and round down to the nearest whole word
@@ -36,7 +44,7 @@ const Util = {};
 		// init loop var
 		let i = 0;
 
-		while ((charCount + words[i].length) < nMaxChar && i < words.length) {
+		while (i < words.length && (charCount + words[i].length) < nMaxChar) {
 			if (i > 0) output += ' ';
 			output += words[i];
 			charCount += words[i].length;

@@ -1,67 +1,76 @@
 (() => {
-	App.initScores = () => {
+	App.initScores = (ccClass, indClass) => {
 
-		// DEMO set scores for first and second indicators for AMR
-		User.setIndicatorScore('p.3.1', 1);
-		User.setIndicatorScore('p.3.2', 2);
+
+		ccId = Util.getIndicatorId(ccClass);
+		indId = Util.getIndicatorId(ccClass + '-' + indClass);
+
+		// // DEMO set scores for first and second indicators for AMR
+		// User.setIndicatorScore('p.3.1', 1);
+		// User.setIndicatorScore('p.3.2', 2);
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
+		
+		const blockTmp = App.generateBlockData();
 		// define blocks
-		const blocks = {
-		  "p-1": {},
-		  "p-2": {},
-		  "p-3": {},
-		  "p-4": {},
-		  "p-5": {},
-		  "p-6": {},
-		  "p-7": {}
-		}
+		const blocks = blockTmp.blocks;
+		const blocksShowing = blockTmp.blocksShowing;
 
-		// define blocksShowing
-		const blocksShowing = [
-		  {
-		    "abbr": "p-1",
-		    "name": "National Legislation, Policy, and Financing",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-2",
-		    "name": "IHR Coordination, Communication and Advocacy",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-3",
-		    "name": "Antimicrobial Resistance (AMR)",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-4",
-		    "name": "Zoonotic Disease",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-5",
-		    "name": "Food Safety",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-6",
-		    "name": "Biosafety and Biosecurity",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-7",
-		    "name": "Immunization",
-		    "level": 0,
-		    "status": ""
-		  }
-		];
+		// const blocks = {
+		//   "p-1": {},
+		//   "p-2": {},
+		//   "p-3": {},
+		//   "p-4": {},
+		//   "p-5": {},
+		//   "p-6": {},
+		//   "p-7": {}
+		// }
+
+		// // define blocksShowing
+		// const blocksShowing = [
+		//   {
+		//     "abbr": "p-1",
+		//     "name": "National Legislation, Policy, and Financing",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-2",
+		//     "name": "IHR Coordination, Communication and Advocacy",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-3",
+		//     "name": "Antimicrobial Resistance (AMR)",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-4",
+		//     "name": "Zoonotic Disease",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-5",
+		//     "name": "Food Safety",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-6",
+		//     "name": "Biosafety and Biosecurity",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-7",
+		//     "name": "Immunization",
+		//     "level": 0,
+		//     "status": ""
+		//   }
+		// ];
 
 		// TODO add input blocks for each core capacity
 		addCoreCapacityTabs = () => {
@@ -94,12 +103,21 @@
 		styleScores();
 		
 		// call function to render the tabs
-		App.setupTabs(blocksShowing, blocks);
+		App.setupTabs(blocksShowing, blocks, ccClass);
+
+		// TODO if previous hash was this CC, don't slide
+		if (!App.prevHash) App.prevHash = '';
+		const prevHashArr = App.prevHash.split('/');
+
+		if (prevHashArr[0] !== 'scores' || prevHashArr[1] !== ccClass) {
+			$(`.${ccClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		}
 
 		// DEMO show the fake-block html in the AMR example
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
-		$('.p-3-block').html(demoScoringHtml);
+		console.log(`${ccClass.toLowerCase()}-block`)
+		$(`.${ccClass.toLowerCase()}-block`).html(demoScoringHtml);
 		$('.fake-block').html('');
 
 		/*
@@ -109,10 +127,10 @@
 		*/
 		updateIndicatorScore = (indId, newScore) => {
 			// get indicator class for selection
-			const indClass = Util.getIndicatorClass(indId);
+			// const indClass = Util.getIndicatorClass(indId);
 
 			// get current indicator score selection
-			const indSlot = d3.select(`.indicator-slot.${indClass}`);
+			const indSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
 
 			if (newScore === undefined) newScore = '';
 			if (newScore !== '') {
@@ -140,15 +158,16 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
 			const flashColor = Colors.scoreColors[newScore];
-			$('.indicator-slot.p-3-3').css('background','none');
-			$('.indicator-slot.p-3-3').animate({
+			console.log(`.indicator-slot.${ccClass}-${indClass}`)
+			$(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
+			$(`.indicator-slot.${ccClass}-${indClass}`).animate({
 				'background-color': flashColor
 			}, animationDuration, function() {
-				$('.indicator-slot.p-3-3').animate({
+				$(`.indicator-slot.${ccClass}-${indClass}`).animate({
 					'background-color': 'none'
 				}, animationDuration, function() {
 				    // Animation complete.
-				    $('.indicator-slot.p-3-3').css('background','');
+				    $(`.indicator-slot.${ccClass}-${indClass}`).css('background','');
 
 				});
 			});
@@ -199,11 +218,19 @@
 			const cc = App.getCoreCapacity(ccId);
 			block.select('.core-capacity-name').text(cc.name);
 
+			// set description of indicator and the score descriptions
+			const ind = App.getIndicator(indId);
+			$('.indicator-description').text(ind.name);
+			for (let i = 1; i < 6; i++) {
+				block.select(`.score-row._${i}`).select('td:nth-child(2)').text(ind.score_descriptions[`${i}`]);
+			}
+
 			// select indicator container that holds the slots
 			const indContainer = block.select('.indicator-container');
 
 			// add indicators to slots
 			const inds = cc.indicators;
+			console.log(inds)
 			const indSlots = indContainer.selectAll('.indicator-slot')
 				.data(inds)
 				.enter().append('div')
@@ -221,12 +248,19 @@
 						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
 						curSlot.classed(slotClass, true);
 
+					})
+					.on('click', function(d, i) {
+						console.log(`scores/${ccClass}/${i+1}`)
+						hasher.setHash(`scores/${ccClass}/${i+1}`);
 					});
 
 			// add indicator name
 			indSlots.append('div')
 				.classed('indicator-name', true)
-				.text(d => Util.truncateText(d.name));
+				.text(d => {
+					console.log(d.name);
+					return Util.truncateText(d.name);
+				});
 
 			// add indicator score
 			indSlots.append('div')
@@ -239,11 +273,12 @@
 			// set score picker to first unscored indicator OR
 			// first indicator if all scored
 			const emptySlot = block.select('.empty');
-			if (emptySlot.nodes().length > 0) {
+			if (emptySlot.nodes().length > 0 && indClass === undefined) {
 				emptySlot.classed('active', true);
 			} else {
+				if (indClass === undefined) indClass = '1';
 				indSlots.data(inds);
-				const activeSlot = d3.select('.indicator-slot');
+				const activeSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
 				activeSlot.classed('active', true);
 				// if active indicator has score, set that in the score
 				// picker
@@ -295,10 +330,10 @@
 			// TODO do this dynamically based on indicator ID
 			// TODO update indicator score in User
 			const indicatorScore = getNewIndicatorScore();
-			User.setIndicatorScore('P.3.3', indicatorScore);
+			User.setIndicatorScore(indId, indicatorScore);
 
 			// TODO update indicator score in summary table above, with animation
-			updateIndicatorScore('P.3.3', indicatorScore);
+			updateIndicatorScore(indId, indicatorScore);
 
 			// update progress message
 			updateIndicatorProgress();
@@ -312,6 +347,30 @@
 		// set titles for table cells to be equal to their text so
 		// the space can be reserved
 		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
+
+		// set function for next button
+		const nextHash = {
+			'p': {next: 'd', prev:'p', max: 7},
+			'd': {next: 'r', prev:'p', max: 4},
+			'r': {next: 'r', prev:'d', max: 5}
+		};
+		d3.select('.next-score').on('click', function () {
+			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+			if (parseInt(indClass) === indsCount) {
+				console.log('Last indicator in CC')
+				if (ccClass === 'r-5' && indClass === '5') {
+				} else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
+					hasher.setHash(`scores/${nextHash[ccClass[0]].next}-1/${1}`);
+				} else {
+					hasher.setHash(`scores/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
+				}
+			} else {
+				hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
+			}
+		});
+
+		// update the hash history
+		App.prevHash = hasher.getHash();
 	};
 
 	/*

@@ -67,7 +67,7 @@ const App = {};
 	*	Initializes the tab blocks on the page being
 	*	initialized.
 	*/
-	App.setupTabs = (blocksShowing, blocks) => {
+	App.setupTabs = (blocksShowing, blocks, ccClass) => {
 		// colors for the block links, depending on status	
 		const blockModeColors = {
 			'': 'transparent',
@@ -85,7 +85,7 @@ const App = {};
 				.style('display', function(d) { return (d.level > 0) ? 'none' : 'block'; })
 				.classed('children-showing', function(d) { if (d.level === 0) return false; })
 				.attr('block-name', function(d) { return d.abbr; })
-				.on('click', function(d) { showBlock(d.abbr); });
+				.on('click', function(d) { hasher.setHash(`scores/${d.abbr}/1`) });
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')
 			.html(function(d) { return d.name; });
@@ -454,7 +454,7 @@ const App = {};
 		// };
 
 		var currBlockAbbr; // the block name abbreviation for the current block showing
-		showBlock(blocksShowing[2].abbr, false);
+		showBlock(ccClass, false);
 		blockLinks.each(function(d) { updateBlockStatus(d.abbr); });
 
 
@@ -589,4 +589,27 @@ const App = {};
 		return ind;
 	};
 
+	/*
+	*	App.generateBlockData
+	*	Generate block data needed on the scores page
+	*/
+	App.generateBlockData = () => {
+		const blocks = {};
+		const blocksShowing = [];
+		for (let i = 0; i < App.jeeTree.length; i++) {
+			for (let j = 0; j < App.jeeTree[i].capacities.length; j++) {
+				const newBlockShowing = {};
+				newBlockShowing.level = 0;
+				newBlockShowing.status = "";
+				newBlockShowing.name = App.jeeTree[i].capacities[j].name;
+				const abbrTmp = App.jeeTree[i].capacities[j].indicators[0].jee_id;
+				const abbrTmpArr = abbrTmp.toLowerCase().split('.');
+				newBlockShowing.abbr = abbrTmpArr[0] + '-' + abbrTmpArr[1];
+				blocksShowing.push(newBlockShowing);
+				blocks[newBlockShowing.abbr] = "";
+			}
+		}
+		console.log({blocks: blocks, blocksShowing: blocksShowing});
+		return {blocks: blocks, blocksShowing: blocksShowing};
+	}
 })();
