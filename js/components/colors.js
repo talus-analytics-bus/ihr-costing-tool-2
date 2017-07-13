@@ -10,6 +10,6 @@ const Colors = {};
 		'3': Colors.jeeYellow,
 		'4': Colors.jeeGreen,
 		'5': Colors.jeeGreen,
-		'': 'gray'
+		'': '#bbb'
 	};
 })();
