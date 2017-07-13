@@ -589,4 +589,27 @@ const App = {};
 		return ind;
 	};
 
+	/*
+	*	App.generateBlockData
+	*	Generate block data needed on the scores page
+	*/
+	App.generateBlockData = () => {
+		const blocks = {};
+		const blocksShowing = [];
+		for (let i = 0; i < App.jeeTree.length; i++) {
+			for (let j = 0; j < App.jeeTree[i].capacities.length; j++) {
+				const newBlockShowing = {};
+				newBlockShowing.level = 0;
+				newBlockShowing.status = "";
+				newBlockShowing.name = App.jeeTree[i].capacities[j].name;
+				const abbrTmp = App.jeeTree[i].capacities[j].indicators[0].jee_id;
+				const abbrTmpArr = abbrTmp.toLowerCase().split('.');
+				newBlockShowing.abbr = abbrTmpArr[0] + '-' + abbrTmpArr[1];
+				blocksShowing.push(newBlockShowing);
+				blocks[newBlockShowing.abbr] = "";
+			}
+		}
+		console.log({blocks: blocks, blocksShowing: blocksShowing});
+		return {blocks: blocks, blocksShowing: blocksShowing};
+	}
 })();

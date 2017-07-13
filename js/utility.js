@@ -44,7 +44,7 @@ const Util = {};
 		// init loop var
 		let i = 0;
 
-		while ((charCount + words[i].length) < nMaxChar && i < words.length) {
+		while (i < words.length && (charCount + words[i].length) < nMaxChar) {
 			if (i > 0) output += ' ';
 			output += words[i];
 			charCount += words[i].length;

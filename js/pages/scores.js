@@ -10,62 +10,67 @@
 		// User.setIndicatorScore('p.3.2', 2);
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
+		
+		const blockTmp = App.generateBlockData();
 		// define blocks
-		const blocks = {
-		  "p-1": {},
-		  "p-2": {},
-		  "p-3": {},
-		  "p-4": {},
-		  "p-5": {},
-		  "p-6": {},
-		  "p-7": {}
-		}
+		const blocks = blockTmp.blocks;
+		const blocksShowing = blockTmp.blocksShowing;
 
-		// define blocksShowing
-		const blocksShowing = [
-		  {
-		    "abbr": "p-1",
-		    "name": "National Legislation, Policy, and Financing",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-2",
-		    "name": "IHR Coordination, Communication and Advocacy",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-3",
-		    "name": "Antimicrobial Resistance (AMR)",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-4",
-		    "name": "Zoonotic Disease",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-5",
-		    "name": "Food Safety",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-6",
-		    "name": "Biosafety and Biosecurity",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "p-7",
-		    "name": "Immunization",
-		    "level": 0,
-		    "status": ""
-		  }
-		];
+		// const blocks = {
+		//   "p-1": {},
+		//   "p-2": {},
+		//   "p-3": {},
+		//   "p-4": {},
+		//   "p-5": {},
+		//   "p-6": {},
+		//   "p-7": {}
+		// }
+
+		// // define blocksShowing
+		// const blocksShowing = [
+		//   {
+		//     "abbr": "p-1",
+		//     "name": "National Legislation, Policy, and Financing",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-2",
+		//     "name": "IHR Coordination, Communication and Advocacy",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-3",
+		//     "name": "Antimicrobial Resistance (AMR)",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-4",
+		//     "name": "Zoonotic Disease",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-5",
+		//     "name": "Food Safety",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-6",
+		//     "name": "Biosafety and Biosecurity",
+		//     "level": 0,
+		//     "status": ""
+		//   },
+		//   {
+		//     "abbr": "p-7",
+		//     "name": "Immunization",
+		//     "level": 0,
+		//     "status": ""
+		//   }
+		// ];
 
 		// TODO add input blocks for each core capacity
 		addCoreCapacityTabs = () => {
@@ -252,7 +257,10 @@
 			// add indicator name
 			indSlots.append('div')
 				.classed('indicator-name', true)
-				.text(d => Util.truncateText(d.name));
+				.text(d => {
+					console.log(d.name);
+					return Util.truncateText(d.name);
+				});
 
 			// add indicator score
 			indSlots.append('div')
@@ -340,6 +348,28 @@
 		// the space can be reserved
 		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
 
+		// set function for next button
+		const nextHash = {
+			'p': {next: 'd', prev:'p', max: 7},
+			'd': {next: 'r', prev:'p', max: 4},
+			'r': {next: 'r', prev:'d', max: 5}
+		};
+		d3.select('.next-score').on('click', function () {
+			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+			if (parseInt(indClass) === indsCount) {
+				console.log('Last indicator in CC')
+				if (ccClass === 'r-5' && indClass === '5') {
+				} else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
+					hasher.setHash(`scores/${nextHash[ccClass[0]].next}-1/${1}`);
+				} else {
+					hasher.setHash(`scores/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
+				}
+			} else {
+				hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
+			}
+		});
+
+		// update the hash history
 		App.prevHash = hasher.getHash();
 	};
 
