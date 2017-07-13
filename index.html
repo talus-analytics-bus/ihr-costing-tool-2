@@ -301,7 +301,6 @@
 		<div class="results-container container">
 			<div class="row">
 				<h1>Results</h1>
-				<br/><br/><br/>
 			</div>
 			<div class="row">
 				<div style="margin-top:7px;">Costing Time Horizon:&nbsp;&nbsp;&nbsp;</div>
@@ -314,7 +313,7 @@
 				<br/><br/><br/>
 			</div>
 			<div class="row">
-				<div class="section-header">Partitioning of Costs</div><br/>
+				<div class="section-header">Partitioning of Costs</div>
 			</div>
 			<div class="row">
 				<svg class="cost-partition-chart"></svg>
@@ -322,8 +321,18 @@
 			<div class="row">
 				<svg class="cost-partition-chart-2"></svg>
 			</div>
-			<div class="row">
-				<svg class="min-max-bar-chart"></svg>
+			<div class="row" style="text-align: center">
+				<div class="min-max-container">
+					<div class="btn-group">
+						<button type="button" class="btn btn-secondary active">Total</button>
+						<button type="button" class="btn btn-secondary">Startup</button>
+						<button type="button" class="btn btn-secondary">Capital</button>
+						<button type="button" class="btn btn-secondary">Recurring</button>
+					</div>
+					<div class="min-max-bar-chart-container">
+						<svg class="min-max-bar-chart"></svg>
+					</div>
+				</div>
 			</div>
 		</div>
 	</script>

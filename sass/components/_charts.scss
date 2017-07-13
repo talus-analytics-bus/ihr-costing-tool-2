@@ -32,3 +32,27 @@
 	  stroke-width: 2px;
 	}
 }
+
+.min-max-bar-chart {
+	.x-axis, .y-axis {
+		font-size: 1em;
+	}
+
+	.bar {
+		fill: steelblue;
+	}
+
+	.axis-label {
+		font-size: 1.2em;
+		font-weight: bold;
+	}
+
+	path.domain {
+		stroke-width: 1.5px;
+
+	}
+
+	.tick line {
+		stroke-width: 1.5px;
+	}
+}
