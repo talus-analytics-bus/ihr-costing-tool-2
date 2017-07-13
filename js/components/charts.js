@@ -282,7 +282,23 @@ let root, nodes, depths, nCols, nRows, indices;
 		  // The x and y declarations are the opposite of what I would have expected
 		  indices = (new Array(nCols)).fill(0);
 		  nodes.forEach((d) => {
-		  		d.y = ((d.depth+1) / (nCols+1)) * width;  // Going to need to space this manually
+		  		// Dynamic spacing
+		  		//d.y = ((d.depth+1) / (nCols+1)) * width;
+
+		  		// Manual spacing
+		  		if (d.depth == 0) {
+		  			d.y = 100;
+		  		} else if (d.depth == 1) {
+		  			d.y = 200;
+		  		} else if (d.depth == 2) {
+		  			d.y = 550;
+		  		} else if (d.depth == 3) {
+		  			d.y = 700;
+		  		} else {
+		  			console.log('Error: positioning not specified past depth of 3')
+		  		}
+
+
 		  		d.x = ((++indices[d.depth]) / (nRows[d.depth]+1)) * height;
 		  });
 
@@ -313,16 +329,35 @@ let root, nodes, depths, nCols, nRows, indices;
 		      .attr('r', 1e-6)
 		      .style("fill", function(d) {
 		          return d._children ? "lightsteelblue" : "#fff";
+		      })
+		      .each(function(d) {
+		      		const contentStr = '' +
+		      			`<b>Cost:</b> \$${Math.round(d.data.cost).toLocaleString('currency')}`;
+		      		$(this).tooltipster({content: contentStr});
 		      });
 
 		  // Add labels for the nodes
 		  nodeEnter.append('text')
-		      .attr("dy", ".35em")
+		      .attr("dy", function(d) {
+		      	  if (d.depth == 2) {
+		      	  		return '2.3em';
+		      	  } else {
+		      	  		return '.35em';
+		      	  }
+		      })
 		      .attr("x", function(d) {
-		          return !d.parent ? -18 : 18;
+		      	  if (d.depth == 2) {
+		      	  		return 0;
+		      	  } else {
+		          		return !d.parent ? -18 : 18;
+		          }
 		      })
 		      .attr("text-anchor", function(d) {
-		          return !d.parent ? "end" : "start";
+		      		if (d.depth == 2) {
+		      			return 'middle';
+		      		} else {
+		          		return !d.parent ? "end" : "start";
+		          	}
 		      })
 		      .text(function(d) { return d.data.name; });
 
@@ -354,7 +389,18 @@ let root, nodes, depths, nCols, nRows, indices;
 		  const nodeExit = node.exit().transition()
 		      .duration(duration)
 		      .attr("transform", function(d) {
-		          return "translate(" + source.y + "," + source.x + ")";
+		          //return "translate(" + source.y + "," + source.x + ")";
+		          //return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
+
+		          if(!source.parent) {
+		          	  return "translate(" + source.y + "," + source.x + ")";
+		          } else {
+			          s = d.parent;
+			          while(s.parent && !source.parent.children.includes(s)) {
+			          	s = s.parent;
+			          }
+			          return 'translate(' + s.y + ',' + s.x + ')';
+			      }
 		      })
 		      .remove();
 
@@ -392,7 +438,20 @@ let root, nodes, depths, nCols, nRows, indices;
 		  var linkExit = link.exit().transition()
 		      .duration(duration)
 		      .attr('d', function(d) {
-		        var o = {x: source.x, y: source.y}
+		        //var o = {x: d.parent.x, y: d.parent.y}
+		        //var o = {x: source.x, y: source.y}
+
+		        let o;
+		        if(!source.parent) {
+		          	o = {x: source.x, y: source.y};
+		        } else {
+			    	s = d.parent;
+			        while(s.parent && !source.parent.children.includes(s)) {
+			          	s = s.parent;
+			        }
+			        o = {x: s.x, y: s.y};
+			    }
+
 		        return diagonal(o, o)
 		      })
 		      .remove();
@@ -420,6 +479,17 @@ let root, nodes, depths, nCols, nRows, indices;
 		        d._children = d.children;
 		        d.children = null;
 		      } else {
+
+		      	// Collapse siblings
+		      	if (d.parent) {
+		      		d.parent.children.forEach((s) => {
+		      			if(s.children) {
+		      				s._children = s.children;
+		      				s.children = null;
+		      			}
+		      		})
+		      	}
+
 		        d.children = d._children;
 		        d._children = null;
 		      }
