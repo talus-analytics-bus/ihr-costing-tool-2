@@ -1,57 +1,62 @@
 (() => {
 	App.initScores = () => {
+
+		// DEMO set scores for first and second indicators for AMR
+		User.setIndicatorScore('p.3.1', 1);
+		User.setIndicatorScore('p.3.2', 2);
+
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
 		// define blocks
 		const blocks = {
-		  "p1": {},
-		  "p2": {},
-		  "p3": {},
-		  "p4": {},
-		  "p5": {},
-		  "p6": {},
-		  "p7": {}
+		  "p-1": {},
+		  "p-2": {},
+		  "p-3": {},
+		  "p-4": {},
+		  "p-5": {},
+		  "p-6": {},
+		  "p-7": {}
 		}
 
 		// define blocksShowing
 		const blocksShowing = [
 		  {
-		    "abbr": "p1",
+		    "abbr": "p-1",
 		    "name": "National Legislation, Policy, and Financing",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p2",
+		    "abbr": "p-2",
 		    "name": "IHR Coordination, Communication and Advocacy",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p3",
+		    "abbr": "p-3",
 		    "name": "Antimicrobial Resistance (AMR)",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p4",
+		    "abbr": "p-4",
 		    "name": "Zoonotic Disease",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p5",
+		    "abbr": "p-5",
 		    "name": "Food Safety",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p6",
+		    "abbr": "p-6",
 		    "name": "Biosafety and Biosecurity",
 		    "level": 0,
 		    "status": ""
 		  },
 		  {
-		    "abbr": "p7",
+		    "abbr": "p-7",
 		    "name": "Immunization",
 		    "level": 0,
 		    "status": ""
@@ -68,7 +73,7 @@
 					});
 		};
 		addCoreCapacityTabs();
-		
+
 		// style the scores page by adding gradient definition
 		styleScores = () => {
 			const slotGradient = d3.select('body').append('linearGradient')
@@ -94,17 +99,19 @@
 		// DEMO show the fake-block html in the AMR example
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
-		$('.p3-block').html(demoScoringHtml);
+		$('.p-3-block').html(demoScoringHtml);
 		$('.fake-block').html('');
-		
+
 		/*
 		* updateIndicatorScore
 		* Updates the score in the summary box whenever an indicator's
 		* score is changed.
 		*/
-		updateIndicatorScore = (indClass) => {
+		updateIndicatorScore = (indId, newScore) => {
+			// get indicator class for selection
+			const indClass = Util.getIndicatorClass(indId);
+
 			// get current indicator score selection
-			let newScore = $('input:checked').val();
 			const indSlot = d3.select(`.indicator-slot.${indClass}`);
 
 			if (newScore === undefined) newScore = '';
@@ -133,7 +140,6 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
 			const flashColor = Colors.scoreColors[newScore];
-			console.log(flashColor)
 			$('.indicator-slot.p-3-3').css('background','none');
 			$('.indicator-slot.p-3-3').animate({
 				'background-color': flashColor
@@ -148,8 +154,124 @@
 			});
 		};
 
+		/*
+		* getNewIndicatorScore
+		* Gets what the indicator score is currently set to on an
+		* indicator's score page
+		*/
+		getNewIndicatorScore = () => {
+			return $('input:checked').val();
+		};
+
+		/*
+		* updateIndicatorProgress
+		* Updates message about how many indicators have been scored for the current
+		* core capacity
+		*/
+		updateIndicatorProgress = () => {
+			// get name of tab block to use
+			const blockSelector = App.getActiveBlockSelector();
+
+			// get active block content
+			const block = d3.select(blockSelector);
+
+			const numInds = block.selectAll('.indicator-slot').nodes().length;
+			const numScored = block.selectAll('.full').nodes().length;
+			block.select('.indicator-progress').text(`${numScored} of ${numInds} indicators scored`);
+		};
+
+	    /*
+		* setupScoreTabContent
+		* Populates each CC's score tab content
+		*/
+		setupScoreTabContent = () => {
+			// get name of tab block to use
+			const blockSelector = App.getActiveBlockSelector();
+
+			// get active block content
+			const block = d3.select(blockSelector);
+
+			// get corresponding CC ID
+			const ccIdArr = blockSelector.split('-');
+			const ccId = ccIdArr[0][1] + '.' + ccIdArr[1];
+
+			// set title of page to core capacity
+			const cc = App.getCoreCapacity(ccId);
+			block.select('.core-capacity-name').text(cc.name);
+
+			// select indicator container that holds the slots
+			const indContainer = block.select('.indicator-container');
+
+			// add indicators to slots
+			const inds = cc.indicators;
+			const indSlots = indContainer.selectAll('.indicator-slot')
+				.data(inds)
+				.enter().append('div')
+					.classed('indicator-slot', true)
+					.each(function(d){
+						// get current slot
+						const curSlot = d3.select(this);
+
+						// add class that defines which indicator it is
+						curSlot.classed(Util.getIndicatorClass(d.jee_id), true);
+
+						// add class 'full' if there's a score defined
+						// add class 'empty' otherwise
+						const curSlotScore = User.getIndicatorScore(d.jee_id);
+						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
+						curSlot.classed(slotClass, true);
+
+					});
+
+			// add indicator name
+			indSlots.append('div')
+				.classed('indicator-name', true)
+				.text(d => Util.truncateText(d.name));
+
+			// add indicator score
+			indSlots.append('div')
+				.classed('indicator-score', true)
+				.text(d => d.score || 'No score');
+
+			// set number of indicators scored and total number
+			updateIndicatorProgress();
+
+			// set score picker to first unscored indicator OR
+			// first indicator if all scored
+			const emptySlot = block.select('.empty');
+			if (emptySlot.nodes().length > 0) {
+				emptySlot.classed('active', true);
+			} else {
+				indSlots.data(inds);
+				const activeSlot = d3.select('.indicator-slot');
+				activeSlot.classed('active', true);
+				// if active indicator has score, set that in the score
+				// picker
+				if (activeSlot.data()[0].score) {
+					// get row and input
+					const curRow = block.select(`.score-row._${activeSlot.data()[0].score}`);
+					const curInput = curRow.select('input');
+
+					// unselect all radio buttons
+					d3.selectAll('.score-row').selectAll('input')
+						.property('checked', false);
+
+					// deactivate all rows
+					d3.selectAll('.score-row')
+						.classed('active', false);
+
+					// select the correct radio button and row
+					curInput.property('checked', true);
+					curRow.classed('active', true);
+				}
+			}
+
+		};
+		setupScoreTabContent();
+		
 		// add functionality to score picker table (click)
 		d3.selectAll('.score-row').on('click', function () {
+
 			// get which row was clicked and its radio button
 			const curRow = d3.select(this);
 			const curInput = curRow.select('input');
@@ -170,11 +292,17 @@
 			curInput.property('checked', !isChecked);
 			curRow.classed('active', !isChecked);
 
-			// TODO update indicator score in User
 			// TODO do this dynamically based on indicator ID
-			updateIndicatorScore(Util.getIndicatorClass('P.3.3'));
+			// TODO update indicator score in User
+			const indicatorScore = getNewIndicatorScore();
+			User.setIndicatorScore('P.3.3', indicatorScore);
 
 			// TODO update indicator score in summary table above, with animation
+			updateIndicatorScore('P.3.3', indicatorScore);
+
+			// update progress message
+			updateIndicatorProgress();
+
 			// TODO update whether next button is blue or gray
 			// TODO update whether the core capacity is completely scored
 			// TODO update whether all indicators are completely scored
@@ -184,5 +312,13 @@
 		// set titles for table cells to be equal to their text so
 		// the space can be reserved
 		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
+	};
+
+	/*
+	* getActiveBlockSelector
+	* Returns the active block selector for the score page
+	*/
+	App.getActiveBlockSelector = () => {
+		return '.' + d3.select('.block-link.active').attr('block-name') + '-block';
 	};
 })();
