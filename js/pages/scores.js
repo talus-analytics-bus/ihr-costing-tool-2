@@ -95,18 +95,73 @@
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
 		$('.p3-block').html(demoScoringHtml);
+		$('.fake-block').html('');
+
+		/*
+		* updateIndicatorScore
+		* Updates the score in the summary box whenever an indicator's
+		* score is changed.
+		*/
+		updateIndicatorScore = (indClass) => {
+			// get current indicator score selection
+			const newScore = $('input:checked').val();
+			const indSlot = d3.select(`.indicator-slot.${indClass}`);
+
+			console.log(newScore)
+			if (newScore !== undefined) {
+				// if score is number, set to number
+				indSlot.select('.indicator-score')
+					.text(newScore);
+				// add full
+				// remove empty
+				indSlot
+					.classed('full', true)
+					.classed('empty', false);
+
+			} else {
+				// if score is 'no score', set to 'No score'
+				indSlot.select('.indicator-score')
+					.text('No score');
+
+				// add empty
+				// remove full
+				indSlot
+					.classed('full', false)
+					.classed('empty', true);
+			}
+		};
 
 		// add functionality to score picker table (click)
 		d3.selectAll('.score-row').on('click', function () {
+			// get which row was clicked and its radio button
 			const curRow = d3.select(this);
 			const curInput = curRow.select('input');
+
+			// get whether radio button was currently selected
 			const isChecked = curInput.property('checked');
+
+			// unselect all radio buttons
 			d3.selectAll('.score-row').selectAll('input')
 				.property('checked', false);
+
+			// deactivate all rows
 			d3.selectAll('.score-row')
 				.classed('active', false);
+
+			// select the correct radio button and row
+			// (if deselecting, rmv the selection)
 			curInput.property('checked', !isChecked);
 			curRow.classed('active', !isChecked);
+
+			// TODO update indicator score in User
+			// TODO do this dynamically based on indicator ID
+			updateIndicatorScore(Util.getIndicatorClass('P.3.3'));
+
+			// TODO update indicator score in summary table above, with animation
+			// TODO update whether next button is blue or gray
+			// TODO update whether the core capacity is completely scored
+			// TODO update whether all indicators are completely scored
+
 		});
 	};
 })();
