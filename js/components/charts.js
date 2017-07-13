@@ -240,7 +240,7 @@ let root, nodes, depths, nCols, nRows, indices;
 		let i = 0, duration = 750;
 
 		// declares a tree layout and assigns the size
-		const treemap = d3.tree().size([height, width]);
+		//const treemap = d3.tree().size([height, width]);
 
 		// Assigns parent, children, height, depth
 		root = d3.hierarchy(treeData, function(d) { return d.children; });
@@ -282,7 +282,7 @@ let root, nodes, depths, nCols, nRows, indices;
 		  // The x and y declarations are the opposite of what I would have expected
 		  indices = (new Array(nCols)).fill(0);
 		  nodes.forEach((d) => {
-		  		d.y = ((d.depth+1) / (nCols+1)) * width;
+		  		d.y = ((d.depth+1) / (nCols+1)) * width;  // Going to need to space this manually
 		  		d.x = ((++indices[d.depth]) / (nRows[d.depth]+1)) * height;
 		  });
 
@@ -297,6 +297,7 @@ let root, nodes, depths, nCols, nRows, indices;
 		  // Update the nodes...
 		  var node = svg.selectAll('g.node')
 		      .data(nodes, function(d) {return d.id || (d.id = ++i); });
+
 
 		  // Enter any new modes at the parent's previous position.
 		  var nodeEnter = node.enter().append('g')
@@ -318,15 +319,20 @@ let root, nodes, depths, nCols, nRows, indices;
 		  nodeEnter.append('text')
 		      .attr("dy", ".35em")
 		      .attr("x", function(d) {
-		          return d.children || d._children ? -13 : 13;
+		          return !d.parent ? -18 : 18;
 		      })
 		      .attr("text-anchor", function(d) {
-		          return d.children || d._children ? "end" : "start";
+		          return !d.parent ? "end" : "start";
 		      })
 		      .text(function(d) { return d.data.name; });
 
 		  // UPDATE
 		  var nodeUpdate = nodeEnter.merge(node);
+
+		  nodeUpdate.selectAll('text')
+		  	.style('font-weight', function(d) {
+		  		return d.children ? 'bold' : '';
+		  	});
 
 		  // Transition to the proper position for the node
 		  nodeUpdate.transition()
