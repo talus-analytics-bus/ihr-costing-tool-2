@@ -26,9 +26,11 @@ const App = {};
 		// load country params data
 		d3.queue()
 		.defer(d3.json, 'data/country-params.json')
-		.await((error, countryParams) => {
+		.defer(d3.json, 'data/jeeTree.json')
+		.await((error, countryParams, jeeTree) => {
 
 			App.countryParams = countryParams;
+			App.jeeTree = jeeTree;
 			
 			// launch callback fcn in arguments
 			callback();
@@ -532,6 +534,54 @@ const App = {};
 		// 	.attr('value', function(d) { return d.abbr; })
 		// 	.text(function(d) { return d.name; });
 		// }
+	};
+
+	/*
+	*	App.getCoreCapacity
+	*	Finds the specified core capacity in the jeeTree and returns it
+	*/
+	App.getCoreCapacity = (ccId) => {
+		// ensure id valid
+		ccId = ccId.toUpperCase();
+
+		// get right core element
+		// TODO add hashes for PoE, rad, and chem
+		const coreElementHash = {
+			'P': 'Prevent',
+			'D': 'Detect',
+			'R': 'Respond'
+		};
+
+		// get right core element
+		const ccIdArr = ccId.split('.');
+		const ce = _.findWhere(App.jeeTree, {name: coreElementHash[ccIdArr[0]]});
+
+		// get right core capacity
+		const ccIdx = ccIdArr[1] - 1;
+		const cc = ce.capacities[ccIdx];
+
+		// return result
+		return cc;
+	};
+
+	/*
+	*	App.getIndicator
+	*	Finds the specified indicator in the jeeTree and returns it
+	*/
+	App.getIndicator = (indId) => {
+		// ensure id valid
+		indId = indId.toUpperCase();
+
+		// get right core capacity
+		const cc = App.getCoreCapacity(indId);
+
+		// get right indicator
+		const indIdArr = indId.split('.');
+		const indIdx = indIdArr[2] - 1;
+		const ind = cc.indicators[indIdx];
+
+		// return result
+		return ind;
 	};
 
 })();
