@@ -80,10 +80,6 @@
 	.custom-control-input {
 		position: relative;
 	}
-	.score-row {
-		cursor: pointer;
-		transition: background-color .5s ease;
-	}
 	td {
 		padding-top:10px;
 		padding-bottom:10px;
@@ -93,6 +89,14 @@
 	td:first-child {
 		padding-left:10px;
 		padding-right:0;
+	}
+	.score-row {
+		cursor: pointer;
+		transition: background-color .5s ease;
+		vertical-align: top;
+	}
+	.score-row.active {
+		font-weight: 600;
 	}
 	.score-row._1:hover,
 	.score-row._1.active {
