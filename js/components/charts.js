@@ -548,7 +548,7 @@ let tmp;
 
 		let currentType = '';
 		let index = 0; // Arbitrary id for each bar
-		
+
 		$('.min-max-container .btn').click(function() {
 			let newType = $(this).attr('tab');
 			if(newType !== currentType) {
@@ -587,34 +587,59 @@ let tmp;
 			//x.domain([0, 1.05*dispData[0].cost]);
 			y.domain(dispData.map(d => d.name));
 
-			// Plot bars
+			// Bars handle
 			const bars = chart.selectAll('.bar')
 				.data(dispData, () => ++index);
 
 			// Remove the old bars
-			bars.exit().remove();
-			/*	.transition()
-					.duration(duration)
-					.attr('width', 0)
-					.remove();*/
-
-			// Create the new bars
-			bars.enter().append('rect')
-				.attr('class', 'bar')
-				.style('fill', colors[type])
-				.attr('y', d => y(d.name))
-				.attr('height', y.bandwidth())
+			bars.exit()
 				.transition()
 					.duration(duration)
-					.attr('width', d => x(d[type]))
+					.attr('width', 0)
+					.remove();
 
-			// Plot axes
-			chart.append('g')
-				.attr('class', 'x-axis axis')
-				.call(d3.axisTop(x).ticks(6).tickFormat(d3.format('$,.0f')).tickPadding(8));
-			chart.append('g')
-				.attr('class', 'y-axis axis')
-				.call(d3.axisLeft(y));
+			// Remove the old x-axis
+			chart.selectAll('.x-axis path')
+				.transition()
+					.duration(duration)
+					.attr('d','')
+			chart.selectAll('.x-axis g')
+				.transition()
+					.duration(duration)
+					.attr('transform', 'translate(0,0)')
+
+			setTimeout(() => {
+				chart.select('.x-axis').remove();
+
+				// Remove the old y-axis and draw the new one
+				chart.select('g.y-axis').remove();
+				chart.append('g')
+					.attr('class', 'y-axis axis')
+					.call(d3.axisLeft(y));
+
+				// Create the new bars
+				bars.enter().append('rect')
+					.attr('class', 'bar')
+					.style('fill', colors[type])
+					.attr('y', d => y(d.name))
+					.attr('height', y.bandwidth())
+					.on('mouseover', function () {
+						d3.select(this).style('fill', colorsHover[type]);
+					})
+					.on('mouseout', function () {
+						d3.select(this).style('fill', colors[type]);
+					})
+					.transition()
+						.duration(duration)
+						.attr('width', d => x(d[type]))
+
+				// Show the new x-axis
+				chart.append('g')
+					.attr('class', 'x-axis axis')
+					.transition()
+						.duration(duration)
+						.call(d3.axisTop(x).ticks(6).tickFormat(d3.format('$,.0f')).tickPadding(8));
+			}, duration);
 
 			// Axes labels
 			chart.append('text')

@@ -69,7 +69,7 @@
 .min-max-bar-chart .x-axis, .min-max-bar-chart .y-axis {
   font-size: 1em; }
 .min-max-bar-chart .bar {
-  fill: steelblue; }
+  cursor: pointer; }
 .min-max-bar-chart .axis-label {
   font-size: 1.2em;
   font-weight: bold; }
