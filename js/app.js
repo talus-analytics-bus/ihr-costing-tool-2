@@ -609,7 +609,6 @@ const App = {};
 				blocks[newBlockShowing.abbr] = "";
 			}
 		}
-		console.log({blocks: blocks, blocksShowing: blocksShowing});
 		return {blocks: blocks, blocksShowing: blocksShowing};
 	}
 })();

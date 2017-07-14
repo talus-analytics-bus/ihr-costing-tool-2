@@ -116,7 +116,6 @@
 		// DEMO show the fake-block html in the AMR example
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
-		console.log(`${ccClass.toLowerCase()}-block`)
 		$(`.${ccClass.toLowerCase()}-block`).html(demoScoringHtml);
 		$('.fake-block').html('');
 
@@ -158,7 +157,6 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
 			const flashColor = Colors.scoreColors[newScore];
-			console.log(`.indicator-slot.${ccClass}-${indClass}`)
 			$(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
 			$(`.indicator-slot.${ccClass}-${indClass}`).animate({
 				'background-color': flashColor
@@ -230,7 +228,6 @@
 
 			// add indicators to slots
 			const inds = cc.indicators;
-			console.log(inds)
 			const indSlots = indContainer.selectAll('.indicator-slot')
 				.data(inds)
 				.enter().append('div')
@@ -250,7 +247,6 @@
 
 					})
 					.on('click', function(d, i) {
-						console.log(`scores/${ccClass}/${i+1}`)
 						hasher.setHash(`scores/${ccClass}/${i+1}`);
 					});
 
@@ -258,7 +254,6 @@
 			indSlots.append('div')
 				.classed('indicator-name', true)
 				.text(d => {
-					console.log(d.name);
 					return Util.truncateText(d.name);
 				});
 
@@ -357,7 +352,6 @@
 		d3.select('.next-score').on('click', function () {
 			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
 			if (parseInt(indClass) === indsCount) {
-				console.log('Last indicator in CC')
 				if (ccClass === 'r-5' && indClass === '5') {
 				} else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
 					hasher.setHash(`scores/${nextHash[ccClass[0]].next}-1/${1}`);

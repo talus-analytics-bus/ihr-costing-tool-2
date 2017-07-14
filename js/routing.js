@@ -38,13 +38,22 @@ const Routing = {};
 			loadPage('costs');
 			window.scrollTo(0, 0);
 		});
+		crossroads.addRoute('/scores', () => {
+			hasher.setHash(`scores/p-1/1`)
+		});
+		crossroads.addRoute('/scores/:{ccId}:', (ccId) => {
+			hasher.setHash(`scores/${ccId}/1`)
+		});
 		crossroads.addRoute('/scores/:{ccId}:/:{indId}:', (ccId, indId) => {
-			// // store previous hash
-			// App.prevHash = '';
-			// crossroads.routed.add(function(request, data) {
-			// 	App.prevHash = request;
-			// });
-
+			if (indId === undefined && ccId !== undefined) {
+				indId = '1';
+				hasher.setHash(`scores/${ccId}/${indId}`)
+			}
+			else if (indId === undefined && ccId === undefined) {
+				indId = '1';
+				ccId = 'p-1';
+				hasher.setHash(`scores/${ccId}/${indId}`)
+			}
 			loadPage('scores', App.initScores, ccId, indId);
 			window.scrollTo(0, 0);
 		});
