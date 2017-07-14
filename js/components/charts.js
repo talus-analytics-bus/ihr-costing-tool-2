@@ -501,12 +501,28 @@ let tmp;
 
 	Charts.buildMinMaxBarChart = (selector, data) => {
 
+		// Temporary
 		tmp = data;
+
+		// Define transition duration
+
+		const duration = 750;
+
+		// Define colors for the different cost types
+
+		const colors = {startup:'rgba(0,0,255,0.6)', capital:'rgba(255,0,0,0.6)', recurring:'rgba(0,126,0,0.6)'};
+		const colorsHover = {startup:'rgba(0,0,255,1)', capital:'rgba(255,0,0,1)', recurring:'rgba(0,126,0,1)'};
 
 		// Return the n least and most expensive indicators in the type category
 		const returnLeastMost = (type, n) => {
-			data.sort((d1, d2) => d1[type] - d2[type]);
-			return [data.slice(0,n), data.slice(data.length-n,data.length)];
+			// Remove any indicators that don't have a cost of this type
+			filteredData = data.filter((d) => d[type]);
+
+			// Sort the data by ascending cost
+			filteredData.sort((d1, d2) => d1[type] - d2[type]);
+
+			// Return the n least expensive [0] and the n most expensive [1] indicators
+			return [filteredData.slice(0,n), filteredData.slice(filteredData.length-n,filteredData.length)];
 		};
 
 		// Set up the chart
@@ -528,15 +544,11 @@ let tmp;
 			.padding(0.2);
 
 
-		// Create the default chart view
-
-		let currentType = 'total';
-
-		leastMost = returnLeastMost(currentType, 5);
-		update(leastMost[0], leastMost[1], currentType);
-
 		// Activate the tab buttons
 
+		let currentType = '';
+		let index = 0; // Arbitrary id for each bar
+		
 		$('.min-max-container .btn').click(function() {
 			let newType = $(this).attr('tab');
 			if(newType !== currentType) {
@@ -553,11 +565,19 @@ let tmp;
 			}
 		});
 
+		// Create the default chart view
+
+		$('.min-max-container .active').click();
+
 		// Assumes:
 		// 	Least sorted in ascending order
 		// 	Most sorted in ascending order
 		//  Type is a string of total/startup/capital/recurring
+		
 		function update (least, most, type) {
+
+			// Temporary
+			if (type === 'total') return;
 
 			// Merge data into one array
 			const dispData = least.concat(most).reverse();
@@ -568,14 +588,25 @@ let tmp;
 			y.domain(dispData.map(d => d.name));
 
 			// Plot bars
-			chart.selectAll('.bar')
-				.data(dispData)
-				.enter().append('rect')
-					.attr('class', 'bar')
-					//.attr('x', d => x(d[type]))
-					.attr('y', d => y(d.name))
+			const bars = chart.selectAll('.bar')
+				.data(dispData, () => ++index);
+
+			// Remove the old bars
+			bars.exit().remove();
+			/*	.transition()
+					.duration(duration)
+					.attr('width', 0)
+					.remove();*/
+
+			// Create the new bars
+			bars.enter().append('rect')
+				.attr('class', 'bar')
+				.style('fill', colors[type])
+				.attr('y', d => y(d.name))
+				.attr('height', y.bandwidth())
+				.transition()
+					.duration(duration)
 					.attr('width', d => x(d[type]))
-					.attr('height', y.bandwidth());
 
 			// Plot axes
 			chart.append('g')
