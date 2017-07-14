@@ -503,17 +503,11 @@ let tmp;
 
 		tmp = data;
 
-		const returnMin5 = (type) => {
-
+		// Return the n least and most expensive indicators in the type category
+		const returnLeastMost = (type, n) => {
+			data.sort((d1, d2) => d1[type] - d2[type]);
+			return [data.slice(0,n), data.slice(data.length-n,data.length)];
 		};
-
-		const returnMax5 = (type) => {
-
-		};
-
-		// Temporary 
-		const subset1 = data.slice(0,5);
-		const subset2 = data.slice(5,10);
 
 		// Set up the chart
 
@@ -533,16 +527,40 @@ let tmp;
 			.range([0, height])
 			.padding(0.2);
 
-		update(subset1, subset2, 'total');
+
+		// Create the default chart view
+
+		let currentType = 'total';
+
+		leastMost = returnLeastMost(currentType, 5);
+		update(leastMost[0], leastMost[1], currentType);
+
+		// Activate the tab buttons
+
+		$('.min-max-container .btn').click(function() {
+			let newType = $(this).attr('tab');
+			if(newType !== currentType) {
+
+				$(this).addClass('active');
+				$(this).siblings().removeClass('active');
+
+				// Call update function
+				leastMost = returnLeastMost(newType, 5);
+				update(leastMost[0], leastMost[1], newType);
+
+				currentType = newType;
+
+			}
+		});
 
 		// Assumes:
 		// 	Least sorted in ascending order
-		// 	Most sorted in descending order
+		// 	Most sorted in ascending order
 		//  Type is a string of total/startup/capital/recurring
 		function update (least, most, type) {
 
 			// Merge data into one array
-			const dispData = most.concat(least.reverse());
+			const dispData = least.concat(most).reverse();
 
 			// Create scales
 			x.domain([0, 1.05*d3.max(dispData, d => d[type])]);
