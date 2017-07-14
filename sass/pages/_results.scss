@@ -6,4 +6,18 @@
 		font-weight: bold;
 		font-size: 20px;
 	}
+
+	.min-max-container {
+		text-align: center;
+		margin: auto;
+
+		.min-max-bar-chart-container {
+			border: 1px solid #ccc;
+			position: relative;
+			top: -1px;
+			@include border-radius(5px);
+			@include box-shadow(2px 2px 6px rgba(0,0,0,0.1));
+		}
+
+	}
 }

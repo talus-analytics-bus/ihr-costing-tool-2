@@ -1,5 +1,7 @@
 const Charts = {};
 
+let tmp;
+
 (() => {
 
 	Charts.buildCostPartitionChart = (selector, data) => {
@@ -11,7 +13,7 @@ const Charts = {};
 		// Chart setup
 
 		const width = 850, height = 350;
-		const margin = {top: 80, right: 0, bottom: 60, left: 0};
+		const margin = {top: 80, right: 0, bottom: 100, left: 0};
 
 		const chartContainer = d3.select(selector)
 			.attr('width', width + margin.left + margin.right)
@@ -226,7 +228,7 @@ const Charts = {};
 		// Chart setup
 		const width = 800, height = 500;
 		//const margin = {top: 20, right: 100, bottom: 20, left: 100};
-		const margin = {top: 0, right: 0, bottom: 0, left: 0};
+		const margin = {top: 0, right: 0, bottom: 40, left: 0};
 
 		const chartContainer = d3.select(selector)
 			.attr('width', width + margin.left + margin.right)
@@ -499,7 +501,103 @@ const Charts = {};
 
 	Charts.buildMinMaxBarChart = (selector, data) => {
 
-		// Find min/max indicators for total/startup/recurring/capital categories
+		tmp = data;
+
+		// Return the n least and most expensive indicators in the type category
+		const returnLeastMost = (type, n) => {
+			data.sort((d1, d2) => d1[type] - d2[type]);
+			return [data.slice(0,n), data.slice(data.length-n,data.length)];
+		};
+
+		// Set up the chart
+
+		const width = 600, height = 400;
+		const margin = {top:100, right:60, bottom:40, left:100};
+
+		const chartContainer = d3.select(selector)
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
+		const chart = chartContainer.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		const x = d3.scaleLinear()
+			.range([0, width]);
+
+		const y = d3.scaleBand()
+			.range([0, height])
+			.padding(0.2);
+
+
+		// Create the default chart view
+
+		let currentType = 'total';
+
+		leastMost = returnLeastMost(currentType, 5);
+		update(leastMost[0], leastMost[1], currentType);
+
+		// Activate the tab buttons
+
+		$('.min-max-container .btn').click(function() {
+			let newType = $(this).attr('tab');
+			if(newType !== currentType) {
+
+				$(this).addClass('active');
+				$(this).siblings().removeClass('active');
+
+				// Call update function
+				leastMost = returnLeastMost(newType, 5);
+				update(leastMost[0], leastMost[1], newType);
+
+				currentType = newType;
+
+			}
+		});
+
+		// Assumes:
+		// 	Least sorted in ascending order
+		// 	Most sorted in ascending order
+		//  Type is a string of total/startup/capital/recurring
+		function update (least, most, type) {
+
+			// Merge data into one array
+			const dispData = least.concat(most).reverse();
+
+			// Create scales
+			x.domain([0, 1.05*d3.max(dispData, d => d[type])]);
+			//x.domain([0, 1.05*dispData[0].cost]);
+			y.domain(dispData.map(d => d.name));
+
+			// Plot bars
+			chart.selectAll('.bar')
+				.data(dispData)
+				.enter().append('rect')
+					.attr('class', 'bar')
+					//.attr('x', d => x(d[type]))
+					.attr('y', d => y(d.name))
+					.attr('width', d => x(d[type]))
+					.attr('height', y.bandwidth());
+
+			// Plot axes
+			chart.append('g')
+				.attr('class', 'x-axis axis')
+				.call(d3.axisTop(x).ticks(6).tickFormat(d3.format('$,.0f')).tickPadding(8));
+			chart.append('g')
+				.attr('class', 'y-axis axis')
+				.call(d3.axisLeft(y));
+
+			// Axes labels
+			chart.append('text')
+				.attr('class', 'axis-label')
+				.attr('x', width/2)
+				.attr('y', -55)
+				.attr('text-anchor', 'middle')
+				.text('Cost of Indicator')
+
+
+			// TODO: Add most and least expensive indicator labels
+			// TODO: Remove ticks at the end of the axes?
+
+		}
 
 	};
 
