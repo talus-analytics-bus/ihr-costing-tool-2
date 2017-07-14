@@ -39,6 +39,9 @@ const App = {};
 	
 	App.initResults = () => {
 
+		// Build summary bullet chart
+		Charts.buildSummaryBulletChart('.summary-bullet-chart');
+
 		// Build first cost partition chart
 		d3.queue()
 			.defer(d3.csv, 'data/notional_cost_data.csv')

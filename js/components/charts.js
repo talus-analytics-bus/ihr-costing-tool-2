@@ -1,7 +1,5 @@
 const Charts = {};
 
-let tmp;
-
 (() => {
 
 	Charts.buildCostPartitionChart = (selector, data) => {
@@ -501,9 +499,6 @@ let tmp;
 
 	Charts.buildMinMaxBarChart = (selector, data) => {
 
-		// Temporary
-		tmp = data;
-
 		// Define transition duration
 
 		const duration = 750;
@@ -609,6 +604,7 @@ let tmp;
 					.attr('transform', 'translate(0,0)')
 
 			setTimeout(() => {
+				// Remove the old x-axis from the html
 				chart.select('.x-axis').remove();
 
 				// Remove the old y-axis and draw the new one
@@ -655,6 +651,56 @@ let tmp;
 
 		}
 
+	};
+
+	Charts.buildSummaryBulletChart = (selector) => {
+
+		// Set up the chart
+
+		const width = 600, height = 50;
+		const margin = {top:20, right:20, bottom:20, left:20};
+
+		const chartContainer = d3.select(selector)
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
+		const chart = chartContainer.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		const x = d3.scaleLinear()
+			.domain([0,5])
+			.range([0,width]);
+
+		/*const colorBar = d3.scaleLinear()
+			.domain([0,2.5,5])
+			.range(['rgb(200,0,0)','rgb(255,255,0)','rgb(0,126,0)'])*/
+
+		// Define an SVG linear gradient color scale
+
+		const red = 'rgba(255,0,0,0.9)';
+		const yellow = 'rgba(255,239,0,0.8)';
+		const green = 'rgba(0,126,0,0.9)';
+
+		const lg = chart.append('defs').append('linearGradient')
+			.attr('id', 'summary-gradient');
+		lg.append('stop')
+			.attr('offset', '15%')
+			.attr('stop-color', red);
+		lg.append('stop')
+			.attr('offset', '42.5%')
+			.attr('stop-color', yellow);
+		lg.append('stop')
+			.attr('offset', '57.5%')
+			.attr('stop-color', yellow);
+		lg.append('stop')
+			.attr('offset','85%')
+			.attr('stop-color', green);
+
+		// Create the bullet bar
+
+		chart.append('rect')
+			.attr('fill', 'url(#summary-gradient')
+			.attr('width', width)
+			.attr('height', height);
 	};
 
 })();
