@@ -595,6 +595,34 @@ div.tooltip {
       -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
       box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); }
 
+.assessment-container .upload {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px 50px 50px;
+  max-width: 900px; }
+.assessment-container .button-group {
+  margin-top: 30px; }
+  .assessment-container .button-group p {
+    margin-bottom: 10px; }
+.assessment-container .uploadButton {
+  margin-right: 10px; }
+.assessment-container .min-max-container {
+  text-align: center;
+  margin: auto; }
+  .assessment-container .min-max-container .min-max-bar-chart-container {
+    border: 1px solid #ccc;
+    position: relative;
+    top: -1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); }
+
 body {
   font-family: Georgia, serif;
   font-size: 16px; }

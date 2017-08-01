@@ -13,11 +13,13 @@
 @import 'pages/who';
 @import 'pages/scores';
 @import 'pages/results';
+@import 'pages/assessment';
 
 body { 
 	font-family: Georgia, serif;
 	font-size: 16px;
 }
+
 #page-content {
 	position: relative;
 	z-index: 10;

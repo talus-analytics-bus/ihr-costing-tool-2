@@ -21,6 +21,10 @@
     "axios": "^0.16.2",
     "express": "^4.15.3",
     "http": "0.0.0",
-    "path": "^0.12.7"
+    "node-sass": "^4.5.3",
+    "node-sassy": "0.0.1",
+    "nodecli": "0.0.1",
+    "path": "^0.12.7",
+    "scss-compile": "^0.1.7"
   }
 }
