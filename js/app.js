@@ -27,10 +27,12 @@ const App = {};
 		d3.queue()
 		.defer(d3.json, 'data/country-params.json')
 		.defer(d3.json, 'data/jeeTree.json')
-		.await((error, countryParams, jeeTree) => {
+		.defer(d3.json, 'data/currencies.json')
+		.await((error, countryParams, jeeTree, currencies) => {
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
+			App.currencies = currencies;
 			App.whoAmI = {};
 			
 			// launch callback fcn in arguments
