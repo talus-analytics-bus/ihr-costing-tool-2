@@ -8,6 +8,8 @@
                 initCurrencyTab();
                 break;
             case 'pop-dist':
+                initPopDistTab();
+                break;
             default:
                 initCountryTab();
         }
@@ -46,6 +48,9 @@
 		App.setupTabs(blocksShowing, blocks, ccClass);
 	};
 
+    hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
+    hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
+
 	/*
 	*	initCountryTab
 	*	Initialize the country picker dropdown on the country tab in Who Am I?
@@ -83,9 +88,6 @@
         const currenciesArray = Object.keys(App.currencies)
             .map((key) => currencyObj(key, App.currencies[key]));
 
-	    const hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
-	    const hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
-
         // if country is selected and no currency has been selected yet, select matching country currency as default
         if (hasCountrySelected() && !hasCurrencySelected()) {
             App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
@@ -111,6 +113,72 @@
     }
 
     initPopDistTab = () => {
+        const jeeTreeFieldMapping = {
+            'basic_info.population': 'population',
+            'basic_info.level_1_areas.area_name': 'adm-org-1',
+            'basic_info.level_1_areas.area_count': 'adm-org-1-count',
+            'basic_info.level_2_areas.area_name': 'adm-org-2',
+            'basic_info.level_2_areas.area_count': 'adm-org-2-count',
+            'basic_info.level_3_areas.area_name': 'adm-org-3',
+            'basic_info.level_3_areas.area_count': 'adm-org-3-count',
+            'basic_info.level_4_areas.area_name': 'adm-org-4',
+            'basic_info.level_4_areas.area_count': 'adm-org-4-count',
+            'advanced_info.national_health_care_facilities_count': 'hcf',
+            'advanced_info.staff.national_epi_count': 'epi',
+            'advanced_info.staff.national_chw_count': 'chw',
+        };
+
+        const getJeeTreeValue = (keyString, jeeTreeObj) => {
+            return keyString.split('.')
+                .reduce((objVal, currKey) => {
+                    return objVal.hasOwnProperty(currKey) ? objVal[currKey] : {};
+                }, jeeTreeObj);
+        }
+
+        const setKeyTreeValue = (keyString, jeeTreeObj, newVal) => {
+            const isValidNestedKey = keyString.split('.')
+                .reduce((acc, currKey) => {
+                    if (acc.val) {
+                        if (acc.obj.hasOwnProperty(currKey)) {
+                            return Object.assign({}, acc, {
+                                obj: acc.obj[currKey],
+                            });
+                        }
+                        return {
+                            obj: {},
+                            val: false,
+                        }
+                    }
+                    return acc;
+                }, {
+                    obj: jeeTreeObj,
+                    val: true,
+                });
+
+            if (isValidNestedKey.val) {
+                // TODO: change this
+                const exp = `jeeTreeObj.${keyString} = ${newVal}`;
+
+                eval(exp);
+            }
+        }
+
+        // set default values if country is selected
+        if (hasCountrySelected()) {
+            Object.keys(jeeTreeFieldMapping)
+                .forEach((keyString) => {
+                    $(`#${jeeTreeFieldMapping[keyString]}`).val(getJeeTreeValue(keyString, App.whoAmI));
+                });
+        }
+
+        // change jeetree values
+        const changeValue = _.debounce(setKeyTreeValue, 1000);
+        const invertedMapping = _.invert(jeeTreeFieldMapping);
+        $('#pop-dist input').on('keyup', (ev) => {
+            const id = $(ev.target).attr('id');
+
+            changeValue(invertedMapping[id], App.whoAmI, ev.target.value);
+        });
 
     }
 
@@ -123,7 +191,6 @@
         	.classed('active', false);
 		d3.selectAll('.country')
 			.each(function(d){
-				console.log(d);
 				if (d.properties.code === countryCode) {
 					d3.select(this).classed('active',true);
 				}
