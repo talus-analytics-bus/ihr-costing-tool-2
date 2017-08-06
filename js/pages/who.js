@@ -1,5 +1,5 @@
 (() => {
-	App.initWho = () => {
+	App.initWho = (ccClass) => {
 
 		/*Initialize country picker map*/
 		App.createCountryMap();
@@ -36,7 +36,7 @@
 		];
 
 		// call function to render the tabs
-		App.setupTabs(blocksShowing, blocks);
+		App.setupTabs(blocksShowing, blocks, ccClass);
 	};
 
 	/*
@@ -44,6 +44,11 @@
 	*	Initialize the country picker dropdown on the country tab in Who Am I?
 	*/
 	initCountryTab = () => {
+		if (App.whoAmI.hasOwnProperty('name')) {
+            d3.select('.country-dropdown.dropdown > button')
+                .text(App.whoAmI.name);
+		}
+
 		d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
 			.data(App.countryParams)
 			.enter()
@@ -53,6 +58,7 @@
 					.on('click', function (d) {
 						d3.select('.country-dropdown.dropdown > button').text(d.name);
 						countryDropdownToggle(d.abbreviation);
+						App.whoAmI = JSON.parse(JSON.stringify(d));
 					});
 	};
 
@@ -66,6 +72,7 @@
         	.classed('active', false);
 		d3.selectAll('.country')
 			.each(function(d){
+				console.log(d);
 				if (d.properties.code === countryCode) {
 					d3.select(this).classed('active',true);
 				}

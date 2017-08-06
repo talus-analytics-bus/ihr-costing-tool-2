@@ -31,6 +31,7 @@ const App = {};
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
+			App.whoAmI = {};
 			
 			// launch callback fcn in arguments
 			callback();
@@ -88,7 +89,14 @@ const App = {};
 				.style('display', function(d) { return (d.level > 0) ? 'none' : 'block'; })
 				.classed('children-showing', function(d) { if (d.level === 0) return false; })
 				.attr('block-name', function(d) { return d.abbr; })
-				.on('click', function(d) { hasher.setHash(`scores/${d.abbr}/1`) });
+				.on('click', function(d) {
+					const hash = hasher.getHashAsArray();
+					const newHash = [hash[0], d.abbr]
+						.concat(hash[0] === 'scores' ? [1] : [])
+						.join('/');
+
+					hasher.setHash(newHash);
+				});
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')
 			.html(function(d) { return d.name; });

@@ -63,6 +63,7 @@
           .attr("d", path)
           .attr("id", function(d,i) { return d.id; })
           .attr("title", function(d,i) { return d.properties.name; })
+          .classed('active', (d) => App.whoAmI.hasOwnProperty('abbreviation') && App.whoAmI.abbreviation === d.properties.code)
           .on('click', countryClick)
           .each(function(d){
             // add tooltips to country shapes
@@ -281,10 +282,12 @@
           const countryParam = _.findWhere(App.countryParams, {abbreviation: d.properties.code});
           d3.select('.country-dropdown.dropdown > button')
             .text(countryParam.name);
+          App.whoAmI = JSON.parse(JSON.stringify(countryParam));
         });
       } else {
         d3.select('.country-dropdown.dropdown > button')
             .text('Choose country');
+        App.whoAmI = {};
       }
       // else, change dropdown menu selection to current country name
 
