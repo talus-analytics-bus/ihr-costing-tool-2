@@ -145,6 +145,15 @@
 						<div class="block-description">
 							Placeholder: Currency select (dropdown)
 						</div>
+						<div class="currency">
+							<div class="currency__container dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Choose currency
+								</button>
+								<div class="currency__container__dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="block pop-dist-block no-reset">
@@ -155,6 +164,77 @@
 						<div class="block-description">
 							Placeholder: Population and districts entry (text fields with defaults)
 						</div>
+						<form id="pop-dist">
+							<fieldset>
+								<legend>Population</legend>
+								<div class="form-group row">
+									<label for="population" class="col-sm-4 col-form-label">Current total population</label>
+									<div class="col-4">
+										<input type="number" id="population" />
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>Administrative Organisation</legend>
+								<div class="form-group row">
+									<label for="adm-org-1" class="col-sm-4 col-form-label">Central</label>
+									<div class="col-3">
+										<input id="adm-org-1" placeholder="name" />
+									</div>
+									<div class="col-3">
+										<input type="number" placeholder="number" id="adm-org-1-count" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="adm-org-2" class="col-sm-4 col-form-label">Intermediate (e.g., province, district)</label>
+									<div class="col-3">
+										<input id="adm-org-2" placeholder="name" />
+									</div>
+									<div class="col-3">
+										<input type="number" placeholder="number" id="adm-org-2-count" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="adm-org-3" class="col-sm-4 col-form-label">Intermediate 2 (optional)</label>
+									<div class="col-3">
+										<input id="adm-org-3" placeholder="name" />
+									</div>
+									<div class="col-3">
+										<input type="number" placeholder="number" id="adm-org-3-count" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="adm-org-4" class="col-sm-4 col-form-label">Local (e.g., county, division)</label>
+									<div class="col-3">
+										<input id="adm-org-4" placeholder="name" />
+									</div>
+									<div class="col-3">
+										<input type="number" placeholder="number" id="adm-org-4-count" />
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>Public Health Infrastructure</legend>
+								<div class="form-group row">
+									<label for="epi" class="col-sm-4 col-form-label">Number of epidemiologists working in country (approximate)</label>
+									<div class="col-4">
+										<input type="number" id="epi" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="chw" class="col-sm-4 col-form-label">Number of community health workers (approximate)</label>
+									<div class="col-4">
+										<input type="number" id="chw" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="hcf" class="col-sm-4 col-form-label">Number of health care facilities in country (approximate)</label>
+									<div class="col-4">
+										<input type="number" id="hcf" />
+									</div>
+								</div>
+							</fieldset>
+						</form>
 					</div>
 				</div>
 			</div>

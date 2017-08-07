@@ -23,9 +23,12 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/who', () => {
-			loadPage('who', App.initWho);
-			window.scrollTo(0, 0);
+			hasher.setHash(`who/country`);
 		});
+        crossroads.addRoute('/who/:{ccId}:', (ccId) => {
+            loadPage('who', App.initWho, ccId);
+            window.scrollTo(0, 0);
+        });
 		crossroads.addRoute('/default', () => {
 			loadPage('default');
 			window.scrollTo(0, 0);
