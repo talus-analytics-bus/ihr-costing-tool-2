@@ -345,23 +345,52 @@
 
 		// set function for next button
 		const nextHash = {
-			'p': {next: 'd', prev:'p', max: 7},
-			'd': {next: 'r', prev:'p', max: 4},
-			'r': {next: 'r', prev:'d', max: 5}
+			'p': {next: 'd', prev:'p', max: 7, min: 1},
+			'd': {next: 'r', prev:'p', max: 4, min: 1},
+			'r': {next: 'r', prev:'d', max: 5, min: 1}
 		};
 		d3.select('.next-score').on('click', function () {
 			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
 			if (parseInt(indClass) === indsCount) {
 				if (ccClass === 'r-5' && indClass === '5') {
-				} else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
+					// no-op
+				}
+				else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
 					hasher.setHash(`scores/${nextHash[ccClass[0]].next}-1/${1}`);
-				} else {
+				}
+				else {
 					hasher.setHash(`scores/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
 				}
 			} else {
 				hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
 			}
 		});
+
+        d3.select('.previous-score').on('click', function () {
+             const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+            //if (parseInt(indClass) === indsCount) {
+            if (ccClass === 'p-1' && indClass === '1') {
+                // no-op
+            }
+            else if (ccClass[0] !== 'p' && (parseInt(ccClass[2]) === 1 && parseInt(indClass) === 1)) {
+                  	// go back one major block (e.g. d-1)
+                    let prevClass = nextHash[ccClass[0]].prev + '-' + nextHash[nextHash[ccClass[0]].prev].max;
+                    hasher.setHash(`scores/${prevClass}/${1}`);
+            } else if (parseInt(indClass) === nextHash[ccClass[0]].min) {
+            	// go back one minor block
+				  const prevInd = ccClass[0]+'-'+(parseInt(ccClass[2])-1)
+                hasher.setHash(`scores/${prevInd}/${1}`);
+            }
+			else {
+            	// go back one indicator
+
+                hasher.setHash(`scores/${ccClass}/${(indClass - 1)}`);
+            }
+
+            //} else {
+              //  hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
+            //}
+        });
 
 		// update the hash history
 		App.prevHash = hasher.getHash();
