@@ -5,17 +5,22 @@
 }
 .block-link {
   position: relative;
-  color: #555;
+  color: black;
   padding: 10px 30px 10px 50px;
-  border-right: $border-light-minimal;
+  /*border-right: $border-light-minimal;
   border-bottom: $border-light-minimal;
-  border-left: $border-light-minimal;
-  @include border-left-radius(25px);
-  @include box-shadow(-3px 0px 6px -3px rgba(0,0,0,0.5));
+  border-left: $border-light-minimal;*/
+  border-right: $border-dark-indigo;
+  border-bottom: $border-dark-indigo;
+  border-left: $border-dark-indigo;
+  @include border-left-radius(5px);
+  @include box-shadow(-3px 0px 6px -3px rgba(0,0,0,0.2));
   @include noselect;
-  cursor: pointer;  
+  cursor: pointer;
+  background-color: $indigo-lighten-4;
   
-  &:first-child { border-top: $border-light-minimal; }
+  /*&:first-child { border-top: $border-light-minimal; }*/
+  &:first-child { border-top: $border-dark-indigo; }
   &[level="1"] {
     margin-left: 50px;
     padding-top: 15px;
@@ -32,6 +37,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
+    background-color: white;
   }
 }
 .block-link-cover {
@@ -40,11 +46,11 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  @include border-left-radius(25px);
+  @include border-left-radius(5px);
   background-color: transparent;
 }
 .block-link-cover:hover {
-  @include hori-gradient(rgba(0,0,0,0.04), transparent);
+  //@include hori-gradient(rgba(0,0,0,0.04), transparent);
 }
 .block-link-title {
   font-size: 1.1em;
@@ -59,13 +65,14 @@
   position: absolute;
   top: 15px;
   left: 19px;
-  width: 15px;
-  height: 15px;
+  width: 24px;
+  height: 24px;
   @include opacity(0.7);
 }
 
 /* --- Block Content --- */
-.block-container { border-top: $border-light-minimal; }
+/*.block-container { border-top: $border-light-minimal; }*/
+.block-container { border-top: $border-dark-indigo; }
 .block {
   position: relative;
   padding: 30px 30px 30px 0px;

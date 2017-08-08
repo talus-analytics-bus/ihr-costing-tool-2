@@ -110,7 +110,8 @@ const App = {};
 		// add arrow image to active block
 		d3.select('.block-link-container .block-link:first-child').append('img')
 			.attr('class', 'block-link-arrow')
-			.attr('src', 'img/chevron-right.png');
+			//.attr('src', 'img/chevron-right.png');
+			.attr('src', 'img/ic_assessment_black_48dp_2x.png');
 
 		// // add parent attribute to children blocks
 		// for (var name in blocks) {
@@ -279,8 +280,8 @@ const App = {};
 			
 			// reset all borders
 			d3.selectAll('.block-link')
-			.style('border-top', function(d, i) { return (i === 0) ? '1px solid #ccc' : 'none'; })
-			.style('border-bottom', '1px solid #ccc');
+			.style('border-top', function(d, i) { return (i === 0) ? '1px solid #1a237e' : 'none'; })
+			.style('border-bottom', '1px solid #1a237e');
 
 			// clicked the block link of a different block than the one currently showing
 			currBlockAbbr = blockAbbr;
@@ -364,7 +365,13 @@ const App = {};
 			if (typeof blockLinkEle === 'undefined') var blockLinkEle = d3.select('.block-link[block-name="' + blockAbbr + '"]');		
 			blockLinkEle.style('background', function(d) {
 				var bgColor = (blockAbbr === currBlockAbbr && (d.status === '' || d.status === 'default')) ? '#f0f0f0' : blockModeColors[d.status];
-				return 'linear-gradient(to right, ' + bgColor + ', white)';
+				if (d.status==='default') {
+					return ""; // don't show any gradient for default
+				}
+				else {
+                    return 'linear-gradient(to right, ' + bgColor + ', white)';
+				}
+
 			});
 		};
 

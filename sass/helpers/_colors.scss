@@ -29,6 +29,16 @@ $bar-dark-yellow: #8c6d31;
 $bar-dark-green: #637939;
 
 
+/*
+Indigo Colors
+reference: https://mdbootstrap.com/css/colors/
+*/
+
+$indigo-darken-4:   #1a237e;
+$indigo-lighten-4:  #c5cae9;
+$indigo-lighten-5:  #e8eaf6;
+$orange-lighten-4:  #ffe0b2;
+
 /* Blocks colors */
 $grey: #e6e6e6;
 $light-grey: #ebebeb;
@@ -41,6 +51,7 @@ $water: rgba(28,107,160,0.4);
 
 $border-minimal: 1px solid #777;
 $border-light-minimal: 1px solid #ccc;
+$border-dark-indigo: 1px solid $indigo-darken-4;
 
 /* JEE Colors */
 $jeeRed: #C12025;

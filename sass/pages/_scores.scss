@@ -13,11 +13,16 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+
+	.indicator-flash-color {
+		background-color: $orange-lighten-4;
+	}
+
 	.indicator-slot.full {
-		background: linear-gradient(#fff, #e6e7e8);
+		//background: linear-gradient(#fff, #e6e7e8);
 	}
 	.indicator-slot.full:hover {
-		background: linear-gradient(#fff, #ccc);
+		//background: linear-gradient(#fff, #ccc);
 	}
 	.indicator-slot.empty {
 		font-style: italic;
@@ -75,7 +80,8 @@
 	}
 	.custom-radio .custom-control-input:checked~.custom-control-indicator {
 		background-image: none;
-		background-color: rgb(48, 113, 169);
+		//background-color: rgb(48, 113, 169);
+		background-color: $indigo-darken-4;
 	}
 	.custom-control-input {
 		position: relative;
@@ -113,19 +119,19 @@
 	}
 	.score-row._1:hover,
 	.score-row._1.active {
-		background-color: rgba($jeeRed, 0.3);
+		background-color: $indigo-lighten-5;/*rgba($jeeRed, 0.3);*/
 	}
 	.score-row._2:hover,
 	.score-row._3:hover,
 	.score-row._2.active,
 	.score-row._3.active {
-		background-color: rgba($jeeYellow, 0.3);
+		background-color: $indigo-lighten-5;//rgba($jeeYellow, 0.3);
 	}
 	.score-row._4:hover,
 	.score-row._5:hover,
 	.score-row._4.active,
 	.score-row._5.active {
-		background-color: rgba($jeeGreen, 0.5);
+		background-color: $indigo-lighten-5;//rgba($jeeGreen, 0.5);
 	}
 }
 .btn-col {

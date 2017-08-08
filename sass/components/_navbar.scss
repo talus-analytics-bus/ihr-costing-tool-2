@@ -3,6 +3,7 @@
   position: relative;
   z-index: 100;
   margin-bottom: 0px;
+  color: white;
 }
 .ihr-navbar {
   padding: 0 0 0 70px;
@@ -15,7 +16,8 @@
   }
   .nav-item.active,
   .nav-item:hover {
-    background-color: #f6f6f6;
+    background-color: #3f51b5;
+    color: black;
   }
 }
 .header-wrapper {
@@ -32,6 +34,11 @@
   font-weight: 300;
   cursor: pointer;
 }
+
+.indigo {
+  background-color: #1a237e!important;
+}
+
 .navbar-logo-container {
   padding: 15px;
   background-color: #e8e8e8;

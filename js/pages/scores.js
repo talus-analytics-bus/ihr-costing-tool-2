@@ -156,19 +156,19 @@
 
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
-			const flashColor = Colors.scoreColors[newScore];
-			$(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
-			$(`.indicator-slot.${ccClass}-${indClass}`).animate({
-				'background-color': flashColor
-			}, animationDuration, function() {
-				$(`.indicator-slot.${ccClass}-${indClass}`).animate({
-					'background-color': 'none'
-				}, animationDuration, function() {
-				    // Animation complete.
-				    $(`.indicator-slot.${ccClass}-${indClass}`).css('background','');
+            const indicatorFlashColor = "#ffe0b2";
+            $(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
+            $(`.indicator-slot.${ccClass}-${indClass}`).animate({
+                'background-color': indicatorFlashColor
+            }, animationDuration, function() {
+                $(`.indicator-slot.${ccClass}-${indClass}`).animate({
+                    'background-color': 'none'
+                }, animationDuration, function() {
+                    // Animation complete.
+                    $(`.indicator-slot.${ccClass}-${indClass}`).css('background','');
 
-				});
-			});
+                });
+            });
 		};
 
 		/*
