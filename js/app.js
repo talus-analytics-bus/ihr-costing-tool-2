@@ -351,7 +351,7 @@ const App = {};
 			// fix borders for when children are showing
 			if (blockInfo.hasOwnProperty('children') || blockInfo.hasOwnProperty('parent')) {
 				blockLink.nextAll('[level="0"]:first')
-				.css('border-top', '1px solid #ccc')
+				.css('border-top', '2px solid #ccc')
 				.prev().css('border-bottom', 'none');
 			}
 
