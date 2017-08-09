@@ -16,3 +16,8 @@ node_modules/
 
 # PowerShell scripts
 ps/
+ihr-costing-tool-2.iml
+
+.idea/*
+.sass-cache*
+.gitignore
