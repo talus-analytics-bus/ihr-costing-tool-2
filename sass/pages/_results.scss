@@ -1,23 +1,16 @@
 .results-container {
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
-
-	.section-header {
-		font-weight: bold;
-		font-size: 20px;
+}
+.score-improvement-container {
+	div, span { vertical-align: middle; }
+	.score-improvement-title {
+		font-weight: 600;
 	}
-
-	.min-max-container {
-		text-align: center;
-		margin: auto;
-
-		.min-max-bar-chart-container {
-			border: 1px solid #ccc;
-			position: relative;
-			top: -1px;
-			@include border-radius(5px);
-			@include box-shadow(2px 2px 6px rgba(0,0,0,0.1));
-		}
-
+	.rp-score-container {
+		display: inline-block;
+		margin-top: .35em;
+	}
+	.rp-score-to-text {
+		display: inline-block;
 	}
 }

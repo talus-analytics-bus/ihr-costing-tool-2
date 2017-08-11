@@ -400,43 +400,15 @@
 	<!-- Results page tempate -->
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
-			<div class="row">
-				<h1>Results</h1>
+			<h1>Results</h1>
+			<div class="score-improvement-container">
+				<span class="score-improvement-title">Score Improvement:</span>
+				<div class="rp-score-old rp-score-container"></div>
+				<div class="rp-score-to-text">to</div>
+				<div class="rp-score-new rp-score-container"></div>
 			</div>
-			<div class="row">
-				<div style="margin-top:7px;">Costing Time Horizon:&nbsp;&nbsp;&nbsp;</div>
-				<div class="time-horizon-buttons">
-					<div class="btn-group">
-						<button type="button" class="btn btn-secondary active">One Year</button>
-						<button type="button" class="btn btn-secondary">Five Years</button>
-					</div>
-				</div>
-				<br/><br/><br/>
-			</div>
-			<div class="row">
-				<svg class="summary-bullet-chart"></svg>
-			</div>
-			<div class="row">
-				<div class="section-header">Partitioning of Costs</div>
-			</div>
-			<div class="row">
-				<svg class="cost-partition-chart"></svg>
-			</div>
-			<div class="row">
-				<svg class="cost-partition-chart-2"></svg>
-			</div>
-			<div class="row" style="text-align: center">
-				<div class="min-max-container">
-					<div class="btn-group">
-						<button type="button" class="btn btn-secondary" tab="total">Total</button>
-						<button type="button" class="btn btn-secondary active" tab="startup">Startup</button>
-						<button type="button" class="btn btn-secondary" tab="capital">Capital</button>
-						<button type="button" class="btn btn-secondary" tab="recurring">Recurring</button>
-					</div>
-					<div class="min-max-bar-chart-container">
-						<svg class="min-max-bar-chart"></svg>
-					</div>
-				</div>
+			<div class="cost-chart-section">
+				<div class="cost-chart-container"></div>
 			</div>
 		</div>
 	</script>
@@ -494,6 +466,7 @@
 <script src="js/components/map.js"></script>
 <script src="js/pages/who.js"></script>
 <script src="js/pages/scores.js"></script>
+<script src="js/pages/results.js"></script>
 <script src="js/routing.js"></script>
 <script src="js/init.js"></script>
 <!-- <script src="build/bundle.min.js"></script> -->

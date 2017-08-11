@@ -1,63 +1,13 @@
-.cost-partition-chart {
-	.node {
-		cursor: pointer;
-		//fill: #fff;
-		//stroke: black;
-		stroke-width: 2px;
-	}
-	.path {
-		fill: none;
-		stroke: #ccc;
-	}
-	.label-text {
-		font-weight: bold;
-		font-size: 20px;
-	}
-}
+.rp-chart {
+	display: inline-block;
 
-.cost-partition-chart-2 {
-	.node circle {
-	  fill: #fff;
-	  stroke: steelblue;
-	  stroke-width: 3px;
+	.rp-background {
+		fill: rgba(0,0,0,0.03);
 	}
-
-	.node text {
-	  font: 12px sans-serif;
+	.rp-outer { fill: #1a237e; }
+	.rp-inner { fill: lightsteelblue; }
+	.rp-text {
+		font-weight: 600;
+		text-anchor: middle;
 	}
-
-	.link {
-	  fill: none;
-	  stroke: rgba(204,204,204,0.5);//#ccc;
-	  stroke-width: 2px;
-	}
-}
-
-.min-max-bar-chart {
-	.x-axis, .y-axis {
-		font-size: 1em;
-	}
-
-	.bar {
-		cursor: pointer;
-		//fill: steelblue;
-	}
-
-	.axis-label {
-		font-size: 1.2em;
-		font-weight: bold;
-	}
-
-	path.domain {
-		stroke-width: 1.5px;
-
-	}
-
-	.tick line {
-		stroke-width: 1.5px;
-	}
-}
-
-.summary-bullet-chart {
-	
 }
