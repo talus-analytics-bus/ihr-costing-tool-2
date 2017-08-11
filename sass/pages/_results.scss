@@ -14,3 +14,19 @@
 		display: inline-block;
 	}
 }
+.cost-chart-container {
+	text-align: center;
+	svg { display: inline-block; }
+}
+.cost-chart-options {
+	padding: 15px 30px;
+	border: 1px solid #ccc;
+
+	.cost-chart-option {
+		display: inline-block;
+	}
+	select {
+		display: inline-block;
+		margin-left: 10px;
+	}
+}
