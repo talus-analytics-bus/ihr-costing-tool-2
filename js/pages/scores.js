@@ -15,6 +15,7 @@
 		// define blocks
 		const blocks = blockTmp.blocks;
 		const blocksShowing = blockTmp.blocksShowing;
+		const blockParents = blockTmp.blockParents;
 
 		// const blocks = {
 		//   "p-1": {},
@@ -25,6 +26,10 @@
 		//   "p-6": {},
 		//   "p-7": {}
 		// }
+
+		/*const blockParents ={
+			"p":blocksShowing;
+		}*/
 
 		// // define blocksShowing
 		// const blocksShowing = [
@@ -72,7 +77,7 @@
 		//   }
 		// ];
 
-		// TODO add input blocks for each core capacity
+		// This code addes all of the individual indicators to score (p-1, p-2, p-3, etc)
 		addCoreCapacityTabs = () => {
 			const block = d3.select('.block-container.input-block-container').selectAll('block')
 				.data(blocksShowing)
@@ -103,7 +108,7 @@
 		styleScores();
 		
 		// call function to render the tabs
-		App.setupTabs(blocksShowing, blocks, ccClass);
+		App.setupScoresTabs(blocksShowing, blocks, ccClass, blockParents);
 
 		// TODO if previous hash was this CC, don't slide
 		if (!App.prevHash) App.prevHash = '';
@@ -215,6 +220,15 @@
 			// set title of page to core capacity
 			const cc = App.getCoreCapacity(ccId);
 			block.select('.core-capacity-name').text(cc.name);
+			block.select('.capacity-target').text(cc.target_description);
+			block.select('.capacity-desired-impact').text(cc.desired_impact);
+            block.select('.capacity-additional-notes').text(cc.notes);
+
+            $('.capacity-description-header').click(()=> {
+            	$('.capacity-description-details').toggle();
+            	$('#chevron').toggleClass("rotate-chevron");
+
+            });
 
 			// set description of indicator and the score descriptions
 			const ind = App.getIndicator(indId);

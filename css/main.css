@@ -98,8 +98,7 @@ reference: https://mdbootstrap.com/css/colors/
     cursor: pointer; }
   .ihr-navbar .nav-item.active,
   .ihr-navbar .nav-item:hover {
-    background-color: #3f51b5;
-    color: white; }
+    background-color: #f6f6f6; }
 
 .header-wrapper {
   position: relative;
@@ -201,26 +200,20 @@ reference: https://mdbootstrap.com/css/colors/
     margin: 1em auto; }
 
 /* --- Block Link Content --- */
-.block-link-container {
-  float: left;
-  width: 365px; }
-
-.block-link {
+.block-link-capacities .block-link-capabilities-header {
+  background-color: #bbbbb5;
   position: relative;
   color: black;
   padding: 10px 30px 10px 50px;
-  /*border-right: $border-light-minimal;
-  border-bottom: $border-light-minimal;
-  border-left: $border-light-minimal;*/
-  border-right: 1px solid #1a237e;
-  border-bottom: 1px solid #1a237e;
-  border-left: 1px solid #1a237e;
-  -webkit-border-top-left-radius: 5px;
-  -moz-border-top-left-radius: 5px;
-  border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-bottom-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  -webkit-border-top-left-radius: 25px;
+  -moz-border-top-left-radius: 25px;
+  border-top-left-radius: 25px;
+  -webkit-border-bottom-left-radius: 25px;
+  -moz-border-bottom-left-radius: 25px;
+  border-bottom-left-radius: 25px;
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
@@ -234,10 +227,49 @@ reference: https://mdbootstrap.com/css/colors/
   -ms-user-select: none;
   user-select: none;
   cursor: pointer;
-  background-color: #c5cae9;
-  /*&:first-child { border-top: $border-light-minimal; }*/ }
+  background-color: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc; }
+.block-link-capacities .active {
+  background: white; }
+.block-link-capacities .block-link {
+  width: 90%;
+  left: 10%;
+  background-color: #ebebeb; }
+
+.block-link-container {
+  float: left;
+  width: 365px; }
+
+.block-link {
+  position: relative;
+  color: black;
+  padding: 10px 30px 10px 50px;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  -webkit-border-top-left-radius: 25px;
+  -moz-border-top-left-radius: 25px;
+  border-top-left-radius: 25px;
+  -webkit-border-bottom-left-radius: 25px;
+  -moz-border-bottom-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-box-shadow: -3px 0px 6px -3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -3px 0px 6px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: -3px 0px 6px -3px rgba(0, 0, 0, 0.2);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  background-color: 1px solid #ccc; }
   .block-link:first-child {
-    border-top: 1px solid #1a237e; }
+    border-top: 1px solid #ccc; }
   .block-link[level="1"] {
     margin-left: 50px;
     padding-top: 15px;
@@ -262,12 +294,12 @@ reference: https://mdbootstrap.com/css/colors/
   left: 0px;
   width: 100%;
   height: 100%;
-  -webkit-border-top-left-radius: 5px;
-  -moz-border-top-left-radius: 5px;
-  border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-bottom-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  -webkit-border-top-left-radius: 25px;
+  -moz-border-top-left-radius: 25px;
+  border-top-left-radius: 25px;
+  -webkit-border-bottom-left-radius: 25px;
+  -moz-border-bottom-left-radius: 25px;
+  border-bottom-left-radius: 25px;
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
@@ -285,22 +317,21 @@ reference: https://mdbootstrap.com/css/colors/
   position: absolute;
   top: 15px;
   left: 19px;
-  width: 24px;
-  height: 24px;
+  width: 15px;
+  height: 15px;
   -webkit-opacity: 0.7;
   -moz-opacity: 0.7;
   opacity: 0.7; }
 
 /* --- Block Content --- */
-/*.block-container { border-top: $border-light-minimal; }*/
 .block-container {
-  border-top: 1px solid #1a237e; }
+  border-top: 1px solid #ccc; }
 
 .block {
   position: relative;
   padding: 30px 30px 30px 0px;
   text-align: left;
-  border-bottom: 1px solid #1a237e;
+  border-bottom: 1px solid #ccc;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -444,6 +475,19 @@ div.tooltip {
   -moz-opacity: 1;
   opacity: 1; }
 
+.home-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 900px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 20px 50px 50px; }
+
 .home-veil {
   background-color: rgba(255, 255, 255, 0.9);
   margin: 80px 0 20px;
@@ -461,6 +505,22 @@ div.tooltip {
   font-size: 1.1em;
   margin-top: 20px; }
 
+.home-header {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start; }
+
+.home-body {
+  margin-top: 10px; }
+
+.home-image {
+  margin-top: 10px;
+  height: 200px;
+  width: 100%;
+  background: url("../img/foc.d648643d.jpg");
+  background-size: cover;
+  background-position: 0 48%; }
+
 /* Country picker tab */
 .country-dropdown {
   float: left; }
@@ -469,6 +529,27 @@ div.tooltip {
   padding: .5rem 1.1rem; }
 .scores-container .btn-primary {
   background-color: #3f51b5; }
+.scores-container .capacity-description-container {
+  margin-bottom: 20px; }
+  .scores-container .capacity-description-container .capacity-description-header {
+    display: flex; }
+  .scores-container .capacity-description-container .capacity-description-header-chevron {
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.870588);
+    fill: currentcolor;
+    height: 24px;
+    width: 24px;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    -webkit-user-select: none; }
+  .scores-container .capacity-description-container .capacity-description-details {
+    padding-left: 27px;
+    font-size: .8em;
+    display: none; }
+
+.rotate-chevron {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg); }
 
 .indicator-progress-container .indicator-container {
   margin-left: 60px;
@@ -517,7 +598,7 @@ div.tooltip {
     border: solid 1px gray; }
   .score-picker-table .custom-radio .custom-control-input:checked ~ .custom-control-indicator {
     background-image: none;
-    background-color: #1a237e; }
+    background-color: black; }
   .score-picker-table .custom-control-input {
     position: relative; }
   .score-picker-table td {
@@ -541,19 +622,21 @@ div.tooltip {
     cursor: pointer;
     transition: background-color .5s ease;
     vertical-align: top; }
-  .score-picker-table .score-row:hover {
-    background-color: #ffecb3; }
   .score-picker-table .score-row.active {
     font-weight: 600; }
-  .score-picker-table .score-row._1.active {
-    background-color: #e8eaf6;
-    /*rgba($jeeRed, 0.3);*/ }
+  .score-picker-table .score-row._1.active,
+  .score-picker-table .score-row._1:hover {
+    background-color: rgba(193, 32, 37, 0.3); }
   .score-picker-table .score-row._2.active,
-  .score-picker-table .score-row._3.active {
-    background-color: #e8eaf6; }
+  .score-picker-table .score-row._2:hover,
+  .score-picker-table .score-row._3.active,
+  .score-picker-table .score-row._3:hover {
+    background-color: rgba(237, 233, 41, 0.3); }
   .score-picker-table .score-row._4.active,
-  .score-picker-table .score-row._5.active {
-    background-color: #e8eaf6; }
+  .score-picker-table .score-row._4:hover,
+  .score-picker-table .score-row._5.active,
+  .score-picker-table .score-row._5:hover {
+    background-color: rgba(135, 199, 100, 0.5); }
 
 .btn-col {
   padding-left: 5px;
@@ -718,6 +801,16 @@ h1 {
   font-size: 2em;
   margin-bottom: 1.2rem; }
 
+h2 {
+  font-family: Helvetica;
+  font-size: 1.5em;
+  /*-webkit-margin-before: 0.83em;
+  -webkit-margin-after: 0.83em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;*/
+  margin-bottom: 1rem;
+  font-weight: bold; }
+
 h3 {
   font-family: Helvetica;
   font-weight: bold;
@@ -730,7 +823,6 @@ h4 {
 
 h5 {
   font-family: Helvetica;
-  font-style: italic;
   font-size: 1.05em; }
 
 /* Material Icons support */

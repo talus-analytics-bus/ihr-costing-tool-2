@@ -27,7 +27,7 @@
 	</div>
 	<!-- Nav bar -->
 	<!-- Test nav bar from bootstrap <nav class="navbar navbar-toggleable-md navbar-light indigo bg-faded ihr-navbar">-->
-	<nav class="navbar navbar-toggleable-md indigo ihr-navbar">
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded ihr-navbar">
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -101,15 +101,56 @@
 	<!-- Home page tempate -->
 	<script id="home-template" type="text/x-handlebars-template">
 		<div class="home-container container">
-			<h1>Placeholder: Home page</h1>
+			<div class="home-header"><h1>Welcome to the IHR Costing Tool</h1></div>
+			<div class="home-image"></div>
+			<div class="home-body">
+			<p>The International Health Regulations (IHR) set standards for national capacities needed to prevent, detect, and respond to public health threats.
+				The recently adopted Joint External Evaluation Tool (JEE) is a voluntary external evaluation
+				process using standardized indicators to measure country-specific progress in IHR implementation
+				and help set goals for further capacity development. However, national leaders face significant
+				challenges in accurately defining the costs to establish and maintain compliance with IHR and to
+				assign costs to goals set using JEE results.</p>
+			<p>This tool provides a framework to calculate costs for
+			implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost
+			calculations developed using best practices for achieving the technical standards specified in the JEE.</p>
+			<p>The goal of the IHR Costing Tool
+			is to provide national leaders with realistic cost information to support practical planning for initial IHR compliance and sustainable capacity
+			development to realize the objectives of the JEE process.</p>
+			</div>
+
+			<div class="btn-col col-sm-12 center">
+				<button type="button" class="btn btn-primary enter-site">Enter</button>
+			</div>
 		</div>
 	</script>
 
 	<!-- Overview page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
 		<div class="overview-container container">
-			<h1>Placeholder: Overview page</h1>
+
+			<div>
+				<h1>Instructions</h1>
+				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
+			</div>
+			<div>
+				<h2>Before Starting</h2>
+				<p>
+					Current JEE assessment scores are needed to use the IHR Costing Tool. Indicator scores should be from a recent JEE assessment report. The full JEE Tool is available <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">here</a>.
+				</p>
+				<p>It is also useful to have any local cost information in use for public health planning available before starting. This includes salary information for public health workers (e.g. laboratory technicians, epidemiologists, etc.), costs for training, meetings, common laboratory supplies, and office equipment. Default costs are provided throughout the tool where available, but should be replaced by country-specific data wherever possible for the most accurate cost estimates.</p>
+			</div>
+			<div>
+				<h2>Process Overview</h2>
+				<p>First, the tool is customized for country-specific costing including currency, country population, geopolitical organization, and public health infrastructure.</p>
+				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
+				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
+			</div>
+			<div class="btn-col col-sm-12 center">
+				<button type="button" class="btn btn-primary overview-start">Start</button>
+			</div>
+
 		</div>
+
 	</script>
 	
 	<!-- Who Am I? page tempate -->
@@ -279,11 +320,26 @@
 	<!-- Scores page tempate -->
 	<script id="scores-template" type="text/x-handlebars-template">
 		<div class="scores-container container container-wide">
+
 			<!-- TODO add tabs (block links) -->
 			<div class="block-link-container"></div>
 			<div class="block-container input-block-container">
 				<div class="block fake-block no-reset">
 					<h1 class="core-capacity-name"></h1>
+					<div class="capacity-description-container">
+						<div class="capacity-description-header">
+							<svg id="chevron" viewBox="0 0 24 24" class="capacity-description-header-chevron">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+							<h3>Capacity Description</h3>
+						</div>
+						<div class="capacity-description-details">
+							<p> <b>Target: </b><span class="capacity-target"></span></p>
+							<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
+							<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
+						</div>
+					</div>
+
 					<div class='indicator-progress-container'>
 						<h3 class="indicator-progress">2 of 4 indicators scored</h3>
 						<div class="indicator-container">
@@ -494,6 +550,8 @@
 <script src="js/components/map.js"></script>
 <script src="js/pages/who.js"></script>
 <script src="js/pages/scores.js"></script>
+<script src="js/pages/home.js"></script>
+<script src="js/pages/overview.js"></script>
 <script src="js/routing.js"></script>
 <script src="js/init.js"></script>
 <!-- <script src="build/bundle.min.js"></script> -->

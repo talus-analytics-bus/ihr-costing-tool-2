@@ -1,10 +1,15 @@
 .home-container {
-	// padding: 0 0 50px;
-    // width: 970px	;
-	// text-align: center;
-	// background: url('../img/splash.png');
-	// background-size: cover;
-	// background-position: 0 80%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	max-width: 900px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	padding: 20px 50px 50px;
 }
 .home-veil {
 	background-color: rgba(255,255,255,0.9);
@@ -22,4 +27,24 @@
 .home-start-button {
 	font-size: 1.1em;
 	margin-top: 20px;
+}
+
+.home-header {
+	-webkit-box-pack: start;
+	-ms-flex-pack: start;
+	justify-content: flex-start;
+
+}
+
+.home-body {
+	margin-top: 10px;
+}
+.home-image {
+	margin-top: 10px;
+	height: 200px;
+	width: 100%;
+	background: url("../img/foc.d648643d.jpg");
+
+	background-size: cover;
+	background-position: 0 48%;
 }
