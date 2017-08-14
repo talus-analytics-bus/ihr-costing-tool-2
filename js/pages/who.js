@@ -2,7 +2,7 @@
 	App.initWho = (ccClass) => {
 
 		/*Initialize country picker map*/
-		App.createCountryMap();
+		App.createLeafletMap();
 		switch(ccClass) {
             case 'currency':
                 initCurrencyTab();
@@ -56,6 +56,25 @@
 	*	Initialize the country picker dropdown on the country tab in Who Am I?
 	*/
 	initCountryTab = () => {
+
+        // event handler for selecting the country from dropdown
+        const selectCountryInMap = (geoJson, code) => {
+
+            geoJson.eachLayer((layer) => {
+                const layerAbbr = layer.feature.properties.iso_a2;
+                if (layerAbbr === code) {
+                    layer.setStyle({
+                        fillColor: 'red',
+                    });
+                } else {
+                    geoJson.resetStyle(layer);
+                }
+            });
+        };
+
+        // selected country will be stored in App.whoAmI object
+
+
 		if (App.whoAmI.hasOwnProperty('name')) {
             d3.select('.country-dropdown.dropdown > button')
                 .text(App.whoAmI.name);
@@ -69,99 +88,11 @@
 					.text(function(d) { return d.name})
 					.on('click', function (d) {
 						d3.select('.country-dropdown.dropdown > button').text(d.name);
-						countryDropdownToggle(d.abbreviation);
+						selectCountryInMap(App.geoJson, d.abbreviation);
 						App.whoAmI = JSON.parse(JSON.stringify(d));
 					});
 
-        // wrap in timeout to make sure that dom element is already present
-        setTimeout(() => {
 
-            const map = L.map('leaflet-map')
-                .setView([0, 0], 1);
-
-            const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
-
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                maxZoom: 8,
-                minZoom: 1,
-                id: 'mapbox.light',
-                accessToken,
-            }).addTo(map);
-
-            const info = L.control();
-
-            info.onAdd = function (map) {
-                this._div = L.DomUtil.create('div', 'info');
-                this.update();
-                return this._div;
-            }
-
-            info.update = function (props) {
-                this._div.innerHTML = props && props.name ? `<p>${props.name}</p>` : '';
-            }
-
-            let geoJson;
-            const customStyle = {
-                stroke: true,
-                weight: 0.4,
-                fill: true,
-                color: '#000',
-                fillColor: '#fff',
-                fillOpacity: 1
-            };
-            let activeCountry = '';
-            const highlightFeature = (e) => {
-                const layer = e.target;
-
-                layer.setStyle({
-                    fillColor: '#ff7a7a',
-                });
-
-                info.update(layer.feature.properties);
-            }
-            const resetHighlight = (e) => {
-                geoJson.resetStyle(e.target);
-                info.update();
-            }
-            const selectFeature = (e) => {
-                const layer = e.target;
-                const abbreviation = layer.feature.properties.iso_a2;
-                if (abbreviation === activeCountry) {
-                    activeCountry = '';
-                    geoJson.resetStyle(layer);
-                    d3.select('.country-dropdown.dropdown > button')
-                        .text('Choose country');
-                    App.whoAmI = {};
-                    return;
-                }
-                activeCountry = abbreviation;
-
-                layer.setStyle({
-                    fillColor: 'red',
-                });
-                const countryParam = _.findWhere(App.countryParams, {abbreviation});
-                d3.select('.country-dropdown.dropdown > button')
-                    .text(countryParam.name);
-                App.whoAmI = JSON.parse(JSON.stringify(countryParam));
-            }
-            const featureEventHandlers = (feature, layer) => {
-                layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight,
-                    click: selectFeature,
-                });
-            }
-
-            $.getJSON('/data/custom.geo.json' , (data) => {
-                geoJson = L.geoJson(data, {
-                    style: customStyle,
-                    onEachFeature: featureEventHandlers,
-                }).addTo(map);
-            });
-
-            info.addTo(map);
-        }, 100);
 
 	};
 
@@ -273,18 +204,4 @@
 
     }
 
-	/*
-	*	countryDropdownToggle
-	*	Set the map's active country to the dropdown selection
-	*/
-	countryDropdownToggle = (countryCode) => {
-		d3.selectAll(".country")
-        	.classed('active', false);
-		d3.selectAll('.country')
-			.each(function(d){
-				if (d.properties.code === countryCode) {
-					d3.select(this).classed('active',true);
-				}
-			});
-	};
 })();
