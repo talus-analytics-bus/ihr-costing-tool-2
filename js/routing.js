@@ -19,7 +19,7 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/overview', () => {
-			loadPage('overview');
+			loadPage('overview', App.initOverview);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/who', () => {
