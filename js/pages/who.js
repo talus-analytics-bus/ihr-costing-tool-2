@@ -45,7 +45,7 @@
 		];
 
 		// call function to render the tabs
-		App.setupTabs(blocksShowing, blocks, ccClass);
+		App.setupWhoTabs(blocksShowing, blocks, ccClass);
 	};
 
     hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
