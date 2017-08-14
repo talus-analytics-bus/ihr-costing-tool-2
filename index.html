@@ -161,7 +161,7 @@
 			<div class="block-container input-block-container">
 				<div class="block country-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Country</span>
+						<span class="block-title-title"><h1>Select Your Country</h1></span>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
@@ -181,7 +181,7 @@
 				</div>
 				<div class="block currency-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Currency</span>
+						<span class="block-title-title"><h1>Select Your Currency</h1></span>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
@@ -200,26 +200,26 @@
 				</div>
 				<div class="block pop-dist-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Population and Districts</span>
+						<span class="block-title-title"><h1>Population and Administrative Organization</h1></span>
 					</div>
-					<div class="block-content">
+					<div class="block-content population-block">
 						<div class="block-description">
 							Placeholder: Population and districts entry (text fields with defaults)
 						</div>
 						<form id="pop-dist">
 							<fieldset>
-								<legend>Population</legend>
+								<h2>Population</h2>
 								<div class="form-group row">
-									<label for="population" class="col-sm-4 col-form-label">Current total population</label>
-									<div class="col-4">
-										<input type="number" id="population" />
+									<label for="population" class="col-sm-6 col-form-label">Current total population</label>
+									<div class="col-6">
+										<input type="number" placeholder="number" id="population" />
 									</div>
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend>Administrative Organisation</legend>
+								<h2>Administrative Organisation</h2>
 								<div class="form-group row">
-									<label for="adm-org-1" class="col-sm-4 col-form-label">Central</label>
+									<label for="adm-org-1" class="col-sm-6 col-form-label">Central</label>
 									<div class="col-3">
 										<input id="adm-org-1" placeholder="name" />
 									</div>
@@ -228,7 +228,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="adm-org-2" class="col-sm-4 col-form-label">Intermediate (e.g., province, district)</label>
+									<label for="adm-org-2" class="col-sm-6 col-form-label">Intermediate (e.g., province, district)</label>
 									<div class="col-3">
 										<input id="adm-org-2" placeholder="name" />
 									</div>
@@ -237,7 +237,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="adm-org-3" class="col-sm-4 col-form-label">Intermediate 2 (optional)</label>
+									<label for="adm-org-3" class="col-sm-6 col-form-label">Intermediate 2 (optional)</label>
 									<div class="col-3">
 										<input id="adm-org-3" placeholder="name" />
 									</div>
@@ -246,7 +246,7 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="adm-org-4" class="col-sm-4 col-form-label">Local (e.g., county, division)</label>
+									<label for="adm-org-4" class="col-sm-6 col-form-label">Local (e.g., county, division)</label>
 									<div class="col-3">
 										<input id="adm-org-4" placeholder="name" />
 									</div>
@@ -256,23 +256,23 @@
 								</div>
 							</fieldset>
 							<fieldset>
-								<legend>Public Health Infrastructure</legend>
+								<h2>Public Health Infrastructure</h2>
 								<div class="form-group row">
-									<label for="epi" class="col-sm-4 col-form-label">Number of epidemiologists working in country (approximate)</label>
-									<div class="col-4">
-										<input type="number" id="epi" />
+									<label for="epi" class="col-sm-6 col-form-label">Number of epidemiologists working in country (approximate)</label>
+									<div class="col-6">
+										<input type="number" placeholder="number" id="epi" />
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="chw" class="col-sm-4 col-form-label">Number of community health workers (approximate)</label>
-									<div class="col-4">
-										<input type="number" id="chw" />
+									<label for="chw" class="col-sm-6 col-form-label">Number of community health workers (approximate)</label>
+									<div class="col-6">
+										<input type="number" placeholder="number" id="chw" />
 									</div>
 								</div>
 								<div class="form-group row">
-									<label for="hcf" class="col-sm-4 col-form-label">Number of health care facilities in country (approximate)</label>
-									<div class="col-4">
-										<input type="number" id="hcf" />
+									<label for="hcf" class="col-sm-6 col-form-label">Number of health care facilities in country (approximate)</label>
+									<div class="col-6">
+										<input type="number" placeholder="number" id="hcf" />
 									</div>
 								</div>
 							</fieldset>

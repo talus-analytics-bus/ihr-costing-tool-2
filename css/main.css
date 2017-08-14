@@ -525,6 +525,11 @@ div.tooltip {
 .country-dropdown {
   float: left; }
 
+.population-block fieldset {
+  margin-top: 1.1rem; }
+.population-block input {
+  border-radius: 5px; }
+
 .scores-container .btn {
   padding: .5rem 1.1rem; }
 .scores-container .btn-primary {

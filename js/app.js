@@ -503,7 +503,13 @@ const App = {};
             .style('display', function(d) { return (d.level > 0) ? 'none' : 'block'; })
             .classed('children-showing', function(d) { if (d.level === 0) return false; })
             .attr('block-name', function(d) { return d.abbr; })
-            .on('click', function(d) { hasher.setHash(`scores/${d.abbr}/1`) });
+            .on('click', function(d) {
+            	const hash = hasher.getHashAsArray();
+            	const newHash = [hash[0], d.abbr]
+					.concat(hash[0] ==='scores'?[1]:[])
+					.join('/');
+            	hasher.setHash(newHash);
+            	});
         blockLinks.append('div')
             .attr('class', 'block-link-title')
             .html(function(d) { return d.name; });
@@ -516,72 +522,6 @@ const App = {};
         d3.select('.block-link-container .block-link:first-child').append('img')
             .attr('class', 'block-link-arrow')
             .attr('src', 'img/chevron-right.png');
-
-        // // add parent attribute to children blocks
-        // for (var name in blocks) {
-        // 	if (blocks[name].hasOwnProperty('children')) {
-        // 		for (var childName in blocks[name].children) {
-        // 			blocks[name].children[childName].parent = name;
-        // 		}
-        // 	}
-        // }
-
-
-        // // only show blocks related to chosen esfs
-        // var blocksShowing = [];
-        // var addBlockToVar = function(name, block, level, parentAbbr) {
-        // 	var isRelevant = false;
-        // 	for (var i = 0; i < block.esf.length; i++) {
-        // 		if (inputValues.esf.indexOf(String(block.esf[i])) > -1) {
-        // 			isRelevant = true;
-        // 			break;
-        // 		}
-        // 	}
-        // 	if (block.hazard && block.hazard.indexOf(inputValues.hazard) === -1) isRelevant = false;
-        // 	if (isRelevant) {
-        // 		var blockInfo = {
-        // 			abbr: name,
-        // 			name: block.blockName ? block.blockName : $('.' + name + '-block .block-title-title').text(),
-        // 			level: level,
-        // 			status: 'default',
-        // 		};
-        // 		if (level === 1) blockInfo.parentAbbr = parentAbbr;
-        // 		for (var ind in block) blockInfo[ind] = block[ind];
-        // 			blocksShowing.push(blockInfo);
-        // 	}
-        // 	return isRelevant;
-        // };
-        // for (var name in blocks) {
-        // 	var isRelevant = addBlockToVar(name, blocks[name], 0);
-        // 	if (isRelevant && blocks[name].hasOwnProperty('children')) {
-        // 		for (var childName in blocks[name].children) {
-        // 			addBlockToVar(childName, blocks[name].children[childName], 1, name);
-        // 		}
-        // 	}
-        // };
-
-        // // add "links" (tabs) to sidebar
-        // var blockLinks = d3.select('.block-link-container').selectAll('.block-link')
-        // .data(blocksShowing)
-        // .enter().append('div')
-        // .attr('class', 'block-link')
-        // .attr('level', function(d) { return d.level; })
-        // .style('display', function(d) { return (d.level > 0) ? 'none' : 'block'; })
-        // .classed('children-showing', function(d) { if (d.level === 0) return false; })
-        // .attr('block-name', function(d) { return d.abbr; })
-        // .on('click', function(d) { showBlock(d.abbr); });
-        // blockLinks.append('div')
-        // .attr('class', 'block-link-title')
-        // .html(function(d) { return d.name; });
-        // blockLinks.append('div')
-        // .attr('class', 'block-status')
-        // .html(function(d) { return d.status; });
-        // blockLinks.append('div').attr('class', 'block-link-cover');
-
-        // // add arrow image to active block
-        // d3.select('.block-link-container .block-link:first-child').append('img')
-        // .attr('class', 'block-link-arrow')
-        // .attr('src', 'img/chevron_right.png');
 
 
         // function that updates an input block's status (incomplete, default, custom)
@@ -631,37 +571,7 @@ const App = {};
             if (blockInfo.hasOwnProperty('parent')) updateBlockStatus(blockInfo.parent);
         };
 
-        // // color block links appropriately (white, red, or yellow) in a horizontal gradient
-        // var updateBlockLinkColor = function(blockAbbr, blockLinkEle) {
-        // 	if (typeof blockLinkEle === 'undefined') var blockLinkEle = d3.select('.block-link[block-name="' + blockAbbr + '"]');
-        // 	blockLinkEle.style('background', function(d) {
-        // 		var bgColor = (blockAbbr === currBlockAbbr && (d.status === '' || d.status === 'default')) ? '#f0f0f0' : blockModeColors[d.status];
-        // 		return 'linear-gradient(to right, ' + bgColor + ', white)';
-        // 	});
-        // };
 
-        // // show or hide the tooltips for a block
-        // var toggleBlockTooltip = function(blockAbbr, show) {
-        // 	var blockInfo = getBlockInfo(blockAbbr);
-        // 	if (blockInfo.hasOwnProperty('tooltipElements')) {
-        // 		var tooltipElements = [];
-        // 		var tooltipEleDict = blockInfo.tooltipElements;
-        // 		for (var ind in tooltipEleDict) {
-        // 			if (show) {
-        // 				// if not default, add element to tooltipster collection to show or hide
-        // 				if (blockInfo.hasOwnProperty('tooltipShowFn') && blockInfo.tooltipShowFn.hasOwnProperty(ind)) {
-        // 					blockInfo.tooltipShowFn[ind](blockInfo.isDefault[ind]);
-        // 				} else {
-        // 					if (!blockInfo.isDefault[ind]) tooltipElements.push(tooltipEleDict[ind]);
-        // 				}
-        // 			} else {
-        // 				tooltipElements.push(tooltipEleDict[ind]);
-        // 			}
-        // 		}
-        // 		var displayStr = show ? 'show' : 'hide';
-        // 		if ($(tooltipElements.join(', ')).hasClass('tooltipstered')) $(tooltipElements.join(', ')).tooltipster(displayStr);
-        // 	}
-        // };
 
         // show the specified block while hiding other blocks
         var showBlock = function(blockAbbr, animate) {
@@ -796,13 +706,6 @@ const App = {};
             }
         };
 
-        // // hide the block links of the children block of the given block name
-        // var hideBlockLinks = function(blockNames, animate) {
-        // 	for (var blockName in blockNames) {
-        // 		if (animate) $('.block-link[block-name="' + blockName + '"]').slideUp();
-        // 		else $('.block-link[block-name="' + blockName + '"]').hide();
-        // 	}
-        // };
 
         // get the block information (may be embedded in another block's children attribute)
         var getBlockInfo = function(blockAbbr) {
@@ -841,122 +744,12 @@ const App = {};
             return status;
         };
 
-        // // returns the default status for a component of a block
-        // var getBlockComponentStatus = function(blockInfo, componentName) {
-        // 	if (typeof blockInfo === 'undefined') var blockInfo = getBlockInfo(blockAbbr);
-        // 	if (blockInfo.isDefault[componentName] === false) {
-        // 		if (blockInfo.hasOwnProperty('required') && blockInfo.required.indexOf(ind) > -1) {
-        // 			return 'incomplete';
-        // 		} else {
-        // 			return 'custom';
-        // 		}
-        // 	} else {
-        // 		return blockInfo.hasOwnProperty('completeText') ? blockInfo.completeText : 'default';
-        // 	}
-        // };
-
-        // // determine whether the block is being shown based on the user's ESF choices
-        // var isBlockOnPage = function(blockAbbr) {
-        // 	for (var i = 0; i < blocksShowing.length; i++) {
-        // 		if (blocksShowing[i].abbr === blockAbbr) return true;
-        // 	}
-        // 	return false;
-        // };
-
-        // // show or hide tooltip and change input color
-        // var toggleInputTooltip = function(element, isDefault) {
-        // 	var $element = $(element);
-        // 	if ($element.hasClass('tooltipstered')) {
-        // 		$element.tooltipster(isDefault ? 'hide' : 'show');
-        // 	}
-        // };
-
         var currBlockAbbr; // the block name abbreviation for the current block showing
         showBlock(ccClass, false);
         blockLinks.each(function(d) { updateBlockStatus(d.abbr); });
 
 
-        // /* ------------------------------- Building the DOM Elements --------------------------------- */
-        // // display correct block content and descriptions if based on hazard
-        // $('.input-block-container .block-content, .input-block-container .block-description').css('display', function() {
-        // 	return 'block';
-        // 	// var contentHazardStr = $(this).attr('hazard');
-        // 	// if (typeof contentHazardStr !== 'undefined') {
-        // 	// 	var contentHazards = contentHazardStr.split(',');
-        // 	// 	return (contentHazards.indexOf(inputValues.hazard) === -1) ? 'none' : 'block';
-        // 	// }
-        // });
 
-        // // build out location block
-        // if (isBlockOnPage('location')) {
-        // 	// add counties and states for county picker
-        // 	var countyClass = '.search-county';
-        // 	var stateClass = '.search-state-for-county';
-        // 	var addOptions = function(data, type, param) {
-        // 		if (!param) var param = {};
-        // 		if (!param.hasOwnProperty('refresh')) param.refresh = true;
-
-        // 		var cont = (type === 'county') ? countyClass : stateClass;
-        // 		var ele = (type === 'county') ? '.search-county-element' : '.search-state-element';
-        // 		$(ele).remove();
-        // 		d3.select(cont).selectAll(ele)
-        // 		.data(data)
-        // 		.enter().append('option')
-        // 		.attr('class', ele.slice(1))
-        // 		.attr('selected', function(d) { if (d.selected) return true; })
-        // 		.attr('value', function(d) { return d.abbr;	})
-        // 		.html(function(d) {
-        // 			return (type === 'county') ? d.abbr : d.name;
-        // 		});
-        // 		if (param.refresh) {
-        // 			$(cont).multiselect('rebuild');
-        // 		}
-        // 	};
-        // 	var addOptionsForState = function(state_abbr, param) {
-        // 		if (!param) var param = {};
-
-        // 		var county_list = [];
-        // 		for (var fips in COUNTIES) {
-        // 			if (COUNTIES[fips].state_abbr === state_abbr) {
-        // 				county_list.push({
-        // 					abbr: COUNTIES[fips].county_abbr,
-        // 					selected: (inputValues.locations.indexOf(+fips) > -1)
-        // 				});
-        // 			}
-        // 		}
-
-        // 		Util.sortObjects(county_list, 'abbr');
-        // 		addOptions(county_list, 'county', param);
-        // 	};
-        // 	var displayForState = function(state_abbr, param) {
-        // 		if (!param) var param = {};
-        // 		addOptionsForState(state_abbr, param);
-        // 		if (param.hasOwnProperty('refresh') && param.refresh === false) {
-        // 			$('.search-state-for-county option[value="' + state_abbr + '"]').attr('selected', true);
-        // 		} else {
-        // 			$(stateClass).multiselect('select', state_abbr, false);
-        // 		}
-        // 	};
-        // 	addOptions(STATES_UNIQ, 'state', {refresh: false});
-        // 	if (inputValues.locations.length > 0) {
-        // 		displayForState(App.getLocationObject()[0].state_abbr, {refresh: false});
-        // 	}
-
-        // 	// add cities to city picker
-        // 	d3.select('.search-city').selectAll('option')
-        // 	.data(CITIES_UNIQ)
-        // 	.enter().append('option')
-        // 	.attr('value', function(d) { return d.fips; })
-        // 	.text(function(d) { return d.name; });
-
-        // 	// add states to state pickers
-        // 	var stateNames = Util.sortObjects(STATES_UNIQ.slice(0), 'name');
-        // 	d3.select('.search-state').selectAll('option')
-        // 	.data(stateNames)
-        // 	.enter().append('option')
-        // 	.attr('value', function(d) { return d.abbr; })
-        // 	.text(function(d) { return d.name; });
-        // }
     };
 
 
