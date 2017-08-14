@@ -14,6 +14,58 @@
 		display: inline-block;
 	}
 }
+.chart-tab-container {
+	margin-top: 30px;
+	text-align: center;
+}
+.chart-content {
+	display: none;
+	margin-top: 30px;
+}
+
+/* --- Cost Explorer --- */
+.explorer-filters {
+	padding: 15px 20px;
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+
+	.explorer-filter-label {
+		font-weight: 600;
+		margin-bottom: 2px;
+	}
+}
+.explorer-summary {
+	margin-top: 30px;
+	text-align: center;
+
+	span {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.4em;
+		font-weight: 600;
+	}
+	.summary-score-improvement {
+		color: green;
+	}
+}
+.explorer-cost-summary {
+	margin-top: 20px;
+	text-align: center;
+
+	.explorer-cost-value {
+		font-family: 'Raleway', sans-serif;
+		font-size: 2.2em;
+		font-weight: 600;
+	}
+	.explorer-cost-text {
+		margin-top: 5px;
+	}
+}
+.explorer-cost-chart-container {
+	margin-top: 20px;
+}
+
+
+/* --- Cost Chart --- */
 .cost-chart-container {
 	text-align: center;
 	svg { display: inline-block; }

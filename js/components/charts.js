@@ -79,6 +79,125 @@ const Charts = {};
 		return chart;
 	}
 
+	Charts.buildCostBarChart = (selector, data, param={}) => {
+		const margin = { top: 30, right: 50, bottom: 20, left: 100 };
+		const width = param.width || 800;
+		const height = param.height || 110;
+		const chartContainer = d3.select(selector).append('svg')
+			.attr('class', 'cost-bar-chart')
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
+		const chart = chartContainer.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		const x = d3.scaleLinear()
+			.range([0, width]);
+		const y = d3.scaleBand()
+			.paddingOuter(0.3)
+			.paddingInner(0.55)
+			.rangeRound([0, height]);
+
+		const xAxis = d3.axisTop()
+			.tickFormat(d3.format('$.3s'));
+		const yAxis = d3.axisLeft();
+		const xAxisG = chart.append('g').attr('class', 'x axis');
+		const yAxisG = chart.append('g').attr('class', 'y axis');
+
+
+		chart.update = (newData) => {
+			const maxCost = d3.max(newData.map(d => d3.sum(d.data, dd => dd.value)));
+			x.domain([0, 1.1 * maxCost])
+			y.domain(newData.map(d => d.name));
+			xAxis.scale(x);
+			yAxis.scale(y);
+			xAxisG.call(xAxis);
+			yAxisG.call(yAxis);
+
+			// modify data to have x0 and x1 attribute
+			newData.forEach((d) => {
+				let runningVal = 0;
+				d.data.filter(cap => cap.selected).forEach((cap) => {
+					cap.val0 = runningVal;
+					cap.val1 = (runningVal += cap.value);
+				});
+				d.selectedVal = runningVal;
+				d.data.filter(cap => !cap.selected).forEach((cap) => {
+					cap.val0 = runningVal;
+					cap.val1 = (runningVal += cap.value);
+				});
+			});
+
+			let barGroups = chart.selectAll('.bar-group')
+				.data(newData);
+			barGroups.exit().remove();
+			const newBarGroups = barGroups.enter().append('g')
+				.attr('class', 'bar-group');
+			newBarGroups.append('text').attr('class', 'total-label');
+			newBarGroups.append('text').attr('class', 'selected-label');
+			barGroups = newBarGroups.merge(barGroups);
+			barGroups.transition()
+				.attr('transform', (d) => `translate(0, ${y(d.name)})`);
+
+			let bars = barGroups.selectAll('.bar')
+				.data(d => d.data);
+			bars.exit().remove();
+			const newBars = bars.enter().append('rect')
+				.attr('class', 'bar')
+				.each(function() { $(this).tooltipster(); });
+			bars = newBars.merge(bars);
+			bars
+				.style('fill', d => d.selected ? '#c91414' : 'steelblue')
+				.attr('height', y.bandwidth())
+				.transition()
+					.attr('x', d => x(d.val0))
+					.attr('width', d => x(d.val1) - x(d.val0));
+
+			// update tooltipster content
+			barGroups.each(function(d) {
+				d3.select(this).selectAll('.bar').each(function(dd) {
+					$(this).tooltipster('content',
+						'<div class="cc-tooltip">' +
+							`<div class="cc-tooltip-title">${dd.name}</div>` +
+							'<div class="cc-tooltip-block">' +
+								`<div>${d3.format('$.3s')(dd.value)}</div>` +
+								`<div>${d.name}</div>` +
+							'</div>' +
+						'</div>');
+				});
+			});
+
+			// add total cost text
+			barGroups.select('.total-label')
+				.attr('x', d => x(d3.sum(d.data, dd => dd.value)) + 5)
+				.attr('y', y.bandwidth() / 2)
+				.attr('dy', '.35em')
+				.text((d) => {
+					const totalCost = d3.sum(d.data, dd => dd.value);
+					return `${d3.format('$.3s')(totalCost)} total`;
+				});
+
+			// add selected cost text
+			barGroups.select('.selected-label')
+				.attr('y', y.bandwidth() + 8)
+				.attr('dy', '.35em')
+				.text((d) => {
+					const selectedCost = d3.sum(d.data.filter(dd => dd.selected), dd => dd.value);
+					return d3.format('$.3s')(selectedCost);
+				})
+				.transition()
+					.attr('x', d => x(d.selectedVal) > 50 ? x(d.selectedVal) / 2 : 3)
+					.style('text-anchor', d => x(d.selectedVal) > 50 ? 'middle' : 'start');
+
+			// move axes to front
+			$('.axis').each(function() {
+				this.parentNode.appendChild(this);
+			});
+		};
+
+		if (data) chart.update(data);
+		return chart;
+	}
+
 	Charts.buildCostChart = (selector, data, param={}) => {
 		const margin = { top: 60, right: 30, bottom: 40, left: 85 };
 		const width = 800;

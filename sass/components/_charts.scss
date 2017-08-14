@@ -21,6 +21,21 @@
 		text-anchor: middle;
 	}
 }
+.cost-bar-chart {
+	.bar {
+		fill: steelblue;
+		stroke: white;
+	}
+	.selected-label {
+		font-size: 0.75em;
+	}
+	.total-label {
+		font-size: 0.85em;
+	}
+	.tick text {
+		font-size: 1.3em;
+	}
+}
 .cost-chart {
 	.line {
 		fill: none;
