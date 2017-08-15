@@ -3,6 +3,6 @@
 (() => {
     App.initOverview = () => {
 
-        $('.overview-start').click(()=>{hasher.setHash(`who/`);});
+        $('.overview-start').click(()=>{hasher.setHash(`jee/`);});
     }
 })();

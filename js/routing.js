@@ -34,7 +34,7 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/jee', () => {
-			loadPage('jee');
+			loadPage('jee', App.initAssessment);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/costs', () => {

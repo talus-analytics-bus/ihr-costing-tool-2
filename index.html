@@ -36,23 +36,47 @@
 				<li class="nav-item active" page="">
 					<a class="nav-link">Home</a>
 				</li>
-				<li class="nav-item" page="overview">
-					<a class="nav-link">Overview</a>
+				<!-- <li class="nav-item" page="overview">
+					<a class="nav-link">Instructions</a>
 				</li>
 				<li class="nav-item" page="who">
 					<a class="nav-link">Who Am I?</a>
-				</li>
+				</li>-->
+				<!--
 				<li class="nav-item" page="default">
 					<a class="nav-link">Default Values</a>
 				</li>
 				<li class="nav-item" page="jee">
 					<a class="nav-link">JEE Assessment Status</a>
+				</li>-->
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						JEE Assessment
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" page="overview">Instructions</a>
+						<a class="dropdown-item" page="scores" >Score Assessment</a>
+
+					</div>
 				</li>
-				<li class="nav-item" page="scores">
+				<!--<li class="nav-item" page="scores">
 					<a class="nav-link">JEE Scores</a>
 				</li>
+
 				<li class="nav-item" page="costs">
-					<a class="nav-link">Costing</a>
+					<a class="nav-link">JEE Costing</a>
+				</li>-->
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						JEE Costing
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" page="costinstructions">Instructions</a>
+						<a class="dropdown-item" page="who">Default Costing</a>
+						<a class="dropdown-item" page="costs" >Costing</a>
+
+					</div>
 				</li>
 				<li class="nav-item" page="results">
 					<a class="nav-link">Results</a>
@@ -309,7 +333,7 @@
 					<div class="button-group">
 						<p>Or, continue to options for manual score entry</p>
 						<div>
-							<button type="button" class="btn btn-primary">Enter Assessments Manually</button>
+							<button type="button" page="scores" class="btn btn-primary enter-assessments">Enter Assessments Manually</button>
 						</div>
 					</div>
 				</div>
@@ -552,6 +576,7 @@
 <script src="js/pages/scores.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
+<script src="js/pages/assessment.js"></script>
 <script src="js/routing.js"></script>
 <script src="js/init.js"></script>
 <!-- <script src="build/bundle.min.js"></script> -->

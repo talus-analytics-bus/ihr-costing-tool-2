@@ -9,8 +9,14 @@ const App = {};
 
 		// initiate behavior for navigation links
 		$('.nav-item').click(function() {
-			hasher.setHash($(this).attr('page'));
+			if ($(this).attr('page') !== undefined) { // dropdown lists do not have associated pages
+                hasher.setHash($(this).attr('page'));
+            }
 		});
+
+        $('.dropdown-item').click(function() {
+            hasher.setHash($(this).attr('page'));
+        });
 
 		// activate tooltipster
 		$.tooltipster.setDefaults({
