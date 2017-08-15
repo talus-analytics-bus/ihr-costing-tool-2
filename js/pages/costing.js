@@ -112,11 +112,11 @@
 						const curSlot = d3.select(this);
 
 						// add class that defines which indicator it is
-						curSlot.classed(Util.getIndicatorClass(d.jee_id), true);
+						curSlot.classed(Util.getIndicatorClass(d.id), true);
 
 						// add class 'full' if there's a score defined
 						// add class 'empty' otherwise
-						const curSlotScore = User.getIndicatorScore(d.jee_id);
+						const curSlotScore = User.getIndicatorScore(d.id);
 						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
 						curSlot.classed(slotClass, true);
 
@@ -168,22 +168,32 @@
 		function setupActionContent() {
 			const ind = App.getIndicator(indId);
 
-			d3.select('.action-headers').selectAll('.action-header')
-				.data(ind.questions)  // TODO using questions right now
+			const headers = d3.select('.action-headers').selectAll('.action-header')
+				.data(ind.actions)
 				.enter().append('div')
 					.attr('class', 'action-header')
-					.text(d => d.name.slice(0, 20))
-					.on('click', (d) => {
-						showItemBlocks(d);
+					.on('click', function(d) {
+						showAction(d);
 					});
+			headers.append('input').attr('type', 'checkbox');
+			headers.append('span').text(d => d.name);
 		}
 		setupActionContent();
+
+		function showAction(action) {
+			// make this header active
+			d3.selectAll('.action-header')
+				.classed('active', d => d.name === action.name);
+
+			// show correct items for this action
+			showItemBlocks(action);
+		}
 
 		function showItemBlocks(action) {
 			const moneyFormat = d3.format('$.3s');
 
 			let items = d3.select('.item-block-container').selectAll('.item-block')
-				.data([action]);  // TODO needs to be line items for action
+				.data(action.inputs);  // TODO needs to be line items for action
 			items.exit().remove();
 
 			// add HTML structure to each new item
@@ -192,8 +202,8 @@
 			newItems.append('div').attr('class', 'item-title');
 			newItems.append('div').attr('class', 'item-cost');
 			newItems.append('div')
-				.attr('class', 'item-select-button')
-				.text('Select');
+				.attr('class', 'item-select-button btn btn-primary')
+				.text('Selected');
 			newItems.append('div').attr('class', 'item-description');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
@@ -204,14 +214,14 @@
 				.text('View Details');
 
 			items = newItems.merge(items);
-			items.select('.item-title').text('Item Title');
+			items.select('.item-title').text(d => d.name);
 			items.select('.item-cost').text(moneyFormat(45e3));
 			items.select('.item-select-button').on('click', (d) => {
 				// user selects an action
 			});
-			items.select('.item-description').text('Description text...');
+			items.select('.item-description').text(d => d.description);
 		}
-		showItemBlocks(App.getIndicator(indId).questions);  // TODO need to change this
+		showAction(App.getIndicator(indId).actions[0]);
 		
 
 		// set titles for table cells to be equal to their text so
