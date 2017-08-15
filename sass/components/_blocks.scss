@@ -34,9 +34,9 @@
 .block-link {
   position: relative;
   padding: 10px 30px 10px 30px;
-  border-right: $border-light-minimal;
-  border-bottom: $border-light-minimal;
-  border-left: $border-light-minimal;
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #999;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.85rem;
   color: black;
@@ -46,7 +46,7 @@
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
   
-  &:first-child { border-top: $border-light-minimal; }
+  &:first-child { border-top: 1px solid #999; }
   &[level="1"] {
     margin-left: 50px;
     padding-top: 15px;
@@ -87,14 +87,6 @@
   top: 22px;
   right: 30px;
 }
-.block-link-arrow {
-  position: absolute;
-  top: 15px;
-  left: 19px;
-  width: 15px;
-  height: 15px;
-  @include opacity(0.7);
-}
 
 /* --- Block Content --- */
 .block-container { border-top: $border-light-minimal; }
@@ -118,24 +110,6 @@
   &.block-description-wide { max-width: 850px; }
   &.radio-box-description { margin-bottom: 10px; }
 }
-.block-toggle-bar {
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  text-align: center;
-  cursor: pointer;  
-  padding: 3px 5px 3px 0px;
-  width: 100%;
-}
-.block-toggle-bar:hover { background-color: $off-white; }
-.block-toggle-bar img { padding: 0px 10px; }
-.extra-block {
-  border-top: $border-light-minimal;
-}
-.input-block-description {
-  display: inline-block;
-  margin: 5px 10px 20px;
-}
 .input-block-container {
   margin-left: 365px;
   padding-left: 75px;
@@ -148,4 +122,3 @@
   }
   .block-description { font-style: italic; }
 }
-input.non-default { background-color: #ffdbdb; }

@@ -157,6 +157,11 @@
 					hasher.setHash(`scores/${ccClass}/${indClass}`);
 				});
 
+			// add cost for each indicator
+			indSlots.append('div')
+				.attr('class', 'indicator-cost')
+				.text('$0');
+
 			// set number of indicators scored and total number
 			updateIndicatorProgress();
 		};

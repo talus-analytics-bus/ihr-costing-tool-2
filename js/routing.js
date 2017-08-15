@@ -59,7 +59,7 @@ const Routing = {};
 		});
 
 		crossroads.addRoute('/costsinstructions', () => {
-			//loadPage('cost-instructions', App.initCosting);
+			loadPage('cost-instructions');
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/costs', () => {
