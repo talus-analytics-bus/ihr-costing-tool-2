@@ -34,13 +34,10 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/jee', () => {
-			loadPage('jee');
+			loadPage('jee', App.initAssessment);
 			window.scrollTo(0, 0);
 		});
-		crossroads.addRoute('/costs', () => {
-			loadPage('costs');
-			window.scrollTo(0, 0);
-		});
+
 		crossroads.addRoute('/scores', () => {
 			hasher.setHash(`scores/p-1/1`)
 		});
@@ -60,6 +57,31 @@ const Routing = {};
 			loadPage('scores', App.initScores, ccId, indId);
 			window.scrollTo(0, 0);
 		});
+
+		crossroads.addRoute('/costsinstructions', () => {
+			//loadPage('cost-instructions', App.initCosting);
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/costs', () => {
+			hasher.setHash('costs/p-1/1');
+		});
+		crossroads.addRoute('/costs/:{ccId}:', (ccId) => {
+			hasher.setHash(`scores/${ccId}/1`);
+		});
+		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
+			if (indId === undefined && ccId !== undefined) {
+				indId = '1';
+				hasher.setHash(`costs/${ccId}/${indId}`);
+			}
+			else if (indId === undefined && ccId === undefined) {
+				indId = '1';
+				ccId = 'p-1';
+				hasher.setHash(`costs/${ccId}/${indId}`);
+			}
+			loadPage('costs', App.initCosting, ccId, indId);
+			window.scrollTo(0, 0);
+		});
+
 		crossroads.addRoute('/results', () => {
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);

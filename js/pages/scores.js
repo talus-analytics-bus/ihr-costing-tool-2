@@ -78,7 +78,7 @@
 		// ];
 
 		// This code addes all of the individual indicators to score (p-1, p-2, p-3, etc)
-		addCoreCapacityTabs = () => {
+		function addCoreCapacityTabs() {
 			const block = d3.select('.block-container.input-block-container').selectAll('block')
 				.data(blocksShowing)
 				.enter().append('div')
@@ -89,7 +89,7 @@
 		addCoreCapacityTabs();
 
 		// style the scores page by adding gradient definition
-		styleScores = () => {
+		function styleScores() {
 			const slotGradient = d3.select('body').append('linearGradient')
 				.attr('class','indicator-slot-gradient')
 				.attr('x1',322.44)
@@ -129,7 +129,7 @@
 		* Updates the score in the summary box whenever an indicator's
 		* score is changed.
 		*/
-		updateIndicatorScore = (indId, newScore) => {
+		function updateIndicatorScore(indId, newScore) {
 			// get indicator class for selection
 			// const indClass = Util.getIndicatorClass(indId);
 
@@ -181,7 +181,7 @@
 		* Gets what the indicator score is currently set to on an
 		* indicator's score page
 		*/
-		getNewIndicatorScore = () => {
+		function getNewIndicatorScore() {
 			return $('input:checked').val();
 		};
 
@@ -190,7 +190,7 @@
 		* Updates message about how many indicators have been scored for the current
 		* core capacity
 		*/
-		updateIndicatorProgress = () => {
+		function updateIndicatorProgress() {
 			// get name of tab block to use
 			const blockSelector = App.getActiveBlockSelector();
 
@@ -206,7 +206,7 @@
 		* setupScoreTabContent
 		* Populates each CC's score tab content
 		*/
-		setupScoreTabContent = () => {
+		function setupScoreTabContent() {
 			// get name of tab block to use
 			const blockSelector = App.getActiveBlockSelector();
 
@@ -251,11 +251,11 @@
 						const curSlot = d3.select(this);
 
 						// add class that defines which indicator it is
-						curSlot.classed(Util.getIndicatorClass(d.jee_id), true);
+						curSlot.classed(Util.getIndicatorClass(d.id), true);
 
 						// add class 'full' if there's a score defined
 						// add class 'empty' otherwise
-						const curSlotScore = User.getIndicatorScore(d.jee_id);
+						const curSlotScore = User.getIndicatorScore(d.id);
 						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
 						curSlot.classed(slotClass, true);
 
