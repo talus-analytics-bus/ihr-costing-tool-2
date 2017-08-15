@@ -251,11 +251,11 @@
 						const curSlot = d3.select(this);
 
 						// add class that defines which indicator it is
-						curSlot.classed(Util.getIndicatorClass(d.jee_id), true);
+						curSlot.classed(Util.getIndicatorClass(d.id), true);
 
 						// add class 'full' if there's a score defined
 						// add class 'empty' otherwise
-						const curSlotScore = User.getIndicatorScore(d.jee_id);
+						const curSlotScore = User.getIndicatorScore(d.id);
 						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
 						curSlot.classed(slotClass, true);
 
