@@ -3,6 +3,7 @@
 @import 'helpers/mixins';
 @import 'helpers/vendors';
 
+@import 'components/capacityDescription';
 @import 'components/charts';
 @import 'components/navbar';
 @import 'components/footer';
@@ -12,6 +13,7 @@
 @import 'pages/home';
 @import 'pages/who';
 @import 'pages/scores';
+@import 'pages/costing';
 @import 'pages/results';
 @import 'pages/assessment';
 

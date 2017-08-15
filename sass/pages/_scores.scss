@@ -1,35 +1,6 @@
 .scores-container {
 	.btn {
 		padding: .5rem 1.1rem;
-
-	}
-
-	.capacity-description-container {
-
-		margin-bottom: 20px;
-
-		.capacity-description {
-
-		}
-		.capacity-description-header {
-			display: flex;
-		}
-		.capacity-description-header-chevron {
-			display: inline-block;
-			color: rgba(0, 0, 0, 0.870588);
-			fill: currentcolor;
-			height: 24px;
-			width: 24px;
-			transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-			-webkit-user-select: none;
-		}
-
-
-		.capacity-description-details {
-			padding-left: 27px;
-			font-size: .8em;
-			display: none;
-		}
 	}
 }
 .rotate-chevron {

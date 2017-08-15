@@ -499,8 +499,46 @@
 	
 	<!-- Costs page tempate -->
 	<script id="costs-template" type="text/x-handlebars-template">
-		<div class="costs-container container">
-			<h1>Placeholder: Costs page</h1>
+		<div class="costs-container container container-wide">
+			<div class="block-link-container"></div>
+			<div class="block-container input-block-container">
+				<div class="block fake-block no-reset">
+					<h1 class="core-capacity-name"></h1>
+					<div class="capacity-description-container">
+						<div class="capacity-description-header">
+							<svg id="chevron" viewBox="0 0 24 24" class="capacity-description-header-chevron">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+							<h3>Capacity Description</h3>
+						</div>
+						<div class="capacity-description-details">
+							<p> <b>Target: </b><span class="capacity-target"></span></p>
+							<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
+							<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
+						</div>
+					</div>
+
+					<div class='indicator-progress-container'>
+						<h3 class="indicator-progress">2 of 4 indicators scored</h3>
+						<div class="indicator-container"></div>
+					</div>
+					<h3 class='score-picker-header'>Choose costs</h3>
+					<div class='nav-buttons-container'>
+						<div class='btn-row row'>
+							<div class='btn-col col-sm-12 center'>
+								<button type="button" class="btn btn-secondary previous-cost"><i class="material-icons">skip_previous</i></button>
+								<button type="button" class="btn btn-primary next-cost"><i class="material-icons">skip_next</i></button>
+							</div>
+						</div>
+						<div class='margin-top-10'></div>
+						<div class='btn-row row'>
+							<div class='btn-col col-sm-12 center'>
+								<button type="button" class="btn btn-secondary go-to-results-button">Go to Results</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</script>
 	
