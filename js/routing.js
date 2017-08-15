@@ -41,6 +41,11 @@ const Routing = {};
 			loadPage('costs');
 			window.scrollTo(0, 0);
 		});
+        crossroads.addRoute('/costsinstructions', () => {
+            loadPage('cost-instructions', App.initCosting);
+            window.scrollTo(0, 0);
+        });
+
 		crossroads.addRoute('/scores', () => {
 			hasher.setHash(`scores/p-1/1`)
 		});
