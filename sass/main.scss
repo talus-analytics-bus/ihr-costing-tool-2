@@ -87,6 +87,21 @@ select.form-control { width: auto; }
 .btn-primary:hover {
 	background-color: rgb(1, 41, 76);
 }
+.btn-secondary {
+	background-color: #fbfbfb;
+	border-color: #bbb;
+	color: #333;
+	padding: .5rem 1rem;
+	&:hover,
+	&.active {
+		background-color: #e6e6e6;
+		border-color: #adadad;
+		color: #333;
+	}
+	&.active {
+		box-shadow: inset 0 4px 6px rgba(0,0,0,.125);
+	}
+}
 
 /* Scrollable dropdown menus */
 .scrollable-dropdown {

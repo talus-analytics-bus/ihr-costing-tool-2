@@ -90,35 +90,33 @@
 
 	<!-- Footer -->
 	<div class="footer">
-		<div class="footer">
-			<table>
-				<tbody>
-					<tr>
-						<th>
-							<a href="https://www.georgetown.edu/" target="_blank">
-								<img
+		<table>
+			<tbody>
+				<tr>
+					<th>
+						<a href="https://www.georgetown.edu/" target="_blank">
+							<img
 								alt="Georgetown University"
 								class="logo-georgetown"
 								src="img/logo-georgetown.png"
-								/>
-							</a>
-						</th>
-						<th>
-							<span class="built-by">Built by</span>
-						</th>
-						<th>
-							<a href="http://www.talusanalytics.com" target="_blank">
-								<img
+							/>
+						</a>
+					</th>
+					<th>
+						<span class="built-by">Built by</span>
+					</th>
+					<th>
+						<a href="http://www.talusanalytics.com" target="_blank">
+							<img
 								alt="Talus Analytics"
 								class="logo-talus"
 								src="img/logo-talus.png"
-								/>
-							</a>
-						</th>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+							/>
+						</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 	<!-- TEMPLATES -->
@@ -480,42 +478,69 @@
 	<!-- Results page tempate -->
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
-			<div class="row">
-				<h1>Results</h1>
+			<h1>Results</h1>
+			<div class="score-improvement-container">
+				<span class="score-improvement-title">Score Improvement:</span>
+				<div class="rp-score-old rp-score-container"></div>
+				<div class="rp-score-to-text">to</div>
+				<div class="rp-score-new rp-score-container"></div>
 			</div>
-			<div class="row">
-				<div style="margin-top:7px;">Costing Time Horizon:&nbsp;&nbsp;&nbsp;</div>
-				<div class="time-horizon-buttons">
-					<div class="btn-group">
-						<button type="button" class="btn btn-secondary active">One Year</button>
-						<button type="button" class="btn btn-secondary">Five Years</button>
+			<div class="chart-tab-container">
+				<div class="btn-group">
+					<div class="btn btn-secondary active" ind="type">Cost Explorer</div>
+					<div class="btn btn-secondary" ind="time">Cost over Time</div>
+				</div>
+			</div>
+			<div class="chart-content" ind="time">
+				<div class="cost-chart-container"></div>
+				<div class="cost-chart-options">
+					<div class="cost-chart-option">
+						<span>View cost by:</span>
+						<select class="view-cost-by-select form-control">
+							<option value="core">Core Capacity</option>
+							<option value="capacity" selected>Capacity</option>
+						</select>
 					</div>
 				</div>
-				<br/><br/><br/>
 			</div>
-			<div class="row">
-				<svg class="summary-bullet-chart"></svg>
-			</div>
-			<div class="row">
-				<div class="section-header">Partitioning of Costs</div>
-			</div>
-			<div class="row">
-				<svg class="cost-partition-chart"></svg>
-			</div>
-			<div class="row">
-				<svg class="cost-partition-chart-2"></svg>
-			</div>
-			<div class="row" style="text-align: center">
-				<div class="min-max-container">
-					<div class="btn-group">
-						<button type="button" class="btn btn-secondary" tab="total">Total</button>
-						<button type="button" class="btn btn-secondary active" tab="startup">Startup</button>
-						<button type="button" class="btn btn-secondary" tab="capital">Capital</button>
-						<button type="button" class="btn btn-secondary" tab="recurring">Recurring</button>
+			<div class="chart-content" ind="type">
+				<div class="explorer-filters row">
+					<div class="col-sm-4">
+						<div class="explorer-filter-label">Core Capacity</div>
+						<select class="cc-select form-control" multiple="multiple"></select>
 					</div>
-					<div class="min-max-bar-chart-container">
-						<svg class="min-max-bar-chart"></svg>
+					<div class="col-sm-4">
+						<div class="explorer-filter-label">Capacity</div>
+						<select class="capacity-select form-control" multiple="multiple"></select>
 					</div>
+					<div class="col-sm-4">
+						<div class="explorer-filter-label">Category</div>
+						<select class="category-select form-control" multiple="multiple"></select>
+					</div>
+				</div>
+				<div class="explorer-summary">
+					<span class="summary-num-capacities"></span>
+					capacities,
+					<span class="summary-score-improvement"></span>
+					avg. score improvement
+				</div>
+				<div class="explorer-cost-summary row">
+					<div class="col-4">
+						<div class="explorer-startup-value explorer-cost-value"></div>
+						<div class="explorer-cost-text">Startup Cost</div>
+					</div>
+					<div class="col-4">
+						<div class="explorer-capital-value explorer-cost-value"></div>
+						<div class="explorer-cost-text">Capital Cost</div>
+					</div>
+					<div class="col-4">
+						<div class="explorer-recurring-value explorer-cost-value"></div>
+						<div class="explorer-cost-text">Recurring Cost (per year)</div>
+					</div>
+				</div>
+				<div class="explorer-cost-chart-container">
+					<div class="explorer-fixed-cost-chart"></div>
+					<div class="explorer-recurring-cost-chart"></div>
 				</div>
 			</div>
 		</div>
@@ -556,6 +581,7 @@
 <script src="lib/albers-usa-pr.js"></script>
 
 <!-- Other -->
+<script src="lib/popper.js"></script>
 <script src="lib/tether.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 <script src="lib/bootstrap-multiselect.js"></script>
@@ -574,6 +600,7 @@
 <script src="js/components/map.js"></script>
 <script src="js/pages/who.js"></script>
 <script src="js/pages/scores.js"></script>
+<script src="js/pages/results.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
 <script src="js/pages/assessment.js"></script>

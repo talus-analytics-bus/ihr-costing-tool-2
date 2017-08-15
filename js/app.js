@@ -46,33 +46,6 @@ const App = {};
 		});
 	}
 	
-	App.initResults = () => {
-
-		// Build summary bullet chart
-		Charts.buildSummaryBulletChart('.summary-bullet-chart');
-
-		// Build first cost partition chart
-		d3.queue()
-			.defer(d3.csv, 'data/notional_cost_data.csv')
-			.await((error, notional_data) => {
-				if (error) throw error;
-				Charts.buildCostPartitionChart('.cost-partition-chart', notional_data);
-			});
-
-		// Build second cost partition chart
-		d3.json('data/notional_cost_data_2.json', (error, notional_data) => {
-			if (error) throw error;
-			Charts.buildCostPartitionChart2('.cost-partition-chart-2', notional_data)
-		});
-
-		// Build min/max bar chart
-		d3.json('data/notional_cost_data_3.json', (error, notional_data) => {
-			if (error) throw error;
-			Charts.buildMinMaxBarChart('.min-max-bar-chart', notional_data)
-		});
-
-
-	};
 
 	/*
 	*	App.setupScoresTabs

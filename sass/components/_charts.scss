@@ -1,63 +1,84 @@
-.cost-partition-chart {
-	.node {
-		cursor: pointer;
-		//fill: #fff;
-		//stroke: black;
-		stroke-width: 2px;
+.tick text {
+	font-size: 1.05em;
+}
+.axis-label {
+	text-anchor: middle;
+	font-size: 0.85em;
+}
+
+
+/* --- Specific Charts --- */
+.rp-chart {
+	display: inline-block;
+
+	.rp-background {
+		fill: rgba(0,0,0,0.03);
 	}
-	.path {
+	.rp-outer { fill: #082b84; }
+	.rp-inner { fill: lightsteelblue; }
+	.rp-text {
+		font-weight: 600;
+		text-anchor: middle;
+	}
+}
+.cost-bar-chart {
+	.bar {
+		fill: steelblue;
+		stroke: white;
+	}
+	.selected-label {
+		font-size: 0.75em;
+	}
+	.total-label {
+		font-size: 0.85em;
+	}
+	.tick text {
+		font-size: 1.3em;
+	}
+}
+.cost-chart {
+	.line {
 		fill: none;
 		stroke: #ccc;
 	}
+	.total-line {
+		fill: none;
+		stroke: #1a237e;
+		stroke-width: 2;
+	}
+	.area {
+		fill: lightsteelblue;
+		stroke: none;
+	}
+	.label-line {
+		stroke: #333;
+		stroke-dasharray: 2,2;
+	}
 	.label-text {
-		font-weight: bold;
-		font-size: 20px;
+		font-size: 0.75em;
 	}
 }
+.cc-tooltip {
+	text-align: center;
+	padding: 10px;
 
-.cost-partition-chart-2 {
-	.node circle {
-	  fill: #fff;
-	  stroke: steelblue;
-	  stroke-width: 3px;
-	}
-
-	.node text {
-	  font: 12px sans-serif;
-	}
-
-	.link {
-	  fill: none;
-	  stroke: rgba(204,204,204,0.5);//#ccc;
-	  stroke-width: 2px;
-	}
-}
-
-.min-max-bar-chart {
-	.x-axis, .y-axis {
-		font-size: 1em;
-	}
-
-	.bar {
-		cursor: pointer;
-		//fill: steelblue;
-	}
-
-	.axis-label {
+	.cc-tooltip-title {
 		font-size: 1.2em;
-		font-weight: bold;
+		font-weight: 300;
+		color: #333;
 	}
-
-	path.domain {
-		stroke-width: 1.5px;
-
+	.cc-tooltip-block {
+		display: inline-block;
+		margin: 25px 15px 0;
 	}
-
-	.tick line {
-		stroke-width: 1.5px;
+	.cc-tooltip-block div:first-child {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.7em;
+		font-weight: 600;
+		color: #555;
 	}
-}
-
-.summary-bullet-chart {
-	
+	.cc-tooltip-block div:nth-child(2) {
+		margin-top: 8px;
+		font-size: 0.9em;
+	}
 }

@@ -53,4 +53,35 @@ const Util = {};
 
 		return output + '...';
 	};
+
+	/**
+	 * Populates a select element with the given data using d3
+	 */
+	Util.populateSelect = (selector, data, param={}) => {
+		if (typeof param.valKey === 'undefined') param.valKey = '';
+		if (typeof param.nameKey === 'undefined') param.nameKey = '';
+		
+		let options = d3.select(selector).selectAll('option')
+			.data(data);
+		options.exit().remove();
+		const newOptions = options.enter().append('option');
+		options = newOptions.merge(options)
+			.attr('value', (d) => {
+			  if (typeof param.valKey === 'function') return param.valKey(d);
+			  return (param.valKey === '') ? d : d[param.valKey];
+			})
+			.text(function(d) {
+			  if (typeof param.nameKey === 'function') return param.nameKey(d);
+			  return (param.nameKey === '') ? d : d[param.nameKey];
+			});
+		if (param.selected) {
+		  if (typeof param.selected === 'boolean') {
+		  	options.attr('selected', param.selected);
+		  } else if (typeof param.selected === 'function') {
+		    options.attr('selected', function() {
+		    	if (param.selected($(this).attr('value'))) return true;
+		    });
+		  }
+		}
+	};
 })();
