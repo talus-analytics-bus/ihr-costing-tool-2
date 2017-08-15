@@ -8,6 +8,7 @@ const App = {};
 	App.initialize = (callback) => {
 
 		// initiate behavior for navigation links
+		$('.tool-name').click(() => hasher.setHash(''));
 		$('.nav-item').click(function() {
 			hasher.setHash($(this).attr('page'));
 		});

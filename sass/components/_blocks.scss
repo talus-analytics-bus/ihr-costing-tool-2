@@ -3,24 +3,22 @@
 .block-link-capacities {
 
   .block-link-capabilities-header {
-    background-color: $mid-grey;
     position: relative;
     color: black;
-    padding: 10px 30px 10px 50px;
-    border-right: $border-light-minimal;
-    border-bottom: $border-light-minimal;
-    border-left: $border-light-minimal;
-    @include border-left-radius(25px);
-    @include box-shadow(-3px 0px 6px -3px rgba(0, 0, 0, 0.2));
-    @include noselect;
+    padding: 15px 30px;
+    border: 1px solid #999;
+    border-right: 1px solid #ccc;;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    background-color: $border-light-minimal;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-
+    @include border-left-radius(20px);
+    @include hori-gradient(#dae5f3, white);
+    @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
+    @include noselect;
   }
   .active {
-    background: white;
+    @include hori-gradient(#b0c4de, white);
   }
   .block-link {
     width: 90%;
@@ -46,11 +44,11 @@
   border-right: $border-light-minimal;
   border-bottom: $border-light-minimal;
   border-left: $border-light-minimal;
-  @include border-left-radius(25px);
-  @include box-shadow(-3px 0px 6px -3px rgba(0,0,0,0.2));
+  @include border-left-radius(20px);
+  @include hori-gradient(#f0f0f0, white);
+  @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
   cursor: pointer;
-  background-color: $border-light-minimal;
   
   &:first-child { border-top: $border-light-minimal; }
   &[level="1"] {

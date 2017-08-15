@@ -32,9 +32,8 @@
 	.total-label {
 		font-size: 0.85em;
 	}
-	.tick text {
-		font-size: 1.3em;
-	}
+	.x.axis .tick text { font-size: 1.1em; }
+	.y.axis .tick text { font-size: 1.3em; }
 }
 .cost-chart {
 	.line {
