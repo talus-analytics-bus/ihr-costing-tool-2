@@ -2,7 +2,7 @@
 	App.initWho = (ccClass) => {
 
 		/*Initialize country picker map*/
-		App.createCountryMap();
+		App.createLeafletMap();
 		switch(ccClass) {
             case 'currency':
                 initCurrencyTab();
@@ -56,6 +56,25 @@
 	*	Initialize the country picker dropdown on the country tab in Who Am I?
 	*/
 	initCountryTab = () => {
+
+        // event handler for selecting the country from dropdown
+        const selectCountryInMap = (geoJson, code) => {
+
+            geoJson.eachLayer((layer) => {
+                const layerAbbr = layer.feature.properties.iso_a2;
+                if (layerAbbr === code) {
+                    layer.setStyle({
+                        fillColor: 'red',
+                    });
+                } else {
+                    geoJson.resetStyle(layer);
+                }
+            });
+        };
+
+        // selected country will be stored in App.whoAmI object
+
+
 		if (App.whoAmI.hasOwnProperty('name')) {
             d3.select('.country-dropdown.dropdown > button')
                 .text(App.whoAmI.name);
@@ -69,9 +88,12 @@
 					.text(function(d) { return d.name})
 					.on('click', function (d) {
 						d3.select('.country-dropdown.dropdown > button').text(d.name);
-						countryDropdownToggle(d.abbreviation);
+						selectCountryInMap(App.geoJson, d.abbreviation);
 						App.whoAmI = JSON.parse(JSON.stringify(d));
 					});
+
+
+
 	};
 
 	initCurrencyTab = () => {
@@ -182,18 +204,4 @@
 
     }
 
-	/*
-	*	countryDropdownToggle
-	*	Set the map's active country to the dropdown selection
-	*/
-	countryDropdownToggle = (countryCode) => {
-		d3.selectAll(".country")
-        	.classed('active', false);
-		d3.selectAll('.country')
-			.each(function(d){
-				if (d.properties.code === countryCode) {
-					d3.select(this).classed('active',true);
-				}
-			});
-	};
 })();
