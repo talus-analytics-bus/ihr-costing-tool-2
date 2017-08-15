@@ -3,72 +3,13 @@
 		padding: .5rem 1.1rem;
 	}
 }
-.rotate-chevron {
-	-webkit-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	transform: rotate(90deg);
-}
-.indicator-progress-container {
-	.indicator-container {
-		margin-left: 60px;
-		margin-bottom: 35px;
-	}
-	.indicator-slot { 
-		width: 600px;
-		height: 40px;
-		padding: 0 20px;
-		border: 1px solid #CCCBCB;
-		cursor: pointer;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.indicator-flash-color {
-		background-color: $orange-lighten-4;
-	}
-
-	.indicator-slot.full {
-		//background: linear-gradient(#fff, #e6e7e8);
-	}
-	.indicator-slot.full:hover {
-		//background: linear-gradient(#fff, #ccc);
-	}
-	.indicator-slot.empty {
-		font-style: italic;
-		color: gray;
-	}
-	.indicator-slot.empty:hover {
-		color: black;
-	}
-	.indicator-slot.active {
-		font-weight: bold;
-		color: black;
-	}
-	.indicator-name,
-	.indicator-score {
-		// display: flex;
-		// vertical-align: middle;
-	}
-	.indicator-name {
-	}
-	.indicator-score {
-		// float: right;
-	}
-}
 .score-picker-container {
 	margin-left: 50px;
 	width:100%;
 
 
 }
-.indicator-description {
-	margin-left: 10px;
-}
 .score-picker-table {
-
-
-
 	font-family: Helvetica;
 	// .headers {
 	// 	font-weight: bold;

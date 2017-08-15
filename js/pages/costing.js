@@ -48,6 +48,23 @@
 		$('.fake-block').html('');
 
 
+		/*
+		* updateIndicatorProgress
+		* Updates message about how many indicators have been scored for the current
+		* core capacity
+		*/
+		function updateIndicatorProgress() {
+			// get name of tab block to use
+			const blockSelector = App.getActiveBlockSelector();
+
+			// get active block content
+			const block = d3.select(blockSelector);
+
+			const numInds = block.selectAll('.indicator-slot').nodes().length;
+			const numScored = block.selectAll('.full').nodes().length;
+			block.select('.indicator-progress').text(`${numScored} of ${numInds} indicators costed`);
+		};
+
 
 	    /*
 		* setupScoreTabContent
@@ -117,11 +134,84 @@
 
 			// add indicator score
 			indSlots.append('div')
-				.classed('indicator-score', true)
-				.text(d => d.score || 'No score');
+				.attr('class', 'indicator-score')
+				.html((d) => {
+					if (!d.score) return 'No score';
 
+					const score = +d.score;
+					if (score >= 4) {
+						return `<span class='score-text score-text-${score}'>${score}</span>`;
+					}
+
+					const t1 = `<span class='score-text score-text-${score}'>${score}</span>`;
+					const t2 = `<span class='score-text score-text-${score + 1}'>${score + 1}</span>`;
+					return `${t1} to ${t2}`;
+				});
+
+			// add button to edit score
+			indSlots.append('div')
+				.attr('class', 'indicator-edit-score-button')
+				.text('Edit Score')
+				.on('click', (d) => {
+					d3.event.stopPropagation();
+					hasher.setHash(`scores/${ccClass}/${indClass}`);
+				});
+
+			// set number of indicators scored and total number
+			updateIndicatorProgress();
 		};
 		setupScoreTabContent();
+
+		/*
+		 * Set up list of actions for user to choose from
+		 */
+		function setupActionContent() {
+			const ind = App.getIndicator(indId);
+
+			d3.select('.action-headers').selectAll('.action-header')
+				.data(ind.questions)  // TODO using questions right now
+				.enter().append('div')
+					.attr('class', 'action-header')
+					.text(d => d.name.slice(0, 20))
+					.on('click', (d) => {
+						showItemBlocks(d);
+					});
+		}
+		setupActionContent();
+
+		function showItemBlocks(action) {
+			const moneyFormat = d3.format('$.3s');
+
+			let items = d3.select('.item-block-container').selectAll('.item-block')
+				.data([action]);  // TODO needs to be line items for action
+			items.exit().remove();
+
+			// add HTML structure to each new item
+			const newItems = items.enter().append('div')
+				.attr('class', 'item-block');
+			newItems.append('div').attr('class', 'item-title');
+			newItems.append('div').attr('class', 'item-cost');
+			newItems.append('div')
+				.attr('class', 'item-select-button')
+				.text('Select');
+			newItems.append('div').attr('class', 'item-description');
+			const itemFooters = newItems.append('div').attr('class', 'item-footer');
+			itemFooters.append('div')
+				.attr('class', 'item-edit-cost-button')
+				.text('Edit Item Cost');
+			itemFooters.append('div')
+				.attr('class', 'item-view-details-button')
+				.text('View Details');
+
+			items = newItems.merge(items);
+			items.select('.item-title').text('Item Title');
+			items.select('.item-cost').text(moneyFormat(45e3));
+			items.select('.item-select-button').on('click', (d) => {
+				// user selects an action
+			});
+			items.select('.item-description').text('Description text...');
+		}
+		showItemBlocks(App.getIndicator(indId).questions);  // TODO need to change this
 		
 
 		// set titles for table cells to be equal to their text so
