@@ -25,10 +25,10 @@ const Routing = {};
 		crossroads.addRoute('/who', () => {
 			hasher.setHash(`who/country`);
 		});
-        crossroads.addRoute('/who/:{ccId}:', (ccId) => {
-            loadPage('who', App.initWho, ccId);
-            window.scrollTo(0, 0);
-        });
+		crossroads.addRoute('/who/:{ccId}:', (ccId) => {
+			loadPage('who', App.initWho, ccId);
+			window.scrollTo(0, 0);
+		});
 		crossroads.addRoute('/default', () => {
 			loadPage('default');
 			window.scrollTo(0, 0);

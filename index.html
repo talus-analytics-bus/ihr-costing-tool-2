@@ -371,42 +371,13 @@
 			<!-- TODO add tabs (block links) -->
 			<div class="block-link-container"></div>
 			<div class="block-container input-block-container">
-				<div class="block fake-block no-reset">
-					<h1 class="core-capacity-name"></h1>
-					<div class="capacity-description-container">
-						<div class="capacity-description-header">
-							<svg id="chevron" viewBox="0 0 24 24" class="capacity-description-header-chevron">
-								<path d="M8 5v14l11-7z"></path>
-							</svg>
-							<h3>Capacity Description</h3>
-						</div>
-						<div class="capacity-description-details">
-							<p> <b>Target: </b><span class="capacity-target"></span></p>
-							<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
-							<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
-						</div>
-					</div>
-
+				<div class="block">
+					<h1>Costing Page</h1>
+					<div class="core-capacity-name"></div>
+					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
 						<h3 class="indicator-progress">2 of 4 indicators scored</h3>
-						<div class="indicator-container">
-						<!-- 	<div class='indicator-slot p-3-1 full'>
-								<div class='indicator-name'>Antimicrobial resistance (AMR) detection</div>
-								<div class='indicator-score'>2</div>
-							</div>
-							<div class='indicator-slot p-3-2 full'>
-								<div class='indicator-name'>Surveillance of infections caused by AMR...</div>
-								<div class='indicator-score'>3</div>
-							</div>
-							<div class='indicator-slot p-3-3 empty active'>
-								<div class='indicator-name'>Healthcare associated infection (HCAI) prevention...</div>
-								<div class='indicator-score'>No score</div>
-							</div>
-							<div class='indicator-slot p-3-4 empty'>
-								<div class='indicator-name'>Antimicrobial stewardship activities</div>
-								<div class='indicator-score'>No score</div>
-							</div> -->
-						</div>
+						<div class="indicator-container"></div>
 					</div>
 					<h3 class='score-picker-header'>Assign score</h3>
 					<div class='score-picker-container'>
@@ -498,7 +469,7 @@
 		<div class="costs-container container container-wide">
 			<div class="block-link-container"></div>
 			<div class="block-container input-block-container">
-				<div class="block fake-block no-reset">
+				<div class="block">
 					<h1 class="core-capacity-name"></h1>
 					<div class="capacity-description-container">
 						<div class="capacity-description-header">
@@ -618,22 +589,20 @@
 		</div>
 	</script>
 	
-	<!-- Login template (not currently used) -->
-	<!-- <script id="login-template" type="text/x-handlebars-template">
-		<div class="login-container container">
-			<div class="login-box">
-				<div class="login-input-container">
-					<div class="login-input-label">Username</div>
-					<input class="username-input login-input form-control">
-				</div>
-				<div class="login-input-container">
-					<div class="login-input-label">Password</div>
-					<input type="password" class="password-input login-input form-control">
-				</div>
-				<div class="login-button btn btn-primary">Login</div>
-			</div>
+	<!-- Capacity Description Component -->
+	<script id="capacity-description-template" type="text/x-handlebars-template">
+		<div class="capacity-description-header">
+			<svg id="chevron" viewBox="0 0 24 24" class="capacity-description-header-chevron">
+				<path d="M8 5v14l11-7z"></path>
+			</svg>
+			<h4>Capacity Description</h4>
 		</div>
-	</script> -->
+		<div class="capacity-description-details">
+			<p> <b>Target: </b><span class="capacity-target"></span></p>
+			<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
+			<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
+		</div>
+	</script>
 </body>
 
 <!-- General Libraries -->
@@ -668,9 +637,11 @@
 <script src="js/utility.js"></script>
 <script src="js/user.js"></script>
 <script src="js/app.js"></script>
+<script src="js/components/capacityDescription.js"></script>
 <script src="js/components/colors.js"></script>
 <script src="js/components/charts.js"></script>
 <script src="js/components/map.js"></script>
+<script src="js/components/tabNavigation.js"></script>
 <script src="js/pages/who.js"></script>
 <script src="js/pages/scores.js"></script>
 <script src="js/pages/results.js"></script>

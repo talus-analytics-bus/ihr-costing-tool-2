@@ -5,8 +5,8 @@
 		$('.cost-instructions-start').click(()=>{hasher.setHash(`costs/`);});
 		$('.go-to-results-button').click(() => hasher.setHash('results'));
 
-		ccId = Util.getIndicatorId(ccClass);
-		indId = Util.getIndicatorId(ccClass + '-' + indClass);
+		const ccId = Util.getIndicatorId(ccClass);
+		const indId = Util.getIndicatorId(ccClass + '-' + indClass);
 
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
@@ -81,18 +81,11 @@
 			const ccIdArr = blockSelector.split('-');
 			const ccId = ccIdArr[0][1] + '.' + ccIdArr[1];
 
-			// set title of page to core capacity
+			// populate capacity description
+			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			App.buildCapacityDescription(ccId);
+
 			const cc = App.getCoreCapacity(ccId);
-			block.select('.core-capacity-name').text(cc.name);
-			block.select('.capacity-target').text(cc.target_description);
-			block.select('.capacity-desired-impact').text(cc.desired_impact);
-            block.select('.capacity-additional-notes').text(cc.notes);
-
-            $('.capacity-description-header').click(()=> {
-            	$('.capacity-description-details').toggle();
-            	$('#chevron').toggleClass("rotate-chevron");
-
-            });
 
 			// set description of indicator and the score descriptions
 			const ind = App.getIndicator(indId);
@@ -284,13 +277,5 @@
 
 		// update the hash history
 		App.prevHash = hasher.getHash();
-	};
-
-	/*
-	* getActiveBlockSelector
-	* Returns the active block selector for the score page
-	*/
-	App.getActiveBlockSelector = () => {
-		return '.' + d3.select('.block-link.active').attr('block-name') + '-block';
 	};
 })();

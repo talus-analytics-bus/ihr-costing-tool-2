@@ -2,12 +2,17 @@
 	.btn {
 		padding: .5rem 1.1rem;
 	}
+	.core-capacity-name {
+		color: #555;
+		font-size: 1.2em;
+		font-weight: 600;
+		margin-top: -10px;
+	}
 }
+
 .score-picker-container {
 	margin-left: 50px;
-	width:100%;
-
-
+	width: 100%;
 }
 .score-picker-table {
 	font-family: Helvetica;
