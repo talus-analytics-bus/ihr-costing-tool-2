@@ -1,38 +1,36 @@
 /* --- Block Link Content --- */
-
-.block-link-capacities {
-
-  .block-link-capabilities-header {
-    position: relative;
-    color: black;
-    padding: 15px 30px;
-    border: 1px solid #999;
-    border-right: 1px solid #ccc;;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    @include border-left-radius(20px);
-    @include hori-gradient(#dae5f3, white);
-    @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
-    @include noselect;
-  }
-  .active {
-    @include hori-gradient(#b0c4de, white);
-  }
-  .block-link {
-    width: 90%;
-    left: 10%;
-  }
-}
-
 .block-link-container {
   float: left;
   width: 365px;
 }
+.block-link-capabilities-header {
+  position: relative;
+  color: black;
+  padding: 15px 30px;
+  border: 1px solid #999;
+  border-right: 1px solid #ccc;;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  @include border-left-radius(20px);
+  @include hori-gradient(#f0f0f0, white);
+  @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
+  @include noselect;
 
+  &.active {
+    @include hori-gradient(#dae5f3, white);
+  }
+  .chevron {
+    top: 3px;
+    width: 24px;
+    height: 19px;
+  }
+}
 .block-link {
   position: relative;
+  width: 90%;
+  left: 10%;
   padding: 10px 30px 10px 30px;
   border-right: 1px solid #999;
   border-bottom: 1px solid #999;
@@ -63,7 +61,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    background-color: white;
+    @include hori-gradient(#b0c4de, white);
   }
 }
 .block-link-cover {
@@ -74,9 +72,9 @@
   height: 100%;
   @include border-left-radius(25px);
   background-color: transparent;
-}
-.block-link-cover:hover {
-  //@include hori-gradient(rgba(0,0,0,0.04), transparent);
+  &:hover {
+    @include hori-gradient(rgba(0,0,0,0.04), transparent);
+  }
 }
 .block-link-title {
   font-size: 1.1em;
@@ -107,8 +105,6 @@
   margin: 20px 0px;
   max-width: 750px;
   text-align: left;
-  &.block-description-wide { max-width: 850px; }
-  &.radio-box-description { margin-bottom: 10px; }
 }
 .input-block-container {
   margin-left: 350px;

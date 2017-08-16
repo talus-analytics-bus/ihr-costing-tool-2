@@ -7,7 +7,7 @@ const Util = {};
 	*	For the given indicator ID, returns its CSS class
 	*/
 	Util.getIndicatorClass = (id) => {
-		return id.toLowerCase().split('.').join('-');
+		return id.split('.').join('-');
 	};
 
 	/*
@@ -15,7 +15,7 @@ const Util = {};
 	*	For the given indicator class, returns its ID
 	*/
 	Util.getIndicatorId = (selector) => {
-		return selector.toUpperCase().split('-').join('.');
+		return selector.split('-').join('.');
 	};
 
 	/*

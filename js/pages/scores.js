@@ -1,19 +1,20 @@
 (() => {
-	App.initScores = (ccClass, indClass) => {
-		const ccId = Util.getIndicatorId(ccClass);
-		const indId = Util.getIndicatorId(ccClass + '-' + indClass);
+	App.initScores = (capClass, indClass) => {
+		console.log(capClass, indClass);
+		const capId = Util.getIndicatorId(capClass).toLowerCase();
+		const indId = Util.getIndicatorId(capClass + '-' + indClass).toLowerCase();
 
 
 		/* --------------- Input Block Overview and Links -------------- */		
 
 		function buildContent() {
-			App.buildTabNavigation('.block-container.input-block-container', ccClass);
+			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 		}
 
 		function buildCapacityDescription() {
 			$('.capacity-description-container').html(Routing.templates['capacity-description']());
-			App.buildCapacityDescription(ccId);
+			App.buildCapacityDescription(capId);
 		}
 
 
@@ -27,10 +28,10 @@
 		if (!App.prevHash) App.prevHash = '';
 		const prevHashArr = App.prevHash.split('/');
 
-		if (prevHashArr[0] !== 'scores' || prevHashArr[1] !== ccClass) {
-			//$(`.${ccClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		if (prevHashArr[0] !== 'scores' || prevHashArr[1] !== capClass) {
+			//$(`.${capClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
 		}
-		
+
 
 		/*
 		* updateIndicatorScore
@@ -39,7 +40,7 @@
 		*/
 		function updateIndicatorScore(indId, newScore) {
 			// get current indicator score selection
-			const indSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
+			const indSlot = d3.select(`.indicator-slot.${capClass}-${indClass}`);
 
 			if (newScore === undefined) newScore = '';
 			if (newScore !== '') {
@@ -67,15 +68,15 @@
 			// flash the indicator slot the appropriate color
 			const animationDuration = 250; // msec
             const indicatorFlashColor = "#ffe0b2";
-            $(`.indicator-slot.${ccClass}-${indClass}`).css('background','none');
-            $(`.indicator-slot.${ccClass}-${indClass}`).animate({
+            $(`.indicator-slot.${capClass}-${indClass}`).css('background','none');
+            $(`.indicator-slot.${capClass}-${indClass}`).animate({
                 'background-color': indicatorFlashColor
             }, animationDuration, function() {
-                $(`.indicator-slot.${ccClass}-${indClass}`).animate({
+                $(`.indicator-slot.${capClass}-${indClass}`).animate({
                     'background-color': 'none'
                 }, animationDuration, function() {
                     // Animation complete.
-                    $(`.indicator-slot.${ccClass}-${indClass}`).css('background','');
+                    $(`.indicator-slot.${capClass}-${indClass}`).css('background','');
 
                 });
             });
@@ -106,7 +107,7 @@
 		* Populates each CC's score tab content
 		*/
 		function setupScoreTabContent() {
-			const cc = App.getCoreCapacity(ccId);
+			const cc = App.getCoreCapacity(capId);
 
 			// set description of indicator and the score descriptions
 			const ind = App.getIndicator(indId);
@@ -139,7 +140,7 @@
 
 					})
 					.on('click', function(d, i) {
-						hasher.setHash(`scores/${ccClass}/${i+1}`);
+						hasher.setHash(`scores/${capClass}/${i+1}`);
 					});
 
 			// add indicator name
@@ -165,7 +166,7 @@
 			} else {
 				if (indClass === undefined) indClass = '1';
 				indSlots.data(inds);
-				const activeSlot = d3.select(`.indicator-slot.${ccClass}-${indClass}`);
+				const activeSlot = d3.select(`.indicator-slot.${capClass}-${indClass}`);
 				activeSlot.classed('active', true);
 				// if active indicator has score, set that in the score
 				// picker
@@ -242,45 +243,45 @@
 			'r': {next: 'r', prev:'d', max: 5, min: 1}
 		};
 		d3.select('.next-score').on('click', function () {
-			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+			const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
 			if (parseInt(indClass) === indsCount) {
-				if (ccClass === 'r-5' && indClass === '5') {
+				if (capClass === 'r-5' && indClass === '5') {
 					// no-op
 				}
-				else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
-					hasher.setHash(`scores/${nextHash[ccClass[0]].next}-1/${1}`);
+				else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
+					hasher.setHash(`scores/${nextHash[capClass[0]].next}-1/${1}`);
 				}
 				else {
-					hasher.setHash(`scores/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
+					hasher.setHash(`scores/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
 				}
 			} else {
-				hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
+				hasher.setHash(`scores/${capClass}/${parseInt(indClass) + 1}`);
 			}
 		});
 
         d3.select('.previous-score').on('click', function () {
-             const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+             const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
             //if (parseInt(indClass) === indsCount) {
-            if (ccClass === 'p-1' && indClass === '1') {
+            if (capClass === 'p-1' && indClass === '1') {
                 // no-op
             }
-            else if (ccClass[0] !== 'p' && (parseInt(ccClass[2]) === 1 && parseInt(indClass) === 1)) {
+            else if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
                   	// go back one major block (e.g. d-1)
-                    let prevClass = nextHash[ccClass[0]].prev + '-' + nextHash[nextHash[ccClass[0]].prev].max;
+                    let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
                     hasher.setHash(`scores/${prevClass}/${1}`);
-            } else if (parseInt(indClass) === nextHash[ccClass[0]].min) {
+            } else if (parseInt(indClass) === nextHash[capClass[0]].min) {
             	// go back one minor block
-				  const prevInd = ccClass[0]+'-'+(parseInt(ccClass[2])-1)
+				  const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
                 hasher.setHash(`scores/${prevInd}/${1}`);
             }
 			else {
             	// go back one indicator
 
-                hasher.setHash(`scores/${ccClass}/${(indClass - 1)}`);
+                hasher.setHash(`scores/${capClass}/${(indClass - 1)}`);
             }
 
             //} else {
-              //  hasher.setHash(`scores/${ccClass}/${parseInt(indClass) + 1}`);
+              //  hasher.setHash(`scores/${capClass}/${parseInt(indClass) + 1}`);
             //}
         });
 
