@@ -17,66 +17,6 @@
 		const blocksShowing = blockTmp.blocksShowing;
 		const blockParents = blockTmp.blockParents;
 
-		// const blocks = {
-		//   "p-1": {},
-		//   "p-2": {},
-		//   "p-3": {},
-		//   "p-4": {},
-		//   "p-5": {},
-		//   "p-6": {},
-		//   "p-7": {}
-		// }
-
-		/*const blockParents ={
-			"p":blocksShowing;
-		}*/
-
-		// // define blocksShowing
-		// const blocksShowing = [
-		//   {
-		//     "abbr": "p-1",
-		//     "name": "National Legislation, Policy, and Financing",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-2",
-		//     "name": "IHR Coordination, Communication and Advocacy",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-3",
-		//     "name": "Antimicrobial Resistance (AMR)",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-4",
-		//     "name": "Zoonotic Disease",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-5",
-		//     "name": "Food Safety",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-6",
-		//     "name": "Biosafety and Biosecurity",
-		//     "level": 0,
-		//     "status": ""
-		//   },
-		//   {
-		//     "abbr": "p-7",
-		//     "name": "Immunization",
-		//     "level": 0,
-		//     "status": ""
-		//   }
-		// ];
-
 		// This code addes all of the individual indicators to score (p-1, p-2, p-3, etc)
 		addCoreCapacityTabs = () => {
 			const block = d3.select('.block-container.input-block-container').selectAll('block')

@@ -29,6 +29,11 @@
   }
 } // .block-link-capabilities
 
+.block-link-costing {
+  .block-link {
+    background-color: $light-grey;
+  }
+}
 .block-link-container {
   float: left;
   width: 365px;
@@ -118,7 +123,7 @@
 }
 .block-content { margin-top: 5px; }
 .block-description {
-  margin: 20px 0px;
+  margin: 20px 0px 0px 0px;
   max-width: 750px;
   text-align: left;
   &.block-description-wide { max-width: 850px; }

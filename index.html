@@ -179,7 +179,7 @@
 	<script id="who-template" type="text/x-handlebars-template">
 		<div class="container container-wide who-container">
 			<!-- TODO add tabs (block links) -->
-			<div class="block-link-container"></div>
+			<div class="block-link-container block-link-costing"></div>
 			<div class="block-container input-block-container">
 				<div class="block country-block no-reset">
 					<div class="block-title">
@@ -187,7 +187,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Choose country
+							Choose country:
 						</div>
 						<div class="country-dropdown-container">
 							<div class="country-dropdown dropdown">
@@ -207,7 +207,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Placeholder: Currency select (dropdown)
+							Choose Currency:
 						</div>
 						<div class="currency">
 							<div class="currency__container dropdown">
@@ -226,7 +226,7 @@
 					</div>
 					<div class="block-content population-block">
 						<div class="block-description">
-							Placeholder: Population and districts entry (text fields with defaults)
+							Please enter the population and districts details
 						</div>
 						<form id="pop-dist">
 							<fieldset>
@@ -299,6 +299,9 @@
 								</div>
 							</fieldset>
 						</form>
+						<div class="btn-col col-sm-12 center">
+							<button type="button" class="btn btn-primary overview-start">Continue</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -14,6 +14,7 @@ const App = {};
             }
 		});
 
+		// add the hrefs to the dropdown menu items
         $('.dropdown-item').click(function() {
             hasher.setHash($(this).attr('page'));
         });
@@ -34,11 +35,13 @@ const App = {};
 		.defer(d3.json, 'data/country-params.json')
 		.defer(d3.json, 'data/jeeTree.json')
 		.defer(d3.json, 'data/currencies.json')
-		.await((error, countryParams, jeeTree, currencies) => {
+		.defer(d3.json, 'data/global_base_costs.json')
+		.await((error, countryParams, jeeTree, currencies, globalBaseCosts) => {
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
+			App.globalBaseCosts = globalBaseCosts;
 			App.whoAmI = {};
 			
 			// launch callback fcn in arguments
@@ -265,12 +268,12 @@ const App = {};
 			if (typeof blockLinkEle === 'undefined') var blockLinkEle = d3.select('.block-link[block-name="' + blockAbbr + '"]');		
 			blockLinkEle.style('background', function(d) {
 				var bgColor = (blockAbbr === currBlockAbbr && (d.status === '' || d.status === 'default')) ? '#f0f0f0' : blockModeColors[d.status];
-				if (d.status==='default') {
+				/*if (d.status==='default') {
 					return ""; // don't show any gradient for default
 				}
 				else {
                     return 'linear-gradient(to right, ' + bgColor + ', white)';
-				}
+				}*/
 
 			});
 		};
@@ -658,7 +661,8 @@ const App = {};
             if (typeof blockLinkEle === 'undefined') var blockLinkEle = d3.select('.block-link[block-name="' + blockAbbr + '"]');
             blockLinkEle.style('background', function(d) {
                 var bgColor = (blockAbbr === currBlockAbbr && (d.status === '' || d.status === 'default')) ? '#f0f0f0' : blockModeColors[d.status];
-                return 'linear-gradient(to right, ' + bgColor + ', white)';
+                //return 'linear-gradient(to right, ' + bgColor + ', white)';
+				return;
             });
         };
 
