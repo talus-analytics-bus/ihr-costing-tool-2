@@ -55,7 +55,7 @@ const Routing = {};
 				hasher.setHash(`scores/${ccId}/${indId}`)
 			}
 			loadPage('scores', App.initScores, ccId, indId);
-			window.scrollTo(0, 0);
+			//window.scrollTo(0, 0);
 		});
 
 		crossroads.addRoute('/costsinstructions', () => {

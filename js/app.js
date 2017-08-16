@@ -1,6 +1,13 @@
 const App = {};
 
 (() => {
+	App.scoreLabels = {
+		1: 'No Capacity',
+		2: 'Limited Capacity',
+		3: 'Developed Capacity',
+		4: 'Demonstrated Capacity',
+		5: 'Sustainable Capacity',
+	};
 
 	/*
 	*	Initialize basic app behaviors
@@ -225,9 +232,6 @@ const App = {};
             if (animate) setTimeout(function() { toggleBlockTooltip(currBlockAbbr, true); }, 410);
             else toggleBlockTooltip(currBlockAbbr, true);
 
-            // if opened up eagle i block, mark as completed
-            if (currBlockAbbr === 'eaglei') updateBlockStatus('eaglei', true);
-
             // fix borders for when children are showing
             if (blockInfo.hasOwnProperty('children') || blockInfo.hasOwnProperty('parent')) {
                 blockLink.nextAll('[level="0"]:first')
@@ -247,29 +251,6 @@ const App = {};
                 var bgColor = (blockAbbr === currBlockAbbr && (d.status === '' || d.status === 'default')) ? '#f0f0f0' : blockModeColors[d.status];
                 return 'linear-gradient(to right, ' + bgColor + ', white)';
             });
-        };
-
-        // show or hide the tooltips for a block
-        var toggleBlockTooltip = function(blockAbbr, show) {
-            var blockInfo = getBlockInfo(blockAbbr);
-            if (blockInfo.hasOwnProperty('tooltipElements')) {
-                var tooltipElements = [];
-                var tooltipEleDict = blockInfo.tooltipElements;
-                for (var ind in tooltipEleDict) {
-                    if (show) {
-                        // if not default, add element to tooltipster collection to show or hide
-                        if (blockInfo.hasOwnProperty('tooltipShowFn') && blockInfo.tooltipShowFn.hasOwnProperty(ind)) {
-                            blockInfo.tooltipShowFn[ind](blockInfo.isDefault[ind]);
-                        } else {
-                            if (!blockInfo.isDefault[ind]) tooltipElements.push(tooltipEleDict[ind]);
-                        }
-                    } else {
-                        tooltipElements.push(tooltipEleDict[ind]);
-                    }
-                }
-                var displayStr = show ? 'show' : 'hide';
-                if ($(tooltipElements.join(', ')).hasClass('tooltipstered')) $(tooltipElements.join(', ')).tooltipster(displayStr);
-            }
         };
 
 

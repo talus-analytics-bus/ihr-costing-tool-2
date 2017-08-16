@@ -3,106 +3,90 @@
 		padding: .5rem 1.1rem;
 	}
 	.core-capacity-name {
-		color: #444;
-		font-size: 1.2em;
+		color: #333;
+		font-size: 1.3em;
 		font-weight: 600;
-		margin-top: -10px;
+		margin-top: -5px;
 	}
 }
-
+.score-instructions {
+	margin-top: 20px;
+}
 .score-picker-container {
-	margin-left: 50px;
+	margin-left: 20px;
 	width: 100%;
 }
 .score-picker-table {
 	font-family: Helvetica;
-	// .headers {
-	// 	font-weight: bold;
-	// }
-	.headers.score {
-		// width: 250px;
-		font-weight: bold;
-	}
-	.headers.description {
-		font-weight: bold;
-		// width: 600px;
-	}
-	.btn.toggle-score-descriptions {
-		margin-left: 5px;
-	}
-	.custom-control.custom-radio {
-		bottom: 5px;
-		margin-right: 5px;
-		padding-left: 0;
-	}
-	.custom-radio .custom-control-indicator {
-		border-radius: 10%;
-		border: solid 1px gray;
-	}
-	.custom-radio .custom-control-input:checked~.custom-control-indicator {
-		background-image: none;
-		//background-color: rgb(48, 113, 169);
-		background-color: black;
-	}
-	.custom-control-input {
-		position: relative;
-	}
+	margin-top: 20px;
+
+	thead td { font-weight: 600; }
 	td {
-		padding-top:10px;
-		padding-bottom:10px;
-		padding-right:10px;   
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-right: 10px;   
 		width: 700px;
 	}
-
 	td:first-child {
-		padding-left:10px;
-		padding-right:0;
+		padding-left: 10px;
+		padding-right: 0;
 		width: 350px;
 	}
-
 	td::after {
-		display:block;
-		content:attr(content);
-		font-weight:bold;
-		height:1px;
-		color:transparent;
-		overflow:hidden;
-		visibility:hidden;
+		display: block;
+		content: attr(content);
+		font-weight: bold;
+		height: 1px;
+		color: transparent;
+		overflow: hidden;
+		visibility: hidden;
 	}
+}
+.score-row {
+	cursor: pointer;
+	transition: background-color .5s ease;
+	vertical-align: top;
 
-	.score-row {
-		cursor: pointer;
-		transition: background-color .5s ease;
-		vertical-align: top;
-	}
-
-	.score-row.active {
-		font-weight: 600;
-	}
-
-	.score-row._1.active,
-	.score-row._1:hover {
+	&.active { font-weight: 600; }
+	&:first-child.active,
+	&:first-child:hover {
 		background-color: rgba($jeeRed, 0.3);
 	}
-	.score-row._2.active,
-	.score-row._2:hover,
-	.score-row._3.active,
-	.score-row._3:hover{
+	&:nth-child(2).active,
+	&:nth-child(2):hover,
+	&:nth-child(3).active,
+	&:nth-child(3):hover{
 		background-color: rgba($jeeYellow, 0.3);
 	}
-	.score-row._4.active,
-	.score-row._4:hover,
-	.score-row._5.active,
-	.score-row._5:hover {
+	&:nth-child(4).active,
+	&:nth-child(4):hover,
+	&:nth-child(5).active,
+	&:nth-child(5):hover {
 		background-color: rgba($jeeGreen, 0.5);
 	}
-}
-.btn-col {
-	padding-left: 5px;
-	padding-right: 5px;
-	min-height: none;
-}
 
+	td:first-child input {
+		position: relative;
+		top: 1px;
+		margin-right: 15px;
+	}
+	.rp-score-table-img {
+		position: relative;
+		top: -1px;
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+	}
+}
+.nav-buttons-container {
+	margin-top: 30px;
+
+	.btn-col {
+		padding-left: 5px;
+		padding-right: 5px;
+		min-height: none;
+	}
+}
 
 
 /* Flash class and keyframe animation */

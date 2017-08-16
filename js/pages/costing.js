@@ -1,50 +1,38 @@
-// All code for the Costing page should go here
-
 (() => {
-	App.initCosting = (ccClass, indClass) => {
-		$('.cost-instructions-start').click(()=>{hasher.setHash(`costs/`);});
+	App.initCosting = (capClass, indClass) => {
+		const capId = Util.getIndicatorId(capClass);
+		const indId = Util.getIndicatorId(capClass + '-' + indClass);
+
 		$('.go-to-results-button').click(() => hasher.setHash('results'));
 
-		const ccId = Util.getIndicatorId(ccClass);
-		const indId = Util.getIndicatorId(ccClass + '-' + indClass);
+
+		/* --------------- Input Block Overview and Links -------------- */		
+
+		function buildContent() {
+			App.buildTabNavigation('.block-link-container', capId);
+			buildCapacityDescription();
+		}
+
+		function buildCapacityDescription() {
+			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			App.buildCapacityDescription(capId);
+		}
 
 
-		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
+		/* --------------- --------------------- Old Code ------------------ -------------- */		
 		
-		const blockTmp = App.generateBlockData();
-		// define blocks
-		const blocks = blockTmp.blocks;
-		const blocksShowing = blockTmp.blocksShowing;
-		const blockParents = blockTmp.blockParents;
-
-
-		// This code addes all of the individual indicators to score (p-1, p-2, p-3, etc)
-		function addCoreCapacityTabs() {
-			const block = d3.select('.block-container.input-block-container').selectAll('block')
-				.data(blocksShowing)
-				.enter().append('div')
-					.attr('class', (d) =>  {
-						return `block ${d.abbr}-block no-reset`;
-					});
-		};
-		addCoreCapacityTabs();
-
-		
-		// call function to render the tabs
-		App.setupScoresTabs(blocksShowing, blocks, ccClass, blockParents);
-
 		// TODO if previous hash was this CC, don't slide
 		if (!App.prevHash) App.prevHash = '';
 		const prevHashArr = App.prevHash.split('/');
 
-		if (prevHashArr[0] !== 'costs' || prevHashArr[1] !== ccClass) {
-			$(`.${ccClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		if (prevHashArr[0] !== 'costs' || prevHashArr[1] !== capClass) {
+			$(`.${capClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
 		}
 
 		// DEMO show the fake-block html in the AMR example
 		// TODO setup the block content dynamically
 		const demoScoringHtml = $('.fake-block').html();
-		$(`.${ccClass.toLowerCase()}-block`).html(demoScoringHtml);
+		$(`.${capClass.toLowerCase()}-block`).html(demoScoringHtml);
 		$('.fake-block').html('');
 
 
@@ -54,15 +42,9 @@
 		* core capacity
 		*/
 		function updateIndicatorProgress() {
-			// get name of tab block to use
-			const blockSelector = App.getActiveBlockSelector();
-
-			// get active block content
-			const block = d3.select(blockSelector);
-
-			const numInds = block.selectAll('.indicator-slot').nodes().length;
-			const numScored = block.selectAll('.full').nodes().length;
-			block.select('.indicator-progress').text(`${numScored} of ${numInds} indicators costed`);
+			const numInds = d3.selectAll('.indicator-slot').nodes().length;
+			const numScored = d3.selectAll('.full').nodes().length;
+			d3.select('.indicator-progress').text(`${numScored} of ${numInds} indicators costed`);
 		};
 
 
@@ -71,28 +53,14 @@
 		* Populates each CC's score tab content
 		*/
 		function setupScoreTabContent() {
-			// get name of tab block to use
-			const blockSelector = App.getActiveBlockSelector();
-
-			// get active block content
-			const block = d3.select(blockSelector);
-
-			// get corresponding CC ID
-			const ccIdArr = blockSelector.split('-');
-			const ccId = ccIdArr[0][1] + '.' + ccIdArr[1];
-
-			// populate capacity description
-			$('.capacity-description-container').html(Routing.templates['capacity-description']());
-			App.buildCapacityDescription(ccId);
-
-			const cc = App.getCoreCapacity(ccId);
+			const cc = App.getCoreCapacity(capId);
 
 			// set description of indicator and the score descriptions
 			const ind = App.getIndicator(indId);
 			$('.indicator-description').text(ind.name);
 
 			// select indicator container that holds the slots
-			const indContainer = block.select('.indicator-container');
+			const indContainer = d3.select('.indicator-container');
 
 			// add indicators to slots
 			const inds = cc.indicators;
@@ -115,7 +83,7 @@
 
 					})
 					.on('click', function(d, i) {
-						hasher.setHash(`costs/${ccClass}/${i+1}`);
+						hasher.setHash(`costs/${capClass}/${i+1}`);
 					});
 
 			// add indicator name
@@ -139,15 +107,6 @@
 					const t1 = `<span class='score-text score-text-${score}'>${score}</span>`;
 					const t2 = `<span class='score-text score-text-${score + 1}'>${score + 1}</span>`;
 					return `${t1} to ${t2}`;
-				});
-
-			// add button to edit score
-			indSlots.append('div')
-				.attr('class', 'indicator-edit-score-button')
-				.text('Edit Score')
-				.on('click', (d) => {
-					d3.event.stopPropagation();
-					hasher.setHash(`scores/${ccClass}/${indClass}`);
 				});
 
 			// add cost for each indicator
@@ -233,49 +192,51 @@
 			'r': {next: 'r', prev:'d', max: 5, min: 1}
 		};
 		d3.select('.next-cost').on('click', function () {
-			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+			const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
 			if (parseInt(indClass) === indsCount) {
-				if (ccClass === 'r-5' && indClass === '5') {
+				if (capClass === 'r-5' && indClass === '5') {
 					// no-op
 				}
-				else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
-					hasher.setHash(`costs/${nextHash[ccClass[0]].next}-1/${1}`);
+				else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
+					hasher.setHash(`costs/${nextHash[capClass[0]].next}-1/${1}`);
 				}
 				else {
-					hasher.setHash(`costs/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
+					hasher.setHash(`costs/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
 				}
 			} else {
-				hasher.setHash(`costs/${ccClass}/${parseInt(indClass) + 1}`);
+				hasher.setHash(`costs/${capClass}/${parseInt(indClass) + 1}`);
 			}
 		});
 
         d3.select('.previous-cost').on('click', function () {
-             const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
+             const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
             //if (parseInt(indClass) === indsCount) {
-            if (ccClass === 'p-1' && indClass === '1') {
+            if (capClass === 'p-1' && indClass === '1') {
                 // no-op
             }
-            else if (ccClass[0] !== 'p' && (parseInt(ccClass[2]) === 1 && parseInt(indClass) === 1)) {
+            else if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
                   	// go back one major block (e.g. d-1)
-                    let prevClass = nextHash[ccClass[0]].prev + '-' + nextHash[nextHash[ccClass[0]].prev].max;
+                    let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
                     hasher.setHash(`costs/${prevClass}/${1}`);
-            } else if (parseInt(indClass) === nextHash[ccClass[0]].min) {
+            } else if (parseInt(indClass) === nextHash[capClass[0]].min) {
             	// go back one minor block
-				  const prevInd = ccClass[0]+'-'+(parseInt(ccClass[2])-1)
+				  const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
                 hasher.setHash(`costs/${prevInd}/${1}`);
             }
 			else {
             	// go back one indicator
 
-                hasher.setHash(`costs/${ccClass}/${(indClass - 1)}`);
+                hasher.setHash(`costs/${capClass}/${(indClass - 1)}`);
             }
 
             //} else {
-              //  hasher.setHash(`costs/${ccClass}/${parseInt(indClass) + 1}`);
+              //  hasher.setHash(`costs/${capClass}/${parseInt(indClass) + 1}`);
             //}
         });
 
 		// update the hash history
 		App.prevHash = hasher.getHash();
+
+		buildContent();
 	};
 })();
