@@ -25,9 +25,8 @@
 			const cc = App.getCoreCapacity(capId);
 			const ind = App.getIndicator(indId);
 
-			// update number of indicators complete, and indicator description
+			// update number of indicators complete
 			updateIndicatorProgress();
-			$('.indicator-description').text(ind.name);
 
 			// add indicators to slots
 			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
@@ -43,7 +42,7 @@
 			// add indicator name
 			indSlots.append('div')
 				.attr('class', 'indicator-name')
-				.text(d => Util.truncateText(d.name));
+				.text(d => `${d.id.toUpperCase()} - ${Util.truncateText(d.name)}`);
 
 			// add indicator score
 			const scoreContainer = indSlots.append('div')
@@ -62,6 +61,9 @@
 						return +User.getIndicatorScore(d.id) === i ? 'inline' : 'none';
 					});
 			}
+
+			// add description
+			$('.indicator-description').html(`${indId.toUpperCase()} - ${ind.name}`);
 		}
 
 		// build the score picker table
@@ -117,7 +119,7 @@
 		function updateIndicatorProgress() {
 			const cc = App.getCoreCapacity(capId);
 			const numInds = cc.indicators.length;
-			const numScored = numInds - d3.selectAll('.empty').nodes().length;
+			const numScored = cc.indicators.filter(ind => ind.score).length;
 			d3.select('.indicator-progress')
 				.text(`Select a score for each indicator (${numScored} of ${numInds}):`);
 		};

@@ -43,7 +43,7 @@
 				});
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')
-			.html(d => d.name);
+			.html(d => `${d.id.toUpperCase()} - ${d.name}`);
 		blockLinks.append('div').attr('class', 'block-link-cover');
 	};
 })();

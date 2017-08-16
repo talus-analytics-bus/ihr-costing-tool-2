@@ -23,27 +23,14 @@ const Util = {};
 	*	For the given string, truncate to specified number of
 	*	characters, and round down to the nearest whole word
 	*/
-	Util.truncateText = (str, nMaxChar) => {
-		// set default  value for nMaxChar
-		if (nMaxChar === undefined) nMaxChar = 40;
-
-		// get str length
-		const length = str.length;
-
-		// split the str by space
+	Util.truncateText = (str, nMaxChar=30) => {
 		const words = str.split(' ');
+		if (words.length === 1 || str.length <= nMaxChar) return str;
 
-		if (words.length === 1 || length <= nMaxChar ) return str;
-
-		// init output string
+		// init output string, char counter, loop var
 		let output = '';
-
-		// init char counter
 		let charCount = 0;
-
-		// init loop var
 		let i = 0;
-
 		while (i < words.length && (charCount + words[i].length) < nMaxChar) {
 			if (i > 0) output += ' ';
 			output += words[i];
