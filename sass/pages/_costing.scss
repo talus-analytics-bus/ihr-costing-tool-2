@@ -1,0 +1,91 @@
+.action-container {
+	margin: 20px 0;
+	background-color: #e0e0e0;
+	border: 1px solid #ccc;
+}
+.choose-action-instructions {
+	font-style: italic;
+	margin-top: 10px;
+}
+.action-headers {
+	padding: 10px 20px 5px;
+	border-bottom: 1px solid #999;
+	@include gradient(#f0f0f0, #f6f6f6);
+
+	.action-header-title {
+		font-weight: 600;
+		font-variant: small-caps;
+		margin-bottom: -2px;
+	}
+	.action-header {
+		margin: 5px 0 5px 15px;
+		color: #444;
+		font-size: 0.9em;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.action-header:hover {
+		color: #000;
+	}
+	.action-header.active {
+		color: #000;
+		font-weight: 600;
+		text-decoration: underline;
+	}
+	.action-header input {
+		position: relative;
+		top: 1px;
+		margin-right: 5px;
+	}
+}
+.item-block-container {
+	padding: 15px;
+
+	.item-block {
+		display: inline-block;
+		position: relative;
+		margin: 0 15px;
+		padding: 15px 30px;
+		border: 1px solid #999;
+		text-align: center;
+		width: 300px;
+		height: 420px;
+		vertical-align: top;
+		@include gradient(#f0f0f0, #fff);
+		@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
+	}
+	.item-title {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.2em;
+	}
+	.item-cost {
+		margin-top: 10px;
+		font-size: 1.6em;
+		font-weight: 600;
+	}
+	.item-select-button {
+		margin-top: 20px;
+		display: inline-block;
+		padding: 2px 35px;
+		font-size: 0.8rem;
+		@include border-radius(0);
+	}
+	.item-description {
+		margin-top: 20px;
+		text-align: left;
+	}
+	.item-footer {
+		position: absolute;
+		bottom: 15px;
+	}
+	.item-edit-cost-button,
+	.item-view-details-button {
+		display: inline-block;
+		padding: 2px 15px;
+		border: 1px solid #999;
+		font-size: 0.9rem;
+		&:nth-child(n+2) {
+			margin-left: 10px;
+		}
+	}
+}

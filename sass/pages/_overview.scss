@@ -1,13 +1,5 @@
 .overview-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  max-width: 900px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  padding: 20px 50px 50px;
+	& > div:nth-child(n+2) {
+		margin-top: 15px;
+	}
 }

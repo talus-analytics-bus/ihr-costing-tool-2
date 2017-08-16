@@ -8,6 +8,7 @@ const App = {};
 	App.initialize = (callback) => {
 
 		// initiate behavior for navigation links
+		$('.tool-name').click(() => hasher.setHash(''));
 		$('.nav-item').click(function() {
 			if ($(this).attr('page') !== undefined) { // dropdown lists do not have associated pages
                 hasher.setHash($(this).attr('page'));
@@ -789,10 +790,12 @@ const App = {};
 	*	Generate block data needed on the scores page
 	*/
 	App.generateBlockData = () => {
-		const blockParents = [	{name:"Prevent", capacity:[], key:"p"},
-            					{name:"Detect", capacity:[], key:"d"},
-            					{name:"Response", capacity:[], key:"r"},
-            					{name:"Other", capacity:[], key:"o"}];
+		const blockParents = [
+			{ name: "Prevent", capacity: [], key: "p" },
+			{ name: "Detect", capacity: [], key: "d" },
+			{ name: "Response", capacity: [], key: "r" },
+			{ name: "Other", capacity: [], key: "o" }
+		];
 
 		const blocks = {};
 		const blocksShowing = [];
@@ -802,14 +805,18 @@ const App = {};
 				newBlockShowing.level = 0;
 				newBlockShowing.status = "";
 				newBlockShowing.name = App.jeeTree[i].capacities[j].name;
-				const abbrTmp = App.jeeTree[i].capacities[j].indicators[0].jee_id;
+				const abbrTmp = App.jeeTree[i].capacities[j].indicators[0].id;
 				const abbrTmpArr = abbrTmp.toLowerCase().split('.');
 				newBlockShowing.abbr = abbrTmpArr[0] + '-' + abbrTmpArr[1];
 				blocksShowing.push(newBlockShowing);
 				blocks[newBlockShowing.abbr] = "";
-				blockParents.find((item)=> item.key==abbrTmpArr[0]).capacity.push(newBlockShowing); // this will add the capacities under the major categories
+
+				// this will add the capacities under the major categories
+				let bp = blockParents.find(cc => cc.key === abbrTmpArr[0]);
+				if (!bp) bp = blockParents.find(cc => cc.name === 'Other');
+				bp.capacity.push(newBlockShowing);
 			}
 		}
-		return {blocks: blocks, blocksShowing: blocksShowing, blockParents: blockParents};
+		return { blocks, blocksShowing, blockParents };
 	}
 })();

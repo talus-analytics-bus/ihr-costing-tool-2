@@ -1,32 +1,7 @@
 .assessment-container{
-
-  .upload {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    padding: 20px 50px 50px;
-    max-width: 900px;
-  }
-
   .button-group {
     margin-top: 30px;
 
     p { margin-bottom: 10px; }
   }
-
-  .uploadButton { margin-right: 10px; }
-
-  .min-max-container {
-    text-align: center;
-    margin: auto;
-
-    .min-max-bar-chart-container {
-      border: 1px solid #ccc;
-      position: relative;
-      top: -1px;
-      @include border-radius(5px);
-      @include box-shadow(2px 2px 6px rgba(0,0,0,0.1));
-    }
-
-  }
-
 }

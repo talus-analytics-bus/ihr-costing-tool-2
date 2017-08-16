@@ -3,15 +3,20 @@
 @import 'helpers/mixins';
 @import 'helpers/vendors';
 
+@import 'components/capacityDescription';
 @import 'components/charts';
+@import 'components/headers';
+@import 'components/indicatorProgress';
 @import 'components/navbar';
 @import 'components/footer';
 @import 'components/blocks';
 @import 'components/map';
 
 @import 'pages/home';
+@import 'pages/overview';
 @import 'pages/who';
 @import 'pages/scores';
+@import 'pages/costing';
 @import 'pages/results';
 @import 'pages/assessment';
 
@@ -22,6 +27,7 @@ body {
 
 #page-content {
 	position: relative;
+	min-height: 100px;
 	z-index: 10;
 }
 .link {
@@ -32,140 +38,37 @@ body {
 	display: inline-block;
 	margin-bottom: 5px;
 }
+.instructions {
+	font-style: italic;
+}
 
-// re-color for bootstrap buttons
-.btn-primary {
-	background-color: $light-blue;
-	border-color: darken($light-blue, 8%);
-	&:hover {
-		background-color: darken($light-blue, 5%);
-		border-color: darken($light-blue, 16%);
-	}
-}
-.btn-warning {
-	background-color: $dark-orange;
-	border-color: darken($dark-orange, 8%);
-	&:hover {
-		background-color: darken($dark-orange, 5%);
-		border-color: darken($dark-orange, 16%);
-	}
-}
 select.form-control { width: auto; }
 .container {
 	position: relative; 
-	padding: 20px 50px;
+	padding: 25px 50px 30px;
 }
 .container-wide {
 	display: inline-block;
 	max-width: none;
 	border: none;
 }
-
-// notional data warnings
-.notional-warning {
-	color: #c91414;
-	font-weight: 600;
+.container-text {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	max-width: 900px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 
-// re-style for bootstrap multiselect
-.btn b.caret { margin-left: 3px; }
-.multiselect-container label { @include noselect; }
-.multiselect {
-	background-color: $light-blue;
-	border-color: #666;
-	color: white;
-}
-
-// re-style for bootstrap buttons
-.btn {
-	cursor: pointer;
-}
-.btn-primary {
-	background-color: rgb(48, 113, 169);
-
-}
-.btn-primary:hover {
-	background-color: rgb(1, 41, 76);
-}
-.btn-secondary {
-	background-color: #fbfbfb;
-	border-color: #bbb;
-	color: #333;
-	padding: .5rem 1rem;
-	&:hover,
-	&.active {
-		background-color: #e6e6e6;
-		border-color: #adadad;
-		color: #333;
-	}
-	&.active {
-		box-shadow: inset 0 4px 6px rgba(0,0,0,.125);
-	}
-}
 
 /* Scrollable dropdown menus */
 .scrollable-dropdown {
 	height: auto;
 	max-height: 200px;
 	overflow-x: hidden;
-}
-
-/* Header Styles */
-h1 {
-	color: #AA0000;
-	font-family: Helvetica;
-	font-weight: bold;
-	font-size: 2em;
-	margin-bottom: 1.2rem;
-}
-h2 {
-
-	font-family: Helvetica;
-	font-size: 1.5em;
-	/*-webkit-margin-before: 0.83em;
-	-webkit-margin-after: 0.83em;
-	-webkit-margin-start: 0px;
-	-webkit-margin-end: 0px;*/
-	margin-bottom: 1rem;
-	font-weight: bold;
-}
-h3 {
-	font-family: Helvetica;
-	font-weight: bold;
-	font-size: 1.25em;
-}
-h4 {
-	font-family: Helvetica;
-	font-weight: bold;
-	font-size: 1.15em;
-}
-h5 {
-	font-family: Helvetica;
-	font-size: 1.05em;
-}
-
-/* Material Icons support */
-.material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;  /* Preferred icon size */
-	display: inline-block;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-
-	/* Support for IE. */
-	font-feature-settings: 'liga';
 }

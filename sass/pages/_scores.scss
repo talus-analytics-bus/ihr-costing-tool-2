@@ -1,88 +1,6 @@
 .scores-container {
 	.btn {
 		padding: .5rem 1.1rem;
-
-	}
-
-	.capacity-description-container {
-
-		margin-bottom: 20px;
-
-		.capacity-description {
-
-		}
-		.capacity-description-header {
-			display: flex;
-		}
-		.capacity-description-header-chevron {
-			display: inline-block;
-			color: rgba(0, 0, 0, 0.870588);
-			fill: currentcolor;
-			height: 24px;
-			width: 24px;
-			transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-			-webkit-user-select: none;
-		}
-
-
-		.capacity-description-details {
-			padding-left: 27px;
-			font-size: .8em;
-			display: none;
-		}
-	}
-}
-.rotate-chevron {
-	-webkit-transform: rotate(90deg);
-	-ms-transform: rotate(90deg);
-	transform: rotate(90deg);
-}
-.indicator-progress-container {
-	.indicator-container {
-		margin-left: 60px;
-		margin-bottom: 35px;
-	}
-	.indicator-slot { 
-		width: 600px;
-		height: 40px;
-		padding: 0 20px;
-		border: 1px solid #CCCBCB;
-		cursor: pointer;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.indicator-flash-color {
-		background-color: $orange-lighten-4;
-	}
-
-	.indicator-slot.full {
-		//background: linear-gradient(#fff, #e6e7e8);
-	}
-	.indicator-slot.full:hover {
-		//background: linear-gradient(#fff, #ccc);
-	}
-	.indicator-slot.empty {
-		font-style: italic;
-		color: gray;
-	}
-	.indicator-slot.empty:hover {
-		color: black;
-	}
-	.indicator-slot.active {
-		font-weight: bold;
-		color: black;
-	}
-	.indicator-name,
-	.indicator-score {
-		// display: flex;
-		// vertical-align: middle;
-	}
-	.indicator-name {
-	}
-	.indicator-score {
-		// float: right;
 	}
 }
 .score-picker-container {
@@ -91,13 +9,7 @@
 
 
 }
-.indicator-description {
-	margin-left: 10px;
-}
 .score-picker-table {
-
-
-
 	font-family: Helvetica;
 	// .headers {
 	// 	font-weight: bold;

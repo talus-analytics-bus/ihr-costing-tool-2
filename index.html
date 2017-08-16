@@ -13,6 +13,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-multiselect.css" rel="stylesheet">
 	<link href="css/datatables.min.css" rel="stylesheet">
+	<link href="css/nprogress.min.css" rel="stylesheet">
 	<link href="css/tooltipster.bundle.min.css" rel="stylesheet">
 	<link href="css/tooltipster-follower.min.css" rel="stylesheet">
 	<link href="css/tooltipster-sideTip-light.css" rel="stylesheet">
@@ -122,7 +123,7 @@
 	<!-- TEMPLATES -->
 	<!-- Home page tempate -->
 	<script id="home-template" type="text/x-handlebars-template">
-		<div class="home-container container">
+		<div class="home-container container container-text">
 			<div class="home-header"><h1>Welcome to the IHR Costing Tool</h1></div>
 			<div class="home-image"></div>
 			<div class="home-body">
@@ -148,8 +149,7 @@
 
 	<!-- Overview/Assessment Instructions page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
-		<div class="overview-container container">
-
+		<div class="overview-container container container-text">
 			<div>
 				<h1>Assessment Instructions</h1>
 				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
@@ -310,8 +310,7 @@
 
 	<!-- Cost Instructions page tempate -->
 	<script id="cost-instructions-template" type="text/x-handlebars-template">
-		<div class="cost-instructions-container container">
-
+		<div class="cost-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
 				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
@@ -346,26 +345,23 @@
 
 	<!-- JEE Assessment Status page tempate -->
 	<script id="jee-template" type="text/x-handlebars-template">
-			<div class="assessment-container container">
-				<div class="upload">
-					<div>
-						<h1>Enter Current JEE Assessment Scores</h1>
-						<h4>
-							Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
-						</h4>
-					</div>
-					<div class="button-group">
-						<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below</p>
-						<div>
-							<button type="button" class="btn btn-primary">Select a File</button>
-						</div>
-					</div>
-					<div class="button-group">
-						<p>Or, continue to options for manual score entry</p>
-						<div>
-							<button type="button" page="scores" class="btn btn-primary enter-assessments">Enter Assessments Manually</button>
-						</div>
-					</div>
+		<div class="assessment-container container container-text">
+			<div>
+				<h1>Enter Current JEE Assessment Scores</h1>
+				<div class="instructions">
+					Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
+				</div>
+			</div>
+			<div class="button-group">
+				<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below.</p>
+				<div>
+					<button type="button" class="btn btn-primary">Select a File</button>
+				</div>
+			</div>
+			<div class="button-group">
+				<p>Or, continue to options for manual score entry.</p>
+				<div>
+					<button type="button" page="scores" class="btn btn-primary enter-assessments">Enter Assessments Manually</button>
 				</div>
 			</div>
 		</div>
@@ -502,8 +498,55 @@
 	
 	<!-- Costs page tempate -->
 	<script id="costs-template" type="text/x-handlebars-template">
-		<div class="costs-container container">
-			<h1>Placeholder: Costs page</h1>
+		<div class="costs-container container container-wide">
+			<div class="block-link-container"></div>
+			<div class="block-container input-block-container">
+				<div class="block fake-block no-reset">
+					<h1 class="core-capacity-name"></h1>
+					<div class="capacity-description-container">
+						<div class="capacity-description-header">
+							<svg id="chevron" viewBox="0 0 24 24" class="capacity-description-header-chevron">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+							<h3>Capacity Description</h3>
+						</div>
+						<div class="capacity-description-details">
+							<p> <b>Target: </b><span class="capacity-target"></span></p>
+							<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
+							<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
+						</div>
+					</div>
+
+					<div class='indicator-progress-container'>
+						<h3 class="indicator-progress">2 of 4 indicators scored</h3>
+						<div class="indicator-container"></div>
+					</div>
+					<h3>Choose costs</h3>
+					<div class="choose-action-instructions">
+						Review the item costs for each of the following actions.
+					</div>
+					<div class='action-container'>
+						<div class='action-headers'>
+							<div class='action-header-title'>Actions:</div>
+						</div>
+						<div class='item-block-container'></div>
+					</div>
+					<div class='nav-buttons-container'>
+						<div class='btn-row row'>
+							<div class='btn-col col-sm-12 center'>
+								<button type="button" class="btn btn-secondary previous-cost"><i class="material-icons">skip_previous</i></button>
+								<button type="button" class="btn btn-primary next-cost"><i class="material-icons">skip_next</i></button>
+							</div>
+						</div>
+						<div class='margin-top-10'></div>
+						<div class='btn-row row'>
+							<div class='btn-col col-sm-12 center'>
+								<button type="button" class="btn btn-secondary go-to-results-button">Go to Results</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</script>
 	
@@ -621,6 +664,7 @@
 <script src="lib/tooltipster-follower.min.js"></script>
 <script src="lib/datatables.min.js"></script>
 <script src="lib/jquery.noty.packaged.min.js"></script>
+<script src="lib/nprogress.min.js"></script>
 <!--<script src="build/lib.min.js"></script>-->
 
 <!-- Project Specific Files -->

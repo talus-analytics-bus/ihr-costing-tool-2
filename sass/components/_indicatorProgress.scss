@@ -1,0 +1,59 @@
+.indicator-progress-container {
+	.indicator-container {
+		margin-left: 60px;
+		margin-bottom: 35px;
+	}
+	.indicator-slot { 
+		width: 600px;
+		height: 40px;
+		padding: 0 20px;
+		border: 1px solid #CCCBCB;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.indicator-flash-color {
+		background-color: $orange-lighten-4;
+	}
+
+	.indicator-slot.full {
+		//background: linear-gradient(#fff, #e6e7e8);
+	}
+	.indicator-slot.full:hover {
+		//background: linear-gradient(#fff, #ccc);
+	}
+	.indicator-slot.empty {
+		font-style: italic;
+		color: gray;
+	}
+	.indicator-slot.empty:hover {
+		color: black;
+	}
+	.indicator-slot.active {
+		font-weight: bold;
+		color: black;
+	}
+	.score-text { font-weight: 600; }
+	.score-text-1 { color: #c91414; }
+	.score-text-2,
+	.score-text-3 {
+		color: #c7bc21;
+	}
+	.score-text-4,
+	.score-text-5 {
+		color: #0c6b0c;
+	}
+	.indicator-edit-score-button {
+		border: 1px solid #ccc;
+		padding: 2px 10px;
+		font-size: 0.7rem;
+		@include border-radius(5px);
+	}
+}
+.indicator-description {
+	margin-left: 10px;
+}
+.score-text {
+}
