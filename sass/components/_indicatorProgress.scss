@@ -30,6 +30,9 @@
 		color: #000;
 		@include gradient(#fff, #cadef8);
 	}
+	.indicator-name {
+		width: 400px;
+	}
 	.score-none {
 		font-style: italic;
 	}
