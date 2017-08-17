@@ -1,0 +1,25 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jquery": true
+    },
+    "globals": {
+        "hasher": true,
+        "d3": true,
+        "App": true,
+        "_": true,
+        "Util": true,
+        "Routing": true,
+        "crossroads": true,
+        "Handlebars": true,
+        "NProgress": true
+    },
+    "rules": {
+        "indent": ["error", 4]
+    }
+}

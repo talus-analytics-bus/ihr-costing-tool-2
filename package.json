@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "eslint": "eslint --ext .js **/*.js; exit 0"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
     "nodecli": "0.0.1",
     "path": "^0.12.7",
     "scss-compile": "^0.1.7"
+  },
+  "devDependencies": {
+    "eslint": "4.4.1"
   }
 }

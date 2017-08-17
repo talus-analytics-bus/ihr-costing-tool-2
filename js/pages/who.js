@@ -1,90 +1,13 @@
 (() => {
-	App.initWho = (ccClass) => {
 
-		/*Initialize country picker map*/
-		App.createLeafletMap();
-		switch(ccClass) {
-            case 'currency':
-                initCurrencyTab();
+    const hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
+    const hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
 
-                break;
-            case 'population':
-                initPopDistTab();
-                break;
-            case 'default-costs':
-                initDefaultCostsTab();
-            default: // country tab
-                initCurrencyTab();
-                initCountryTab();
-
-        }
-
-		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
-		// define blocks
-		const blocks = {
-            "country": {},
-            //"currency": {},
-            "population": {},
-            "default-costs": {}
-		}
-
-		// define blocksShowing
-		const blocksShowing = [
-            {
-            "abbr": "country",
-            "name": "Country and Currency",
-            "level": 0,
-            "status": ""
-            },
-            /*{
-            "abbr": "currency",
-            "name": "Currency",
-            "level": 0,
-            "status": ""
-            },*/
-            {
-            "abbr": "population",
-            "name": "Total Population",
-            "level": 0,
-            "status": ""
-            },
-            {
-                "abbr": "default-costs",
-                "name": "Country Details",
-                "level": 0,
-                "status": ""
-            }
-		];
-
-		// call function to render the tabs
-		App.setupWhoTabs(blocksShowing, blocks, ccClass);
-
-        $('.defn').tooltipster({
-            theme: 'tooltipster-default',
-            trigger: 'click',
-            position: 'bottom',
-            interactive: true,
-            contentAsHTML: true,
-            maxWidth: 500,
-            functionInit: function(origin) {
-                var defnName = $(origin[0]).attr('defn');
-                if (defnName === 'pop') {
-                    return 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
-                }
-            }
-        });
-	};
-
-
-
-    hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
-    hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
-
-	/*
-	*	initCountryTab
-	*	Initialize the country picker dropdown on the country tab in Who Am I?
-	*/
-	initCountryTab = () => {
+    /*
+    *	initCountryTab
+    *	Initialize the country picker dropdown on the country tab in Who Am I?
+    */
+    const initCountryTab = () => {
 
         // event handler for selecting the country from dropdown
         const selectCountryInMap = (geoJson, code) => {
@@ -135,46 +58,48 @@
                 App.whoAmI.selectedCurrency = d;
             })
 
-		if (App.whoAmI.hasOwnProperty('name')) {
+        if (App.whoAmI.hasOwnProperty('name')) {
             d3.select('.country-dropdown.dropdown > button')
                 .text(App.whoAmI.name);
-		}
+        }
 
-		d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
-			.data(App.countryParams)
-			.enter()
-				.append('a')
-					.attr('class','country-option dropdown-item')
-					.text(function(d) { return d.name})
-					.on('click', function (d) {
-						d3.select('.country-dropdown.dropdown > button').text(d.name);
-                        selectCountryInMap(App.geoJson, d.abbreviation);
-						App.whoAmI = JSON.parse(JSON.stringify(d));
+        d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
+            .data(App.countryParams)
+            .enter()
+            .append('a')
+            .attr('class', 'country-option dropdown-item')
+            .text(function (d) {
+                return d.name
+            })
+            .on('click', function (d) {
+                d3.select('.country-dropdown.dropdown > button').text(d.name);
+                selectCountryInMap(App.geoJson, d.abbreviation);
+                App.whoAmI = JSON.parse(JSON.stringify(d));
 
-                        // if country is selected and no currency has been selected yet, select matching country currency as default
-                        if (hasCountrySelected() && !hasCurrencySelected()) {
-                            App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
-                            changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-                        }
+                // if country is selected and no currency has been selected yet, select matching country currency as default
+                if (hasCountrySelected() && !hasCurrencySelected()) {
+                    App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
+                    changeDropdownLabel(App.whoAmI.selectedCurrency.name);
+                }
 
-                        // if there is selected currency, mark it as selected
-                        if (hasCurrencySelected()) {
-                            changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-                        }
-					});
-	};
+                // if there is selected currency, mark it as selected
+                if (hasCurrencySelected()) {
+                    changeDropdownLabel(App.whoAmI.selectedCurrency.name);
+                }
+            });
+    };
 
-	initCurrencyTab = () => {
-	    // transforms currency object and adds code that matches with the original currencies.json key
-	    const currencyObj = (key, obj) => Object.assign({}, obj, {
-	        code: key,
+    const initCurrencyTab = () => {
+        // transforms currency object and adds code that matches with the original currencies.json key
+        const currencyObj = (key, obj) => Object.assign({}, obj, {
+            code: key,
         });
 
-	    const changeDropdownLabel = (name) => {
+        const changeDropdownLabel = (name) => {
             d3.select('.currency-container > button').text(name);
         }
 
-	    // transform currencies object into array
+        // transform currencies object into array
         const currenciesArray = Object.keys(App.currencies)
             .map((key) => currencyObj(key, App.currencies[key]));
 
@@ -188,21 +113,21 @@
             changeDropdownLabel(App.whoAmI.selectedCurrency.name);
         }
 
-	    // prepare currency dropdown
+        // prepare currency dropdown
         d3.select('.currency-container-dropdown.dropdown-menu')
             .selectAll('.currency-option')
             .data(currenciesArray)
             .enter()
-                .append('a')
-                .attr('class', 'currency-option dropdown-item')
-                .text((d) => d.name)
-                .on('click', (d) => {
-                    changeDropdownLabel(d.name);
-                    App.whoAmI.selectedCurrency = d;
-                })
+            .append('a')
+            .attr('class', 'currency-option dropdown-item')
+            .text((d) => d.name)
+            .on('click', (d) => {
+                changeDropdownLabel(d.name);
+                App.whoAmI.selectedCurrency = d;
+            })
     }
 
-    initPopDistTab = () => {
+    const initPopDistTab = () => {
         const jeeTreeFieldMapping = {
             'basic_info.population': 'population',
             'basic_info.level_1_areas.area_name': 'adm-org-1',
@@ -272,11 +197,72 @@
 
     }
 
-	initDefaultCosts = () => {
+    const initDefaultCosts = () => {
 
-        const categoriesTab = new Set(App.globalBaseCosts.map(e=>e.tab_name));
-        var filters = App.globalBaseCosts.filter(e=>e.tab_name===search);
+        const categoriesTab = new Set(App.globalBaseCosts.map(e => e.tab_name));
+        var filters = App.globalBaseCosts.filter(e => e.tab_name === search);
 
     }
+
+    App.initWho = (ccClass) => {
+
+        /*Initialize country picker map*/
+        App.createLeafletMap();
+        switch (ccClass) {
+        case 'currency':
+            initCurrencyTab();
+            break;
+        case 'pop-dist':
+            initPopDistTab();
+            break;
+        case 'default-costs':
+            initDefaultCostsTab();
+            break;
+        default: // country tab
+            initCurrencyTab();
+            initCountryTab();
+
+        }
+
+        /* ---------------------------------- Input Block Overview and Links ------------------------------------ */
+        // define blocks
+        const blocks = {
+            "country": {},
+            "currency": {},
+            "pop-dist": {},
+            "default-costs": {}
+        }
+
+        // define blocksShowing
+        const blocksShowing = [
+            {
+                "abbr": "country",
+                "name": "Country and Currency",
+                "level": 0,
+                "status": ""
+            },
+            /*{
+            "abbr": "currency",
+            "name": "Currency",
+            "level": 0,
+            "status": ""
+            },*/
+            {
+                "abbr": "pop-dist",
+                "name": "Population and Districts",
+                "level": 0,
+                "status": ""
+            },
+            {
+                "abbr": "default-costs",
+                "name": "Country Details",
+                "level": 0,
+                "status": ""
+            }
+        ];
+
+        // call function to render the tabs
+        App.setupWhoTabs(blocksShowing, blocks, ccClass);
+    };
 
 })();
