@@ -1,5 +1,6 @@
 .map-container {
   float:right;
+  width: 65%;
 }
 .country {
   fill: #f0f0f0;
@@ -8,13 +9,13 @@
   cursor: pointer;
 }
 .country.active {
-  fill: red;
+  fill: #AA0000;
 }
 .country:hover{
   fill: rgb(255,122,122);
 }
 .country.active:hover {
-  fill: red;
+  fill: #AA0000;
 }
 .text{
   font-size:10px;

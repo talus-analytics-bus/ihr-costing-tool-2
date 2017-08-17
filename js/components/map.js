@@ -7,7 +7,7 @@
     App.zoom = zoom;
     const mapContainer = d3.select('.map-container');
 
-    let width = 600;
+    let width = 650;
     var height = width / 2;
     var topo,projection,path,svg,g;
     // var tooltip = mapContainer.append("div").attr("class", "tooltip hidden");
@@ -283,6 +283,10 @@
           d3.select('.country-dropdown.dropdown > button')
             .text(countryParam.name);
           App.whoAmI = JSON.parse(JSON.stringify(countryParam));
+
+
+          d3.select('.currency-container > button').text(App.currencies[App.whoAmI.currency].name);
+
         });
       } else {
         d3.select('.country-dropdown.dropdown > button')

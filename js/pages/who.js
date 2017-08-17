@@ -6,14 +6,17 @@
 		switch(ccClass) {
             case 'currency':
                 initCurrencyTab();
+
                 break;
             case 'pop-dist':
                 initPopDistTab();
                 break;
             case 'default-costs':
                 initDefaultCostsTab();
-            default:
+            default: // country tab
+                initCurrencyTab();
                 initCountryTab();
+
         }
 
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
@@ -65,6 +68,43 @@
 	*	Initialize the country picker dropdown on the country tab in Who Am I?
 	*/
 	initCountryTab = () => {
+
+        // transforms currency object and adds code that matches with the original currencies.json key
+        const currencyObj = (key, obj) => Object.assign({}, obj, {
+            code: key,
+        });
+
+        const changeDropdownLabel = (name) => {
+            d3.select('.currency-container > button').text(name);
+        }
+
+        // transform currencies object into array
+        const currenciesArray = Object.keys(App.currencies)
+            .map((key) => currencyObj(key, App.currencies[key]));
+
+        // if country is selected and no currency has been selected yet, select matching country currency as default
+        if (hasCountrySelected() && !hasCurrencySelected()) {
+            App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
+        }
+
+        // if there is selected currency, mark it as selected
+        if (hasCurrencySelected()) {
+            changeDropdownLabel(App.whoAmI.selectedCurrency.name);
+        }
+
+        // prepare currency dropdown
+        d3.select('.currency-container-dropdown.dropdown-menu')
+            .selectAll('.currency-option')
+            .data(currenciesArray)
+            .enter()
+            .append('a')
+            .attr('class', 'currency-option dropdown-item')
+            .text((d) => d.name)
+            .on('click', (d) => {
+                changeDropdownLabel(d.name);
+                App.whoAmI.selectedCurrency = d;
+            })
+
 		if (App.whoAmI.hasOwnProperty('name')) {
             d3.select('.country-dropdown.dropdown > button')
                 .text(App.whoAmI.name);
@@ -80,6 +120,17 @@
 						d3.select('.country-dropdown.dropdown > button').text(d.name);
 						countryDropdownToggle(d.abbreviation);
 						App.whoAmI = JSON.parse(JSON.stringify(d));
+
+                        // if country is selected and no currency has been selected yet, select matching country currency as default
+                        if (hasCountrySelected() && !hasCurrencySelected()) {
+                            App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
+                            changeDropdownLabel(App.whoAmI.selectedCurrency.name);
+                        }
+
+                        // if there is selected currency, mark it as selected
+                        if (hasCurrencySelected()) {
+                            changeDropdownLabel(App.whoAmI.selectedCurrency.name);
+                        }
 					});
 	};
 
@@ -90,7 +141,7 @@
         });
 
 	    const changeDropdownLabel = (name) => {
-            d3.select('.currency__container > button').text(name);
+            d3.select('.currency-container > button').text(name);
         }
 
 	    // transform currencies object into array
@@ -108,7 +159,7 @@
         }
 
 	    // prepare currency dropdown
-        d3.select('.currency__container__dropdown.dropdown-menu')
+        d3.select('.currency-container-dropdown.dropdown-menu')
             .selectAll('.currency-option')
             .data(currenciesArray)
             .enter()
