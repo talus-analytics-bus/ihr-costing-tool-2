@@ -119,7 +119,7 @@
       }
 
       const renderMap = () => {
-          $.getJSON('/data/custom.geo.json' , (data) => {
+          $.getJSON('data/custom.geo.json' , (data) => {
               App.geoJson = L.geoJson(data, {
                   style: mapConfig.styles.default,
                   onEachFeature: featureEventHandlers,
