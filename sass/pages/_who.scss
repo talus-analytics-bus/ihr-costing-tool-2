@@ -6,8 +6,25 @@
 .population-block {
 	fieldset {
 		margin-top: 1.1rem;
+		border: 1px solid #ccc;
+		min-width: 0;
+		border-bottom: none;
+		border-right: none;
+		border-left: none;
+		padding-top: 20px;
+	}
+	fieldset:last-child {
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 30px;
+		padding-bottom: 20px;
 	}
 	input {
 		border-radius: 5px;
+		border-style: groove;
+	}
+
+	.form-group {
+		margin-bottom: .5rem;
 	}
 }
+

@@ -10,6 +10,8 @@
             case 'pop-dist':
                 initPopDistTab();
                 break;
+            case 'default-costs':
+                initDefaultCostsTab();
             default:
                 initCountryTab();
         }
@@ -17,31 +19,38 @@
 		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
 		// define blocks
 		const blocks = {
-		  "country": {},
-		  "currency": {},
-		  "pop-dist": {}
+            "country": {},
+            "currency": {},
+            "pop-dist": {},
+            "default-costs": {}
 		}
 
 		// define blocksShowing
 		const blocksShowing = [
-		  {
-		    "abbr": "country",
-		    "name": "Country",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "currency",
-		    "name": "Currency",
-		    "level": 0,
-		    "status": ""
-		  },
-		  {
-		    "abbr": "pop-dist",
-		    "name": "Population and Districts",
-		    "level": 0,
-		    "status": ""
-		  }
+            {
+            "abbr": "country",
+            "name": "Country",
+            "level": 0,
+            "status": ""
+            },
+            {
+            "abbr": "currency",
+            "name": "Currency",
+            "level": 0,
+            "status": ""
+            },
+            {
+            "abbr": "pop-dist",
+            "name": "Population and Districts",
+            "level": 0,
+            "status": ""
+            },
+            {
+                "abbr": "default-costs",
+                "name": "Country Details",
+                "level": 0,
+                "status": ""
+            }
 		];
 
 		// call function to render the tabs
@@ -182,7 +191,13 @@
 
     }
 
-	/*
+	initDefaultCosts = () => {
+
+        const categoriesTab = new Set(App.globalBaseCosts.map(e=>e.tab_name));
+        var filters = App.globalBaseCosts.filter(e=>e.tab_name===search);
+
+    }
+    /*
 	*	countryDropdownToggle
 	*	Set the map's active country to the dropdown selection
 	*/
