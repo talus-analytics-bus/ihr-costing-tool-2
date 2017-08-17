@@ -22,7 +22,7 @@
 
 		// build the indicator tabs
 		function buildIndicatorContent() {
-			const cc = App.getCoreCapacity(capId);
+			const cc = App.getCapacity(capId);
 			const ind = App.getIndicator(indId);
 
 			// update number of indicators complete
@@ -101,9 +101,10 @@
 						updateIndicatorProgress();
 					});
 
-			const scoreLabels = scoreRows.append('td');
-			scoreLabels.append('input')
+			scoreRows.append('td').append('input')
 				.attr('type', 'radio');
+
+			const scoreLabels = scoreRows.append('td');
 			scoreLabels.append('img')
 				.attr('class', 'rp-score-table-img rp-score')
 				.attr('src', d => `img/rp-${d}.png`);
@@ -117,7 +118,7 @@
 		
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
-			const cc = App.getCoreCapacity(capId);
+			const cc = App.getCapacity(capId);
 			const numInds = cc.indicators.length;
 			const numScored = cc.indicators.filter(ind => ind.score).length;
 			d3.select('.indicator-progress')

@@ -3,6 +3,11 @@
 		const capId = Util.getIndicatorId(capClass);
 		const indId = Util.getIndicatorId(capClass + '-' + indClass);
 
+		const moneyFormat = (num) => {
+			if (num < 100) return d3.format('$')(Math.round(num));
+			return d3.format('$,.3r')(num);
+		}
+
 		$('.go-to-results-button').click(() => hasher.setHash('results'));
 
 
@@ -11,6 +16,8 @@
 			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 			buildIndicatorContent();
+			showAction(App.getIndicator(indId).actions[0]);
+			updateTotalCosts();
 			attachNextButtonBehavior();
 		}
 
@@ -23,7 +30,7 @@
 
 		// build the indicator tabs
 		function buildIndicatorContent() {
-			const cc = App.getCoreCapacity(capId);
+			const cc = App.getCapacity(capId);
 			const ind = App.getIndicator(indId);
 
 			// update number of indicators complete, and indicator description
@@ -37,7 +44,7 @@
 					.classed('active', d => d.id === indId)
 					.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
 					.on('click', (d, i) => {
-						hasher.setHash(`scores/${capClass}/${i+1}`);
+						hasher.setHash(`costs/${capClass}/${i+1}`);
 					});
 
 			// add indicator name
@@ -64,9 +71,7 @@
 			}
 
 			// add cost for each indicator
-			indSlots.append('div')
-				.attr('class', 'indicator-cost')
-				.text('$0');
+			indSlots.append('div').attr('class', 'indicator-cost');
 
 			// add description
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${ind.name}`);
@@ -76,15 +81,18 @@
 		function setupActionContent() {
 			const ind = App.getIndicator(indId);
 
-			const headers = d3.select('.action-headers').selectAll('.action-header')
+			// add every action for the indicator
+			const headers = d3.select('.action-header-content').selectAll('.action-header')
 				.data(ind.actions)
 				.enter().append('div')
 					.attr('class', 'action-header')
 					.on('click', function(d) {
 						showAction(d);
 					});
-			headers.append('input').attr('type', 'checkbox');
-			headers.append('span').text(d => d.name);
+			headers.append('div')
+				.attr('class', 'action-name')
+				.text(d => d.name);
+			headers.append('div').attr('class', 'action-cost');
 		}
 		setupActionContent();
 
@@ -98,8 +106,6 @@
 		}
 
 		function showItemBlocks(action) {
-			const moneyFormat = d3.format('$.3s');
-
 			let items = d3.select('.item-block-container').selectAll('.item-block')
 				.data(action.inputs);  // TODO needs to be line items for action
 			items.exit().remove();
@@ -110,7 +116,7 @@
 			newItems.append('div').attr('class', 'item-title');
 			newItems.append('div').attr('class', 'item-cost');
 			newItems.append('div')
-				.attr('class', 'item-select-button btn btn-primary')
+				.attr('class', 'item-select-button')
 				.text('Selected');
 			newItems.append('div').attr('class', 'item-description');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
@@ -119,26 +125,78 @@
 				.text('Edit Item Cost');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
-				.text('View Details');
+				.text('View Details')
+				.each(function() {
+					$(this).tooltipster({
+						theme: 'tooltipster-shadow',
+						maxWidth: 400,
+						trigger: 'click',
+						side: ['top', 'right', 'bottom', 'left'],
+					});
+				});
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').text(moneyFormat(45e3));
-			items.select('.item-select-button').on('click', (d) => {
-				// user selects an action
-			});
+			items.select('.item-cost').text(d => moneyFormat(d.cost));
+			items.select('.item-select-button')
+				.classed('selected', d => {
+					console.log(d); return d.selected;
+				})
+				.on('click', function(d) {
+					// user toggles an item
+					d.selected = !d.selected;
+					d3.select(this)
+						.classed('selected', d.selected)
+						.text(d.selected ? 'Selected': 'Select');
+
+					updateTotalCosts();
+				});
 			items.select('.item-description').text(d => d.description);
+			items.select('.item-view-details-button').each(function(d) {
+				const contentContainer = d3.select(document.createElement('div'));
+				const content = contentContainer.append('div')
+					.attr('class', 'item-details-container');
+				content.append('div')
+					.attr('class', 'item-details-name')
+					.text(d.name);
+				content.append('div')
+					.attr('class', 'item-details-description')
+					.text(d.description);
+				
+				// add table of line items
+				const liTable = content.append('table')
+					.attr('class', 'line-item-table table table-condensed table-striped')
+					.append('tbody');
+				const liRows = liTable.selectAll('tr')
+					.data(d.line_items)
+					.enter().append('tr');
+				liRows.append('td').text(li => li.name);
+				liRows.append('td').text(li => moneyFormat(1e5 * Math.random()));  // TODO tie to real cost
+
+				// add total cost
+				const totalRow = liTable.append('tr');
+				totalRow.append('td').text('Total');
+				totalRow.append('td').text(moneyFormat(d.cost));
+
+				$(this).tooltipster('content', contentContainer.html());
+			});
 		}
-		showAction(App.getIndicator(indId).actions[0]);
+
+		// updates the total cost of the actions
+		function updateTotalCosts() {
+			App.updateAllCosts();
+			d3.selectAll('.action-cost').text(d => moneyFormat(d.cost));
+			d3.selectAll('.indicator-cost').text(d => moneyFormat(d.cost));
+		}
 
 
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
-			const cc = App.getCoreCapacity(capId);
+			const cc = App.getCapacity(capId);
 			const numInds = cc.indicators.length;
 			const numScored = numInds - d3.selectAll('.empty').nodes().length;
 			d3.select('.indicator-progress')
-				.text(`Select a score for each indicator (${numScored} of ${numInds}):`);
+				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
 
 		// define the behavior for the "previous" and "next" button
@@ -156,12 +214,12 @@
 					if (capClass === 'r-5' && indClass === '5') {
 						// no-op
 					} else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
-						hasher.setHash(`scores/${nextHash[capClass[0]].next}-1/${1}`);
+						hasher.setHash(`costs/${nextHash[capClass[0]].next}-1/${1}`);
 					} else {
-						hasher.setHash(`scores/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
+						hasher.setHash(`costs/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
 					}
 				} else {
-					hasher.setHash(`scores/${capClass}/${parseInt(indClass) + 1}`);
+					hasher.setHash(`costs/${capClass}/${parseInt(indClass) + 1}`);
 				}
 			});
 
@@ -171,14 +229,14 @@
 				if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
 					// go back one major block (e.g. d-1)
 					let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
-					hasher.setHash(`scores/${prevClass}/${1}`);
+					hasher.setHash(`costs/${prevClass}/${1}`);
 				} else if (parseInt(indClass) === nextHash[capClass[0]].min) {
 					// go back one minor block
 					const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
-					hasher.setHash(`scores/${prevInd}/${1}`);
+					hasher.setHash(`costs/${prevInd}/${1}`);
 				} else {
 					// go back one indicator
-					hasher.setHash(`scores/${capClass}/${(indClass - 1)}`);
+					hasher.setHash(`costs/${capClass}/${(indClass - 1)}`);
 				}
 			});
 		}

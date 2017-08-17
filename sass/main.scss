@@ -3,15 +3,16 @@
 @import 'helpers/mixins';
 @import 'helpers/vendors';
 
+@import 'components/blocks';
 @import 'components/capacityDescription';
 @import 'components/charts';
+@import 'components/footer';
 @import 'components/headers';
 @import 'components/indicatorProgress';
 @import 'components/images';
-@import 'components/navbar';
-@import 'components/footer';
-@import 'components/blocks';
 @import 'components/map';
+@import 'components/navbar';
+@import 'components/tooltipster';
 
 @import 'pages/assessment';
 @import 'pages/background';

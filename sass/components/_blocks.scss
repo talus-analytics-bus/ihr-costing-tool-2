@@ -7,8 +7,7 @@
   position: relative;
   color: black;
   padding: 15px 30px;
-  border: 1px solid #999;
-  border-right: 1px solid #ccc;;
+  border: $border;
   font-family: 'Open Sans', sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
@@ -19,7 +18,7 @@
   @include noselect;
 
   &.active {
-    @include hori-gradient(#dae5f3, white);
+    @include hori-gradient($lightest-blue, white);
   }
   .chevron {
     top: 3px;
@@ -32,9 +31,9 @@
   width: 90%;
   left: 10%;
   padding: 10px 30px 10px 30px;
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
-  border-left: 1px solid #999;
+  border-right: $border;
+  border-bottom: $border;
+  border-left: $border;
   font-family: 'Open Sans', sans-serif;
   font-size: 0.85rem;
   color: black;
@@ -61,7 +60,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include hori-gradient(#b0c4de, white);
+    @include hori-gradient($medium-blue, white);
   }
 }
 .block-link-cover {
@@ -87,12 +86,12 @@
 }
 
 /* --- Block Content --- */
-.block-container { border-top: $border-light-minimal; }
+.block-container { border-top: $light-border; }
 .block {
   position: relative;
   padding: 30px 30px 30px 0px;
   text-align: left;
-  border-bottom: $border-light-minimal;
+  border-bottom: $light-border;
   @include box-sizing();
 }
 .block-title {

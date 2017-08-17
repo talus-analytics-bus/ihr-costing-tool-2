@@ -29,11 +29,11 @@ const App = {};
 
 		// activate tooltipster
 		$.tooltipster.setDefaults({
-			plugins: ['follower'],
+			//plugins: ['follower'],
 			contentAsHTML: true,
 			trigger: 'hover',
 			anchor: 'top-center',
-			 offset: [5, -25],
+			offset: [5, -25],
 			theme: 'tooltipster-shadow',
 			maxWidth: 320,
 		});
@@ -51,6 +51,11 @@ const App = {};
 			App.currencies = currencies;
 			App.globalBaseCosts = globalBaseCosts;
 			App.whoAmI = {};
+
+			// add costs to each level of the jeeTree
+			App.updateAllCosts({
+				setInputsToSelected: true,
+			});
 			
 			// launch callback fcn in arguments
 			callback();
@@ -298,57 +303,114 @@ const App = {};
         var currBlockAbbr; // the block name abbreviation for the current block showing
         showBlock(ccClass, false);
         blockLinks.each(function(d) { updateBlockStatus(d.abbr); });
-
-
-
     };
 
 
-    /*
-    *	App.getCoreCapacity
-    *	Finds the specified core capacity in the jeeTree and returns it
-    */
-	App.getCoreCapacity = (ccId) => {
-		// ensure id valid
-		ccId = ccId.toUpperCase();
+  /* ------------------ jeeTree Getter Functions ------------------- */
+  // gets the capacity from the jeeTree given an id
+	App.getCapacity = (id) => {
+		const ccId = id.charAt(0).toLowerCase();
+		const capId = id.toLowerCase();
+		const cc = App.jeeTree.find(cc => cc.id === ccId);
+		if (!cc) return null;
+		return cc.capacities.find(cap => cap.id === capId);
+	}
 
-		// get right core element
-		// TODO add hashes for PoE, rad, and chem
-		const coreElementHash = {
-			'P': 'Prevent',
-			'D': 'Detect',
-			'R': 'Respond'
-		};
+  // gets the indicator from the jeeTree given an id
+	App.getIndicator = (id) => {
+		const capId = id.split('.').slice(0, 2).join('.').toLowerCase();
+		const indId = id.toLowerCase();
+		const cap = App.getCapacity(capId);
+		if (!cap) return null;
+		return cap.indicators.find(ind => ind.id === indId);
+	}
 
-		// get right core element
-		const ccIdArr = ccId.split('.');
-		const ce = _.findWhere(App.jeeTree, {name: coreElementHash[ccIdArr[0]]});
+  // gets the action from the jeeTree given an id
+  App.getAction = (id) => {
+		const indId = id.split('.').slice(0, 3).join('.').toLowerCase();
+		const actionId = id.toLowerCase();
+		const ind = App.getIndicator(indId);
+		if (!ind) return null;
+		return ind.actions.find(a => a.id === actionId);
+  }
 
-		// get right core capacity
-		const ccIdx = ccIdArr[1] - 1;
-		const cc = ce.capacities[ccIdx];
+  // gets the input from the jeeTree given an id
+  App.getInput = (id) => {
+		const actionId = id.split('.').slice(0, 4).join('.').toLowerCase();
+		const inputId = id.toLowerCase();
+		const action = App.getAction(actionId);
+		if (!action) return null;
+		return action.inputs.find(input => input.id === inputId);
+  }
 
-		// return result
-		return cc;
-	};
+  // gets the line item from the jeeTree given an id
+  App.getLineItem = (id) => {
+  	const inputId = id.split('.').slice(0, 5).join('.').toLowerCase();
+  	const liId = id.toLowerCase();
+  	const input = App.getInput(inputId);
+  	if (!input) return null;
+  	return input.line_items.find(li => li.id === liId);
+  }
 
-	/*
-	*	App.getIndicator
-	*	Finds the specified indicator in the jeeTree and returns it
-	*/
-	App.getIndicator = (indId) => {
-		// ensure id valid
-		indId = indId.toUpperCase();
 
-		// get right core capacity
-		const cc = App.getCoreCapacity(indId);
+  /* ------------------ Cost Calculation Function ------------------- */
+  // sets/updates the costs for all levels of the jeeTree
+  App.updateAllCosts = (param={}) => {
+  	App.jeeTree.forEach((cc) => {
+  		cc.cost = 0;
+  		cc.capacities.forEach((cap) => {
+  			cap.cost = 0;
+  			cap.indicators.forEach((ind) => {
+  				ind.cost = 0;
+  				ind.actions.forEach((a) => {
+  					a.cost = 0;
+  					a.inputs.forEach((input) => {
+  						input.cost = 0;
 
-		// get right indicator
-		const indIdArr = indId.split('.');
-		const indIdx = indIdArr[2] - 1;
-		const ind = cc.indicators[indIdx];
+  						// set inputs to user-selected (usually on init)
+  						if (param.setInputsToSelected) input.selected = true;
 
-		// return result
-		return ind;
-	};
+  						input.line_items.forEach((li) => {
+  							const costObj = App.globalBaseCosts.find((gbc) => {
+  								return gbc.id === li.base_cost;
+  							});
+  							li.cost = costObj ? costObj.cost : 0;
+
+  							// include multipliers
+  							if (li.staff_multiplier) {
+  								// TODO lookup and include
+  							}
+  							if (li.country_multiplier) {
+  								// TODO lookup and include
+  							}
+  							if (li.custom_multiplier_1) {
+  								li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
+  							}
+  							if (li.custom_multiplier_2) {
+  								li.cost *= App.getMultiplierValue(li.custom_multiplier_2);
+  							}
+
+  							// add overhead if a salary
+  							if (costObj && costObj.subheading_name === 'Salaries') {
+  								// TODO add overhead from country parameters
+  							}
+
+  							input.cost += li.cost;
+  						});
+  						if (input.selected) a.cost += input.cost;
+  					});
+  					ind.cost += a.cost;
+  				});
+  				cap.cost += ind.cost;
+  			});
+  			cc.cost += cap.cost;
+  		});
+  	});
+  }
+
+	// parses multiplier string or integer and returns an integer
+	App.getMultiplierValue = (input) => {
+		if (typeof input === 'number') return input;
+		return input.match(/\d+/)[0];
+	}
 })();
