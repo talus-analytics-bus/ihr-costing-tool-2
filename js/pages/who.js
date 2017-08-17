@@ -2,7 +2,7 @@
 	App.initWho = (ccClass) => {
 
 		/*Initialize country picker map*/
-		App.createCountryMap();
+		App.createLeafletMap();
 		switch(ccClass) {
             case 'currency':
                 initCurrencyTab();
@@ -32,16 +32,16 @@
 		const blocksShowing = [
             {
             "abbr": "country",
-            "name": "Country",
+            "name": "Country and Currency",
             "level": 0,
             "status": ""
             },
-            {
+            /*{
             "abbr": "currency",
             "name": "Currency",
             "level": 0,
             "status": ""
-            },
+            },*/
             {
             "abbr": "pop-dist",
             "name": "Population and Districts",
