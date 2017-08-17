@@ -27,14 +27,13 @@
 		<div class="tool-name">IHR Costing Tool</div>
 	</div>
 	<!-- Nav bar -->
-	<!-- Test nav bar from bootstrap <nav class="navbar navbar-toggleable-md navbar-light indigo bg-faded ihr-navbar">-->
 	<nav class="navbar navbar-toggleable-md navbar-light bg-faded ihr-navbar">
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item active" page="">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item" page="">
 					<a class="nav-link">Home</a>
 				</li>
 				<li class="nav-item dropdown">
@@ -54,11 +53,18 @@
 						<a class="dropdown-item" page="costsinstructions">Instructions</a>
 						<a class="dropdown-item" page="who">Country Details</a>
 						<a class="dropdown-item" page="costs" >Costing</a>
-
 					</div>
 				</li>
 				<li class="nav-item" page="results">
 					<a class="nav-link">Results</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item" page="background">
+					<a class="nav-link">Background</a>
+				</li>
+				<li class="nav-item" page="contact">
+					<a class="nav-link">Contact</a>
 				</li>
 			</ul>
 		</div>
@@ -505,6 +511,20 @@
 		</div>
 	</script>
 	
+	<!-- Background page template -->
+	<script id="background-template" type="text/x-handlebars-template">
+		<div class="background-container container container-text">
+			<h1>Background</h1>
+		</div>
+	</script>
+
+	<!-- Contact page template -->
+	<script id="contact-template" type="text/x-handlebars-template">
+		<div class="contact-container container container-text">
+			<h1>Contact Us</h1>
+		</div>
+	</script>
+
 	<!-- Capacity Description Component -->
 	<script id="capacity-description-template" type="text/x-handlebars-template">
 		<div class="capacity-description-header">
@@ -558,13 +578,15 @@
 <script src="js/components/charts.js"></script>
 <script src="js/components/map.js"></script>
 <script src="js/components/tabNavigation.js"></script>
-<script src="js/pages/who.js"></script>
-<script src="js/pages/scores.js"></script>
-<script src="js/pages/results.js"></script>
+<script src="js/pages/assessment.js"></script>
+<script src="js/pages/background.js"></script>
+<script src="js/pages/contact.js"></script>
+<script src="js/pages/costing.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
-<script src="js/pages/assessment.js"></script>
-<script src="js/pages/costing.js"></script>
+<script src="js/pages/results.js"></script>
+<script src="js/pages/scores.js"></script>
+<script src="js/pages/who.js"></script>
 <script src="js/routing.js"></script>
 <script src="js/init.js"></script>
 <!-- <script src="build/bundle.min.js"></script> -->

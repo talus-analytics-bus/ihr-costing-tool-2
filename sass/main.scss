@@ -13,13 +13,15 @@
 @import 'components/blocks';
 @import 'components/map';
 
+@import 'pages/assessment';
+@import 'pages/background';
+@import 'pages/contact';
+@import 'pages/costing';
 @import 'pages/home';
 @import 'pages/overview';
-@import 'pages/who';
-@import 'pages/scores';
-@import 'pages/costing';
 @import 'pages/results';
-@import 'pages/assessment';
+@import 'pages/scores';
+@import 'pages/who';
 
 body { 
 	font-family: Georgia, serif;

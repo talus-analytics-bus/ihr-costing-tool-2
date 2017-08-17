@@ -86,6 +86,14 @@ const Routing = {};
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);
 		});
+		crossroads.addRoute('/background', () => {
+			loadPage('background', App.initBackground);
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/contact', () => {
+			loadPage('contact', App.initContact);
+			window.scrollTo(0, 0);
+		});
 
 		// setup hasher for subscribing to hash changes and browser history
 		hasher.prependHash = '';
