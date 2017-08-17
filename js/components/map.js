@@ -2,50 +2,49 @@
 
     App.geoJson = {};
 
-    App.createLeafletMap = () => {
+    const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
 
-        const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
-        const mapConfig = {
-            divId: 'leaflet-map',
-            view: {
-                coordinates: [0, 0],
-                zoom: 1,
+    App.mapConfig = {
+        divId: 'leaflet-map',
+        view: {
+            coordinates: [0, 0],
+            zoom: 1,
+        },
+        url: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+        options: {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 8,
+            minZoom: 1,
+            id: 'mapbox.light',
+            accessToken,
+        },
+        styles: {
+            default: {
+                stroke: true,
+                weight: 0.4,
+                fill: true,
+                color: '#000',
+                fillColor: '#fff',
+                fillOpacity: 1
             },
-            url: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-            options: {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                maxZoom: 8,
-                minZoom: 1,
-                id: 'mapbox.light',
-                accessToken,
+            active: {
+                fillColor: '#ff7a7a',
             },
-            styles: {
-                default: {
-                    stroke: true,
-                    weight: 0.4,
-                    fill: true,
-                    color: '#000',
-                    fillColor: '#fff',
-                    fillOpacity: 1
-                },
-                active: {
-                    fillColor: '#ff7a7a',
-                },
-                selected: {
-                    fillColor: '#AA0000',
-                }
+            selected: {
+                fillColor: '#AA0000',
             }
-        };
+        }
+    };
 
-
+    App.createLeafletMap = () => {
 
         let map, info, activeCountry = '';
 
         const initMap = () => {
-            map = L.map(mapConfig.divId)
-                .setView(mapConfig.view.coordinates, mapConfig.view.zoom);
+            map = L.map(App.mapConfig.divId)
+                .setView(App.mapConfig.view.coordinates, App.mapConfig.view.zoom);
 
-            L.tileLayer(mapConfig.url, mapConfig.options).addTo(map);
+            L.tileLayer(App.mapConfig.url, App.mapConfig.options).addTo(map);
 
             info = L.control();
 
@@ -65,7 +64,7 @@
             const layer = e.target;
 
             if (activeCountry !== layer.feature.properties.iso_a2) {
-                layer.setStyle(mapConfig.styles.active);
+                layer.setStyle(App.mapConfig.styles.active);
 
                 //info.update(layer.feature.properties);
 
@@ -99,7 +98,7 @@
 
             App.geoJson.eachLayer((layer) => {
                 if (abbreviation === layer.feature.properties.iso_a2) {
-                    layer.setStyle(mapConfig.styles.selected);
+                    layer.setStyle(App.mapConfig.styles.selected);
                 } else {
                     App.geoJson.resetStyle(layer);
                 }
@@ -122,7 +121,7 @@
 
             // check if country has already been selected
             if (App.whoAmI.hasOwnProperty('abbreviation') && App.whoAmI.abbreviation === layer.feature.properties.iso_a2) {
-                layer.setStyle(mapConfig.styles.selected);
+                layer.setStyle(App.mapConfig.styles.selected);
                 activeCountry = App.whoAmI.abbreviation;
 
             }
@@ -131,7 +130,7 @@
         const renderMap = () => {
             $.getJSON('data/custom.geo.json' , (data) => {
                 App.geoJson = L.geoJson(data, {
-                    style: mapConfig.styles.default,
+                    style: App.mapConfig.styles.default,
                     onEachFeature: featureEventHandlers,
                 }).addTo(map);
             });

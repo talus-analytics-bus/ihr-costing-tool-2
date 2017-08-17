@@ -86,6 +86,19 @@
 	*/
 	initCountryTab = () => {
 
+        // event handler for selecting the country from dropdown
+        const selectCountryInMap = (geoJson, code) => {
+
+            geoJson.eachLayer((layer) => {
+                const layerAbbr = layer.feature.properties.iso_a2;
+                if (layerAbbr === code) {
+                    layer.setStyle(App.mapConfig.styles.selected);
+                } else {
+                    geoJson.resetStyle(layer);
+                }
+            });
+        };
+
         // transforms currency object and adds code that matches with the original currencies.json key
         const currencyObj = (key, obj) => Object.assign({}, obj, {
             code: key,
@@ -135,7 +148,7 @@
 					.text(function(d) { return d.name})
 					.on('click', function (d) {
 						d3.select('.country-dropdown.dropdown > button').text(d.name);
-						countryDropdownToggle(d.abbreviation);
+                        selectCountryInMap(App.geoJson, d.abbreviation);
 						App.whoAmI = JSON.parse(JSON.stringify(d));
 
                         // if country is selected and no currency has been selected yet, select matching country currency as default
@@ -265,20 +278,5 @@
         var filters = App.globalBaseCosts.filter(e=>e.tab_name===search);
 
     }
-    /*
-	*	countryDropdownToggle
-	*	Set the map's active country to the dropdown selection
-	*/
-	countryDropdownToggle = (countryCode) => {
-		d3.selectAll(".country")
-        	.classed('active', false);
-		d3.selectAll('.country')
-			.each(function(d){
-				if (d.properties.code === countryCode) {
-					d3.select(this).classed('active',true);
-				}
-			});
-	};
-
 
 })();
