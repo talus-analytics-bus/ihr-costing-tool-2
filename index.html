@@ -151,12 +151,22 @@
 				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
 				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
 			</div>
-			<div class="btn-col col-sm-12 center">
+			<div>
+				<h2>Upload Assessment</h2>
+				<div class="instructions">
+					Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
+				</div>
+				<div class="button-group">
+					<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below.</p>
+					<div>
+						<button type="button" class="btn btn-primary">Select a File</button>
+					</div>
+				</div>
+			</div>
+			<div class="start-button-container">
 				<button type="button" class="btn btn-primary overview-start">Start</button>
 			</div>
-
 		</div>
-
 	</script>
 	
 	<!-- Who Am I? page tempate -->
@@ -320,36 +330,6 @@
 
 	</script>
 
-	<!-- Default Values page tempate -->
-	<script id="default-template" type="text/x-handlebars-template">
-		<div class="default-container container">
-			<h1>Placeholder: Default Values page</h1>
-		</div>
-	</script>
-
-	<!-- JEE Assessment Status page tempate -->
-	<script id="jee-template" type="text/x-handlebars-template">
-		<div class="assessment-container container container-text">
-			<div>
-				<h1>Enter Current JEE Assessment Scores</h1>
-				<div class="instructions">
-					Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
-				</div>
-			</div>
-			<div class="button-group">
-				<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below.</p>
-				<div>
-					<button type="button" class="btn btn-primary">Select a File</button>
-				</div>
-			</div>
-			<div class="button-group">
-				<p>Or, continue to options for manual score entry.</p>
-				<div>
-					<button type="button" page="scores" class="btn btn-primary enter-assessments">Enter Assessments Manually</button>
-				</div>
-			</div>
-		</div>
-	</script>
 
 	<!-- Scores page tempate -->
 	<script id="scores-template" type="text/x-handlebars-template">

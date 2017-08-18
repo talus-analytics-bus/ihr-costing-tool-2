@@ -29,14 +29,6 @@ const Routing = {};
 			loadPage('who', App.initWho, ccId);
 			window.scrollTo(0, 0);
 		});
-		crossroads.addRoute('/default', () => {
-			loadPage('default');
-			window.scrollTo(0, 0);
-		});
-		crossroads.addRoute('/jee', () => {
-			loadPage('jee', App.initAssessment);
-			window.scrollTo(0, 0);
-		});
 
 		crossroads.addRoute('/scores', () => {
 			hasher.setHash(`scores/p-1/1`)
