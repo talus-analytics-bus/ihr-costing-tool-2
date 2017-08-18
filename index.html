@@ -303,8 +303,8 @@
 	</script>
 
 	<!-- Cost Instructions page tempate -->
-	<script id="cost-instructions-template" type="text/x-handlebars-template">
-		<div class="cost-instructions-container container container-text">
+	<script id="costs-instructions-template" type="text/x-handlebars-template">
+		<div class="costs-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
 				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
@@ -322,12 +322,30 @@
 				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
 				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
 			</div>
-			<div class="btn-col col-sm-12 center">
-				<button type="button" class="btn btn-primary cost-instructions-start">Start Costing</button>
+			<div>
+				<h2>Select Target Score</h2>
+				<div class="target-score-section">
+					<div class="target-score-option" ind="step">
+						<input type="radio" checked />
+						<span>I want to score 1 point higher for each indicator</span>
+					</div>
+					<div class="target-score-option" ind="target">
+						<input type="radio" />
+						<span>I want to reach a target score of</span>
+						<select class="target-score-select form-control">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4" selected>4</option>
+							<option value="5">5</option>
+						</select>
+						<span>for each indicator</span>
+					</div>
+				</div>
 			</div>
-
+			<div class="start-button-container">
+				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
+			</div>
 		</div>
-
 	</script>
 
 
@@ -340,7 +358,7 @@
 					<h1>Assessment</h1>
 					<div class="core-capacity-name"></div>
 					<div class="score-instructions instructions">
-						For the following capacity, select a score for each indicator below that best matches your country's capabilities. Open the description below for more details.
+						For the following capacity, select a score for each indicator below that best matches the country's capabilities. Open the description below for more details.
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
@@ -579,6 +597,7 @@
 <script src="js/pages/background.js"></script>
 <script src="js/pages/contact.js"></script>
 <script src="js/pages/costing.js"></script>
+<script src="js/pages/costsInstructions.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
 <script src="js/pages/results.js"></script>

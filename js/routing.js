@@ -51,7 +51,7 @@ const Routing = {};
 		});
 
 		crossroads.addRoute('/costsinstructions', () => {
-			loadPage('cost-instructions');
+			loadPage('costs-instructions', App.initCostsInstructions);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/costs', () => {

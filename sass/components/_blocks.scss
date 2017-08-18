@@ -60,7 +60,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include hori-gradient($medium-blue, white);
+    @include hori-gradient($light-blue, white);
   }
 }
 .block-link-cover {
