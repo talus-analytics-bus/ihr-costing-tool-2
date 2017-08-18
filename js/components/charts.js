@@ -1,6 +1,11 @@
 const Charts = {};
 
 (() => {
+	const moneyFormat = (num) => {
+		if (num < 100) return d3.format('$')(Math.round(num));
+		return d3.format('$,.3r')(num);
+	}
+
 	Charts.buildRadialProgress = (selector, data, param={}) => {
 		const margin = { top: 0, right: 15, bottom: 0, left: 15 };
 		const radius = param.radius || 35;
@@ -75,7 +80,7 @@ const Charts = {};
 	Charts.buildBulletChart = (selector, data, param={}) => {
 		const margin = { top: 5, right: 40, bottom: 30, left: 120 };
 		const width = param.width || 400;
-		const height = param.height || 25;
+		const height = param.height || 30;
 
 		const bullet = d3.bullet()
 			.width(width)
@@ -90,6 +95,34 @@ const Charts = {};
 				.append('g')
 					.attr('transform', `translate(${margin.left}, ${margin.top})`)
 					.call(bullet);
+
+		const titles = charts.append('g')
+			.style('text-anchor', 'end')
+			.attr('transform', `translate(-6, ${height / 2})`);
+		titles.append('text')
+			.attr('class', 'title')
+			.text(d => d.name);
+		titles.append('text')
+			.attr('class', 'subtitle')
+			.attr('y', 15)
+			.text(d => d.subtitle);
+
+		// add gradient definition
+		const defs = charts.append('defs');
+		const lg = defs.append('linearGradient')
+			.attr('id', 'gradient')
+			.attr('x1', '0%')
+			.attr('x2', '0%')
+			.attr('y1', '0%')
+			.attr('y2', '100%');
+		lg.append('stop')
+			.attr('offset', '0%')
+			.style('stop-color', '#f0f0f0');
+		lg.append('stop')
+			.attr('offset', '100%')
+			.style('stop-color', '#e0e0e0');
+
+		charts.selectAll('.measure').style('fill', 'url(#gradient)');
 
 		return charts;
 	}
@@ -225,7 +258,6 @@ const Charts = {};
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 		const dt = 0.1;  // in years
-		const moneyFormat = d3.format('$,.3s');
 		const colorScale = d3.scaleOrdinal(d3.schemeCategory20c);
 
 		// define scales

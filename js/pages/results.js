@@ -35,12 +35,18 @@
 		});
 
 		// build bullet charts
-		Charts.buildBulletChart('.bullet-chart-container', [
-			{"ranges":[150,225,300],"measures":[220,270],"markers":[250]},
-			{"ranges":[20,25,30],"measures":[21,23],"markers":[26]},
-			{"ranges":[350,500,600],"measures":[100,320],"markers":[550]},
-			{"ranges":[1400,2000,2500],"measures":[1000,1650],"markers":[2100]},
-		]);
+		const bulletData = App.jeeTree.map((cc) => {
+			const scoreFormat = d3.format('.1f');
+			const oldScore = 2 + Math.random();
+			const newScore = 3 + Math.random();
+			return {
+				name: cc.name,
+				subtitle: `Avg. Score: ${scoreFormat(newScore)}`,
+				ranges: [1, 3, 5],
+				measures: [oldScore, newScore],
+			};
+		});
+		Charts.buildBulletChart('.bullet-chart-container', bulletData);
 
 
 		/* --------------------------- Cost Explorer Section ---------------------------*/
