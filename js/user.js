@@ -8,13 +8,13 @@ const User = {};
 
 	// sets the score in the user data for the indicator specified
 	User.setIndicatorScore = (indId, newScore) => {
-		const ind = App.getIndicator(indId.toUpperCase());
+		const ind = App.getIndicator(indId);
 		ind.score = newScore;
 	};
 
 	// gets the score in the user data for the indicator specified
 	User.getIndicatorScore = (indId) => {
-		const ind = App.getIndicator(indId.toUpperCase());
+		const ind = App.getIndicator(indId);
 		return ind.score;
 	};
 

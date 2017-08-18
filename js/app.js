@@ -309,9 +309,11 @@ const App = {};
 
 
   /* ------------------ jeeTree Getter Functions ------------------- */
+  App.normalCcIds = ['p', 'd', 'r'];
+
   // gets the capacity from the jeeTree given an id
 	App.getCapacity = (id) => {
-		const ccId = id.charAt(0).toLowerCase();
+		const ccId = id.includes('.') ? id.split('.')[0].toLowerCase() : 'o';
 		const capId = id.toLowerCase();
 		const cc = App.jeeTree.find(cc => cc.id === ccId);
 		if (!cc) return null;
@@ -320,7 +322,8 @@ const App = {};
 
   // gets the indicator from the jeeTree given an id
 	App.getIndicator = (id) => {
-		const capId = id.split('.').slice(0, 2).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 2 : 1;
+		const capId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const indId = id.toLowerCase();
 		const cap = App.getCapacity(capId);
 		if (!cap) return null;
@@ -329,7 +332,8 @@ const App = {};
 
   // gets the action from the jeeTree given an id
   App.getAction = (id) => {
-		const indId = id.split('.').slice(0, 3).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 3 : 2;
+		const indId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const actionId = id.toLowerCase();
 		const ind = App.getIndicator(indId);
 		if (!ind) return null;
@@ -338,7 +342,8 @@ const App = {};
 
   // gets the input from the jeeTree given an id
   App.getInput = (id) => {
-		const actionId = id.split('.').slice(0, 4).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 4 : 3;
+		const actionId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const inputId = id.toLowerCase();
 		const action = App.getAction(actionId);
 		if (!action) return null;
@@ -347,7 +352,8 @@ const App = {};
 
   // gets the line item from the jeeTree given an id
   App.getLineItem = (id) => {
-  	const inputId = id.split('.').slice(0, 5).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 5 : 4;
+  	const inputId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
   	const liId = id.toLowerCase();
   	const input = App.getInput(inputId);
   	if (!input) return null;
