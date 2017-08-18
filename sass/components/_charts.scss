@@ -11,15 +11,22 @@
 .rp-chart {
 	display: inline-block;
 
-	.rp-background {
-		fill: rgba(0,0,0,0.03);
-	}
-	.rp-outer { fill: #082b84; }
-	.rp-inner { fill: lightsteelblue; }
+	.rp-background { fill: #d0d0d0; }
+	.rp-outer { fill: steelblue; }
 	.rp-text {
 		font-weight: 600;
 		text-anchor: middle;
 	}
+}
+.bullet-chart {
+	font-size: 0.9rem;
+	.marker { stroke: #000; stroke-width: 2px; }
+	.tick line { stroke: #666; stroke-width: .5px; }
+	.range.s0 { fill: #eee; }
+	.range.s1 { fill: #ddd; }
+	.range.s2 { fill: #ccc; }
+	.measure.s0 { fill: lightsteelblue; }
+	.measure.s1 { fill: steelblue; }
 }
 .cost-bar-chart {
 	.bar {

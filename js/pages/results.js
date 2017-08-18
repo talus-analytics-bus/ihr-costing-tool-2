@@ -24,18 +24,38 @@
 		const scoreChangeFormat = d3.format('+.1f');
 		const moneyFormat = d3.format('$.3s');
 
+
+		/* ---------------------- Score Improvement Section ----------------------*/
 		// build score improvement charts
-		const oldScoreChart = Charts.buildRadialProgress('.rp-score-old', {
+		const oldScoreChart = Charts.buildRadialProgress('.rp-score-old', oldScore, {
 			duration: 1500 * oldScore / newScore,
-		})
-			.initValue([oldScore / 5], scoreFormat(oldScore));
-		const newScoreChart = Charts.buildRadialProgress('.rp-score-new', {
+		});
+		const newScoreChart = Charts.buildRadialProgress('.rp-score-new', newScore, {
 			duration: 1500,
-		})
-			.initValue([newScore / 5], scoreFormat(newScore))
+		});
+
+		// build bullet charts
+		Charts.buildBulletChart('.bullet-chart-container', [
+			{"ranges":[150,225,300],"measures":[220,270],"markers":[250]},
+			{"ranges":[20,25,30],"measures":[21,23],"markers":[26]},
+			{"ranges":[350,500,600],"measures":[100,320],"markers":[550]},
+			{"ranges":[1400,2000,2500],"measures":[1000,1650],"markers":[2100]},
+		]);
 
 
 		/* --------------------------- Cost Explorer Section ---------------------------*/
+		// toggling filter display
+		$('.explorer-filter-header').click(function() {
+			const chevron = $(this).find('.chevron');
+			if (chevron.hasClass('active')) {
+				chevron.removeClass('active');
+				$('.explorer-filter-content').slideUp();
+			} else {
+				chevron.addClass('active');
+				$('.explorer-filter-content').slideDown();
+			}
+		});
+
 		// populate filters
 		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
 		

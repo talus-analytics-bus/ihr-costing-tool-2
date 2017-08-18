@@ -1,7 +1,13 @@
 .results-container {
 	font-family: 'Open Sans', sans-serif;
 }
-.score-improvement-container {
+.results-section {
+	border: $border;
+	padding: 10px 20px;
+	@include border-radius(10px);
+	@include gradient(#fff, #fcfcfc);
+}
+.score-improvement-section {
 	div, span { vertical-align: middle; }
 	.score-improvement-title {
 		font-weight: 600;
@@ -14,6 +20,9 @@
 		display: inline-block;
 	}
 }
+.chart-section {
+	margin-top: 20px;
+}
 .chart-tab-container {
 	margin-top: 30px;
 	text-align: center;
@@ -25,10 +34,32 @@
 
 /* --- Cost Explorer --- */
 .explorer-filters {
-	padding: 15px 20px;
-	background-color: #f9f9f9;
-	border: 1px solid #ddd;
+	border: $border;
 
+	.explorer-filter-header {
+		padding: 1px 20px;
+		background-color: #f0f0f0;
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.explorer-filter-header span {
+		position: relative;
+		top: -3px;
+		left: -7px;
+	}
+	.chevron {
+		position: relative;
+		top: 2px;
+		left: -5px;
+	}
+	.explorer-filter-content {
+		display: none;
+		padding: 15px 20px 20px;
+		border-top: $border;
+		background-color: white;
+		.row { margin: 0; }
+	}
 	.explorer-filter-label {
 		font-weight: 600;
 		margin-bottom: 2px;

@@ -1,7 +1,7 @@
 const Charts = {};
 
 (() => {
-	Charts.buildRadialProgress = (selector, param={}) => {
+	Charts.buildRadialProgress = (selector, data, param={}) => {
 		const margin = { top: 0, right: 15, bottom: 0, left: 15 };
 		const radius = param.radius || 35;
 		const chartContainer = d3.select(selector).append('svg')
@@ -16,10 +16,6 @@ const Charts = {};
 		const outerArc = d3.arc()
 			.innerRadius(radius - arcSep)
 			.outerRadius(radius)
-			.startAngle(0);
-		const innerArc = d3.arc()
-			.innerRadius(radius - 2 * arcSep)
-			.outerRadius(radius - arcSep)
 			.startAngle(0);
 
 		// add glow definitions to svg
@@ -42,11 +38,6 @@ const Charts = {};
 			.datum({ endAngle: 0 })
 			.attr('d', outerArc)
 			.attr('filter', 'url(#blur)');
-		const innerCircle = chart.append('path')
-			.attr('class', 'rp-inner')
-			.datum({ endAngle: 0 })
-			.attr('d', innerArc)
-			.attr('filter', 'url(#blur)');
 
 		// add label text
 		const label = chart.append('text')
@@ -54,16 +45,17 @@ const Charts = {};
 			.attr('dy', '.35em');
 
 		// add update function
-		chart.initValue = (values, text) => {
-			outerCircle.transition()
-				.duration(param.duration || 1500)
-				.attrTween('d', arcTween(outerArc, values[0]));
-			if (values.length > 1) {
-				innerCircle.transition()
+		chart.initValue = (score) => {
+			outerCircle
+				.style('fill', () => {
+					if (score < 2) return '#c82127';
+					else if (score < 4) return '#ede929';
+					return '#156c37';
+				})
+				.transition()
 					.duration(param.duration || 1500)
-					.attrTween('d', arcTween(innerArc, values[1]))
-			}
-			label.text(text || d3.format('.0%')(values[0]));
+					.attrTween('d', arcTween(outerArc, score / 5));
+			label.text(d3.format('.1f')(score));
 		}
 
 		function arcTween(arc, newValue) {
@@ -76,7 +68,30 @@ const Charts = {};
 			}
 		}
 
+		chart.initValue(data);
 		return chart;
+	}
+
+	Charts.buildBulletChart = (selector, data, param={}) => {
+		const margin = { top: 5, right: 40, bottom: 30, left: 120 };
+		const width = param.width || 400;
+		const height = param.height || 25;
+
+		const bullet = d3.bullet()
+			.width(width)
+			.height(height);
+
+		const charts = d3.select(selector).selectAll('svg')
+			.data(data)
+			.enter().append('svg')
+				.attr('class', 'bullet-chart')
+				.attr('width', width + margin.left + margin.right)
+				.attr('height', height + margin.top + margin.bottom)
+				.append('g')
+					.attr('transform', `translate(${margin.left}, ${margin.top})`)
+					.call(bullet);
+
+		return charts;
 	}
 
 	Charts.buildCostBarChart = (selector, data, param={}) => {
