@@ -22,11 +22,10 @@
 	font-size: 0.9rem;
 	.marker { stroke: #000; stroke-width: 2px; }
 	.tick line { stroke: #666; stroke-width: .5px; }
-	.range.s0 { fill: rgba($jeeGreen, 1); }
-	.range.s1 { fill: rgba($jeeYellow, 0.9); }
-	.range.s2 { fill: rgba($jeeRed, 0.8); }
+	.range.s0 { fill: rgba($jeeGreen, 0.5); }
+	.range.s1 { fill: rgba($jeeYellow, 0.5); }
+	.range.s2 { fill: rgba($jeeRed, 0.5); }
 	.measure {
-		fill: #f0f0f0;
 		stroke: #333;
 	}
 	.measure.s0 {
@@ -35,7 +34,7 @@
 	.measure.s1 {
 	}
 	.title { font-weight: bold; font-size: 1.05em; }
-	.subtitle { fill: #999; font-size: 0.8rem; }
+	.subtitle { fill: #777; font-size: 0.8rem; }
 	.value {
 		font-size: 0.9rem;
 		font-weight: 600;
