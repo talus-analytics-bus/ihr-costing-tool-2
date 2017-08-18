@@ -123,6 +123,77 @@ reference: https://mdbootstrap.com/css/colors/
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
+/* ------------------------ Multiselect ------------------------ */
+.btn b.caret {
+  margin-left: 3px; }
+
+.multiselect-container label {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+/* ------------------------ Bootstrap Slider ------------------------ */
+.slider-tick.round {
+  display: none; }
+
+.slider-handle {
+  z-index: 10; }
+
+.slider-tick-container {
+  position: absolute;
+  width: 100%;
+  left: -3px;
+  z-index: 9; }
+
+.slider-tick-vert {
+  position: absolute;
+  width: 2px;
+  height: 5px;
+  top: 10px;
+  background-color: #999; }
+
+.slider-tick-label-container {
+  margin-left: -22.5px !important; }
+
+.slider-tick-label {
+  font-size: 0.85em; }
+
+.slider-img {
+  width: 20px;
+  height: 20px; }
+
+/* ------------------------ Noty ------------------------ */
+.noty_message {
+  padding: 15px !important; }
+
+.noty_text {
+  font-size: 1.1em; }
+
+/* ------------------------ Tooltipster ------------------------ */
+.tooltipster-default {
+  background-color: #fdfdfd;
+  border: 2px solid #999;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); }
+  .tooltipster-default .tooltipster-content {
+    text-align: left;
+    color: #2c2c2c; }
+
+.tooltipster-shadow .tooltipster-content {
+  text-align: left;
+  padding: 5px 10px;
+  color: #666; }
+
+.tooltipster-title {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 5px; }
+
 .capacity-description-container {
   margin-bottom: 20px; }
   .capacity-description-container .capacity-description-header {
@@ -634,6 +705,46 @@ div.tooltip {
   -moz-opacity: 1;
   opacity: 1; }
 
+/* ---------- Images ------------ */
+.question-img,
+.calc-img,
+.exclamation-img {
+  position: relative;
+  top: -2px;
+  left: 4px;
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+  -webkit-opacity: 0.75;
+  -moz-opacity: 0.75;
+  opacity: 0.75; }
+
+.collapse-arrow {
+  position: relative;
+  height: 11px;
+  width: 9px;
+  top: -1px; }
+
+.add-new-icon,
+.remove-icon {
+  position: relative;
+  top: -1px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer; }
+
+.blackx-icon {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  -webkit-opacity: 0.7;
+  -moz-opacity: 0.7;
+  opacity: 0.7; }
+  .blackx-icon:hover {
+    -webkit-opacity: 0.8;
+    -moz-opacity: 0.8;
+    opacity: 0.8; }
+
 .home-veil {
   background-color: rgba(255, 255, 255, 0.9);
   margin: 80px 0 20px;
@@ -689,17 +800,24 @@ div.tooltip {
   padding-bottom: 20px; }
 .population-block input {
   border-radius: 5px;
-  border-style: groove; }
+  border: 1px solid #ccc;
+  text-align: right; }
 .population-block .form-group {
   margin-bottom: .5rem; }
+.population-block .btn-container {
+  margin-top: 20px; }
+.population-block .estimated-population {
+  margin-top: 20px; }
 
 .country-currency-label {
-  margin-top: 50px; }
+  margin-top: 60px; }
 
 .country-control-container {
   margin-right: 30px;
   margin-top: 0px;
   width: 25%; }
+  .country-control-container .btn {
+    width: 220px; }
 
 .scores-container .btn {
   padding: .5rem 1.1rem; }
@@ -959,8 +1077,8 @@ div.tooltip {
     margin-bottom: 10px; }
 
 body {
-  font-family: Georgia, serif;
-  font-size: 16px; }
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px; }
 
 #page-content {
   position: relative;

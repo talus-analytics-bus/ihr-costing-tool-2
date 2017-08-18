@@ -2,10 +2,20 @@ const Util = {};
 
 (() => {
 
-	/*
-	*	getIndicatorClass
-	*	For the given indicator ID, returns its CSS class
-	*/
+    Util.comma = d3.format(',f'); // rounds down and adds commas appropriately
+    Util.decimalOne = d3.format('.1f'); // formats to a one decimal significance
+    Util.decimalTwo = d3.format('.2f'); // formats to a two decimal significance
+    Util.percentize = d3.format('%'); // divides by 100 and adds a percentage symbol
+    Util.percentizeDec = d3.format('.1%'); // percentize method but with a greater significance
+    Util.monetize = d3.format('$,f'); // rounds down, adds commas, and adds money symbol
+    Util.formatSI = d3.format('.2s'); // uses 3 sigfigs and suffixes the appropriate symbol (k for 1000, M for 1000000)
+    Util.formatTimestamp = d3.time.format('%b %d, %Y %H:%M GMT%Z'); // formats a date (e.g.: Jul 16, 2015 17:12 GMT-0400)
+    Util.formatTimestampShort = d3.time.format('%m/%d/%Y %H:%M GMT%Z'); // formats a date (e.g.: 07/16/2015 17:12 GMT-0400)
+
+    /*
+    *	getIndicatorClass
+    *	For the given indicator ID, returns its CSS class
+    */
 	Util.getIndicatorClass = (id) => {
 		return id.toLowerCase().split('.').join('-');
 	};

@@ -8,7 +8,7 @@
                 initCurrencyTab();
 
                 break;
-            case 'pop-dist':
+            case 'population':
                 initPopDistTab();
                 break;
             case 'default-costs':
@@ -23,8 +23,8 @@
 		// define blocks
 		const blocks = {
             "country": {},
-            "currency": {},
-            "pop-dist": {},
+            //"currency": {},
+            "population": {},
             "default-costs": {}
 		}
 
@@ -43,8 +43,8 @@
             "status": ""
             },*/
             {
-            "abbr": "pop-dist",
-            "name": "Population and Districts",
+            "abbr": "population",
+            "name": "Total Population",
             "level": 0,
             "status": ""
             },
@@ -58,7 +58,24 @@
 
 		// call function to render the tabs
 		App.setupWhoTabs(blocksShowing, blocks, ccClass);
+
+        $('.defn').tooltipster({
+            theme: 'tooltipster-default',
+            trigger: 'click',
+            position: 'bottom',
+            interactive: true,
+            contentAsHTML: true,
+            maxWidth: 500,
+            functionInit: function(origin) {
+                var defnName = $(origin[0]).attr('defn');
+                if (defnName === 'pop') {
+                    return 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+                }
+            }
+        });
 	};
+
+
 
     hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
     hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
@@ -234,7 +251,7 @@
         // change jeetree values
         const changeValue = _.debounce(setKeyTreeValue, 1000);
         const invertedMapping = _.invert(jeeTreeFieldMapping);
-        $('#pop-dist input').on('keyup', (ev) => {
+        $('#population input').on('keyup', (ev) => {
             const id = $(ev.target).attr('id');
 
             changeValue(invertedMapping[id], App.whoAmI, ev.target.value);
@@ -262,4 +279,6 @@
 				}
 			});
 	};
+
+
 })();

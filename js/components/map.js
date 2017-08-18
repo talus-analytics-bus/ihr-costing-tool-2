@@ -68,7 +68,7 @@
                 layer.setStyle(mapConfig.styles.active);
 
                 //info.update(layer.feature.properties);
-                
+
 
                 layer.bindPopup(layer.feature.properties.name, {closeButton: false, offset: L.point(-60, 0)});
                 //layer.openPopup();

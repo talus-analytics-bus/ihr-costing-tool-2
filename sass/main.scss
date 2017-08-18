@@ -11,6 +11,7 @@
 @import 'components/footer';
 @import 'components/blocks';
 @import 'components/map';
+@import 'components/images';
 
 @import 'pages/home';
 @import 'pages/overview';
@@ -21,8 +22,9 @@
 @import 'pages/assessment';
 
 body { 
-	font-family: Georgia, serif;
-	font-size: 16px;
+	//font-family: Georgia, serif;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
 }
 
 #page-content {

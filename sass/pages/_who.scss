@@ -20,24 +20,35 @@
 	}
 	input {
 		border-radius: 5px;
-		border-style: groove;
+		border: 1px solid #ccc;
+		text-align: right;
 	}
 
 	.form-group {
 		margin-bottom: .5rem;
 	}
 
+	.btn-container {
+		margin-top: 20px;
+	}
 
 
+	.estimated-population{
+		margin-top:	20px;
+	}
 }
 
 .country-currency-label {
-	margin-top:	50px;
+	margin-top:	60px;
 }
 
 .country-control-container {
 	margin-right: 30px;
 	margin-top: 0px;
 	width: 25%;
+
+	.btn {
+		width: 220px;
+	}
 }
 
