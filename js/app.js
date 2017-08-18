@@ -355,6 +355,29 @@ const App = {};
   }
 
 
+  /* ------------------ Scoring Functions ------------------- */
+  App.getNeededActions = (ind) => {
+		// find actions that match the target score
+		let actions = [];
+		if (ind.score) {
+			if (User.targetScoreType === 'step') {
+				actions = ind.actions.filter((action) => {
+					return action.score_step_to === ind.score + 1;
+				});
+			} else if (User.targetScoreType === 'target') {
+				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
+				actions = ind.actions.filter((action) => {
+					return scoresToGetTo.includes(action.score_step_to);
+				});
+			}
+		} else {
+			// if indicator is not scored, display all actions for the user to see
+			actions = ind.actions;
+		}
+		return actions;
+  }
+
+
   /* ------------------ Cost Calculation Function ------------------- */
   // sets/updates the costs for all levels of the jeeTree
   App.updateAllCosts = (param={}) => {
@@ -364,7 +387,9 @@ const App = {};
   			cap.cost = 0;
   			cap.indicators.forEach((ind) => {
   				ind.cost = 0;
-  				ind.actions.forEach((a) => {
+
+  				const actions = App.getNeededActions(ind);
+  				actions.forEach((a) => {
   					a.cost = 0;
   					a.inputs.forEach((input) => {
   						input.cost = 0;

@@ -20,7 +20,6 @@
 }
 .action-headers {
 	padding: 10px 20px 7px;
-	border-bottom: $border;
 	background-color: #e6e6e6;
 
 	.action-header-title {
@@ -33,6 +32,12 @@
 	margin: 10px 30px;
 	width: 600px;
 }
+.action-header-empty-content {
+	display: none;
+	margin: 25px 20px 20px;
+	text-align: center;
+	font-style: italic;
+}
 .action-header {
 	display: flex;
 	border: $border;	
@@ -43,112 +48,39 @@
 	cursor: pointer;
 	@include gradient(#fff, #f0f0f0);
 
-	 &:hover { color: #000; }
-	 &.active {
+	&:hover { color: #000; }
+	&.active {
 	 	color: #000;
-	 	font-weight: 600;
 		@include gradient(#fff, $light-blue);
-	 }
-	 &:nth-child(n+2) {
-	 	border-top: none;
-	 }
-	 span { margin: 0 5px; }
-	 .action-name {
+		.action-name,
+		.action-cost {
+			font-weight: 600;
+		}
+	}
+	&:nth-child(n+2) {
+		border-top: none;
+	}
+	span { margin: 0 5px; }
+	.action-name {
 	 	display: inline-block;
-	 }
-	 .action-cost {
-	 	display: inline-block;
-	 	width: 100px;
-	 	text-align: right;
-	 }
+	 	margin-right: 10px;
+	}
+	.action-scores {
+		margin-left: auto;
+		min-width: 60px;
+	}
+	.rp-score {
+		width: 20px;
+		height: 20px;
+	}
+	.action-cost {
+		display: inline-block;
+		min-width: 100px;
+		text-align: right;
+	}
 }
 .item-block-container {
+	border-top: $border;
 	padding: 15px;
 	background-color: #c9c9c9;
-
-	.item-block {
-		display: inline-block;
-		position: relative;
-		margin: 0 15px;
-		padding: 15px 30px;
-		border: $border;
-		text-align: center;
-		width: 300px;
-		height: 420px;
-		vertical-align: top;
-		@include gradient(#f0f0f0, #fff);
-		@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
-	}
-	.item-title {
-		font-family: 'Raleway', sans-serif;
-		font-size: 1.2em;
-	}
-	.item-cost {
-		margin-top: 10px;
-		font-size: 1.6em;
-		font-weight: 600;
-	}
-	.item-select-button {
-		margin-top: 20px;
-		display: inline-block;
-		padding: 2px 35px;
-		border: $border;
-		font-size: 0.8rem;
-		cursor: pointer;
-		@include noselect;
-		@include gradient(#fff, #e0e0e0);
-		&.selected {
-			border: 1px solid rgba(0,0,0,0.1);
-			color: white;
-			@include gradient(#4a8bc3, #3071a9);
-		}
-	}
-	.item-description {
-		margin-top: 20px;
-		text-align: left;
-	}
-	.item-footer {
-		position: absolute;
-		bottom: 15px;
-	}
-	.item-edit-cost-button,
-	.item-view-details-button {
-		display: inline-block;
-		padding: 2px 15px;
-		border: $border;
-		font-size: 0.9rem;
-		cursor: pointer;
-		@include noselect;
-		@include gradient(#fff, #f0f0f0);
-		@include box-shadow(1px 1px 3px rgba(0,0,0,0.05));
-		&:nth-child(n+2) {
-			margin-left: 10px;
-		}
-	}
-}
-.item-details-container {
-	padding: 10px 20px;
-	color: #333;
-
-	.item-details-name {
-		text-align: center;
-		font-family: 'Raleway', sans-serif;
-		font-size: 1.4em;
-	}
-	.item-details-description {
-		margin-top: 20px;
-		font-size: 0.9em;
-	}
-	.line-item-table {
-		margin-top: 20px;
-		font-size: 0.9em;
-		background-color: #f0f0f0;
-		td {
-			border-top: none;
-			padding: 3px 10px;
-		}
-		td:last-child { text-align: right; }
-		tr:last-child { font-weight: 600; }
-		tr:last-child td { border-top: 1px solid #999; }
-	}
 }
