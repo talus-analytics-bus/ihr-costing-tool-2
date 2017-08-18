@@ -75,7 +75,7 @@ const Charts = {};
 	Charts.buildBulletChart = (selector, data, param={}) => {
 		const margin = { top: 5, right: 40, bottom: 30, left: 120 };
 		const width = param.width || 400;
-		const height = param.height || 25;
+		const height = param.height || 30;
 
 		const bullet = d3.bullet()
 			.width(width)
@@ -90,6 +90,26 @@ const Charts = {};
 				.append('g')
 					.attr('transform', `translate(${margin.left}, ${margin.top})`)
 					.call(bullet);
+
+		const titles = charts.append('g')
+			.style('text-anchor', 'end')
+			.attr('transform', `translate(-6, ${height / 2})`);
+		titles.append('text')
+			.attr('class', 'title')
+			.text(d => d.name);
+		titles.append('text')
+			.attr('class', 'subtitle')
+			.attr('y', 15)
+			.text(d => d.subtitle);
+
+		// glow up!
+		/*const defs = charts.append('defs');
+		const filter = defs.append('filter')
+			.attr('id', 'blur');
+		filter.append('feGaussianBlur')
+			.attr('in', 'SourceGraphic')
+			.attr('stdDeviation', '1');
+		charts.selectAll('.measure').attr('filter', 'url(#blur)');*/
 
 		return charts;
 	}
