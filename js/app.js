@@ -44,12 +44,14 @@ const App = {};
 		.defer(d3.json, 'data/jeeTree.json')
 		.defer(d3.json, 'data/currencies.json')
 		.defer(d3.json, 'data/global_base_costs.json')
-		.await((error, countryParams, jeeTree, currencies, globalBaseCosts) => {
+		.defer(d3.json, 'data/global_staff_multipliers.json')
+		.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
 			App.globalBaseCosts = globalBaseCosts;
+			App.globalStaffMultipliers = globalStaffMultipliers;
 			App.whoAmI = {};
 
 			// add costs to each level of the jeeTree
@@ -411,6 +413,8 @@ const App = {};
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
-		return input.match(/\d+/)[0];
+		const numbers = input.match(/\d+/);
+		if (!numbers) return 1;
+		return numbers[0];
 	}
 })();

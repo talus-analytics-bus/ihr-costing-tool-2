@@ -99,7 +99,7 @@
 		function showAction(action) {
 			// make this header active
 			d3.selectAll('.action-header')
-				.classed('active', d => d.name === action.name);
+				.classed('active', d => d.id === action.id);
 
 			// show correct items for this action
 			showItemBlocks(action);
@@ -139,9 +139,7 @@
 			items.select('.item-title').text(d => d.name);
 			items.select('.item-cost').text(d => moneyFormat(d.cost));
 			items.select('.item-select-button')
-				.classed('selected', d => {
-					console.log(d); return d.selected;
-				})
+				.classed('selected', d => d.selected)
 				.on('click', function(d) {
 					// user toggles an item
 					d.selected = !d.selected;
