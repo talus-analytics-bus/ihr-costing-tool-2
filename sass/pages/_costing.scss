@@ -1,52 +1,77 @@
+.costs-container {
+	.core-capacity-name {
+		color: #333;
+		font-size: 1.3em;
+		font-weight: 600;
+		margin-top: -5px;
+	}
+}
+.costing-instructions {
+	margin-top: 20px;
+}
 .action-container {
-	margin: 20px 0;
-	background-color: #e0e0e0;
-	border: 1px solid #ccc;
+	margin: 30px 0 20px;
+	border: $border;
+	margin-left: 30px;
 }
 .choose-action-instructions {
 	font-style: italic;
 	margin-top: 10px;
 }
 .action-headers {
-	padding: 10px 20px 5px;
-	border-bottom: 1px solid #999;
-	@include gradient(#f0f0f0, #f6f6f6);
+	padding: 10px 20px 7px;
+	border-bottom: $border;
+	background-color: #e6e6e6;
 
 	.action-header-title {
 		font-weight: 600;
 		font-variant: small-caps;
 		margin-bottom: -2px;
 	}
-	.action-header {
-		margin: 5px 0 5px 15px;
-		color: #444;
-		font-size: 0.9em;
-		font-weight: 600;
-		cursor: pointer;
-	}
-	.action-header:hover {
-		color: #000;
-	}
-	.action-header.active {
-		color: #000;
-		font-weight: 600;
-		text-decoration: underline;
-	}
-	.action-header input {
-		position: relative;
-		top: 1px;
-		margin-right: 5px;
-	}
+}
+.action-header-content {
+	margin: 10px 30px;
+	width: 600px;
+}
+.action-header {
+	display: flex;
+	border: $border;	
+	padding: 4px 20px;
+	color: #444;
+	font-size: 0.9em;
+	justify-content: space-between;
+	cursor: pointer;
+	@include gradient(#fff, #f0f0f0);
+
+	 &:hover { color: #000; }
+	 &.active {
+	 	color: #000;
+	 	font-weight: 600;
+		@include gradient(#fff, $light-blue);
+	 }
+	 &:nth-child(n+2) {
+	 	border-top: none;
+	 }
+	 span { margin: 0 5px; }
+	 .action-name {
+	 	display: inline-block;
+	 }
+	 .action-cost {
+	 	display: inline-block;
+	 	width: 100px;
+	 	text-align: right;
+	 }
 }
 .item-block-container {
 	padding: 15px;
+	background-color: #c9c9c9;
 
 	.item-block {
 		display: inline-block;
 		position: relative;
 		margin: 0 15px;
 		padding: 15px 30px;
-		border: 1px solid #999;
+		border: $border;
 		text-align: center;
 		width: 300px;
 		height: 420px;
@@ -67,8 +92,16 @@
 		margin-top: 20px;
 		display: inline-block;
 		padding: 2px 35px;
+		border: $border;
 		font-size: 0.8rem;
-		@include border-radius(0);
+		cursor: pointer;
+		@include noselect;
+		@include gradient(#fff, #e0e0e0);
+		&.selected {
+			border: 1px solid rgba(0,0,0,0.1);
+			color: white;
+			@include gradient(#4a8bc3, #3071a9);
+		}
 	}
 	.item-description {
 		margin-top: 20px;
@@ -82,10 +115,40 @@
 	.item-view-details-button {
 		display: inline-block;
 		padding: 2px 15px;
-		border: 1px solid #999;
+		border: $border;
 		font-size: 0.9rem;
+		cursor: pointer;
+		@include noselect;
+		@include gradient(#fff, #f0f0f0);
+		@include box-shadow(1px 1px 3px rgba(0,0,0,0.05));
 		&:nth-child(n+2) {
 			margin-left: 10px;
 		}
+	}
+}
+.item-details-container {
+	padding: 10px 20px;
+	color: #333;
+
+	.item-details-name {
+		text-align: center;
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.4em;
+	}
+	.item-details-description {
+		margin-top: 20px;
+		font-size: 0.9em;
+	}
+	.line-item-table {
+		margin-top: 20px;
+		font-size: 0.9em;
+		background-color: #f0f0f0;
+		td {
+			border-top: none;
+			padding: 3px 10px;
+		}
+		td:last-child { text-align: right; }
+		tr:last-child { font-weight: 600; }
+		tr:last-child td { border-top: 1px solid #999; }
 	}
 }

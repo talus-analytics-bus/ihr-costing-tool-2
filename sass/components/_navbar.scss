@@ -22,22 +22,33 @@
   }
 }
 .ihr-navbar {
-  padding: 0 0 0 70px;
+  padding: 0 40px;
   border-top: 1px solid #999;
   border-bottom: 1px solid #999;
   @include gradient(#ebebeb, #e3e3e3);
   @include box-shadow(0 2px 3px rgba(0,0,0,0.1));
 
-  .nav-link {
-    padding: .5em 1em !important;
-    color: #555 !important;
-  }
   .nav-item {
     cursor: pointer;
+    &.active,
+    &:hover {
+      background-color: #f6f6f6;
+    }
   }
-  .nav-item.active,
-  .nav-item:hover {
-    background-color: #f6f6f6;
+  .nav-link {
+    padding: .5em 1.1em !important;
+    color: #555 !important;
+    border-right: 1px solid rgba(0,0,0,0.2);
+  }
+  .nav-item:first-child .nav-link {
+    border-left: 1px solid rgba(0,0,0,0.2);
+  }
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: #f3f3f3;
+  }
+  .dropdown-item:active {
+    background-color: #f0f0f0;
   }
 }
 .tool-name { cursor: pointer; }

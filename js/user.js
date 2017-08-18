@@ -33,13 +33,7 @@ const User = {};
 	* Gets the score in the user data for the indicator specified
 	*/
 	User.getIndicatorScore = (indId) => {
-		// ensure id valid
-		indId = indId.toUpperCase();
-		
-		// locate relevant indicator in indicator dataset
-		const ind = App.getIndicator(indId);
-
-		// return the score
+		const ind = App.getIndicator(indId.toUpperCase());
 		return ind.score;
 	};
 

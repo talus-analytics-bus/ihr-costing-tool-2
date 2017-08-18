@@ -1,64 +1,24 @@
 /* --- Main Color Palette --- */
-$blue: #10167f;
-$light-blue: #7c81b8;
-$red: #fe230a;
-$orange: #ff9600;
-$gray: #969696;
-$dark-gray: #505050;
+$blue: #082b84;
+$red: #c91414;
+$orange: #ff6d00;
+$green: #0c6b0c;
+$purple: #351d63;
 
 
-/* --- Extended Color Palette --- */
-$dark-blue: #000064;
-$dark-red: #b41428;
-$dark-orange: #f57814;
-$light-red: #ff967d;
-$light-orange: #ffc87d;
-$lightest-red: #e6d7aa;
-$lightest-orange: #f0e6c8;
+/* --- Gradient Colors --- */
+$lightest-blue: #dae5f3;
+$light-blue: #cadef8;
+$medium-blue: #b0c4de;
+
+/* --- Dark JEE Colors --- */
+$jeeRed: #c12025;
+$jeeYellow: #ede929;
+$jeeGreen: #87c764;
 
 
-/* --- Chart Colors --- */
-$bar-light-red: #d6616b;
-$bar-light-yellow: #e7ba52;
-$bar-light-green: #b5cf6b;
-$bar-red: darken(#d62728, 5%);
-$bar-yellow: darken(#bcbd22, 5%);
-$bar-green: darken(#2ca02c, 5%);
-$bar-dark-red: #843c39;
-$bar-dark-yellow: #8c6d31;
-$bar-dark-green: #637939;
 
-
-/*
-Indigo Colors
-reference: https://mdbootstrap.com/css/colors/
-*/
-
-$indigo-darken-4:   #1a237e;
-$indigo-lighten-4:  #c5cae9;
-$indigo-lighten-5:  #e8eaf6;
-$orange-lighten-4:  #ffe0b2;
-$button-primary:    #4285F4;
-$amber-lighten-5:   #fff8e1;
-$amber-lighten-4:   #ffecb3;
-$indigo:            #3f51b5;
-
-  /* Blocks colors */
-$grey: #e6e6e6;
-$mid-grey: #bbbbb5;
-$light-grey: #ebebeb;
-$off-white: #f0f0f0;
-$barely-white: #f9f9f9;
-$barely-barely-white: #fcfcfc;
-$warning-red: #e53935;
-
-$water: rgba(28,107,160,0.4);
-
-$border-minimal: 1px solid #777;
-$border-light-minimal: 1px solid #ccc;
-$border-dark-indigo: 1px solid $indigo-darken-4;
-
-/* JEE Colors */
-$jeeRed: #C12025;
-$jeeYellow: #EDE929;
-$jeeGreen: #87C764;
+/* --- Borders --- */
+$light-border: 1px solid #ccc;
+$border: 1px solid #999;
+$dark-border: 1px solid #555;

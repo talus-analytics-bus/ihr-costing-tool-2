@@ -1,187 +1,98 @@
-// All code for the Costing page should go here
-
 (() => {
-	App.initCosting = (ccClass, indClass) => {
-		$('.cost-instructions-start').click(()=>{hasher.setHash(`costs/`);});
-		$('.go-to-results-button').click(() => hasher.setHash('results'));
+	App.initCosting = (capClass, indClass) => {
+		const capId = Util.getIndicatorId(capClass);
+		const indId = Util.getIndicatorId(capClass + '-' + indClass);
 
-		ccId = Util.getIndicatorId(ccClass);
-		indId = Util.getIndicatorId(ccClass + '-' + indClass);
-
-
-		/* ---------------------------------- Input Block Overview and Links ------------------------------------ */		
-		
-		const blockTmp = App.generateBlockData();
-		// define blocks
-		const blocks = blockTmp.blocks;
-		const blocksShowing = blockTmp.blocksShowing;
-		const blockParents = blockTmp.blockParents;
-
-
-		// This code addes all of the individual indicators to score (p-1, p-2, p-3, etc)
-		function addCoreCapacityTabs() {
-			const block = d3.select('.block-container.input-block-container').selectAll('block')
-				.data(blocksShowing)
-				.enter().append('div')
-					.attr('class', (d) =>  {
-						return `block ${d.abbr}-block no-reset`;
-					});
-		};
-		addCoreCapacityTabs();
-
-		
-		// call function to render the tabs
-		App.setupScoresTabs(blocksShowing, blocks, ccClass, blockParents);
-
-		// TODO if previous hash was this CC, don't slide
-		if (!App.prevHash) App.prevHash = '';
-		const prevHashArr = App.prevHash.split('/');
-
-		if (prevHashArr[0] !== 'costs' || prevHashArr[1] !== ccClass) {
-			$(`.${ccClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		const moneyFormat = (num) => {
+			if (num < 100) return d3.format('$')(Math.round(num));
+			return d3.format('$,.3r')(num);
 		}
 
-		// DEMO show the fake-block html in the AMR example
-		// TODO setup the block content dynamically
-		const demoScoringHtml = $('.fake-block').html();
-		$(`.${ccClass.toLowerCase()}-block`).html(demoScoringHtml);
-		$('.fake-block').html('');
+		$('.go-to-results-button').click(() => hasher.setHash('results'));
 
 
-		/*
-		* updateIndicatorProgress
-		* Updates message about how many indicators have been scored for the current
-		* core capacity
-		*/
-		function updateIndicatorProgress() {
-			// get name of tab block to use
-			const blockSelector = App.getActiveBlockSelector();
-
-			// get active block content
-			const block = d3.select(blockSelector);
-
-			const numInds = block.selectAll('.indicator-slot').nodes().length;
-			const numScored = block.selectAll('.full').nodes().length;
-			block.select('.indicator-progress').text(`${numScored} of ${numInds} indicators costed`);
-		};
+		/* --------------- Input Block Overview and Links -------------- */		
+		function buildContent() {
+			App.buildTabNavigation('.block-link-container', capId);
+			buildCapacityDescription();
+			buildIndicatorContent();
+			showAction(App.getIndicator(indId).actions[0]);
+			updateTotalCosts();
+			attachNextButtonBehavior();
+		}
 
 
-	    /*
-		* setupScoreTabContent
-		* Populates each CC's score tab content
-		*/
-		function setupScoreTabContent() {
-			// get name of tab block to use
-			const blockSelector = App.getActiveBlockSelector();
+		// add the capacity description content
+		function buildCapacityDescription() {
+			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			App.buildCapacityDescription(capId);
+		}
 
-			// get active block content
-			const block = d3.select(blockSelector);
-
-			// get corresponding CC ID
-			const ccIdArr = blockSelector.split('-');
-			const ccId = ccIdArr[0][1] + '.' + ccIdArr[1];
-
-			// set title of page to core capacity
-			const cc = App.getCoreCapacity(ccId);
-			block.select('.core-capacity-name').text(cc.name);
-			block.select('.capacity-target').text(cc.target_description);
-			block.select('.capacity-desired-impact').text(cc.desired_impact);
-            block.select('.capacity-additional-notes').text(cc.notes);
-
-            $('.capacity-description-header').click(()=> {
-            	$('.capacity-description-details').toggle();
-            	$('#chevron').toggleClass("rotate-chevron");
-
-            });
-
-			// set description of indicator and the score descriptions
+		// build the indicator tabs
+		function buildIndicatorContent() {
+			const cc = App.getCapacity(capId);
 			const ind = App.getIndicator(indId);
-			$('.indicator-description').text(ind.name);
 
-			// select indicator container that holds the slots
-			const indContainer = block.select('.indicator-container');
+			// update number of indicators complete, and indicator description
+			updateIndicatorProgress();
 
 			// add indicators to slots
-			const inds = cc.indicators;
-			const indSlots = indContainer.selectAll('.indicator-slot')
-				.data(inds)
+			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
+				.data(cc.indicators)
 				.enter().append('div')
-					.classed('indicator-slot', true)
-					.each(function(d){
-						// get current slot
-						const curSlot = d3.select(this);
-
-						// add class that defines which indicator it is
-						curSlot.classed(Util.getIndicatorClass(d.id), true);
-
-						// add class 'full' if there's a score defined
-						// add class 'empty' otherwise
-						const curSlotScore = User.getIndicatorScore(d.id);
-						const slotClass = (curSlotScore !== undefined) ? 'full' : 'empty';
-						curSlot.classed(slotClass, true);
-
-					})
-					.on('click', function(d, i) {
-						hasher.setHash(`costs/${ccClass}/${i+1}`);
+					.attr('class', 'indicator-slot')
+					.classed('active', d => d.id === indId)
+					.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+					.on('click', (d, i) => {
+						hasher.setHash(`costs/${capClass}/${i+1}`);
 					});
 
 			// add indicator name
 			indSlots.append('div')
-				.classed('indicator-name', true)
-				.text(d => {
-					return Util.truncateText(d.name);
-				});
+				.attr('class', 'indicator-name')
+				.text(d => `${d.id.toUpperCase()} - ${Util.truncateText(d.name)}`);
 
 			// add indicator score
-			indSlots.append('div')
-				.attr('class', 'indicator-score')
-				.html((d) => {
-					if (!d.score) return 'No score';
-
-					const score = +d.score;
-					if (score >= 4) {
-						return `<span class='score-text score-text-${score}'>${score}</span>`;
-					}
-
-					const t1 = `<span class='score-text score-text-${score}'>${score}</span>`;
-					const t2 = `<span class='score-text score-text-${score + 1}'>${score + 1}</span>`;
-					return `${t1} to ${t2}`;
-				});
-
-			// add button to edit score
-			indSlots.append('div')
-				.attr('class', 'indicator-edit-score-button')
-				.text('Edit Score')
-				.on('click', (d) => {
-					d3.event.stopPropagation();
-					hasher.setHash(`scores/${ccClass}/${indClass}`);
-				});
+			const scoreContainer = indSlots.append('div')
+				.attr('class', 'indicator-score');
+			scoreContainer.append('span')
+				.attr('class', 'score-none')
+				.style('display', d => User.getIndicatorScore(d.id) ? 'none' : 'inline')
+				.html('<i>No Score</i>');
+			for (let i = 1; i <= 5; i++) {
+				scoreContainer.append('img')
+					.attr('class', `rp-score`)
+					.attr('src', `img/rp-${i}.png`)
+					.attr('alt', i)
+					.attr('score', i)
+					.style('display', (d) => {
+						return +User.getIndicatorScore(d.id) === i ? 'inline' : 'none';
+					});
+			}
 
 			// add cost for each indicator
-			indSlots.append('div')
-				.attr('class', 'indicator-cost')
-				.text('$0');
+			indSlots.append('div').attr('class', 'indicator-cost');
 
-			// set number of indicators scored and total number
-			updateIndicatorProgress();
-		};
-		setupScoreTabContent();
+			// add description
+			$('.indicator-description').html(`${indId.toUpperCase()} - ${ind.name}`);
+		}
 
-		/*
-		 * Set up list of actions for user to choose from
-		 */
+		// set up list of actions for user to choose from
 		function setupActionContent() {
 			const ind = App.getIndicator(indId);
 
-			const headers = d3.select('.action-headers').selectAll('.action-header')
+			// add every action for the indicator
+			const headers = d3.select('.action-header-content').selectAll('.action-header')
 				.data(ind.actions)
 				.enter().append('div')
 					.attr('class', 'action-header')
 					.on('click', function(d) {
 						showAction(d);
 					});
-			headers.append('input').attr('type', 'checkbox');
-			headers.append('span').text(d => d.name);
+			headers.append('div')
+				.attr('class', 'action-name')
+				.text(d => d.name);
+			headers.append('div').attr('class', 'action-cost');
 		}
 		setupActionContent();
 
@@ -195,8 +106,6 @@
 		}
 
 		function showItemBlocks(action) {
-			const moneyFormat = d3.format('$.3s');
-
 			let items = d3.select('.item-block-container').selectAll('.item-block')
 				.data(action.inputs);  // TODO needs to be line items for action
 			items.exit().remove();
@@ -207,7 +116,7 @@
 			newItems.append('div').attr('class', 'item-title');
 			newItems.append('div').attr('class', 'item-cost');
 			newItems.append('div')
-				.attr('class', 'item-select-button btn btn-primary')
+				.attr('class', 'item-select-button')
 				.text('Selected');
 			newItems.append('div').attr('class', 'item-description');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
@@ -216,81 +125,141 @@
 				.text('Edit Item Cost');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
-				.text('View Details');
+				.text('View Details')
+				.each(function() {
+					$(this).tooltipster({
+						theme: 'tooltipster-shadow',
+						maxWidth: 400,
+						trigger: 'click',
+						side: ['top', 'right', 'bottom', 'left'],
+					});
+				});
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').text(moneyFormat(45e3));
-			items.select('.item-select-button').on('click', (d) => {
-				// user selects an action
-			});
+			items.select('.item-cost').text(d => moneyFormat(d.cost));
+			items.select('.item-select-button')
+				.classed('selected', d => {
+					console.log(d); return d.selected;
+				})
+				.on('click', function(d) {
+					// user toggles an item
+					d.selected = !d.selected;
+					d3.select(this)
+						.classed('selected', d.selected)
+						.text(d.selected ? 'Selected': 'Select');
+
+					updateTotalCosts();
+				});
 			items.select('.item-description').text(d => d.description);
+			items.select('.item-view-details-button').each(function(d) {
+				const contentContainer = d3.select(document.createElement('div'));
+				const content = contentContainer.append('div')
+					.attr('class', 'item-details-container');
+				content.append('div')
+					.attr('class', 'item-details-name')
+					.text(d.name);
+				content.append('div')
+					.attr('class', 'item-details-description')
+					.text(d.description);
+				
+				// add table of line items
+				const liTable = content.append('table')
+					.attr('class', 'line-item-table table table-condensed table-striped')
+					.append('tbody');
+				const liRows = liTable.selectAll('tr')
+					.data(d.line_items)
+					.enter().append('tr');
+				liRows.append('td').text(li => li.name);
+				liRows.append('td').text(li => moneyFormat(li.cost));
+
+				// add total cost
+				const totalRow = liTable.append('tr');
+				totalRow.append('td').text('Total');
+				totalRow.append('td').text(moneyFormat(d.cost));
+
+				$(this).tooltipster('content', contentContainer.html());
+			});
 		}
-		showAction(App.getIndicator(indId).actions[0]);
-		
 
-		// set titles for table cells to be equal to their text so
-		// the space can be reserved
-		d3.selectAll('td').each(function(){d3.select(this).attr('content',d3.select(this).text());});
+		// updates the total cost of the actions
+		function updateTotalCosts() {
+			App.updateAllCosts();
+			d3.selectAll('.action-cost').text(d => moneyFormat(d.cost));
+			d3.selectAll('.indicator-cost').text(d => moneyFormat(d.cost));
+		}
 
-		// set function for next button
-		const nextHash = {
-			'p': {next: 'd', prev:'p', max: 7, min: 1},
-			'd': {next: 'r', prev:'p', max: 4, min: 1},
-			'r': {next: 'r', prev:'d', max: 5, min: 1}
+
+		// updates message on how many indicators have been scored
+		function updateIndicatorProgress() {
+			const cc = App.getCapacity(capId);
+			const numInds = cc.indicators.length;
+			const numScored = numInds - d3.selectAll('.empty').nodes().length;
+			d3.select('.indicator-progress')
+				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
-		d3.select('.next-cost').on('click', function () {
-			const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
-			if (parseInt(indClass) === indsCount) {
-				if (ccClass === 'r-5' && indClass === '5') {
-					// no-op
-				}
-				else if (parseInt(ccClass[2]) === nextHash[ccClass[0]].max) {
-					hasher.setHash(`costs/${nextHash[ccClass[0]].next}-1/${1}`);
-				}
-				else {
-					hasher.setHash(`costs/${ccClass[0]}-${parseInt(ccClass[2])+1}/${1}`);
-				}
-			} else {
-				hasher.setHash(`costs/${ccClass}/${parseInt(indClass) + 1}`);
-			}
-		});
 
-        d3.select('.previous-cost').on('click', function () {
-             const indsCount = d3.select(`.${ccClass}-block`).selectAll('.indicator-slot').nodes().length;
-            //if (parseInt(indClass) === indsCount) {
-            if (ccClass === 'p-1' && indClass === '1') {
-                // no-op
-            }
-            else if (ccClass[0] !== 'p' && (parseInt(ccClass[2]) === 1 && parseInt(indClass) === 1)) {
-                  	// go back one major block (e.g. d-1)
-                    let prevClass = nextHash[ccClass[0]].prev + '-' + nextHash[nextHash[ccClass[0]].prev].max;
-                    hasher.setHash(`costs/${prevClass}/${1}`);
-            } else if (parseInt(indClass) === nextHash[ccClass[0]].min) {
-            	// go back one minor block
-				  const prevInd = ccClass[0]+'-'+(parseInt(ccClass[2])-1)
-                hasher.setHash(`costs/${prevInd}/${1}`);
-            }
-			else {
-            	// go back one indicator
+		// define the behavior for the "previous" and "next" button
+		function attachNextButtonBehavior() {
+			// set function for next button
+			const nextHash = {
+				'p': {next: 'd', prev: 'p', max: 7, min: 1},
+				'd': {next: 'r', prev: 'p', max: 4, min: 1},
+				'r': {next: 'r', prev: 'd', max: 5, min: 1}
+			};
 
-                hasher.setHash(`costs/${ccClass}/${(indClass - 1)}`);
-            }
+			d3.select('.next-score').on('click', () => {
+				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
+				if (parseInt(indClass) === indsCount) {
+					if (capClass === 'r-5' && indClass === '5') {
+						// no-op
+					} else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
+						hasher.setHash(`costs/${nextHash[capClass[0]].next}-1/${1}`);
+					} else {
+						hasher.setHash(`costs/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
+					}
+				} else {
+					hasher.setHash(`costs/${capClass}/${parseInt(indClass) + 1}`);
+				}
+			});
 
-            //} else {
-              //  hasher.setHash(`costs/${ccClass}/${parseInt(indClass) + 1}`);
-            //}
-        });
+			d3.select('.previous-score').on('click', function() {
+				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
+
+				if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
+					// go back one major block (e.g. d-1)
+					let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
+					hasher.setHash(`costs/${prevClass}/${1}`);
+				} else if (parseInt(indClass) === nextHash[capClass[0]].min) {
+					// go back one minor block
+					const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
+					hasher.setHash(`costs/${prevInd}/${1}`);
+				} else {
+					// go back one indicator
+					hasher.setHash(`costs/${capClass}/${(indClass - 1)}`);
+				}
+			});
+		}
+
+		
+		// TODO if previous hash was this CC, don't slide
+		if (!App.prevHash) App.prevHash = '';
+		const prevHashArr = App.prevHash.split('/');
+
+		if (prevHashArr[0] !== 'costs' || prevHashArr[1] !== capClass) {
+			$(`.${capClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
+		}
+
+		// DEMO show the fake-block html in the AMR example
+		// TODO setup the block content dynamically
+		const demoScoringHtml = $('.fake-block').html();
+		$(`.${capClass.toLowerCase()}-block`).html(demoScoringHtml);
+		$('.fake-block').html('');
+
 
 		// update the hash history
 		App.prevHash = hasher.getHash();
-	};
 
-	/*
-	* getActiveBlockSelector
-	* Returns the active block selector for the score page
-	*/
-	App.getActiveBlockSelector = () => {
-		return '.' + d3.select('.block-link.active').attr('block-name') + '-block';
+		buildContent();
 	};
 })();

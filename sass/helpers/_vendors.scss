@@ -6,7 +6,7 @@
 /* --- Bootstrap Multiselect --- */
 .btn b.caret { margin-left: 3px; }
 .multiselect {
-	background-color: $light-blue;
+	background-color: #7c81b8;
 	border-color: #666;
 	color: white;
 }
@@ -27,19 +27,11 @@
 	cursor: pointer;
 }
 .btn-primary {
-	background-color: rgb(48, 113, 169);
-	border-color: darken($light-blue, 8%);
+	@include gradient(#4a8bc3, #3071a9);
+	border-color: darken(#7c81b8, 8%);
 	&:hover {
 		background-color: rgb(1, 41, 76);
-		border-color: darken($light-blue, 16%);
-	}
-}
-.btn-warning {
-	background-color: $dark-orange;
-	border-color: darken($dark-orange, 8%);
-	&:hover {
-		background-color: darken($dark-orange, 5%);
-		border-color: darken($dark-orange, 16%);
+		border-color: darken(#7c81b8, 16%);
 	}
 }
 .btn-secondary {

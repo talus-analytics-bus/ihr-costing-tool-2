@@ -3,23 +3,27 @@
 @import 'helpers/mixins';
 @import 'helpers/vendors';
 
+@import 'components/blocks';
 @import 'components/capacityDescription';
 @import 'components/charts';
+@import 'components/footer';
 @import 'components/headers';
 @import 'components/indicatorProgress';
-@import 'components/navbar';
-@import 'components/footer';
-@import 'components/blocks';
+@import 'components/images';
 @import 'components/map';
 @import 'components/images';
+@import 'components/navbar';
+@import 'components/tooltipster';
 
+@import 'pages/assessment';
+@import 'pages/background';
+@import 'pages/contact';
+@import 'pages/costing';
 @import 'pages/home';
 @import 'pages/overview';
-@import 'pages/who';
-@import 'pages/scores';
-@import 'pages/costing';
 @import 'pages/results';
-@import 'pages/assessment';
+@import 'pages/scores';
+@import 'pages/who';
 
 body { 
 	//font-family: Georgia, serif;
@@ -42,6 +46,7 @@ body {
 }
 .instructions {
 	font-style: italic;
+	max-width: 750px;
 }
 
 select.form-control { width: auto; }

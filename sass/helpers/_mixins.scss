@@ -96,21 +96,8 @@
   background: -ms-linear-gradient(left, $startColor, $endColor);
   background: -o-linear-gradient(left, $startColor, $endColor);
 }
-@mixin transform ($value) {
-  -moz-transform: $value;
-  -o-transform: $value;
-  -ms-transform: $value;
-  -webkit-transform: $value;
-  transform: $value;
-}
-@mixin transition ($value) {
-  -moz-transition: $value;
-  -o-transition: $value;
-  -webkit-transition: $value;
-  transition: $value;
-}
-@mixin calc($property, $expression) {
-  #{$property}: -moz-calc(#{$expression});
-  #{$property}: -webkit-calc(#{$expression});
-  #{$property}: calc(#{$expression});
+@mixin rotate ($value) {
+  -webkit-transform: rotate($value);
+  -ms-transform: rotate($value);
+  transform: rotate($value);
 }

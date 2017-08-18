@@ -25,10 +25,10 @@ const Routing = {};
 		crossroads.addRoute('/who', () => {
 			hasher.setHash(`who/country`);
 		});
-        crossroads.addRoute('/who/:{ccId}:', (ccId) => {
-            loadPage('who', App.initWho, ccId);
-            window.scrollTo(0, 0);
-        });
+		crossroads.addRoute('/who/:{ccId}:', (ccId) => {
+			loadPage('who', App.initWho, ccId);
+			window.scrollTo(0, 0);
+		});
 		crossroads.addRoute('/default', () => {
 			loadPage('default');
 			window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ const Routing = {};
 				hasher.setHash(`scores/${ccId}/${indId}`)
 			}
 			loadPage('scores', App.initScores, ccId, indId);
-			window.scrollTo(0, 0);
+			//window.scrollTo(0, 0);
 		});
 
 		crossroads.addRoute('/costsinstructions', () => {
@@ -66,7 +66,7 @@ const Routing = {};
 			hasher.setHash('costs/p-1/1');
 		});
 		crossroads.addRoute('/costs/:{ccId}:', (ccId) => {
-			hasher.setHash(`scores/${ccId}/1`);
+			hasher.setHash(`costs/${ccId}/1`);
 		});
 		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
 			if (indId === undefined && ccId !== undefined) {
@@ -84,6 +84,14 @@ const Routing = {};
 
 		crossroads.addRoute('/results', () => {
 			loadPage('results', App.initResults);
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/background', () => {
+			loadPage('background', App.initBackground);
+			window.scrollTo(0, 0);
+		});
+		crossroads.addRoute('/contact', () => {
+			loadPage('contact', App.initContact);
 			window.scrollTo(0, 0);
 		});
 
