@@ -171,7 +171,7 @@
 					.data(d.line_items)
 					.enter().append('tr');
 				liRows.append('td').text(li => li.name);
-				liRows.append('td').text(li => moneyFormat(1e5 * Math.random()));  // TODO tie to real cost
+				liRows.append('td').text(li => moneyFormat(li.cost));
 
 				// add total cost
 				const totalRow = liTable.append('tr');

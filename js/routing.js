@@ -66,7 +66,7 @@ const Routing = {};
 			hasher.setHash('costs/p-1/1');
 		});
 		crossroads.addRoute('/costs/:{ccId}:', (ccId) => {
-			hasher.setHash(`scores/${ccId}/1`);
+			hasher.setHash(`costs/${ccId}/1`);
 		});
 		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
 			if (indId === undefined && ccId !== undefined) {
