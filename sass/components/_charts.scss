@@ -11,14 +11,41 @@
 .rp-chart {
 	display: inline-block;
 
-	.rp-background {
-		fill: rgba(0,0,0,0.03);
-	}
-	.rp-outer { fill: #082b84; }
-	.rp-inner { fill: lightsteelblue; }
+	.rp-background { fill: #d0d0d0; }
+	.rp-outer { fill: steelblue; }
 	.rp-text {
 		font-weight: 600;
 		text-anchor: middle;
+	}
+}
+.bullet-chart {
+	font-size: 0.9rem;
+	.marker { stroke: #000; stroke-width: 2px; }
+	.tick line { stroke: #666; stroke-width: .5px; }
+	.range.s0 { fill: rgba($jeeGreen, 0.5); }
+	.range.s1 { fill: rgba($jeeYellow, 0.5); }
+	.range.s2 { fill: rgba($jeeRed, 0.5); }
+	.measure {
+		stroke: #333;
+	}
+	.measure.s0 {
+		stroke-dasharray: 3,3;
+	}
+	.measure.s1 {
+	}
+	.title { font-weight: bold; font-size: 1.05em; }
+	.subtitle { fill: #777; font-size: 0.8rem; }
+	.value {
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+	.value.s0 {
+		text-anchor: start;
+		fill: rgba(0,0,0,1);
+	}
+	.value.s1 {
+		text-anchor: end;
+		fill: rgba(0,0,0,0.7);
 	}
 }
 .cost-bar-chart {

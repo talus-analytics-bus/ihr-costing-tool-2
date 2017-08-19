@@ -156,12 +156,22 @@
 				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
 				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
 			</div>
-			<div class="btn-col col-sm-12 center">
+			<div>
+				<h2>Upload Assessment</h2>
+				<div class="instructions">
+					Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
+				</div>
+				<div class="button-group">
+					<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below.</p>
+					<div>
+						<button type="button" class="btn btn-primary">Select a File</button>
+					</div>
+				</div>
+			</div>
+			<div class="start-button-container">
 				<button type="button" class="btn btn-primary overview-start">Start</button>
 			</div>
-
 		</div>
-
 	</script>
 	
 	<!-- Who Am I? page tempate -->
@@ -360,8 +370,8 @@
 		</div>
 	</script>
 	<!-- Cost Instructions page tempate -->
-	<script id="cost-instructions-template" type="text/x-handlebars-template">
-		<div class="cost-instructions-container container container-text">
+	<script id="costs-instructions-template" type="text/x-handlebars-template">
+		<div class="costs-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
 				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
@@ -397,25 +407,31 @@
 	<script id="jee-template" type="text/x-handlebars-template">
 		<div class="assessment-container container container-text">
 			<div>
-				<h1>Enter Current JEE Assessment Scores</h1>
-				<div class="instructions">
-					Choose a method below to enter current JEE assessment scores. Scores can be added by uploading a report file or by entering scores manually.
+				<h2>Select Target Score</h2>
+				<div class="target-score-section">
+					<div class="target-score-option" ind="step">
+						<input type="radio" checked />
+						<span>I want to score 1 point higher for each indicator</span>
+					</div>
+					<div class="target-score-option" ind="target">
+						<input type="radio" />
+						<span>I want to reach a target score of</span>
+						<select class="target-score-select form-control">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4" selected>4</option>
+							<option value="5">5</option>
+						</select>
+						<span>for each indicator</span>
+					</div>
 				</div>
 			</div>
-			<div class="button-group">
-				<p>To upload a report, review the required format <a href="#">here</a> and then select a file using the button below.</p>
-				<div>
-					<button type="button" class="btn btn-primary">Select a File</button>
-				</div>
-			</div>
-			<div class="button-group">
-				<p>Or, continue to options for manual score entry.</p>
-				<div>
-					<button type="button" page="scores" class="btn btn-primary enter-assessments">Enter Assessments Manually</button>
-				</div>
+			<div class="start-button-container">
+				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
 			</div>
 		</div>
 	</script>
+
 
 	<!-- Scores page tempate -->
 	<script id="scores-template" type="text/x-handlebars-template">
@@ -426,7 +442,7 @@
 					<h1>Assessment</h1>
 					<div class="core-capacity-name"></div>
 					<div class="score-instructions instructions">
-						For the following capacity, select a score for each indicator below that best matches your country's capabilities. Open the description below for more details.
+						For the following capacity, select a score for each indicator below that best matches the country's capabilities. Open the description below for more details.
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
@@ -486,6 +502,9 @@
 						<div class='action-headers'>
 							<div class='action-header-title'>Actions to Achieve Compliance:</div>
 							<div class='action-header-content'></div>
+							<div class="action-header-empty-content">
+								No actions are needed to achieve the target score for this indicator.
+							</div>
 						</div>
 						<div class='item-block-container'></div>
 					</div>
@@ -512,68 +531,83 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
-			<div class="score-improvement-container">
-				<span class="score-improvement-title">Score Improvement:</span>
-				<div class="rp-score-old rp-score-container"></div>
-				<div class="rp-score-to-text">to</div>
-				<div class="rp-score-new rp-score-container"></div>
+			<div class="score-improvement-section results-section">
+				<div class="score-improvement-text">
+					<span class="score-improvement-title">Score Improvement:</span>
+					<div class="rp-score-old rp-score-container"></div>
+					<div class="rp-score-to-text">to</div>
+					<div class="rp-score-new rp-score-container"></div>
+				</div>
+				<div class="bullet-chart-container"></div>
 			</div>
-			<div class="chart-tab-container">
-				<div class="btn-group">
-					<div class="btn btn-secondary active" ind="type">Cost Explorer</div>
-					<div class="btn btn-secondary" ind="time">Cost over Time</div>
-				</div>
-			</div>
-			<div class="chart-content" ind="time">
-				<div class="cost-chart-container"></div>
-				<div class="cost-chart-options">
-					<div class="cost-chart-option">
-						<span>View cost by:</span>
-						<select class="view-cost-by-select form-control">
-							<option value="core">Core Capacity</option>
-							<option value="capacity" selected>Capacity</option>
-						</select>
+			<div class="chart-section results-section">
+				<div class="chart-tab-container">
+					<div class="btn-group">
+						<div class="btn btn-secondary active" ind="type">Cost Explorer</div>
+						<div class="btn btn-secondary" ind="time">Cost over Time</div>
 					</div>
 				</div>
-			</div>
-			<div class="chart-content" ind="type">
-				<div class="explorer-filters row">
-					<div class="col-sm-4">
-						<div class="explorer-filter-label">Core Capacity</div>
-						<select class="cc-select form-control" multiple="multiple"></select>
-					</div>
-					<div class="col-sm-4">
-						<div class="explorer-filter-label">Capacity</div>
-						<select class="capacity-select form-control" multiple="multiple"></select>
-					</div>
-					<div class="col-sm-4">
-						<div class="explorer-filter-label">Category</div>
-						<select class="category-select form-control" multiple="multiple"></select>
+				<div class="chart-content" ind="time">
+					<div class="cost-chart-container"></div>
+					<div class="cost-chart-options">
+						<div class="cost-chart-option">
+							<span>View cost by:</span>
+							<select class="view-cost-by-select form-control">
+								<option value="core">Core Capacity</option>
+								<option value="capacity" selected>Capacity</option>
+							</select>
+						</div>
 					</div>
 				</div>
-				<div class="explorer-summary">
-					<span class="summary-num-capacities"></span>
-					capacities,
-					<span class="summary-score-improvement"></span>
-					avg. score improvement
-				</div>
-				<div class="explorer-cost-summary row">
-					<div class="col-4">
-						<div class="explorer-startup-value explorer-cost-value"></div>
-						<div class="explorer-cost-text">Startup Cost</div>
+				<div class="chart-content" ind="type">
+					<div class="explorer-filters">
+						<div class="explorer-filter-header">
+							<svg viewBox="0 0 24 24" class="chevron">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+							<span>Filter Data</span>
+						</div>
+						<div class="explorer-filter-content">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="explorer-filter-label">Core Capacity</div>
+									<select class="cc-select form-control" multiple="multiple"></select>
+								</div>
+								<div class="col-sm-4">
+									<div class="explorer-filter-label">Capacity</div>
+									<select class="capacity-select form-control" multiple="multiple"></select>
+								</div>
+								<div class="col-sm-4">
+									<div class="explorer-filter-label">Category</div>
+									<select class="category-select form-control" multiple="multiple"></select>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-4">
-						<div class="explorer-capital-value explorer-cost-value"></div>
-						<div class="explorer-cost-text">Capital Cost</div>
+					<div class="explorer-summary">
+						<span class="summary-num-capacities"></span>
+						capacities,
+						<span class="summary-score-improvement"></span>
+						avg. score improvement
 					</div>
-					<div class="col-4">
-						<div class="explorer-recurring-value explorer-cost-value"></div>
-						<div class="explorer-cost-text">Recurring Cost (per year)</div>
+					<div class="explorer-cost-summary row">
+						<div class="col-4">
+							<div class="explorer-startup-value explorer-cost-value"></div>
+							<div class="explorer-cost-text">Startup Cost</div>
+						</div>
+						<div class="col-4">
+							<div class="explorer-capital-value explorer-cost-value"></div>
+							<div class="explorer-cost-text">Capital Cost</div>
+						</div>
+						<div class="col-4">
+							<div class="explorer-recurring-value explorer-cost-value"></div>
+							<div class="explorer-cost-text">Recurring Cost (per year)</div>
+						</div>
 					</div>
-				</div>
-				<div class="explorer-cost-chart-container">
-					<div class="explorer-fixed-cost-chart"></div>
-					<div class="explorer-recurring-cost-chart"></div>
+					<div class="explorer-cost-chart-container">
+						<div class="explorer-fixed-cost-chart"></div>
+						<div class="explorer-recurring-cost-chart"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -629,6 +663,7 @@
 		crossorigin=""></script>
 
 <!-- Other -->
+<script src="lib/bullet.js"></script>
 <script src="lib/popper.js"></script>
 <script src="lib/tether.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
@@ -649,10 +684,10 @@
 <script src="js/components/charts.js"></script>
 <script src="js/components/map.js"></script>
 <script src="js/components/tabNavigation.js"></script>
-<script src="js/pages/assessment.js"></script>
 <script src="js/pages/background.js"></script>
 <script src="js/pages/contact.js"></script>
 <script src="js/pages/costing.js"></script>
+<script src="js/pages/costsInstructions.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
 <script src="js/pages/results.js"></script>

@@ -1,0 +1,28 @@
+.costs-instructions-container {
+	& > div:nth-child(n+2) {
+		margin-top: 15px;
+	}
+  div.start-button-container {
+  	text-align: center;
+  	margin-top: 25px;
+  }
+}
+.target-score-section {
+	margin-left: 15px;
+
+	.target-score-option {
+		margin-bottom: 5px;
+		cursor: pointer;
+	}
+	input {
+		position: relative;
+		top: 1px;
+		margin-right: 5px;
+	}
+	select {
+		display: inline-block;
+		margin: 0 7px;
+		padding: 0 .6rem;
+		height: calc(2rem + 2px);
+	}
+}

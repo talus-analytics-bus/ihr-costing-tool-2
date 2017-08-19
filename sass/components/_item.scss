@@ -1,0 +1,71 @@
+.item-block {
+	display: inline-block;
+	position: relative;
+	margin: 0 15px;
+	padding: 15px 30px;
+	border: $border;
+	text-align: center;
+	width: 300px;
+	height: 280px;
+	vertical-align: top;
+	@include gradient(#f0f0f0, #fff);
+	@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
+
+	.item-title {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.2em;
+	}
+	.item-cost {
+		margin-top: 10px;
+		font-size: 1.6em;
+		font-weight: 600;
+	}
+	.item-select-button {
+		margin-top: 20px;
+		display: inline-block;
+		padding: 2px 35px;
+		border: $border;
+		font-size: 0.8rem;
+		cursor: pointer;
+		@include noselect;
+		@include gradient(#fff, #e0e0e0);
+		&.selected {
+			border: 1px solid rgba(0,0,0,0.1);
+			color: white;
+			@include gradient(#4a8bc3, #3071a9);
+		}
+	}
+	.item-footer {
+		position: absolute;
+		bottom: 15px;
+	}
+	.item-edit-cost-button,
+	.item-view-details-button {
+		display: inline-block;
+		padding: 2px 15px;
+		border: $border;
+		font-size: 0.9rem;
+		cursor: pointer;
+		@include noselect;
+		@include gradient(#fff, #f0f0f0);
+		@include box-shadow(1px 1px 3px rgba(0,0,0,0.05));
+		&:nth-child(n+2) {
+			margin-left: 10px;
+		}
+	}
+}
+.item-details-container {
+	padding: 20px 20px 10px;
+	color: #333;
+
+	.line-item-table {
+		background-color: #e0e0e0;
+		td {
+			border-top: none;
+			padding: 3px 10px;
+		}
+		td:last-child { text-align: right; }
+		tr:last-child { font-weight: 600; }
+		tr:last-child td { border-top: 1px solid #999; }
+	}
+}

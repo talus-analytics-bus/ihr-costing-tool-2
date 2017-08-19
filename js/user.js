@@ -1,40 +1,30 @@
 const User = {};
+
 (() => {
-	// TODO fill in user data
-	User.scores = {
-		'P.3.1': {
-			score: null, // set on scores page
-			step: null // default: plus one
-		}
-	};
+	// set user defaults
+	User.targetScoreType = 'step';  // either "target" or "step"
+	User.targetScore = null;
 
-	// DEMO set scores for AMR indicators
 
-	/*
-	* setIndicatorScore
-	* Sets the score in the user data for the indicator specified
-	*/
+	// sets the score in the user data for the indicator specified
 	User.setIndicatorScore = (indId, newScore) => {
-		// ensure id valid
-		indId = indId.toUpperCase();
-
-		// set score to null if none has been set
-		if (newScore === '') newScore = null;
-
-		// locate relevant indicator in indicator dataset
 		const ind = App.getIndicator(indId);
-
-		// set the score
 		ind.score = newScore;
 	};
 
-	/*
-	* getIndicatorScore
-	* Gets the score in the user data for the indicator specified
-	*/
+	// gets the score in the user data for the indicator specified
 	User.getIndicatorScore = (indId) => {
-		const ind = App.getIndicator(indId.toUpperCase());
+		const ind = App.getIndicator(indId);
 		return ind.score;
 	};
 
+	// set target score type (may be either "step" or "target")
+	User.setTargetScoreType = (targetScoreType) => {
+		User.targetScoreType = targetScoreType;
+	}
+
+	// number for 2 to 5; only valid if target score type is "target"
+	User.setTargetScore = (targetScore) => {
+		User.targetScore = targetScore;
+	}
 })();

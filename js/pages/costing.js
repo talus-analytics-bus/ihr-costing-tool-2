@@ -3,6 +3,10 @@
 		const capId = Util.getIndicatorId(capClass);
 		const indId = Util.getIndicatorId(capClass + '-' + indClass);
 
+		const capacity = App.getCapacity(capId);
+		const indicator = App.getIndicator(indId);
+		const actions = App.getNeededActions(indicator);
+
 		const moneyFormat = (num) => {
 			if (num < 100) return d3.format('$')(Math.round(num));
 			return d3.format('$,.3r')(num);
@@ -16,7 +20,7 @@
 			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 			buildIndicatorContent();
-			showAction(App.getIndicator(indId).actions[0]);
+			if (actions.length) showAction(actions[0]);
 			updateTotalCosts();
 			attachNextButtonBehavior();
 		}
@@ -30,15 +34,12 @@
 
 		// build the indicator tabs
 		function buildIndicatorContent() {
-			const cc = App.getCapacity(capId);
-			const ind = App.getIndicator(indId);
-
 			// update number of indicators complete, and indicator description
 			updateIndicatorProgress();
 
 			// add indicators to slots
 			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
-				.data(cc.indicators)
+				.data(capacity.indicators)
 				.enter().append('div')
 					.attr('class', 'indicator-slot')
 					.classed('active', d => d.id === indId)
@@ -74,32 +75,42 @@
 			indSlots.append('div').attr('class', 'indicator-cost');
 
 			// add description
-			$('.indicator-description').html(`${indId.toUpperCase()} - ${ind.name}`);
+			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
 		}
 
 		// set up list of actions for user to choose from
 		function setupActionContent() {
-			const ind = App.getIndicator(indId);
-
-			// add every action for the indicator
-			const headers = d3.select('.action-header-content').selectAll('.action-header')
-				.data(ind.actions)
-				.enter().append('div')
-					.attr('class', 'action-header')
-					.on('click', function(d) {
-						showAction(d);
+			if (actions.length) {
+				// add every action for the indicator
+				const headers = d3.select('.action-header-content').selectAll('.action-header')
+					.data(actions)
+					.enter().append('div')
+						.attr('class', 'action-header')
+						.on('click', (d) => {
+							showAction(d);
+						});
+				headers.append('div')
+					.attr('class', 'action-name')
+					.text(d => d.name);
+				headers.append('div')
+					.attr('class', 'action-scores')
+					.html((d) => {
+						return `<img class="rp-score" src="img/rp-${d.score_step_to - 1}.png" />` +
+							' to ' +
+							`<img class="rp-score" src="img/rp-${d.score_step_to}.png" />`;
 					});
-			headers.append('div')
-				.attr('class', 'action-name')
-				.text(d => d.name);
-			headers.append('div').attr('class', 'action-cost');
+				headers.append('div').attr('class', 'action-cost');
+			} else {
+				$('.action-header-content, .item-block-container').hide();
+				$('.action-header-empty-content').show();
+			}
 		}
 		setupActionContent();
 
 		function showAction(action) {
 			// make this header active
 			d3.selectAll('.action-header')
-				.classed('active', d => d.name === action.name);
+				.classed('active', d => d.id === action.id);
 
 			// show correct items for this action
 			showItemBlocks(action);
@@ -118,7 +129,6 @@
 			newItems.append('div')
 				.attr('class', 'item-select-button')
 				.text('Selected');
-			newItems.append('div').attr('class', 'item-description');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
 				.attr('class', 'item-edit-cost-button')
@@ -139,9 +149,7 @@
 			items.select('.item-title').text(d => d.name);
 			items.select('.item-cost').text(d => moneyFormat(d.cost));
 			items.select('.item-select-button')
-				.classed('selected', d => {
-					console.log(d); return d.selected;
-				})
+				.classed('selected', d => d.selected)
 				.on('click', function(d) {
 					// user toggles an item
 					d.selected = !d.selected;
@@ -151,17 +159,10 @@
 
 					updateTotalCosts();
 				});
-			items.select('.item-description').text(d => d.description);
 			items.select('.item-view-details-button').each(function(d) {
 				const contentContainer = d3.select(document.createElement('div'));
 				const content = contentContainer.append('div')
 					.attr('class', 'item-details-container');
-				content.append('div')
-					.attr('class', 'item-details-name')
-					.text(d.name);
-				content.append('div')
-					.attr('class', 'item-details-description')
-					.text(d.description);
 				
 				// add table of line items
 				const liTable = content.append('table')
@@ -192,8 +193,7 @@
 
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
-			const cc = App.getCapacity(capId);
-			const numInds = cc.indicators.length;
+			const numInds = capacity.indicators.length;
 			const numScored = numInds - d3.selectAll('.empty').nodes().length;
 			d3.select('.indicator-progress')
 				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);

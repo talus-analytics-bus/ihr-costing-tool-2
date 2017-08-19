@@ -44,12 +44,14 @@ const App = {};
 		.defer(d3.json, 'data/jeeTree.json')
 		.defer(d3.json, 'data/currencies.json')
 		.defer(d3.json, 'data/global_base_costs.json')
-		.await((error, countryParams, jeeTree, currencies, globalBaseCosts) => {
+		.defer(d3.json, 'data/global_staff_multipliers.json')
+		.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
 			App.globalBaseCosts = globalBaseCosts;
+			App.globalStaffMultipliers = globalStaffMultipliers;
 			App.whoAmI = {};
 
 			// add costs to each level of the jeeTree
@@ -329,9 +331,11 @@ const App = {};
 
 
   /* ------------------ jeeTree Getter Functions ------------------- */
+  App.normalCcIds = ['p', 'd', 'r'];
+
   // gets the capacity from the jeeTree given an id
 	App.getCapacity = (id) => {
-		const ccId = id.charAt(0).toLowerCase();
+		const ccId = id.includes('.') ? id.split('.')[0].toLowerCase() : 'o';
 		const capId = id.toLowerCase();
 		const cc = App.jeeTree.find(cc => cc.id === ccId);
 		if (!cc) return null;
@@ -340,7 +344,8 @@ const App = {};
 
   // gets the indicator from the jeeTree given an id
 	App.getIndicator = (id) => {
-		const capId = id.split('.').slice(0, 2).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 2 : 1;
+		const capId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const indId = id.toLowerCase();
 		const cap = App.getCapacity(capId);
 		if (!cap) return null;
@@ -349,7 +354,8 @@ const App = {};
 
   // gets the action from the jeeTree given an id
   App.getAction = (id) => {
-		const indId = id.split('.').slice(0, 3).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 3 : 2;
+		const indId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const actionId = id.toLowerCase();
 		const ind = App.getIndicator(indId);
 		if (!ind) return null;
@@ -358,7 +364,8 @@ const App = {};
 
   // gets the input from the jeeTree given an id
   App.getInput = (id) => {
-		const actionId = id.split('.').slice(0, 4).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 4 : 3;
+		const actionId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
 		const inputId = id.toLowerCase();
 		const action = App.getAction(actionId);
 		if (!action) return null;
@@ -367,11 +374,35 @@ const App = {};
 
   // gets the line item from the jeeTree given an id
   App.getLineItem = (id) => {
-  	const inputId = id.split('.').slice(0, 5).join('.').toLowerCase();
+		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 5 : 4;
+  	const inputId = id.split('.').slice(0, dotTierNum).join('.').toLowerCase();
   	const liId = id.toLowerCase();
   	const input = App.getInput(inputId);
   	if (!input) return null;
   	return input.line_items.find(li => li.id === liId);
+  }
+
+
+  /* ------------------ Scoring Functions ------------------- */
+  App.getNeededActions = (ind) => {
+		// find actions that match the target score
+		let actions = [];
+		if (ind.score) {
+			if (User.targetScoreType === 'step') {
+				actions = ind.actions.filter((action) => {
+					return action.score_step_to === ind.score + 1;
+				});
+			} else if (User.targetScoreType === 'target') {
+				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
+				actions = ind.actions.filter((action) => {
+					return scoresToGetTo.includes(action.score_step_to);
+				});
+			}
+		} else {
+			// if indicator is not scored, display all actions for the user to see
+			actions = ind.actions;
+		}
+		return actions;
   }
 
 
@@ -384,7 +415,9 @@ const App = {};
   			cap.cost = 0;
   			cap.indicators.forEach((ind) => {
   				ind.cost = 0;
-  				ind.actions.forEach((a) => {
+
+  				const actions = App.getNeededActions(ind);
+  				actions.forEach((a) => {
   					a.cost = 0;
   					a.inputs.forEach((input) => {
   						input.cost = 0;
@@ -433,6 +466,8 @@ const App = {};
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
-		return input.match(/\d+/)[0];
+		const numbers = input.match(/\d+/);
+		if (!numbers) return 1;
+		return numbers[0];
 	}
 })();
