@@ -10,6 +10,7 @@
                 break;
             case 'population':
                 initPopDistTab();
+                initGeographicDivisions();
                 break;
             case 'default-costs':
                 initDefaultCostsTab();
@@ -59,6 +60,8 @@
 		// call function to render the tabs
 		App.setupWhoTabs(blocksShowing, blocks, ccClass);
 
+
+
         $('.defn').tooltipster({
             theme: 'tooltipster-default',
             trigger: 'click',
@@ -66,10 +69,22 @@
             interactive: true,
             contentAsHTML: true,
             maxWidth: 500,
-            functionInit: function(origin) {
-                var defnName = $(origin[0]).attr('defn');
+            functionInit: function(instance, helper) {
+                var defnName = instance["_$origin"].attr('defn');
                 if (defnName === 'pop') {
-                    return 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+                    var content = 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+                    instance.content(content);
+                    return content;
+                }
+                else if (defnName === 'geo') {
+                    var content = 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+                    instance.content(content);
+                    return content;
+                }
+                else if (defnName === 'phi') {
+                    var content= 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+                    instance.content(content);
+                    return content;
                 }
             }
         });
@@ -79,6 +94,12 @@
 
     hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
     hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
+
+    /* Generic way to change a dropdown label */
+    const changeDropdownLabel = (className, itemName) => {
+
+        d3.select('.'+className +' > button').text(itemName);
+    }
 
 	/*
 	*	initCountryTab
@@ -120,13 +141,14 @@
             .on('click', (d) => {
                 changeDropdownLabel(d.name);
                 App.whoAmI.selectedCurrency = d;
-            })
+            });
 
 		if (App.whoAmI.hasOwnProperty('name')) {
             d3.select('.country-dropdown.dropdown > button')
                 .text(App.whoAmI.name);
 		}
 
+		/* Prepare the country dropdown*/
 		d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
 			.data(App.countryParams)
 			.enter()
@@ -189,6 +211,8 @@
                 })
     }
 
+    initDefaultCostsTab = () =>{}
+
     initPopDistTab = () => {
         const jeeTreeFieldMapping = {
             'basic_info.population': 'population',
@@ -204,6 +228,7 @@
             'advanced_info.staff.national_epi_count': 'epi',
             'advanced_info.staff.national_chw_count': 'chw',
         };
+
 
         const getJeeTreeValue = (keyString, jeeTreeObj) => {
             return keyString.split('.')
@@ -257,7 +282,76 @@
             changeValue(invertedMapping[id], App.whoAmI, ev.target.value);
         });
 
+        $("#population-btn").click(()=>{
+            $(".population-block").toggle();
+            $(".geographical-divisions-block").toggle();
+            //initGeographicDivisions(); // load the georaphic divisions
+        });
+
     }
+
+    initGeographicDivisions = () => {
+        const geoCentralArray =['Country', 'State', 'Province'];
+        // prepare geo central dropdown
+        d3.select('.geo-central-dropdown.dropdown-menu')
+            .selectAll('.geo-central-option')
+            .data(geoCentralArray)
+            .enter()
+            .append('a')
+            .attr('class', 'geo-central-option dropdown-item')
+            .text((itemName) => itemName)
+            .on('click', (itemName) => {
+                changeDropdownLabel('geo-central-dropdown', itemName);
+            });
+        changeDropdownLabel('geo-central-dropdown', geoCentralArray[0]);
+
+        // prepare the second dropdown
+        const secondCentralArray =['Province', 'Municipality', 'District', 'State'];
+        d3.select('.geo-second-dropdown.dropdown-menu')
+            .selectAll('.geo-second-option')
+            .data(secondCentralArray)
+            .enter()
+            .append('a')
+            .attr('class', 'geo-second-option dropdown-item')
+            .text((itemName) => itemName)
+            .on('click', (itemName) => {
+                changeDropdownLabel('geo-second-dropdown', itemName);
+            });
+        changeDropdownLabel('geo-second-dropdown', secondCentralArray[0]);
+
+        const thirdCentralArray =['Province', 'Municipality', 'District', 'State'];
+        d3.select('.geo-third-dropdown.dropdown-menu')
+            .selectAll('.geo-third-option')
+            .data(thirdCentralArray)
+            .enter()
+            .append('a')
+            .attr('class', 'geo-third-option dropdown-item')
+            .text((itemName) => itemName)
+            .on('click', (itemName) => {
+                changeDropdownLabel('geo-third-dropdown', itemName);
+            });
+        changeDropdownLabel('geo-third-dropdown', thirdCentralArray[0]);
+
+        const fourthCentralArray =['Barangay', 'County', 'District', 'City'];
+        d3.select('.geo-fourth-dropdown.dropdown-menu')
+            .selectAll('.geo-fourth-option')
+            .data(fourthCentralArray)
+            .enter()
+            .append('a')
+            .attr('class', 'geo-fourth-option dropdown-item')
+            .text((itemName) => itemName)
+            .on('click', (itemName) => {
+                changeDropdownLabel('geo-fourth-dropdown', itemName);
+            });
+        changeDropdownLabel('geo-fourth-dropdown', fourthCentralArray[0]);
+
+        $('#geography-division-btn').click(()=>{
+            $(".geographical-divisions-block").toggle();
+            $(".public-health-information-block").toggle();
+
+        });
+    }
+
 
 	initDefaultCosts = () => {
 

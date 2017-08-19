@@ -262,6 +262,28 @@ const App = {};
             });
         };
 
+        // show or hide the tooltips for a block
+        var toggleBlockTooltip = function(blockAbbr, show) {
+            var blockInfo = getBlockInfo(blockAbbr);
+            if (blockInfo.hasOwnProperty('tooltipElements')) {
+                var tooltipElements = [];
+                var tooltipEleDict = blockInfo.tooltipElements;
+                for (var ind in tooltipEleDict) {
+                    if (show) {
+                        // if not default, add element to tooltipster collection to show or hide
+                        if (blockInfo.hasOwnProperty('tooltipShowFn') && blockInfo.tooltipShowFn.hasOwnProperty(ind)) {
+                            blockInfo.tooltipShowFn[ind](blockInfo.isDefault[ind]);
+                        } else {
+                            if (!blockInfo.isDefault[ind]) tooltipElements.push(tooltipEleDict[ind]);
+                        }
+                    } else {
+                        tooltipElements.push(tooltipEleDict[ind]);
+                    }
+                }
+                var displayStr = show ? 'show' : 'hide';
+                if ($(tooltipElements.join(', ')).hasClass('tooltipstered')) $(tooltipElements.join(', ')).tooltipster(displayStr);
+            }
+        };
 
         // get the block information (may be embedded in another block's children attribute)
         var getBlockInfo = function(blockAbbr) {

@@ -168,10 +168,7 @@
 /* ------------------------ Tooltipster ------------------------ */
 .tooltipster-default {
   background-color: #fdfdfd;
-  border: 2px solid #999;
-  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); }
+  border: none; }
   .tooltipster-default .tooltipster-content {
     text-align: left;
     color: #2c2c2c; }
@@ -186,6 +183,18 @@
   font-size: 1.1em;
   font-weight: bold;
   margin-bottom: 5px; }
+
+/*
+.tooltipster-box {
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.1);
+	@include gradient(#f3f3f3, #fff);
+}*/
+.tooltipster-sidetip .tooltipster-box {
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 4px; }
 
 /* --- Block Link Content --- */
 .block-link-container {
@@ -839,68 +848,6 @@ div.tooltip {
 .tool-name {
   cursor: pointer; }
 
-.tooltipster-sidetip.tooltipster-shadow .tooltipster-box {
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 6px rgba(0, 0, 0, 0.1);
-  background-color: #f3f3f3;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#fff));
-  background: -webkit-linear-gradient(top, #f3f3f3, #fff);
-  background: -moz-linear-gradient(top, #f3f3f3, #fff);
-  background: -ms-linear-gradient(top, #f3f3f3, #fff);
-  background: -o-linear-gradient(top, #f3f3f3, #fff); }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-bottom .tooltipster-box {
-  margin-top: 6px; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-left .tooltipster-box {
-  margin-right: 6px; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-right .tooltipster-box {
-  margin-left: 6px; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-top .tooltipster-box {
-  margin-bottom: 6px; }
-
-.tooltipster-sidetip.tooltipster-shadow .tooltipster-content {
-  color: #8d8d8d; }
-
-.tooltipster-sidetip.tooltipster-shadow .tooltipster-arrow {
-  height: 6px;
-  margin-left: -6px;
-  width: 12px; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-left .tooltipster-arrow,
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-right .tooltipster-arrow {
-  height: 12px;
-  margin-left: 0;
-  margin-top: -6px;
-  width: 6px; }
-
-.tooltipster-sidetip.tooltipster-shadow .tooltipster-arrow-background {
-  display: none; }
-
-.tooltipster-sidetip.tooltipster-shadow .tooltipster-arrow-border {
-  border: 6px solid transparent; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-bottom .tooltipster-arrow-border {
-  border-bottom-color: white; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-left .tooltipster-arrow-border {
-  border-left-color: white; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-right .tooltipster-arrow-border {
-  border-right-color: white; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-top .tooltipster-arrow-border {
-  border-top-color: white; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-bottom .tooltipster-arrow-uncropped {
-  top: -6px; }
-
-.tooltipster-sidetip.tooltipster-shadow.tooltipster-right .tooltipster-arrow-uncropped {
-  left: -6px; }
-
 .assessment-container .button-group {
   margin-top: 30px; }
   .assessment-container .button-group p {
@@ -1280,28 +1227,25 @@ div.tooltip {
 .country-dropdown {
   float: left; }
 
-.population-block fieldset {
-  margin-top: 1.1rem;
-  border: 1px solid #ccc;
-  min-width: 0;
-  border-bottom: none;
-  border-right: none;
-  border-left: none;
-  padding-top: 20px; }
-.population-block fieldset:last-child {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 30px;
-  padding-bottom: 20px; }
-.population-block input {
+.who-container td {
+  padding-top: 4px; }
+.who-container td:nth-child(2) {
+  padding-left: 20px; }
+.who-container input {
   border-radius: 5px;
   border: 1px solid #ccc;
   text-align: right; }
-.population-block .form-group {
-  margin-bottom: .5rem; }
-.population-block .btn-container {
+.who-container .btn-container {
   margin-top: 20px; }
-.population-block .estimated-population {
-  margin-top: 20px; }
+.who-container #geography-division-btn {
+  width: auto; }
+
+.population-block {
+  display: none; }
+  .population-block .block-description {
+    margin-bottom: 40px; }
+  .population-block .estimated-population {
+    margin-top: 20px; }
 
 .country-currency-label {
   margin-top: 60px; }
@@ -1311,6 +1255,24 @@ div.tooltip {
   margin-top: 0px;
   width: 25%; }
   .country-control-container .btn {
+    width: 220px; }
+
+.public-health-information-block {
+  display: none; }
+  .public-health-information-block .block-description {
+    margin-bottom: 40px; }
+  .public-health-information-block .phi-defaults {
+    margin-bottom: 10px; }
+  .public-health-information-block input {
+    width: 80px; }
+
+.geographical-divisions-block {
+  display: none; }
+  .geographical-divisions-block .block-description {
+    margin-bottom: 40px; }
+  .geographical-divisions-block table {
+    margin-top: 20px; }
+  .geographical-divisions-block .btn {
     width: 220px; }
 
 body {
