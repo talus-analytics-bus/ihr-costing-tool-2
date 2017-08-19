@@ -44,21 +44,58 @@
             map = L.map(App.mapConfig.divId)
                 .setView(App.mapConfig.view.coordinates, App.mapConfig.view.zoom);
 
+            const mapRect = document.getElementById(App.mapConfig.divId).getBoundingClientRect();
+
+            // this will show tooltip relative to cursor and map div
+            const showInfoTooltip = (e, div) => {
+
+                const xOffset = () => div.getBoundingClientRect().width / -2;
+
+                const right = (ev) => {
+                    return mapRect.right - ev.clientX + xOffset();
+                }
+
+                const top = (ev) => {
+                    const offset = 30;
+                    const pos = ev.clientY - mapRect.top
+                    return pos + (pos >= offset ? -1 : 1) * offset;
+                }
+
+                $(div).css('right', right(e));
+                $(div).css('top', top(e));
+            }
+
             L.tileLayer(App.mapConfig.url, App.mapConfig.options).addTo(map);
 
             info = L.control();
 
-            info.onAdd = function (map) {
+            info.onAdd = function () {
                 this._div = L.DomUtil.create('div', 'info');
-                this.update();
+
+                $(this._div).css('position', 'absolute');
+                $(this._div).css('z-index', '1000');
+                $(this._div).css('min-width', '100px');
+                $(this._div).css('text-align', 'center');
+                $(this._div).css('pointer-events', 'none');
+                // this.update();
                 return this._div;
             };
 
-            info.update = function (props) {
+            info.update = function (props, event) {
+
                 this._div.innerHTML = props && props.name ? `<p>${props.name}</p>` : '';
+
+                // follow the cursor
+                if (event) {
+                    showInfoTooltip(event, this._div);
+                }
             };
 
         };
+
+        const showTooltip = (e) => {
+            info.update(e.target.feature.properties, e.originalEvent)
+        }
 
         const highlightFeature = (e) => {
             const layer = e.target;
@@ -66,26 +103,23 @@
             if (activeCountry !== layer.feature.properties.iso_a2) {
                 layer.setStyle(App.mapConfig.styles.active);
 
-                //info.update(layer.feature.properties);
-
-
-                layer.bindPopup(layer.feature.properties.name, {closeButton: false, offset: L.point(-60, 0)});
-                //layer.openPopup();
+                // info.update(layer.feature.properties, layer);
             }
         }
 
         const resetHighlight = (e) => {
             const layer = e.target;
-            if (activeCountry !== e.target.feature.properties.iso_a2) {
-                App.geoJson.resetStyle(e.target);
+
+            if (activeCountry !== layer.feature.properties.iso_a2) {
+                App.geoJson.resetStyle(layer);
                 info.update();
-                //layer.closePopup();
             }
         }
 
         const selectFeature = (e) => {
             const abbreviation = e.target.feature.properties.iso_a2;
 
+            // if active country is same as selected country, then we deselect
             if (abbreviation === activeCountry) {
                 activeCountry = '';
                 App.geoJson.resetStyle(e.target);
@@ -96,6 +130,7 @@
             }
             activeCountry = abbreviation;
 
+            // apply selected styling to selected country
             App.geoJson.eachLayer((layer) => {
                 if (abbreviation === layer.feature.properties.iso_a2) {
                     layer.setStyle(App.mapConfig.styles.selected);
@@ -104,6 +139,7 @@
                 }
             });
 
+            // assign selected country to dropdown
             const countryParam = _.findWhere(App.countryParams, {abbreviation});
             d3.select('.country-dropdown.dropdown > button')
                 .text(countryParam.name);
@@ -116,6 +152,7 @@
             layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
+                mousemove: showTooltip,
                 click: selectFeature,
             });
 
