@@ -352,6 +352,61 @@ const App = {};
 		return cap.indicators.find(ind => ind.id === indId);
 	}
 
+	// gets the previous indicator given an indicator
+	App.getPrevIndicator = (capId, indId) => {
+		const ccId = capId.includes('.') ? capId.split('.')[0].toLowerCase() : 'o';
+		const ccIndex = App.jeeTree.findIndex(cc => cc.id === ccId);
+		const cc = App.jeeTree[ccIndex];
+		const capIndex = cc.capacities.findIndex(cap => cap.id === capId);
+		const cap = cc.capacities[capIndex];
+		const indIndex = cap.indicators.findIndex(ind => ind.id === indId);
+		if (indIndex > 0) {
+			return cap.indicators[indIndex - 1];
+		} else {
+			// go to prev capacity
+			if (capIndex > 0) {
+				const prevCap = cc.capacities[capIndex - 1];
+				return prevCap.indicators[prevCap.indicators.length - 1];
+			} else {
+				// go to next core capacity
+				if (ccIndex > 0) {
+					const prevCc = App.jeeTree[ccIndex - 1];
+					const prevCap = prevCc.capacities[prevCc.capacities.length - 1];
+					return prevCap.indicators[prevCap.indicators.length - 1];
+				} else {
+					// that's the beginning!
+					return null;
+				}
+			}
+		}
+	}
+
+	// gets the next indicator given an indicator
+	App.getNextIndicator = (capId, indId) => {
+		const ccId = capId.includes('.') ? capId.split('.')[0].toLowerCase() : 'o';
+		const ccIndex = App.jeeTree.findIndex(cc => cc.id === ccId);
+		const cc = App.jeeTree[ccIndex];
+		const capIndex = cc.capacities.findIndex(cap => cap.id === capId);
+		const cap = cc.capacities[capIndex];
+		const indIndex = cap.indicators.findIndex(ind => ind.id === indId);
+		if (indIndex < cap.indicators.length - 1) {
+			return cap.indicators[indIndex + 1];
+		} else {
+			// go to next capacity
+			if (capIndex < cc.capacities.length - 1) {
+				return cc.capacities[capIndex + 1].indicators[0];
+			} else {
+				// go to next core capacity
+				if (ccIndex < App.jeeTree.length - 1) {
+					return App.jeeTree[ccIndex + 1].capacities[0].indicators[0];
+				} else {
+					// that's the end!
+					return null;
+				}
+			}
+		}
+	}
+
   // gets the action from the jeeTree given an id
   App.getAction = (id) => {
 		const dotTierNum = (App.normalCcIds.includes(id.split('.')[0])) ? 3 : 2;
@@ -449,7 +504,10 @@ const App = {};
 
 								// include multipliers
 								if (li.staff_multiplier) {
-									// TODO lookup and include
+									const multiplierObj = App.globalStaffMultipliers.find((sm) => {
+										return sm.id === li.staff_multiplier;
+									});
+									if (multiplierObj) li.cost *= multiplierObj.count;
 								}
 								if (li.country_multiplier) {
 									// TODO lookup and include
@@ -499,21 +557,6 @@ const App = {};
 	App.getCostText = (branch) => {
 		const startupCost = branch.startupCost + branch.capitalCost;
 		const recurringCost = branch.recurringCost;
-
-		/*const contentContainer = d3.select(document.createElement('div'));
-		const content = contentContainer.append('div')
-			.attr('class', 'cost-text');
-		content.append('div')
-			.attr('class', 'startup-cost-text')
-			.text(moneyFormat(startupCost));
-		content.append('div')
-			.attr('class', 'plus-text')
-			.text('+');
-		content.append('div')
-			.attr('class', 'recurring-cost-text')
-			.text(`${moneyFormat(recurringCost)}/yr`);
-		return contentContainer.html();*/
-
 		if (!recurringCost) return moneyFormat(startupCost);
 		//if (!startupCost) return `${moneyFormat(recurringCost)}/yr`;
 		return `${moneyFormat(startupCost)} + ${moneyFormat(recurringCost)}/yr`;

@@ -245,43 +245,24 @@
 
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
-			// set function for next button
-			const nextHash = {
-				'p': {next: 'd', prev: 'p', max: 7, min: 1},
-				'd': {next: 'r', prev: 'p', max: 4, min: 1},
-				'r': {next: 'r', prev: 'd', max: 5, min: 1}
-			};
-
 			d3.select('.next-score').on('click', () => {
-				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
-				if (parseInt(indClass) === indsCount) {
-					if (capClass === 'r-5' && indClass === '5') {
-						// no-op
-					} else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
-						hasher.setHash(`costs/${nextHash[capClass[0]].next}-1/${1}`);
-					} else {
-						hasher.setHash(`costs/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
-					}
-				} else {
-					hasher.setHash(`costs/${capClass}/${parseInt(indClass) + 1}`);
-				}
+				const nextIndId = App.getNextIndicator(capId, indId).id;
+				if (!nextIndId) hasher.setHash('results');
+
+				const lastDotIndex = nextIndId.lastIndexOf('.');
+				const nextCapClass = nextIndId.slice(0, lastDotIndex);
+				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
+				hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
 			});
 
 			d3.select('.previous-score').on('click', function() {
-				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
+				const prevIndId = App.getPrevIndicator(capId, indId).id;
+				if (!prevIndId) return;
 
-				if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
-					// go back one major block (e.g. d-1)
-					let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
-					hasher.setHash(`costs/${prevClass}/${1}`);
-				} else if (parseInt(indClass) === nextHash[capClass[0]].min) {
-					// go back one minor block
-					const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
-					hasher.setHash(`costs/${prevInd}/${1}`);
-				} else {
-					// go back one indicator
-					hasher.setHash(`costs/${capClass}/${(indClass - 1)}`);
-				}
+				const lastDotIndex = prevIndId.lastIndexOf('.');
+				const prevCapClass = prevIndId.slice(0, lastDotIndex);
+				const prevIndClass = prevIndId.slice(lastDotIndex + 1)
+				hasher.setHash(`costs/${prevCapClass}/${prevIndClass}`);
 			});
 		}
 

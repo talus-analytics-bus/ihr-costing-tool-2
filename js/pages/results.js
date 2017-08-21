@@ -154,21 +154,28 @@
 
 		function updateExplorer() {
 			// get data for updating
-			const capData = [];
-			allCapacities.forEach((cap) => {
-				if (chosenCapNames.includes(cap.name)) {
-					capData.push(cap);
-				}
-			});
+			let capData = [];
+			if (chosenCapNames.length) {
+				allCapacities.forEach((cap) => {
+					if (chosenCapNames.includes(cap.name)) {
+						capData.push(cap);
+					}
+				});
+			} else {
+				capData = allCapacities.slice(0);
+			}
 
 			// update summary text
 			$('.summary-num-capacities').text(chosenCapNames.length);
 			$('.summary-score-improvement').text(scoreChangeFormat(1.2));
 
 			// update overall costs
-			$('.explorer-startup-value').text(moneyFormat(0));
-			$('.explorer-capital-value').text(moneyFormat(0));
-			$('.explorer-recurring-value').text(moneyFormat(0));
+			const totalStartup = d3.sum(capData, d => d.startupCost);
+			const totalCapital = d3.sum(capData, d => d.capitalCost);
+			const totalRecurring = d3.sum(capData, d => d.recurringCost);
+			$('.explorer-startup-value').text(moneyFormat(totalStartup));
+			$('.explorer-capital-value').text(moneyFormat(totalCapital));
+			$('.explorer-recurring-value').text(`${moneyFormat(totalRecurring)}/yr`);
 
 			// update charts
 			fixedCostChart.update([

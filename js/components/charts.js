@@ -142,7 +142,7 @@ const Charts = {};
 			.range([0, width]);
 		const y = d3.scaleBand()
 			.paddingOuter(0.3)
-			.paddingInner(0.55)
+			.paddingInner(0.4)
 			.rangeRound([0, height]);
 
 		const xAxis = d3.axisTop()
@@ -181,7 +181,6 @@ const Charts = {};
 			const newBarGroups = barGroups.enter().append('g')
 				.attr('class', 'bar-group');
 			newBarGroups.append('text').attr('class', 'total-label');
-			newBarGroups.append('text').attr('class', 'selected-label');
 			barGroups = newBarGroups.merge(barGroups);
 			barGroups.transition()
 				.attr('transform', (d) => `translate(0, ${y(d.name)})`);
@@ -194,7 +193,6 @@ const Charts = {};
 				.each(function() { $(this).tooltipster(); });
 			bars = newBars.merge(bars);
 			bars
-				.style('fill', d => d.selected ? '#c91414' : 'steelblue')
 				.attr('height', y.bandwidth())
 				.transition()
 					.attr('x', d => x(d.val0))
@@ -223,18 +221,6 @@ const Charts = {};
 					const totalCost = d3.sum(d.data, dd => dd.value);
 					return `${d3.format('$.3s')(totalCost)} total`;
 				});
-
-			// add selected cost text
-			barGroups.select('.selected-label')
-				.attr('y', y.bandwidth() + 8)
-				.attr('dy', '.35em')
-				.text((d) => {
-					const selectedCost = d3.sum(d.data.filter(dd => dd.selected), dd => dd.value);
-					return d3.format('$.3s')(selectedCost);
-				})
-				.transition()
-					.attr('x', d => x(d.selectedVal) > 50 ? x(d.selectedVal) / 2 : 3)
-					.style('text-anchor', d => x(d.selectedVal) > 50 ? 'middle' : 'start');
 
 			// move axes to front
 			$('.axis').each(function() {

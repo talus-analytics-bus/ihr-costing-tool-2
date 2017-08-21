@@ -3,6 +3,9 @@
 		const capId = Util.getIndicatorId(capClass).toLowerCase();
 		const indId = Util.getIndicatorId(capClass + '-' + indClass).toLowerCase();
 
+		const capacity = App.getCapacity(capId);
+		const indicator = App.getIndicator(indId);
+
 
 		/* --------------- Input Block Overview and Links -------------- */		
 		function buildContent() {
@@ -22,15 +25,12 @@
 
 		// build the indicator tabs
 		function buildIndicatorContent() {
-			const cc = App.getCapacity(capId);
-			const ind = App.getIndicator(indId);
-
 			// update number of indicators complete
 			updateIndicatorProgress();
 
 			// add indicators to slots
 			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
-				.data(cc.indicators)
+				.data(capacity.indicators)
 				.enter().append('div')
 					.attr('class', 'indicator-slot')
 					.classed('active', d => d.id === indId)
@@ -63,7 +63,7 @@
 			}
 
 			// add description
-			$('.indicator-description').html(`${indId.toUpperCase()} - ${ind.name}`);
+			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
 		}
 
 		// build the score picker table
@@ -118,52 +118,32 @@
 		
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
-			const cc = App.getCapacity(capId);
-			const numInds = cc.indicators.length;
-			const numScored = cc.indicators.filter(ind => ind.score).length;
+			const numInds = capacity.indicators.length;
+			const numScored = capacity.indicators.filter(ind => ind.score).length;
 			d3.select('.indicator-progress')
 				.text(`Select a score for each indicator (${numScored} of ${numInds}):`);
 		};
 
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
-			// set function for next button
-			const nextHash = {
-				'p': {next: 'd', prev: 'p', max: 7, min: 1},
-				'd': {next: 'r', prev: 'p', max: 4, min: 1},
-				'r': {next: 'r', prev: 'd', max: 5, min: 1}
-			};
-
 			d3.select('.next-score').on('click', () => {
-				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
-				if (parseInt(indClass) === indsCount) {
-					if (capClass === 'r-5' && indClass === '5') {
-						// no-op
-					} else if (parseInt(capClass[2]) === nextHash[capClass[0]].max) {
-						hasher.setHash(`scores/${nextHash[capClass[0]].next}-1/${1}`);
-					} else {
-						hasher.setHash(`scores/${capClass[0]}-${parseInt(capClass[2])+1}/${1}`);
-					}
-				} else {
-					hasher.setHash(`scores/${capClass}/${parseInt(indClass) + 1}`);
-				}
+				const nextIndId = App.getNextIndicator(capId, indId).id;
+				if (!nextIndId) hasher.setHash('costsinstructions');
+
+				const lastDotIndex = nextIndId.lastIndexOf('.');
+				const nextCapClass = nextIndId.slice(0, lastDotIndex);
+				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
+				hasher.setHash(`scores/${nextCapClass}/${nextIndClass}`);
 			});
 
 			d3.select('.previous-score').on('click', function() {
-				const indsCount = d3.select(`.${capClass}-block`).selectAll('.indicator-slot').nodes().length;
+				const prevIndId = App.getPrevIndicator(capId, indId).id;
+				if (!prevIndId) return;
 
-				if (capClass[0] !== 'p' && (parseInt(capClass[2]) === 1 && parseInt(indClass) === 1)) {
-					// go back one major block (e.g. d-1)
-					let prevClass = nextHash[capClass[0]].prev + '-' + nextHash[nextHash[capClass[0]].prev].max;
-					hasher.setHash(`scores/${prevClass}/${1}`);
-				} else if (parseInt(indClass) === nextHash[capClass[0]].min) {
-					// go back one minor block
-					const prevInd = capClass[0]+'-'+(parseInt(capClass[2])-1)
-					hasher.setHash(`scores/${prevInd}/${1}`);
-				} else {
-					// go back one indicator
-					hasher.setHash(`scores/${capClass}/${(indClass - 1)}`);
-				}
+				const lastDotIndex = prevIndId.lastIndexOf('.');
+				const prevCapClass = prevIndId.slice(0, lastDotIndex);
+				const prevIndClass = prevIndId.slice(lastDotIndex + 1)
+				hasher.setHash(`scores/${prevCapClass}/${prevIndClass}`);
 			});
 		}
 
