@@ -10,6 +10,19 @@
 
 
 /* --- Score Improvement Section --- */
+.score-improvement-content {
+	min-height: 95px;
+}
+.score-improvement-warning {
+	display: none;
+	padding: 5px 20px;
+	margin: -10px -20px 20px;
+	text-align: center;
+	color: rgba(255,255,255,0.9);
+	cursor: pointer;
+	@include gradient(#666, #888);
+	@include border-top-radius(10px);
+}
 .bullet-chart-container {
 	margin-top: 10px;
 	margin-left: 415px;

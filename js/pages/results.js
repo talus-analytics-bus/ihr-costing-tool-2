@@ -1,25 +1,6 @@
 (() => {
 	App.initResults = () => {
-		// establish fake data
-		const oldScore = 2.6;
-		const newScore = 3.5;
-
-		App.jeeTree.forEach((core) => {
-			core.startupCost = 0;
-			core.recurringCost = 0;
-			core.capitalCost = 0;
-
-			core.capacities.forEach((capacity) => {
-				capacity.startupCost = 10000 * Math.random();
-				capacity.recurringCost = 1000 * Math.random();
-				capacity.capitalCost = 6000 * Math.random();
-				core.startupCost += capacity.startupCost;
-				core.recurringCost += capacity.recurringCost;
-				core.capitalCost += capacity.capitalCost;
-			});
-		});
-
-		// establish other constants
+		// establish constants
 		const scoreFormat = d3.format('.1f');
 		const scoreChangeFormat = d3.format('+.1f');
 		const moneyFormat = (num) => {
@@ -29,27 +10,50 @@
 
 
 		/* ---------------------- Score Improvement Section ----------------------*/
-		// build score improvement charts
-		const oldScoreChart = Charts.buildRadialProgress('.rp-score-old', oldScore, {
-			duration: 1500 * oldScore / newScore,
+		// build score improvement radial progress svgs
+		const allIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					allIndicators.push(ind);
+				});
+			});
 		});
-		const newScoreChart = Charts.buildRadialProgress('.rp-score-new', newScore, {
-			duration: 1500,
-		});
+
+		const currScore = App.getAverageCurrentScore(allIndicators);
+		Charts.buildRadialProgress('.rp-score-old', currScore);
+		if (!currScore) {
+			$('.score-improvement-warning')
+				.slideDown()
+				.on('click', () => hasher.setHash('scores'));
+		}
+
+		const newScore = App.getAverageTargetScore(allIndicators);
+		Charts.buildRadialProgress('.rp-score-new', newScore);
 
 		// build bullet charts
 		const bulletData = App.jeeTree.map((cc) => {
 			const scoreFormat = d3.format('.1f');
-			const oldScore = 2 + Math.random();
-			const newScore = 3 + Math.random();
+			const indicators = [];
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach(ind => indicators.push(ind));
+			});
+			const oldScore = App.getAverageCurrentScore(indicators) || 0;
+			const newScore = App.getAverageTargetScore(indicators) || 0;
+			const newScoreText = newScore ? scoreFormat(newScore) : '?';
 			return {
 				name: cc.name,
-				subtitle: `Avg. Score: ${scoreFormat(newScore)}`,
+				subtitle: `Avg. Score: ${newScoreText}`,
 				ranges: [1, 3, 5],
 				measures: [oldScore, newScore],
 			};
 		});
-		Charts.buildBulletChart('.bullet-chart-container', bulletData);
+		const bulletCharts = Charts.buildBulletChart('.bullet-chart-container', bulletData);
+
+		// hide bullet charts with no data
+		bulletCharts.style('display', (d) => {
+			return (!d.measures[0] && !d.measures[1]) ? 'none' : 'inline';
+		});
 
 
 		/* --------------------------- Cost Explorer Section ---------------------------*/
@@ -199,6 +203,7 @@
 		const fixedCostChart = Charts.buildCostBarChart('.explorer-fixed-cost-chart');
 		const recurringCostChart = Charts.buildCostBarChart('.explorer-recurring-cost-chart', null, {
 			height: 55,
+			totalTextFormat: d => `${d}/yr total`,
 		});
 
 		updateDropdowns();

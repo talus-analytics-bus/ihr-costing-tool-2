@@ -463,6 +463,32 @@ const App = {};
 		return actions;
   }
 
+  // returns average score for a set of given indicators
+  App.getAverageCurrentScore = (inds) => {
+		const indScores = [];
+		inds.forEach((ind) => {
+			if (ind.score) indScores.push(ind.score);
+		});
+		return d3.mean(indScores);
+  }
+
+  // returns average new score for a set of given indicators
+  App.getAverageTargetScore = (inds) => {
+		const newIndScores = [];
+		inds.forEach((ind) => {
+			if (ind.score) {
+				if (User.targetScoreType === 'step') {
+					if (ind.score === 5) newIndScores.push(5);
+					else newIndScores.push(ind.score + 1);
+				} else if (User.targetScoreType === 'target') {
+					if (ind.score > User.targetScore) newIndScores.push(ind.score);
+					else newIndScores.push(User.targetScore);
+				}
+			}
+		});
+		return d3.mean(newIndScores);
+  }
+
 
   /* ------------------ Cost Functions ------------------- */
 	// sets/updates the costs for all levels of the jeeTree

@@ -50,7 +50,8 @@ const Charts = {};
 			.attr('dy', '.35em');
 
 		// add update function
-		chart.initValue = (score) => {
+		chart.initValue = (value) => {
+			const score = value || 0;
 			outerCircle
 				.style('fill', () => {
 					if (score < 2) return '#c82127';
@@ -60,7 +61,7 @@ const Charts = {};
 				.transition()
 					.duration(param.duration || 1500)
 					.attrTween('d', arcTween(outerArc, score / 5));
-			label.text(d3.format('.1f')(score));
+			label.text(score ? d3.format('.1f')(score) : '?');
 		}
 
 		function arcTween(arc, newValue) {
@@ -86,15 +87,15 @@ const Charts = {};
 			.width(width)
 			.height(height);
 
-		const charts = d3.select(selector).selectAll('svg')
+		const chartContainers = d3.select(selector).selectAll('svg')
 			.data(data)
 			.enter().append('svg')
 				.attr('class', 'bullet-chart')
 				.attr('width', width + margin.left + margin.right)
-				.attr('height', height + margin.top + margin.bottom)
-				.append('g')
-					.attr('transform', `translate(${margin.left}, ${margin.top})`)
-					.call(bullet);
+				.attr('height', height + margin.top + margin.bottom);
+		const charts = chartContainers.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`)
+			.call(bullet);
 
 		const titles = charts.append('g')
 			.style('text-anchor', 'end')
@@ -124,7 +125,7 @@ const Charts = {};
 
 		charts.selectAll('.measure').style('fill', 'url(#gradient)');
 
-		return charts;
+		return chartContainers;
 	}
 
 	Charts.buildCostBarChart = (selector, data, param={}) => {
@@ -219,6 +220,9 @@ const Charts = {};
 				.attr('dy', '.35em')
 				.text((d) => {
 					const totalCost = d3.sum(d.data, dd => dd.value);
+					if (param.totalTextFormat) {
+						return param.totalTextFormat(d3.format('$.3s')(totalCost));
+					}
 					return `${d3.format('$.3s')(totalCost)} total`;
 				});
 
