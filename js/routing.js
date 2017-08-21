@@ -22,13 +22,6 @@ const Routing = {};
 			loadPage('overview', App.initOverview);
 			window.scrollTo(0, 0);
 		});
-		crossroads.addRoute('/who', () => {
-			hasher.setHash(`who/country`);
-		});
-		crossroads.addRoute('/who/:{ccId}:', (ccId) => {
-			loadPage('who', App.initWho, ccId);
-			window.scrollTo(0, 0);
-		});
 
 		crossroads.addRoute('/scores', () => {
 			hasher.setHash(`scores/p-1/1`)
@@ -54,6 +47,15 @@ const Routing = {};
 			loadPage('costs-instructions', App.initCostsInstructions);
 			window.scrollTo(0, 0);
 		});
+
+		crossroads.addRoute('/who', () => {
+			hasher.setHash(`who/country`);
+		});
+		crossroads.addRoute('/who/:{whoTab}:', (whoTab) => {
+			loadPage('who', App.initWho, whoTab);
+			window.scrollTo(0, 0);
+		});
+
 		crossroads.addRoute('/costs', () => {
 			hasher.setHash('costs/p-1/1');
 		});
@@ -61,11 +63,16 @@ const Routing = {};
 			hasher.setHash(`costs/${ccId}/1`);
 		});
 		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
-			if (indId === undefined && ccId !== undefined) {
+			// user must have set country before proceeding to costing
+			if (!App.whoAmI.name) {
+				hasher.setHash('who');
+				return;
+			}
+
+			if (!indId && ccId) {
 				indId = '1';
 				hasher.setHash(`costs/${ccId}/${indId}`);
-			}
-			else if (indId === undefined && ccId === undefined) {
+			} else if (!indId && !ccId) {
 				indId = '1';
 				ccId = 'p-1';
 				hasher.setHash(`costs/${ccId}/${indId}`);

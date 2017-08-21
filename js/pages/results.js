@@ -49,11 +49,7 @@
 			};
 		});
 		const bulletCharts = Charts.buildBulletChart('.bullet-chart-container', bulletData);
-
-		// hide bullet charts with no data
-		bulletCharts.style('display', (d) => {
-			return (!d.measures[0] && !d.measures[1]) ? 'none' : 'inline';
-		});
+		bulletCharts.selectAll('.value').style('display', d => d ? 'inline' : 'none');
 
 
 		/* --------------------------- Cost Explorer Section ---------------------------*/
