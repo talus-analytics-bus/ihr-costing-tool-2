@@ -245,22 +245,22 @@
 
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
-			d3.select('.next-score').on('click', () => {
+			d3.select('.next-cost').on('click', () => {
 				const nextIndId = App.getNextIndicator(capId, indId).id;
 				if (!nextIndId) hasher.setHash('results');
 
 				const lastDotIndex = nextIndId.lastIndexOf('.');
-				const nextCapClass = nextIndId.slice(0, lastDotIndex);
+				const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
 				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
 				hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
 			});
 
-			d3.select('.previous-score').on('click', function() {
+			d3.select('.previous-cost').on('click', function() {
 				const prevIndId = App.getPrevIndicator(capId, indId).id;
 				if (!prevIndId) return;
 
 				const lastDotIndex = prevIndId.lastIndexOf('.');
-				const prevCapClass = prevIndId.slice(0, lastDotIndex);
+				const prevCapClass = prevIndId.slice(0, lastDotIndex).replace('.', '-');
 				const prevIndClass = prevIndId.slice(lastDotIndex + 1)
 				hasher.setHash(`costs/${prevCapClass}/${prevIndClass}`);
 			});

@@ -131,7 +131,7 @@
 				if (!nextIndId) hasher.setHash('costsinstructions');
 
 				const lastDotIndex = nextIndId.lastIndexOf('.');
-				const nextCapClass = nextIndId.slice(0, lastDotIndex);
+				const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
 				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
 				hasher.setHash(`scores/${nextCapClass}/${nextIndClass}`);
 			});
@@ -141,10 +141,12 @@
 				if (!prevIndId) return;
 
 				const lastDotIndex = prevIndId.lastIndexOf('.');
-				const prevCapClass = prevIndId.slice(0, lastDotIndex);
+				const prevCapClass = prevIndId.slice(0, lastDotIndex).replace('.', '-');
 				const prevIndClass = prevIndId.slice(lastDotIndex + 1)
 				hasher.setHash(`scores/${prevCapClass}/${prevIndClass}`);
 			});
+
+			$('.go-to-costing-button').click(() => hasher.setHash('costsinstructions'));
 		}
 
 

@@ -80,7 +80,13 @@
 	}
 }
 .item-block-container {
+	position: relative;
 	border-top: $border;
-	padding: 15px;
+	padding: 15px 15px 25px;
 	background-color: #c9c9c9;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+.go-to-results-button {
+	margin-top: 10px;
 }

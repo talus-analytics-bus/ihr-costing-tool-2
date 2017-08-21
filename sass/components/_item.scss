@@ -2,12 +2,13 @@
 	display: inline-block;
 	position: relative;
 	margin: 0 15px;
-	padding: 15px 30px;
+	padding: 15px;
 	border: $border;
 	text-align: center;
-	width: 300px;
-	height: 280px;
+	width: 320px;
+	height: 100%;
 	vertical-align: top;
+	white-space: normal;
 	@include gradient(#f0f0f0, #fff);
 	@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
 
@@ -21,7 +22,7 @@
 		font-weight: 600;
 	}
 	.item-select-button {
-		margin-top: 20px;
+		margin: 20px 0 80px;
 		display: inline-block;
 		padding: 2px 35px;
 		border: $border;
@@ -37,7 +38,10 @@
 	}
 	.item-footer {
 		position: absolute;
+		left: 0;
 		bottom: 15px;
+		width: 100%;
+		text-align: center;
 	}
 	.item-edit-cost-button,
 	.item-view-details-button {
