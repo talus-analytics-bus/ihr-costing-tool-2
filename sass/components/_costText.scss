@@ -1,0 +1,13 @@
+.cost-text {
+	div { display: inline-block; }
+	.startup-cost-text {
+		text-align: right;
+	}
+	.plus-text {
+		margin-left: 5px;
+	}
+	.recurring-cost-text {
+		width: 80px;
+		text-align: right;
+	}
+}

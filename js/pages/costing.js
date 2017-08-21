@@ -95,9 +95,29 @@
 				headers.append('div')
 					.attr('class', 'action-scores')
 					.html((d) => {
-						return `<img class="rp-score" src="img/rp-${d.score_step_to - 1}.png" />` +
-							' to ' +
-							`<img class="rp-score" src="img/rp-${d.score_step_to}.png" />`;
+						if (indicator.score) {
+							if (User.targetScoreType === 'step') {
+								return `<img class="rp-score" src="img/rp-${indicator.score}.png" />` +
+									' to ' +
+									`<img class="rp-score" src="img/rp-${indicator.score + 1}.png" />`;
+							} else if (User.targetScoreType === 'target') {
+								let lowestScore = d.score_step_to[0] - 1;
+								if (indicator.score > lowestScore) lowestScore = indicator.score;
+								let highestScore = d.score_step_to[d.score_step_to.length - 1];
+								if (User.targetScore < highestScore) highestScore = User.targetScore;
+								return `<img class="rp-score" src="img/rp-$lowestScore}.png" />` +
+									' to ' +
+									`<img class="rp-score" src="img/rp-${highestScore}.png" />`;
+							}
+						} else {
+							const lowestScore = d.score_step_to[0] - 1;
+							const highestScore = d.score_step_to[d.score_step_to.length - 1];
+							return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
+								' to ' +
+								`<img class="rp-score" src="img/rp-${highestScore}.png" />`;							
+						}
+						return '';
+
 					});
 				headers.append('div').attr('class', 'action-cost');
 			} else {
@@ -147,7 +167,7 @@
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').text(d => moneyFormat(d.cost));
+			items.select('.item-cost').html(d => App.getCostText(d));
 			items.select('.item-select-button')
 				.classed('selected', d => d.selected)
 				.on('click', function(d) {
@@ -164,20 +184,44 @@
 				const content = contentContainer.append('div')
 					.attr('class', 'item-details-container');
 				
-				// add table of line items
-				const liTable = content.append('table')
-					.attr('class', 'line-item-table table table-condensed table-striped')
-					.append('tbody');
-				const liRows = liTable.selectAll('tr')
-					.data(d.line_items)
-					.enter().append('tr');
-				liRows.append('td').text(li => li.name);
-				liRows.append('td').text(li => moneyFormat(li.cost));
+				const startupItems = d.line_items.filter((li) => {
+					return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
+				});
+				const recurringItems = d.line_items.filter((li) => {
+					return li.line_item_type === 'recurring';
+				});
 
-				// add total cost
-				const totalRow = liTable.append('tr');
-				totalRow.append('td').text('Total');
-				totalRow.append('td').text(moneyFormat(d.cost));
+				function buildTableInContent(data, ind, param={}) {
+					const startupBox = content.append('div');
+					startupBox.append('div')
+						.attr('class', 'item-details-title')
+						.text(param.title || 'Cost');
+					const sTable = startupBox.append('table')
+						.attr('class', 'line-item-table table table-condensed table-striped')
+						.append('tbody');
+					const sRows = sTable.selectAll('tr')
+						.data(d.line_items)
+						.enter().append('tr');
+					sRows.append('td').text(li => li.name);
+					sRows.append('td').text(li => moneyFormat(li.cost));
+
+					// add total cost
+					const sTotalRow = sTable.append('tr');
+					sTotalRow.append('td').text('Total');
+					sTotalRow.append('td').text(moneyFormat(d[ind]));
+				}
+
+				// add startup cost table, if any startup costs
+				if (startupItems.length) {
+					buildTableInContent(startupItems, 'startupCost', {
+						title: 'Startup/Capital Costs',
+					});
+				}
+				if (recurringItems.length) {
+					buildTableInContent(recurringItems, 'recurringCost', {
+						title: 'Recurring Costs',
+					});
+				}
 
 				$(this).tooltipster('content', contentContainer.html());
 			});
@@ -186,8 +230,8 @@
 		// updates the total cost of the actions
 		function updateTotalCosts() {
 			App.updateAllCosts();
-			d3.selectAll('.action-cost').text(d => moneyFormat(d.cost));
-			d3.selectAll('.indicator-cost').text(d => moneyFormat(d.cost));
+			d3.selectAll('.action-cost').html(d => App.getCostText(d));
+			d3.selectAll('.indicator-cost').html(d => App.getCostText(d));
 		}
 
 

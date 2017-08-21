@@ -58,8 +58,15 @@
 	padding: 20px 20px 10px;
 	color: #333;
 
+	& > div:nth-child(n+2) {
+		margin-top: 20px;
+	}
+	.item-details-title {
+		margin-bottom: 10px;
+		font-size: 1.1em;
+		font-weight: 600;
+	}
 	.line-item-table {
-		background-color: #e0e0e0;
 		td {
 			border-top: none;
 			padding: 3px 10px;

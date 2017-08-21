@@ -390,12 +390,15 @@ const App = {};
 		if (ind.score) {
 			if (User.targetScoreType === 'step') {
 				actions = ind.actions.filter((action) => {
-					return action.score_step_to === ind.score + 1;
+					return action.score_step_to.includes(ind.score + 1);
 				});
 			} else if (User.targetScoreType === 'target') {
 				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
 				actions = ind.actions.filter((action) => {
-					return scoresToGetTo.includes(action.score_step_to);
+					for (let k = 0; k < action.score_step_to.length; k++) {
+						if (scoresToGetTo.includes(action.score_step_to[k])) return true;
+					}
+					return false;
 				});
 			}
 		} else {
@@ -406,62 +409,116 @@ const App = {};
   }
 
 
-  /* ------------------ Cost Calculation Function ------------------- */
-  // sets/updates the costs for all levels of the jeeTree
-  App.updateAllCosts = (param={}) => {
-  	App.jeeTree.forEach((cc) => {
-  		cc.cost = 0;
-  		cc.capacities.forEach((cap) => {
-  			cap.cost = 0;
-  			cap.indicators.forEach((ind) => {
-  				ind.cost = 0;
+  /* ------------------ Cost Functions ------------------- */
+	// sets/updates the costs for all levels of the jeeTree
+	App.updateAllCosts = (param={}) => {
+		App.jeeTree.forEach((cc) => {
+			cc.startupCost = 0;
+			cc.capitalCost = 0;
+			cc.recurringCost = 0;
 
-  				const actions = App.getNeededActions(ind);
-  				actions.forEach((a) => {
-  					a.cost = 0;
-  					a.inputs.forEach((input) => {
-  						input.cost = 0;
+			cc.capacities.forEach((cap) => {
+				cap.startupCost = 0;
+				cap.capitalCost = 0;
+				cap.recurringCost = 0;
 
-  						// set inputs to user-selected (usually on init)
-  						if (param.setInputsToSelected) input.selected = true;
+				cap.indicators.forEach((ind) => {
+					ind.startupCost = 0;
+					ind.capitalCost = 0;
+					ind.recurringCost = 0;
 
-  						input.line_items.forEach((li) => {
-  							const costObj = App.globalBaseCosts.find((gbc) => {
-  								return gbc.id === li.base_cost;
-  							});
-  							li.cost = costObj ? costObj.cost : 0;
+					const actions = App.getNeededActions(ind);
+					actions.forEach((a) => {
+						a.startupCost = 0;
+						a.capitalCost = 0;
+						a.recurringCost = 0;
 
-  							// include multipliers
-  							if (li.staff_multiplier) {
-  								// TODO lookup and include
-  							}
-  							if (li.country_multiplier) {
-  								// TODO lookup and include
-  							}
-  							if (li.custom_multiplier_1) {
-  								li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
-  							}
-  							if (li.custom_multiplier_2) {
-  								li.cost *= App.getMultiplierValue(li.custom_multiplier_2);
-  							}
+						a.inputs.forEach((input) => {
+							input.startupCost = 0;
+							input.capitalCost = 0;
+							input.recurringCost = 0;
 
-  							// add overhead if a salary
-  							if (costObj && costObj.subheading_name === 'Salaries') {
-  								// TODO add overhead from country parameters
-  							}
+							// set inputs to user-selected (usually on init)
+							if (param.setInputsToSelected) input.selected = true;
 
-  							input.cost += li.cost;
-  						});
-  						if (input.selected) a.cost += input.cost;
-  					});
-  					ind.cost += a.cost;
-  				});
-  				cap.cost += ind.cost;
-  			});
-  			cc.cost += cap.cost;
-  		});
-  	});
-  }
+							input.line_items.forEach((li) => {
+								const costObj = App.globalBaseCosts.find((gbc) => {
+									return gbc.id === li.base_cost;
+								});
+								li.cost = costObj ? costObj.cost : 0;
+
+								// include multipliers
+								if (li.staff_multiplier) {
+									// TODO lookup and include
+								}
+								if (li.country_multiplier) {
+									// TODO lookup and include
+								}
+								if (li.custom_multiplier_1) {
+									li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
+								}
+								if (li.custom_multiplier_2) {
+									li.cost *= App.getMultiplierValue(li.custom_multiplier_2);
+								}
+
+								// add overhead if a salary
+								if (costObj && costObj.subheading_name === 'Salaries') {
+									// TODO add overhead from country parameters
+								}
+
+								if (li.line_item_type === 'start-up') {
+									input.startupCost += li.cost;
+								} else if (li.line_item_type === 'capital') {
+									input.capitalCost += li.cost;
+								} else if (li.line_item_type === 'recurring') {
+									input.recurringCost += li.cost;
+								}
+							});
+							if (input.selected) {
+								a.startupCost += input.startupCost;
+								a.capitalCost += input.capitalCost;
+								a.recurringCost += input.recurringCost;
+							}
+						});
+						ind.startupCost += a.startupCost;
+						ind.capitalCost += a.capitalCost;
+						ind.recurringCost += a.recurringCost;
+					});
+					cap.startupCost += ind.startupCost;
+					cap.capitalCost += ind.capitalCost;
+					cap.recurringCost += ind.recurringCost;
+				});
+				cc.startupCost += cap.startupCost;
+				cc.capitalCost += cap.capitalCost;
+				cc.recurringCost2 += cap.recurringCost;
+			});
+		});
+	}
+
+	// builds the cost text for any level of the jeeTree above line item (e.g. indicator)
+	App.getCostText = (branch) => {
+		const startupCost = branch.startupCost + branch.capitalCost;
+		const recurringCost = branch.recurringCost;
+
+		/*const contentContainer = d3.select(document.createElement('div'));
+		const content = contentContainer.append('div')
+			.attr('class', 'cost-text');
+		content.append('div')
+			.attr('class', 'startup-cost-text')
+			.text(moneyFormat(startupCost));
+		content.append('div')
+			.attr('class', 'plus-text')
+			.text('+');
+		content.append('div')
+			.attr('class', 'recurring-cost-text')
+			.text(`${moneyFormat(recurringCost)}/yr`);
+		return contentContainer.html();*/
+
+		if (!recurringCost) return moneyFormat(startupCost);
+		//if (!startupCost) return `${moneyFormat(recurringCost)}/yr`;
+		return `${moneyFormat(startupCost)} + ${moneyFormat(recurringCost)}/yr`;
+	}
+
 
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
@@ -469,5 +526,10 @@ const App = {};
 		const numbers = input.match(/\d+/);
 		if (!numbers) return 1;
 		return numbers[0];
+	}
+
+	const moneyFormat = (num) => {
+		if (num < 100) return d3.format('$')(Math.round(num));
+		return d3.format('$,.3r')(num);
 	}
 })();

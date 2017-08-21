@@ -24,9 +24,9 @@
 		color: #000;
 		@include gradient(#fff, $light-blue);
 	}
-	.indicator-name { width: 400px; }
+	.indicator-name { width: 360px; }
 	.indicator-cost {
-		width: 120px;
+		width: 160px;
 		text-align: right;
 	}
 	.score-none {

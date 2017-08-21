@@ -22,7 +22,10 @@
 		// establish other constants
 		const scoreFormat = d3.format('.1f');
 		const scoreChangeFormat = d3.format('+.1f');
-		const moneyFormat = d3.format('$.3s');
+		const moneyFormat = (num) => {
+			if (num < 100) return d3.format('$')(Math.round(num));
+			return d3.format('$,.3r')(num);
+		}
 
 
 		/* ---------------------- Score Improvement Section ----------------------*/
@@ -66,7 +69,7 @@
 		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
 		
 		let allCapacities = [];
-		let chosenCapNames = ['National Legislation, Policy, and Financing'];
+		let chosenCapNames = [];
 		App.jeeTree.forEach(cc => allCapacities = allCapacities.concat(cc.capacities));
 		Util.populateSelect('.capacity-select', allCapacities.map(d => d.name));
 
@@ -152,18 +155,10 @@
 		function updateExplorer() {
 			// get data for updating
 			const capData = [];
-			let totalStartup = 0;
-			let totalCapital = 0;
-			let totalRecurring = 0;
 			allCapacities.forEach((cap) => {
-				const c = Object.assign({}, cap);
-				c.selected = chosenCapNames.includes(cap.name);
-				if (c.selected) {
-					totalStartup += cap.startupCost;
-					totalCapital += cap.capitalCost;
-					totalRecurring += cap.recurringCost;
+				if (chosenCapNames.includes(cap.name)) {
+					capData.push(cap);
 				}
-				capData.push(c);
 			});
 
 			// update summary text
@@ -171,25 +166,25 @@
 			$('.summary-score-improvement').text(scoreChangeFormat(1.2));
 
 			// update overall costs
-			$('.explorer-startup-value').text(moneyFormat(totalStartup));
-			$('.explorer-capital-value').text(moneyFormat(totalCapital));
-			$('.explorer-recurring-value').text(moneyFormat(totalRecurring));
+			$('.explorer-startup-value').text(moneyFormat(0));
+			$('.explorer-capital-value').text(moneyFormat(0));
+			$('.explorer-recurring-value').text(moneyFormat(0));
 
 			// update charts
 			fixedCostChart.update([
 				{
 					name: 'Startup Cost',
-					data: capData.map(c => ({ name: c.name, selected: c.selected, value: c.startupCost })),
+					data: capData.map(c => ({ name: c.name, value: c.startupCost })),
 				},
 				{
 					name: 'Capital Cost',
-					data: capData.map(c => ({ name: c.name, selected: c.selected, value: c.capitalCost })),
+					data: capData.map(c => ({ name: c.name, value: c.capitalCost })),
 				}
 			]);
 			recurringCostChart.update([
 				{
 					name: 'Recurring Cost',
-					data: capData.map(c => ({ name: c.name, selected: c.selected, value: c.recurringCost })),
+					data: capData.map(c => ({ name: c.name, value: c.recurringCost })),
 				}
 			]);
 		}
