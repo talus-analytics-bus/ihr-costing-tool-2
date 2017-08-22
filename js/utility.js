@@ -81,4 +81,24 @@ const Util = {};
 		  }
 		}
 	};
+
+	// converts a number in string format into a float
+	Util.strToFloat = function(str) {
+		if (typeof str !== 'string') return str;
+		return parseFloat(str.replace(/[^\d\.\-]/g, ""));
+	};
+
+	// reads the value of an input and changes it to a formatted number
+	Util.getInputNumVal = (input) => {
+		const $input = $(input);
+		const val = Util.strToFloat($input.val());
+		if (val === '') return 0;
+		if (isNaN(val) || val < 0) {
+			$input.val(0);
+			return 0;
+		}
+		
+		$input.val(d3.format(',')(val));
+		return val;
+	};
 })();

@@ -1,88 +1,58 @@
-/* Country picker tab */
-.country-dropdown {
-	float: left;
+.who-container {
+	td { padding-top: 4px; }
+	td:nth-child(2) {	padding-left: 20px; }
+	#geography-division-btn { width: auto; }
+}
+.who-container .block-link-container {
+	.block-link {
+		padding-left: 45px;
+	}
+	.chevron {
+		position: absolute;
+		top: 12px;
+		left: 15px;
+	}
+	.block-link-title { font-size: 1.25em; }
+}
+.who-container .block {
+	display: none;
+
+	.block-description { margin-bottom: 30px; }
+	.btn-container { margin-top: 30px; }
+	input {
+		display: inline-block;
+		margin-left: 10px;
+		margin-right: 5px;
+		padding: 6px 12px;
+	}
 }
 
-
-.who-container {
-	td {
-		padding-top: 4px;
+.country-block {
+	.row { margin-left: 0; }
+	.btn { width: 220px; }
+	.country-dropdown { float: left; }
+	.country-label {
+		font-weight: 600;
+		margin-bottom: 3px;
 	}
-	td:nth-child(2) {
-		padding-left: 20px;
+	.country-currency-label {
+		margin-top:	65px;
 	}
-
-	input {
-		border-radius: 5px;
-		border: 1px solid #ccc;
-		text-align: right;
+	.country-control-container {
+		margin-right: 30px;
+		margin-top: 0px;
+		width: 25%;
 	}
-
-	.btn-container {
-		margin-top: 20px;
-	}
-
-	#geography-division-btn {
-		width: auto;
-	}
-
-
-
 }
 .population-block {
-
-	display: none;
-
-	.block-description {
-		margin-bottom: 40px;
-	}
-
-	.estimated-population{
-		margin-top:	20px;
+	.population-input {
+		text-align: right;
+		width: 140px;
 	}
 }
-
-.country-currency-label {
-	margin-top:	60px;
-}
-
-.country-control-container {
-	margin-right: 30px;
-	margin-top: 0px;
-	width: 25%;
-
-	.btn {
-		width: 220px;
-	}
-}
-
-
-.public-health-information-block {
-	display: none;
-
-	.block-description {
-		margin-bottom: 40px;
-	}
+.country-details-block {
+	input { width: 80px; }
 	.phi-defaults {
-		margin-bottom: 10px;
-	}
-	input {
-		width: 80px;
-	}
-}
-
-.geographical-divisions-block {
-	display: none;
-
-	.block-description {
-		margin-bottom: 40px;
-	}
-
-	table {
-		margin-top: 20px;
-	}
-
-	.btn {
-		width: 220px;
+		margin-top: 10px;
 	}
 }

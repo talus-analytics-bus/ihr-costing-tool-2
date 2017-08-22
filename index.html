@@ -187,11 +187,7 @@
 					<div class="row">
 						<div class="country-control-container">
 							<div class="">
-
-								<div class="">
-									Choose country:
-								</div>
-
+								<div class="country-label country-country-labael">Choose country:</div>
 								<div class="country-dropdown-container">
 									<div class="country-dropdown dropdown">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -201,10 +197,7 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="country-currency-label">
-									Default Currency:
-								</div>
+								<div class="country-label country-currency-label">Default currency:</div>
 								<div class="currency">
 									<div class="currency-container dropdown">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -221,6 +214,9 @@
 							<div id="leaflet-map" style="width: 600px; height: 400px"></div>
 						</div>
 					</div>
+					<div class="btn-container btn-col col-sm-12 center">
+						<button class="btn btn-primary reset-button" id="population-btn">Next</button>
+					</div>
 				</div>
 
 				<!--The population block -->
@@ -236,7 +232,7 @@
 						</div>
 						<div class="estimated-population">
 							<span> The estimated total population of the country:</span>
-							<input type="number" placeholder="15,000,000" id="population" />
+							<input id="population" class="population-input form-control" />
 							<span> people.</span>
 						</div>
 					</div>
@@ -246,7 +242,7 @@
 				</div>
 
 				<!-- Geographical Divisions -->
-				<div class="block geographical-divisions-block no-reset">
+				<div class="block country-details-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Geographical Division of the Country</span>
 						<img class="question-img defn tooltipstered" defn="geo" src="img/question-mark.png" title="This is my image's tooltip message!">
@@ -259,7 +255,7 @@
 						<table>
 							<tbody>
 								<tr>
-								<td class="geo-central">The primary geographical divion of the country:</td>
+								<td class="geo-central">The primary geographical division of the country:</td>
 									<td>
 										<div class="geo-central-dropdown-container">
 											<div class="geo-central-dropdown dropdown">
@@ -270,15 +266,10 @@
 												</div>
 											</div>
 										</div>
-
-									<!--	<option value="country" selected>Country</option>
-										<option value="state" >State</option>
-										<option value="province" >State</option> -->
-
 									</td>
 								</tr>
 								<tr>
-								<td class="geo-second">The secondary geographical divion of the country:</td>
+								<td class="geo-second">The secondary geographical division of the country:</td>
 									<td>
 										<div class="geo-second-dropdown-container">
 											<div class="geo-second-dropdown dropdown">
@@ -292,7 +283,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td class="geo-third">The third geographical divion of the country:</td>
+									<td class="geo-third">The third geographical division of the country:</td>
 									<td>
 										<div class="geo-third-dropdown-container">
 											<div class="geo-third-dropdown dropdown">
@@ -308,7 +299,7 @@
 								</tr>
 
 								<tr>
-									<td class="geo-fourth">The fourth geographical divion of the country:</td>
+									<td class="geo-fourth">The fourth geographical division of the country:</td>
 									<td>
 										<div class="geo-fourth-dropdown-container">
 											<div class="geo-fourth-dropdown dropdown">
@@ -327,11 +318,8 @@
 					<div class="btn-container btn-col col-sm-12 center">
 						<button class="btn btn-primary reset-button" id="geography-division-btn">Next</button>
 					</div>
-				</div>
-			</div>
 
-				<!-- Public Health Information -->
-				<div class="block public-health-information-block no-reset">
+					<!-- Public Health Information -->
 					<div class="block-title">
 						<span class="block-title-title">Public Health Information</span>
 						<img class="question-img defn tooltipstered" defn="phi" src="img/question-mark.png" title="This is my image's tooltip message!">
@@ -344,28 +332,31 @@
 
 						<div class="phi-defaults">
 							<span> The estimated total number of epidemiologists within the country: </span>
-							<input type="number" placeholder="2" id="epidemiologists" />
+							<input class="form-control" placeholder="2" id="epidemiologists" />
 							<span> people.</span>
 						</div>
 
 						<div class="phi-defaults">
 							<span> The estimated total number of community health workers within the country: </span>
-							<input type="number" placeholder="2" id="healthworkers" />
+							<input class="form-control" placeholder="2" id="healthworkers" />
 							<span> people.</span>
 						</div>
 
 						<div class="phi-defaults">
 							<span> The estimated total number of health care facilities within the country: </span>
-							<input type="number" placeholder="5" id="facilities" />
+							<input class="form-control" placeholder="5" id="facilities" />
 							<span> facilities.</span>
 						</div>
-
 						<div class="btn-container btn-col col-sm-12 center">
-							<button class="btn btn-primary reset-button" id="public-health-btn">Continue to Country Details</button>
+							<button class="btn btn-primary next-btn">Next</button>
+							<button class="btn btn-primary costs-btn">Continue to Costing</button>
 						</div>
 					</div>
 				</div>
 
+				<div class="block default-costs-block no-reset">
+
+				</div>
 			</div>
 		</div>
 	</script>
