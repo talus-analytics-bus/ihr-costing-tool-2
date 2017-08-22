@@ -174,13 +174,13 @@ const App = {};
 		if (ind.score) {
 			if (User.targetScoreType === 'step') {
 				actions = ind.actions.filter((action) => {
-					return action.score_step_to.includes(ind.score + 1);
+					return action.score_step_to.includes(String(ind.score + 1));
 				});
 			} else if (User.targetScoreType === 'target') {
 				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
 				actions = ind.actions.filter((action) => {
 					for (let k = 0; k < action.score_step_to.length; k++) {
-						if (scoresToGetTo.includes(action.score_step_to[k])) return true;
+						if (scoresToGetTo.includes(+action.score_step_to[k])) return true;
 					}
 					return false;
 				});
