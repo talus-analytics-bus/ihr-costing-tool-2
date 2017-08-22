@@ -317,12 +317,11 @@
 				<div class="block population-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Population of the Country</span>
-						<!--<img class="question-img defn tooltipstered" defn="pop" src="img/question-mark.png">-->
 					</div>
 					<div class="block-content">
 						<div class="block-description">
 							Default estimated total population for the selected country.
-							<br>To edit the estimate, change the population below.
+							To edit the estimate, change the population below.
 						</div>
 						<div class="estimated-population">
 							<div><b>Estimated total population of the country:</b></div>
@@ -346,73 +345,14 @@
 				<div class="block country-details-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Geographical Division of the Country</span>
-						<!--<img class="question-img defn tooltipstered" defn="geo" src="img/question-mark.png" />-->
 					</div>
 					<div class="block-content">
 						<div class="block-description">
 							Default geographical divisions of the country describes how the country is organized by area groupings.
 							<br>To edit the defaults, change the details below.
 						</div>
-						<table>
-							<tbody>
-								<tr>
-								<td class="geo-central">The primary geographical division of the country:</td>
-									<td>
-										<div class="geo-central-dropdown-container">
-											<div class="geo-central-dropdown dropdown">
-												<button class="btn btn-secondary dropdown-toggle" type="button" id="geoCentralMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Primary Division
-												</button>
-												<div class="geo-central-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="geoCentralMenuButton">
-												</div>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-								<td class="geo-second">The secondary geographical division of the country:</td>
-									<td>
-										<div class="geo-second-dropdown-container">
-											<div class="geo-second-dropdown dropdown">
-												<button class="btn btn-secondary dropdown-toggle" type="button" id="geoSecondMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Second Division
-												</button>
-												<div class="geo-second-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="geoSecondMenuButton">
-												</div>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="geo-third">The third geographical division of the country:</td>
-									<td>
-										<div class="geo-third-dropdown-container">
-											<div class="geo-third-dropdown dropdown">
-												<button class="btn btn-secondary dropdown-toggle" type="button" id="geoThirdMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Third Division
-												</button>
-												<div class="geo-third-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="geoThirdMenuButton">
-												</div>
-											</div>
-										</div>
-
-									</td>
-								</tr>
-								<tr>
-									<td class="geo-fourth">The fourth geographical division of the country:</td>
-									<td>
-										<div class="geo-fourth-dropdown-container">
-											<div class="geo-fourth-dropdown dropdown">
-												<button class="btn btn-secondary dropdown-toggle" type="button" id="geoFourthMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													Fourth Division
-												</button>
-												<div class="geo-fourth-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="geoFourthMenuButton">
-												</div>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
+						<table class="geo-division-table">
+							<tbody></tbody>
 						</table>
 					</div>
 
@@ -420,31 +360,15 @@
 					<div class="phi-section">
 						<div class="block-title">
 							<span class="block-title-title">Public Health Information</span>
-							<img class="question-img defn tooltipstered" defn="phi" src="img/question-mark.png" />
 						</div>
 						<div class="block-content">
 							<div class="block-description">
 								Default public health information describes the estimated number of public heathcare facilities and workers within the country.
-								<br>To edit the defaults, change the details below.
+								To edit the defaults, change the details below.
 							</div>
-
-							<div class="phi-defaults">
-								<span> The estimated total number of epidemiologists within the country: </span>
-								<input class="form-control" placeholder="2" id="epidemiologists" />
-								<span> people.</span>
-							</div>
-
-							<div class="phi-defaults">
-								<span> The estimated total number of community health workers within the country: </span>
-								<input class="form-control" placeholder="2" id="healthworkers" />
-								<span> people.</span>
-							</div>
-
-							<div class="phi-defaults">
-								<span> The estimated total number of health care facilities within the country: </span>
-								<input class="form-control" placeholder="5" id="facilities" />
-								<span> facilities.</span>
-							</div>
+							<table class="ph-table">
+								<tbody></tbody>
+							</table>
 						</div>
 					</div>
 					<div class="next-button-container">
@@ -459,7 +383,6 @@
 				<div class="block default-costs-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Default Costs</span>
-						<img class="question-img defn tooltipstered" defn="pop" src="img/question-mark.png">
 					</div>
 					<div class="block-content">
 						<div class="block-description">

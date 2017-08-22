@@ -17,7 +17,6 @@
 				break;
 			case 'population':
 				initPopDistTab();
-				initGeographicDivisions();
 				break;
 			case 'country-details':
 				initCountryDetailsTab();
@@ -95,21 +94,10 @@
 	};
 
 
-
-	const hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
-	const hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
-
-	/* Generic way to change a dropdown label */
-	const changeDropdownLabel = (className, itemName) => {
-
-		d3.select('.'+className +' > button').text(itemName);
-	}
-
-	/*
-	*	initCountryTab
-	*	Initialize the country picker dropdown on the country tab in Who Am I?
-	*/
+	// country tab
 	const initCountryTab = () => {
+		const hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
+		const hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
 
 		// transforms currency object and adds code that matches with the original currencies.json key
 		const currencyObj = (key, obj) => Object.assign({}, obj, {
@@ -222,69 +210,79 @@
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
-	const initGeographicDivisions = () => {
-		const geoCentralArray =['Country', 'State', 'Province'];
-		// prepare geo central dropdown
-		d3.select('.geo-central-dropdown.dropdown-menu')
-			.selectAll('.geo-central-option')
-			.data(geoCentralArray)
-			.enter()
-			.append('a')
-			.attr('class', 'geo-central-option dropdown-item')
-			.text((itemName) => itemName)
-			.on('click', (itemName) => {
-				changeDropdownLabel('geo-central-dropdown', itemName);
-			});
-		changeDropdownLabel('geo-central-dropdown', geoCentralArray[0]);
-
-		// prepare the second dropdown
-		const secondCentralArray =['Province', 'Municipality', 'District', 'State'];
-		d3.select('.geo-second-dropdown.dropdown-menu')
-			.selectAll('.geo-second-option')
-			.data(secondCentralArray)
-			.enter()
-			.append('a')
-			.attr('class', 'geo-second-option dropdown-item')
-			.text((itemName) => itemName)
-			.on('click', (itemName) => {
-				changeDropdownLabel('geo-second-dropdown', itemName);
-			});
-		changeDropdownLabel('geo-second-dropdown', secondCentralArray[0]);
-
-		const thirdCentralArray =['Province', 'Municipality', 'District', 'State'];
-		d3.select('.geo-third-dropdown.dropdown-menu')
-			.selectAll('.geo-third-option')
-			.data(thirdCentralArray)
-			.enter()
-			.append('a')
-			.attr('class', 'geo-third-option dropdown-item')
-			.text((itemName) => itemName)
-			.on('click', (itemName) => {
-				changeDropdownLabel('geo-third-dropdown', itemName);
-			});
-		changeDropdownLabel('geo-third-dropdown', thirdCentralArray[0]);
-
-		const fourthCentralArray =['Barangay', 'County', 'District', 'City'];
-		d3.select('.geo-fourth-dropdown.dropdown-menu')
-			.selectAll('.geo-fourth-option')
-			.data(fourthCentralArray)
-			.enter()
-			.append('a')
-			.attr('class', 'geo-fourth-option dropdown-item')
-			.text((itemName) => itemName)
-			.on('click', (itemName) => {
-				changeDropdownLabel('geo-fourth-dropdown', itemName);
-			});
-		changeDropdownLabel('geo-fourth-dropdown', fourthCentralArray[0]);
-
-		$('#geography-division-btn').click(()=>{
-			$(".geographical-divisions-block").toggle();
-			$(".public-health-information-block").toggle();
-
-		});
-	}
-
 	const initCountryDetailsTab = () => {
+		const geoDivisions = [
+			{
+				name: 'central_area_count',
+				description: 'Primary geographical division of the country',
+				values: ['Country', 'State', 'Province'],
+			}, {
+				name: 'intermediate_1_area_count',
+				description: 'Secondary geographical division of the country',
+				values: ['Province', 'Municipality', 'District', 'State'],
+			}, {
+				name: 'intermediate_2_area_count',
+				description: 'Tertiary geographical division of the country',
+				values: ['Province', 'Municipality', 'District', 'State'],
+			}, {
+				name: 'local_area_count',
+				description: 'Local geographical division of the country',
+				values: ['Barangay', 'County', 'District', 'City'],
+			}
+		];
+
+		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
+			.data(geoDivisions)
+			.enter().append('tr');
+		geoRows.append('td').text(d => `${d.description}:`);
+		geoRows.append('td').append('select')
+			.attr('class', 'form-control')
+			.each(function(d) {
+				Util.populateSelect(this, d.values);
+			});
+		geoRows.append('td').append('input')
+			.attr('class', 'form-control')
+			.attr('value', d => Util.comma(App.whoAmI.multipliers[d.name]))
+			.on('change', function(d) {
+				App.whoAmI.multipliers[d.name] = Util.getInputNumVal(this);
+				App.updateAllCosts();
+			});
+
+
+		// public health section
+		const phMults = [
+			{
+				name: 'central_hospitals_count',
+				description: 'Estimated total number of health care facilities in the country',
+				unit: 'facilities',
+			}, {
+				name: 'central_epi_count',
+				description: 'Estimated total number of epidemiologists in the country',
+				unit: 'people',
+			}, {
+				name: 'central_chw_count',
+				description: 'Estimated total number of community health workers in the country',
+				unit: 'people',
+			}
+		];
+		const phRows = d3.select('.ph-table tbody').selectAll('tr')
+			.data(phMults)
+			.enter().append('tr');
+		phRows.append('td').text(d => `${d.description}:`);
+		const phInputCell = phRows.append('td');
+		phInputCell.append('input')
+			.attr('class', 'form-control')
+			.attr('value', (d) => {
+				d.defaultValue = App.whoAmI.multipliers[d.name];
+				return Util.comma(d.defaultValue);
+			})
+			.on('change', function(d) {
+				App.whoAmI.multipliers[d.name] = Util.getInputNumVal(this);
+				App.updateAllCosts();
+			});
+		phInputCell.append('span').text(d => d.unit);
+
+		// previous and next buttons
 		$('.previous-button').click(() => hasher.setHash('costs/population'));
 		$('.next-button').click(() => hasher.setHash('costs/default-costs'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
@@ -309,39 +307,54 @@
 		});
 
 		$('.dv-input').on('change', function() {
-			const gbc = getCurrentGbc();
-			gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
-			checkIfDefault(gbc);
+			const gbcId = $('.dv-select').val();
+			if (gbcId === 'overhead') {
+				App.whoAmI.staff_overhead_perc = Util.getInputNumVal(this) / 100;
+			} else {
+				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+				gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
+			}
+			checkIfDefault(gbcId);
 			App.updateAllCosts();
 		});
 
 		function updateCostDisplay() {
-			const gbc = getCurrentGbc();
-			$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
-			checkIfDefault(gbc);
+			const gbcId = $('.dv-select').val();
+			if (gbcId === 'overhead') {
+				$('.dv-input').val(Util.comma(100 * App.whoAmI.staff_overhead_perc));
+				$('.dv-currency').text('%');
+			} else {
+				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+				$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
+				$('.dv-currency').text(App.whoAmI.currency_iso);
+			}
+			checkIfDefault(gbcId);
 		}
 
-		function checkIfDefault(gbc) {
-			const isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
+		function checkIfDefault(gbcId) {
+			let isDefault = true;
+			let defaultText = 'Default: ';
+			if (gbcId === 'overhead') {
+				isDefault = App.whoAmI.staff_overhead_perc === 0.6;
+				defaultText += '60';
+			} else {
+				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+				isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
+				defaultText += Util.comma(gbc.default_cost * exchangeRate);
+			}
+
 			$('.dv-input').css('background-color', isDefault ? '#fff' : inputNonDefaultColor);
 			if (isDefault) {
 				$('.dv-default-text').slideUp();
 			} else {
 				$('.dv-default-text')
-					.text(`Default: ${Util.comma(gbc.default_cost * exchangeRate)}`)
+					.text(defaultText)
 					.slideDown();
 			}
 		}
 
-		function getCurrentGbc() {
-			const gbcId = $('.dv-select').val();
-			return App.globalBaseCosts.find(d => d.id === gbcId);
-		}
-
 		updateCostDisplay();
 
-		// fill out currency text
-		$('.dv-currency').text(App.whoAmI.currency_iso);
 
 		// behavior for next button
 		$('.previous-button').click(() => hasher.setHash('costs/country-details'));
