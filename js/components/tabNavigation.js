@@ -20,7 +20,7 @@
 			.on('click', (d) => {
 				const hash = hasher.getHashAsArray();
 				const capLinkId = d.capacities[0].id.replace('.', '-');
-				hasher.setHash(`${hash[0]}/${capLinkId}`);
+				hasher.setHash(`${hash[0]}/${capLinkId}/1`);
 			});
 
 		// add the arrow for each core capacity
@@ -46,7 +46,7 @@
 				.on('click', (d) => {
 					const hash = hasher.getHashAsArray();
 					const capLinkId = d.id.replace('.', '-');
-					hasher.setHash(`${hash[0]}/${capLinkId}`);
+					hasher.setHash(`${hash[0]}/${capLinkId}/1`);
 				});
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')

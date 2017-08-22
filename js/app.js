@@ -222,6 +222,9 @@ const App = {};
 	/* ------------------ Cost Functions ------------------- */
 	// sets/updates the costs for all levels of the jeeTree
 	App.updateAllCosts = (param={}) => {
+		const exchangeRate = App.getExchangeRate();
+
+		// loop through each tier of the tree
 		App.jeeTree.forEach((cc) => {
 			cc.startupCost = 0;
 			cc.capitalCost = 0;
@@ -264,8 +267,9 @@ const App = {};
 									});
 									if (multiplierObj) li.cost *= multiplierObj.count;
 								}
-								if (li.country_multiplier) {
-									// TODO lookup and include
+								if (li.country_multiplier && App.whoAmI.name) {
+									const multiplier = App.whoAmI.multipliers[li.country_multiplier];
+									if (multiplier) li.cost *= multiplier;
 								}
 								if (li.custom_multiplier_1) {
 									li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
@@ -276,8 +280,11 @@ const App = {};
 
 								// add overhead if a salary
 								if (costObj && costObj.subheading_name === 'Salaries') {
-									// TODO add overhead from country parameters
+									li.cost *= 1 + App.whoAmI.staff_overhead_perc;
 								}
+
+								// convert to correct currency
+								li.cost *= exchangeRate;
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -312,11 +319,17 @@ const App = {};
 	App.getCostText = (branch) => {
 		const startupCost = branch.startupCost + branch.capitalCost;
 		const recurringCost = branch.recurringCost;
-		if (!recurringCost) return moneyFormat(startupCost);
+		if (!recurringCost) return App.moneyFormat(startupCost);
 		//if (!startupCost) return `${moneyFormat(recurringCost)}/yr`;
-		return `${moneyFormat(startupCost)} + ${moneyFormat(recurringCost)}/yr`;
+		return `${App.moneyFormat(startupCost)} + ${App.moneyFormat(recurringCost)}/yr`;
 	}
 
+	// gets the exchange rate for the selected currency to USD
+	App.getExchangeRate = () => {
+		if (!App.whoAmI.name) return 1;
+		const exchangeRateArray = App.currencies[App.whoAmI.currency_iso].exchange_rates;
+		return exchangeRateArray.find(rate => rate.convert_from === 'USD').multiplier;
+	}
 
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
@@ -326,9 +339,9 @@ const App = {};
 		return numbers[0];
 	}
 
-	const moneyFormat = (num) => {
-		if (num < 100) return d3.format('$')(Math.round(num));
-		return d3.format('$,.3r')(num);
+	App.moneyFormat = (num) => {
+		if (num < 100) return `${Math.round(num)} ${App.whoAmI.currency_iso}`;
+		return `${d3.format(',.3r')(num)} ${App.whoAmI.currency_iso}`;
 	}
 
 

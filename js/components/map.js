@@ -109,7 +109,8 @@
 			d3.select('.country-dropdown.dropdown > button')
 				.text(countryParam.name);
 			App.whoAmI = JSON.parse(JSON.stringify(countryParam));
-			d3.select('.currency-container > button').text(App.currencies[App.whoAmI.currency].name);
+			App.updateAllCosts();
+			d3.select('.currency-container > button').text(App.currencies[App.whoAmI.currency_iso].name);
 
 		}
 

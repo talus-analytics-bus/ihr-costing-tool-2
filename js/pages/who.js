@@ -1,4 +1,6 @@
 (() => {
+	const inputNonDefaultColor = '#fff3cd';
+
 	App.initWho = (whoTab) => {
 		// check that user has entered the country first
 		if (whoTab !== 'country' && !App.whoAmI.name) {
@@ -12,7 +14,6 @@
 			case 'country':
 				App.createLeafletMap();
 				initCountryTab();
-				initCurrencyTab();
 				break;
 			case 'population':
 				initPopDistTab();
@@ -125,7 +126,8 @@
 
 		// if country is selected and no currency has been selected yet, select matching country currency as default
 		if (hasCountrySelected() && !hasCurrencySelected()) {
-			App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
+			App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency_iso] ? currencyObj(App.whoAmI.currency_iso, App.currencies[App.whoAmI.currency_iso]) : {};
+			App.updateAllCosts();
 		}
 
 		// if there is selected currency, mark it as selected
@@ -142,6 +144,7 @@
 				.on('click', (d) => {
 					changeDropdownLabel(d.name);
 					App.whoAmI.selectedCurrency = d;
+					App.updateAllCosts();
 				});
 
 		if (App.whoAmI.hasOwnProperty('name')) {
@@ -162,7 +165,7 @@
 
 					// if country is selected and no currency has been selected yet, select matching country currency as default
 					if (hasCountrySelected() && !hasCurrencySelected()) {
-						App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
+						App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency_iso] ? currencyObj(App.whoAmI.currency_iso, App.currencies[App.whoAmI.currency_iso]) : {};
 						changeDropdownLabel(App.whoAmI.selectedCurrency.name);
 					}
 
@@ -170,6 +173,8 @@
 					if (hasCurrencySelected()) {
 						changeDropdownLabel(App.whoAmI.selectedCurrency.name);
 					}
+
+					App.updateAllCosts();
 				});
 
 		// next button takes user to population page
@@ -180,117 +185,37 @@
 			}
 			hasher.setHash('costs/population');
 		});
+		$('.proceed-button').click(() => {
+			if (!App.whoAmI.name) {
+				noty({ text: '<b>Select a country before proceeding!</b>' });
+				return;
+			}
+			hasher.setHash('costs/p-1/1');
+		});
 	};
 
-	const initCurrencyTab = () => {
-		// transforms currency object and adds code that matches with the original currencies.json key
-		const currencyObj = (key, obj) => Object.assign({}, obj, {
-			code: key,
-		});
-
-		const changeDropdownLabel = (name) => {
-			d3.select('.currency-container > button').text(name);
-		}
-
-		// transform currencies object into array
-		const currenciesArray = Object.keys(App.currencies)
-			.map((key) => currencyObj(key, App.currencies[key]));
-
-		// if country is selected and no currency has been selected yet, select matching country currency as default
-		if (hasCountrySelected() && !hasCurrencySelected()) {
-			App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency] ? currencyObj(App.whoAmI.currency, App.currencies[App.whoAmI.currency]) : {};
-		}
-
-		// if there is selected currency, mark it as selected
-		if (hasCurrencySelected()) {
-			changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-		}
-
-		// prepare currency dropdown
-		d3.select('.currency-container-dropdown.dropdown-menu')
-			.selectAll('.currency-option')
-			.data(currenciesArray)
-			.enter()
-				.append('a')
-				.attr('class', 'currency-option dropdown-item')
-				.text((d) => d.name)
-				.on('click', (d) => {
-					changeDropdownLabel(d.name);
-					App.whoAmI.selectedCurrency = d;
-				})
-	}
-
 	const initPopDistTab = () => {
-		const jeeTreeFieldMapping = {
-			'basic_info.population': 'population',
-			'basic_info.level_1_areas.area_name': 'adm-org-1',
-			'basic_info.level_1_areas.area_count': 'adm-org-1-count',
-			'basic_info.level_2_areas.area_name': 'adm-org-2',
-			'basic_info.level_2_areas.area_count': 'adm-org-2-count',
-			'basic_info.level_3_areas.area_name': 'adm-org-3',
-			'basic_info.level_3_areas.area_count': 'adm-org-3-count',
-			'basic_info.level_4_areas.area_name': 'adm-org-4',
-			'basic_info.level_4_areas.area_count': 'adm-org-4-count',
-			'advanced_info.national_health_care_facilities_count': 'hcf',
-			'advanced_info.staff.national_epi_count': 'epi',
-			'advanced_info.staff.national_chw_count': 'chw',
-		};
+		const defaultPop = App.countryParams.find(d => d.name === App.whoAmI.name).multipliers.population;
 
+		$('.population-input')
+			.val(Util.comma(defaultPop))
+			.on('change', function() {
+				App.whoAmI.multipliers.population = Util.getInputNumVal(this);
+				checkIfDefault();
+				App.updateAllCosts();
+			});
 
-		const getJeeTreeValue = (keyString, jeeTreeObj) => {
-			return keyString.split('.')
-				.reduce((objVal, currKey) => {
-					return objVal.hasOwnProperty(currKey) ? objVal[currKey] : {};
-				}, jeeTreeObj);
-		}
-
-		const setKeyTreeValue = (keyString, jeeTreeObj, newVal) => {
-			const isValidNestedKey = keyString.split('.')
-				.reduce((acc, currKey) => {
-					if (acc.val) {
-						if (acc.obj.hasOwnProperty(currKey)) {
-							return Object.assign({}, acc, {
-								obj: acc.obj[currKey],
-							});
-						}
-						return {
-							obj: {},
-							val: false,
-						}
-					}
-					return acc;
-				}, {
-					obj: jeeTreeObj,
-					val: true,
-				});
-
-			if (isValidNestedKey.val) {
-				// TODO: change this
-				const exp = `jeeTreeObj.${keyString} = ${newVal}`;
-
-				eval(exp);
+		function checkIfDefault() {
+			const isDefault = Math.round(App.whoAmI.multipliers.population) === Math.round(defaultPop);
+			$('.population-input').css('background-color', isDefault ? '#fff' : inputNonDefaultColor);
+			if (isDefault) {
+				$('.default-pop-text').slideUp();
+			} else {
+				$('.default-pop-text')
+					.text(`Default: ${Util.comma(defaultPop)}`)
+					.slideDown();
 			}
 		}
-
-		// set default values if country is selected
-		if (hasCountrySelected()) {
-			Object.keys(jeeTreeFieldMapping).forEach((keyString) => {
-				const val = getJeeTreeValue(keyString, App.whoAmI);
-				$(`#${jeeTreeFieldMapping[keyString]}`).val(d3.format(',')(val));
-			});
-		}
-
-		// change jeetree values
-		let inputTimeout;
-		const changeValue = _.debounce(setKeyTreeValue, 1000);
-		const invertedMapping = _.invert(jeeTreeFieldMapping);
-		$('.population-input').on('keyup', function(ev) {
-			clearTimeout(inputTimeout);
-			setTimeout(() => {
-				const value = Util.getInputNumVal(this);
-				changeValue(invertedMapping.population, App.whoAmI, value);
-			}, 700);
-		});
 
 		$('.previous-button').click(() => hasher.setHash('costs/country'));
 		$('.next-button').click(() => hasher.setHash('costs/country-details'));
@@ -367,8 +292,7 @@
 
 	const initDefaultCostsTab = () => {
 		// look up exchange rate
-		const exchangeRateArray = App.currencies[App.whoAmI.currency].exchange_rates;
-		const exchangeRate = exchangeRateArray.find(rate => rate.convert_from === 'USD').multiplier;
+		const exchangeRate = App.getExchangeRate();
 
 		// build inputs from global costs data
 		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
@@ -388,6 +312,7 @@
 			const gbc = getCurrentGbc();
 			gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
 			checkIfDefault(gbc);
+			App.updateAllCosts();
 		});
 
 		function updateCostDisplay() {
@@ -398,7 +323,7 @@
 
 		function checkIfDefault(gbc) {
 			const isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
-			$('.dv-input').css('background-color', isDefault ? '#fff' : '#fff3cd');
+			$('.dv-input').css('background-color', isDefault ? '#fff' : inputNonDefaultColor);
 			if (isDefault) {
 				$('.dv-default-text').slideUp();
 			} else {
@@ -416,7 +341,7 @@
 		updateCostDisplay();
 
 		// fill out currency text
-		$('.dv-currency').text(App.whoAmI.currency);
+		$('.dv-currency').text(App.whoAmI.currency_iso);
 
 		// behavior for next button
 		$('.previous-button').click(() => hasher.setHash('costs/country-details'));
@@ -438,6 +363,4 @@
 				}
 			});
 	};
-
-
 })();

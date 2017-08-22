@@ -307,6 +307,9 @@
 					</div>
 					<div class="next-button-container">
 						<button class="btn btn-primary next-button">Next</button>
+						<div>
+							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
+						</div>
 					</div>
 				</div>
 
@@ -322,9 +325,12 @@
 							<br>To edit the estimate, change the population below.
 						</div>
 						<div class="estimated-population">
-							<span> The estimated total population of the country:</span>
-							<input id="population" class="population-input form-control" />
-							<span> people</span>
+							<div><b>Estimated total population of the country:</b></div>
+							<div class="input-container">
+								<input id="population" class="population-input form-control" />
+								<span> people</span>
+							</div>
+							<div class="default-pop-text default-text"></div>
 						</div>
 					</div>
 					<div class="next-button-container">
@@ -464,7 +470,7 @@
 							<input class="dv-input form-control" />
 							<span class="dv-currency"></span>
 						</div>
-						<div class="dv-default-text"></div>
+						<div class="dv-default-text default-text"></div>
 					</div>
 					<div class="next-button-container">
 						<button class="btn btn-secondary previous-button">Previous</button>
