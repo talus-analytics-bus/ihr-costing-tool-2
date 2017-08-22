@@ -76,6 +76,11 @@ const Routing = {};
 		});
 
 		crossroads.addRoute('/results', () => {
+			if (!App.whoAmI.name) {
+				hasher.setHash('costs');
+				noty({ text: '<b>Select a country before proceeding!</b>' });
+				return;
+			}
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);
 		});
