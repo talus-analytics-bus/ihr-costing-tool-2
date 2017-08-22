@@ -3,7 +3,7 @@
 		// check that user has entered the country first
 		if (whoTab !== 'country' && !App.whoAmI.name) {
 			noty({ text: '<b>Select a country before proceeding!</b>' });
-			hasher.setHash('who/country');
+			hasher.setHash('costs/country');
 			return;
 		}
 
@@ -48,7 +48,7 @@
 			.enter().append('div')
 				.attr('class', 'block-link')
 				.classed('active', d => whoTab === d.abbr)
-				.on('click', d => hasher.setHash(`who/${d.abbr}`));
+				.on('click', d => hasher.setHash(`costs/${d.abbr}`));
 
 		// add an arrow to indicate which block is showing
 		const chevron = blockLinks.append('svg')
@@ -171,6 +171,15 @@
 						changeDropdownLabel(App.whoAmI.selectedCurrency.name);
 					}
 				});
+
+		// next button takes user to population page
+		$('.next-button').click(() => {
+			if (!App.whoAmI.name) {
+				noty({ text: '<b>Select a country before proceeding!</b>' });
+				return;
+			}
+			hasher.setHash('costs/population');
+		});
 	};
 
 	const initCurrencyTab = () => {
@@ -209,63 +218,6 @@
 					changeDropdownLabel(d.name);
 					App.whoAmI.selectedCurrency = d;
 				})
-	}
-
-	const initCountryDetailsTab = () => {
-
-	}
-
-	const initDefaultCostsTab = () => {
-		// look up exchange rate
-		const exchangeRateArray = App.currencies[App.whoAmI.currency].exchange_rates;
-		const exchangeRate = exchangeRateArray.find(rate => rate.convert_from === 'USD').multiplier;
-
-		// build inputs from global costs data
-		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
-		Util.populateSelect('.dv-select', defaultCosts, {
-			nameKey: 'name',
-			valKey: 'id',
-		});
-		$('.dv-select').on('change', () => {
-			updateCostDisplay();
-		});
-
-		$('.dv-input').on('change', function() {
-			const gbc = getCurrentGbc();
-			gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
-			checkIfDefault(gbc);
-		});
-
-		function updateCostDisplay() {
-			const gbc = getCurrentGbc();
-			$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
-			checkIfDefault(gbc);
-		}
-
-		function checkIfDefault(gbc) {
-			const isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
-			$('.dv-input').css('background-color', isDefault ? '#fff' : '#fff3cd');
-			if (isDefault) {
-				$('.dv-default-text').slideUp();
-			} else {
-				$('.dv-default-text')
-					.text(`Default: ${Util.comma(gbc.default_cost * exchangeRate)}`)
-					.slideDown();
-			}
-		}
-
-		function getCurrentGbc() {
-			const gbcId = $('.dv-select').val();
-			return App.globalBaseCosts.find(d => d.id === gbcId);
-		}
-
-		updateCostDisplay();
-
-		// fill out currency text
-		$('.dv-currency').text(App.whoAmI.currency);
-
-		// behavior for next button
-		$('.proceed-button').click(() => hasher.setHash('costs'));
 	}
 
 	const initPopDistTab = () => {
@@ -340,7 +292,9 @@
 			}, 700);
 		});
 
-		$('#population-btn').click(() => hasher.setHash('who/default-costs'));
+		$('.previous-button').click(() => hasher.setHash('costs/country'));
+		$('.next-button').click(() => hasher.setHash('costs/country-details'));
+		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
 	const initGeographicDivisions = () => {
@@ -403,6 +357,70 @@
 			$(".public-health-information-block").toggle();
 
 		});
+	}
+
+	const initCountryDetailsTab = () => {
+		$('.previous-button').click(() => hasher.setHash('costs/population'));
+		$('.next-button').click(() => hasher.setHash('costs/default-costs'));
+		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
+	}
+
+	const initDefaultCostsTab = () => {
+		// look up exchange rate
+		const exchangeRateArray = App.currencies[App.whoAmI.currency].exchange_rates;
+		const exchangeRate = exchangeRateArray.find(rate => rate.convert_from === 'USD').multiplier;
+
+		// build inputs from global costs data
+		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
+
+		// add "overhead" to list of global costs
+		defaultCosts.splice(3, 0, { name: 'Salary Overhead', id: 'overhead' });
+
+		Util.populateSelect('.dv-select', defaultCosts, {
+			nameKey: 'name',
+			valKey: 'id',
+		});
+		$('.dv-select').on('change', () => {
+			updateCostDisplay();
+		});
+
+		$('.dv-input').on('change', function() {
+			const gbc = getCurrentGbc();
+			gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
+			checkIfDefault(gbc);
+		});
+
+		function updateCostDisplay() {
+			const gbc = getCurrentGbc();
+			$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
+			checkIfDefault(gbc);
+		}
+
+		function checkIfDefault(gbc) {
+			const isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
+			$('.dv-input').css('background-color', isDefault ? '#fff' : '#fff3cd');
+			if (isDefault) {
+				$('.dv-default-text').slideUp();
+			} else {
+				$('.dv-default-text')
+					.text(`Default: ${Util.comma(gbc.default_cost * exchangeRate)}`)
+					.slideDown();
+			}
+		}
+
+		function getCurrentGbc() {
+			const gbcId = $('.dv-select').val();
+			return App.globalBaseCosts.find(d => d.id === gbcId);
+		}
+
+		updateCostDisplay();
+
+		// fill out currency text
+		$('.dv-currency').text(App.whoAmI.currency);
+
+		// behavior for next button
+		$('.previous-button').click(() => hasher.setHash('costs/country-details'));
+		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
 

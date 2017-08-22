@@ -22,6 +22,6 @@
 		});
 
 		// clicking "next" button takes user to "who am i" page
-		$('.costs-instructions-start').click(() => { hasher.setHash('who'); });
+		$('.costs-instructions-start').click(() => { hasher.setHash('costs'); });
 	}
 })();

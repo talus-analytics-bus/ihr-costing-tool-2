@@ -56,7 +56,6 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" page="costsinstructions">Instructions</a>
-						<a class="dropdown-item" page="who">Country Details</a>
 						<a class="dropdown-item" page="costs" >Costing</a>
 					</div>
 				</li>
@@ -174,6 +173,98 @@
 		</div>
 	</script>
 	
+	<!-- Scores page tempate -->
+	<script id="scores-template" type="text/x-handlebars-template">
+		<div class="scores-container container container-wide">
+			<div class="block-link-container"></div>
+			<div class="block-container input-block-container">
+				<div class="block">
+					<h1>Assessment</h1>
+					<div class="core-capacity-name"></div>
+					<div class="score-instructions instructions">
+						For the following capacity, select a score for each indicator below that best matches the country's capabilities. Open the description below for more details.
+					</div>
+					<div class="capacity-description-container"></div>
+					<div class='indicator-progress-container'>
+						<h4 class="indicator-progress"></h4>
+						<div class="indicator-container"></div>
+					</div>
+					<h5 class='indicator-description'></h5>
+					<div class='score-picker-container'>
+						<table class='score-picker-table table table-condensed'>
+							<thead>
+								<tr>
+									<td></td>
+									<td>Scores</td>
+									<td>Score descriptions</td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class='nav-buttons-container'>
+						<div class='btn-row row'>
+							<div class='btn-col col-sm-12 center'>
+								<button type="button" class="btn btn-secondary previous-score"><i class="material-icons">skip_previous</i></button>
+								<button type="button" class="btn btn-primary next-score"><i class="material-icons">skip_next</i></button>
+							</div>
+						</div>
+						<div class='start-button-container center margin-top-20'>
+							<button type="button" class="btn btn-secondary go-to-costing-button">Go to costing</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+
+	<!-- Cost Instructions page tempate -->
+	<script id="costs-instructions-template" type="text/x-handlebars-template">
+		<div class="costs-instructions-container container container-text">
+			<div>
+				<h1>Costing Instructions</h1>
+				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
+			</div>
+			<div>
+				<h2>Before Starting</h2>
+				<p>
+					Current JEE assessment scores are needed to use the IHR Costing Tool. Indicator scores should be from a recent JEE assessment report. The full JEE Tool is available <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">here</a>.
+				</p>
+				<p>It is also useful to have any local cost information in use for public health planning available before starting. This includes salary information for public health workers (e.g. laboratory technicians, epidemiologists, etc.), costs for training, meetings, common laboratory supplies, and office equipment. Default costs are provided throughout the tool where available, but should be replaced by country-specific data wherever possible for the most accurate cost estimates.</p>
+			</div>
+			<div>
+				<h2>Process Overview</h2>
+				<p>First, the tool is customized for country-specific costing including currency, country population, geopolitical organization, and public health infrastructure.</p>
+				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
+				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
+			</div>
+			<div>
+				<h2>Select Target Score</h2>
+				<div class="target-score-section">
+					<div class="target-score-option" ind="step">
+						<input type="radio" checked />
+						<span>I want to score 1 point higher for each indicator</span>
+					</div>
+					<div class="target-score-option" ind="target">
+						<input type="radio" />
+						<span>I want to reach a target score of</span>
+						<select class="target-score-select form-control">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4" selected>4</option>
+							<option value="5">5</option>
+						</select>
+						<span>for each indicator</span>
+					</div>
+				</div>
+			</div>
+			<div class="start-button-container">
+				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
+			</div>
+		</div>
+	</script>
+	
 	<!-- Who Am I? page tempate -->
 	<script id="who-template" type="text/x-handlebars-template">
 		<div class="container container-wide who-container">
@@ -214,8 +305,8 @@
 							<div id="leaflet-map" style="width: 600px; height: 400px"></div>
 						</div>
 					</div>
-					<div class="btn-container btn-col col-sm-12 center">
-						<button class="btn btn-primary reset-button" id="population-btn">Next</button>
+					<div class="next-button-container">
+						<button class="btn btn-primary next-button">Next</button>
 					</div>
 				</div>
 
@@ -236,8 +327,12 @@
 							<span> people</span>
 						</div>
 					</div>
-					<div class="btn-container btn-col col-sm-12 center">
-						<button class="btn btn-primary reset-button" id="population-btn">Next</button>
+					<div class="next-button-container">
+						<button class="btn btn-secondary previous-button">Previous</button>
+						<button class="btn btn-primary next-button">Next</button>
+						<div>
+							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
+						</div>
 					</div>
 				</div>
 
@@ -309,7 +404,6 @@
 												</div>
 											</div>
 										</div>
-
 									</td>
 								</tr>
 							</tbody>
@@ -345,10 +439,13 @@
 								<input class="form-control" placeholder="5" id="facilities" />
 								<span> facilities.</span>
 							</div>
-							<div class="btn-container btn-col col-sm-12 center">
-								<button class="btn btn-primary next-btn">Next</button>
-								<button class="btn btn-primary costs-btn">Continue to Costing</button>
-							</div>
+						</div>
+					</div>
+					<div class="next-button-container">
+						<button class="btn btn-secondary previous-button">Previous</button>
+						<button class="btn btn-primary next-button">Next</button>
+						<div>
+							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
 						</div>
 					</div>
 				</div>
@@ -369,142 +466,15 @@
 						</div>
 						<div class="dv-default-text"></div>
 					</div>
-					<div class="btn-container btn-col col-sm-12 center">
-						<button class="btn btn-primary proceed-button">Proceed to Costing</button>
+					<div class="next-button-container">
+						<button class="btn btn-secondary previous-button">Previous</button>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</script>
 
-	<!-- Cost Instructions page tempate -->
-	<script id="costs-instructions-template" type="text/x-handlebars-template">
-		<div class="costs-instructions-container container container-text">
-			<div>
-				<h1>Costing Instructions</h1>
-				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
-			</div>
-			<div>
-				<h2>Before Starting</h2>
-				<p>
-					Current JEE assessment scores are needed to use the IHR Costing Tool. Indicator scores should be from a recent JEE assessment report. The full JEE Tool is available <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">here</a>.
-				</p>
-				<p>It is also useful to have any local cost information in use for public health planning available before starting. This includes salary information for public health workers (e.g. laboratory technicians, epidemiologists, etc.), costs for training, meetings, common laboratory supplies, and office equipment. Default costs are provided throughout the tool where available, but should be replaced by country-specific data wherever possible for the most accurate cost estimates.</p>
-			</div>
-			<div>
-				<h2>Process Overview</h2>
-				<p>First, the tool is customized for country-specific costing including currency, country population, geopolitical organization, and public health infrastructure.</p>
-				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
-				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
-			</div>
-			<div>
-				<h2>Select Target Score</h2>
-				<div class="target-score-section">
-					<div class="target-score-option" ind="step">
-						<input type="radio" checked />
-						<span>I want to score 1 point higher for each indicator</span>
-					</div>
-					<div class="target-score-option" ind="target">
-						<input type="radio" />
-						<span>I want to reach a target score of</span>
-						<select class="target-score-select form-control">
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4" selected>4</option>
-							<option value="5">5</option>
-						</select>
-						<span>for each indicator</span>
-					</div>
-				</div>
-			</div>
-			<div class="start-button-container">
-				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
-			</div>
-		</div>
-	</script>
-
-	<!-- Default Values page tempate -->
-	<script id="default-template" type="text/x-handlebars-template">
-		<div class="default-container container">
-			<h1>Placeholder: Default Values page</h1>
-		</div>
-	</script>
-
-	<!-- JEE Assessment Status page tempate -->
-	<script id="jee-template" type="text/x-handlebars-template">
-		<div class="assessment-container container container-text">
-			<div>
-				<h2>Select Target Score</h2>
-				<div class="target-score-section">
-					<div class="target-score-option" ind="step">
-						<input type="radio" checked />
-						<span>I want to score 1 point higher for each indicator</span>
-					</div>
-					<div class="target-score-option" ind="target">
-						<input type="radio" />
-						<span>I want to reach a target score of</span>
-						<select class="target-score-select form-control">
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4" selected>4</option>
-							<option value="5">5</option>
-						</select>
-						<span>for each indicator</span>
-					</div>
-				</div>
-			</div>
-			<div class="start-button-container">
-				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
-			</div>
-		</div>
-	</script>
-
-
-	<!-- Scores page tempate -->
-	<script id="scores-template" type="text/x-handlebars-template">
-		<div class="scores-container container container-wide">
-			<div class="block-link-container"></div>
-			<div class="block-container input-block-container">
-				<div class="block">
-					<h1>Assessment</h1>
-					<div class="core-capacity-name"></div>
-					<div class="score-instructions instructions">
-						For the following capacity, select a score for each indicator below that best matches the country's capabilities. Open the description below for more details.
-					</div>
-					<div class="capacity-description-container"></div>
-					<div class='indicator-progress-container'>
-						<h4 class="indicator-progress"></h4>
-						<div class="indicator-container"></div>
-					</div>
-					<h5 class='indicator-description'></h5>
-					<div class='score-picker-container'>
-						<table class='score-picker-table table table-condensed'>
-							<thead>
-								<tr>
-									<td></td>
-									<td>Scores</td>
-									<td>Score descriptions</td>
-								</tr>
-							</thead>
-							<tbody></tbody>
-						</table>
-					</div>
-					<div class='nav-buttons-container'>
-						<div class='btn-row row'>
-							<div class='btn-col col-sm-12 center'>
-								<button type="button" class="btn btn-secondary previous-score"><i class="material-icons">skip_previous</i></button>
-								<button type="button" class="btn btn-primary next-score"><i class="material-icons">skip_next</i></button>
-							</div>
-						</div>
-						<div class='start-button-container center margin-top-20'>
-							<button type="button" class="btn btn-secondary go-to-costing-button">Go to costing</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</script>
-	
 	<!-- Costs page tempate -->
 	<script id="costs-template" type="text/x-handlebars-template">
 		<div class="costs-container container container-wide">
@@ -550,7 +520,7 @@
 			</div>
 		</div>
 	</script>
-	
+
 	<!-- Results page tempate -->
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">

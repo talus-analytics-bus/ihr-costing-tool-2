@@ -48,24 +48,17 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 
-		crossroads.addRoute('/who', () => {
-			hasher.setHash(`who/country`);
+		crossroads.addRoute('/costs', () => {
+			hasher.setHash('costs/country');
 		});
-		crossroads.addRoute('/who/:{whoTab}:', (whoTab) => {
+		crossroads.addRoute('/costs/:{whoTab}:', (whoTab) => {
 			loadPage('who', App.initWho, whoTab);
 			window.scrollTo(0, 0);
-		});
-
-		crossroads.addRoute('/costs', () => {
-			hasher.setHash('costs/p-1/1');
-		});
-		crossroads.addRoute('/costs/:{ccId}:', (ccId) => {
-			hasher.setHash(`costs/${ccId}/1`);
 		});
 		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
 			// user must have set country before proceeding to costing
 			if (!App.whoAmI.name) {
-				hasher.setHash('who');
+				hasher.setHash('costs');
 				noty({ text: '<b>Select a country before proceeding!</b>' });
 				return;
 			}
