@@ -24,9 +24,9 @@
 		margin-left: 10px;
 		margin-right: 5px;
 		padding: 6px 12px;
+		text-align: right;
 	}
 }
-
 .country-block {
 	.row { margin-left: 0; }
 	.btn { width: 220px; }
@@ -39,20 +39,45 @@
 		margin-top:	65px;
 	}
 	.country-control-container {
+		position: relative;
 		margin-right: 30px;
 		margin-top: 0px;
 		width: 25%;
+		z-index: 1000;
+	}
+	.map-container {
+		position: relative;
+		z-index: 10;
 	}
 }
 .population-block {
 	.population-input {
-		text-align: right;
 		width: 140px;
 	}
 }
 .country-details-block {
 	input { width: 80px; }
+	.phi-section {
+		margin-top: 30px;
+		border-top: $light-border;
+		padding-top: 30px;
+	}
 	.phi-defaults {
 		margin-top: 10px;
+	}
+}
+.default-costs-block {
+	.dv-input-container { margin-top: 20px; }
+	.dv-input {
+		width: 140px;
+		margin-right: 5px;
+		text-align: right;
+	}
+	.dv-default-text {
+		width: 135px;
+		margin-top: 2px;
+		font-size: 0.85em;
+		font-weight: 600;
+		text-align: right;
 	}
 }

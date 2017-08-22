@@ -223,7 +223,7 @@
 				<div class="block population-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Population of the Country</span>
-						<img class="question-img defn tooltipstered" defn="pop" src="img/question-mark.png">
+						<!--<img class="question-img defn tooltipstered" defn="pop" src="img/question-mark.png">-->
 					</div>
 					<div class="block-content">
 						<div class="block-description">
@@ -233,7 +233,7 @@
 						<div class="estimated-population">
 							<span> The estimated total population of the country:</span>
 							<input id="population" class="population-input form-control" />
-							<span> people.</span>
+							<span> people</span>
 						</div>
 					</div>
 					<div class="btn-container btn-col col-sm-12 center">
@@ -245,7 +245,7 @@
 				<div class="block country-details-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title">Geographical Division of the Country</span>
-						<img class="question-img defn tooltipstered" defn="geo" src="img/question-mark.png" title="This is my image's tooltip message!">
+						<!--<img class="question-img defn tooltipstered" defn="geo" src="img/question-mark.png" />-->
 					</div>
 					<div class="block-content">
 						<div class="block-description">
@@ -297,7 +297,6 @@
 
 									</td>
 								</tr>
-
 								<tr>
 									<td class="geo-fourth">The fourth geographical division of the country:</td>
 									<td>
@@ -315,47 +314,64 @@
 								</tr>
 							</tbody>
 						</table>
-					<div class="btn-container btn-col col-sm-12 center">
-						<button class="btn btn-primary reset-button" id="geography-division-btn">Next</button>
 					</div>
 
 					<!-- Public Health Information -->
-					<div class="block-title">
-						<span class="block-title-title">Public Health Information</span>
-						<img class="question-img defn tooltipstered" defn="phi" src="img/question-mark.png" title="This is my image's tooltip message!">
-					</div>
-					<div class="block-content">
-						<div class="block-description">
-							Default public health information describes the estimated number of public heathcare facilities and workers within the country.
-							<br>To edit the defaults, change the details below.
+					<div class="phi-section">
+						<div class="block-title">
+							<span class="block-title-title">Public Health Information</span>
+							<img class="question-img defn tooltipstered" defn="phi" src="img/question-mark.png" />
 						</div>
+						<div class="block-content">
+							<div class="block-description">
+								Default public health information describes the estimated number of public heathcare facilities and workers within the country.
+								<br>To edit the defaults, change the details below.
+							</div>
 
-						<div class="phi-defaults">
-							<span> The estimated total number of epidemiologists within the country: </span>
-							<input class="form-control" placeholder="2" id="epidemiologists" />
-							<span> people.</span>
-						</div>
+							<div class="phi-defaults">
+								<span> The estimated total number of epidemiologists within the country: </span>
+								<input class="form-control" placeholder="2" id="epidemiologists" />
+								<span> people.</span>
+							</div>
 
-						<div class="phi-defaults">
-							<span> The estimated total number of community health workers within the country: </span>
-							<input class="form-control" placeholder="2" id="healthworkers" />
-							<span> people.</span>
-						</div>
+							<div class="phi-defaults">
+								<span> The estimated total number of community health workers within the country: </span>
+								<input class="form-control" placeholder="2" id="healthworkers" />
+								<span> people.</span>
+							</div>
 
-						<div class="phi-defaults">
-							<span> The estimated total number of health care facilities within the country: </span>
-							<input class="form-control" placeholder="5" id="facilities" />
-							<span> facilities.</span>
-						</div>
-						<div class="btn-container btn-col col-sm-12 center">
-							<button class="btn btn-primary next-btn">Next</button>
-							<button class="btn btn-primary costs-btn">Continue to Costing</button>
+							<div class="phi-defaults">
+								<span> The estimated total number of health care facilities within the country: </span>
+								<input class="form-control" placeholder="5" id="facilities" />
+								<span> facilities.</span>
+							</div>
+							<div class="btn-container btn-col col-sm-12 center">
+								<button class="btn btn-primary next-btn">Next</button>
+								<button class="btn btn-primary costs-btn">Continue to Costing</button>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="block default-costs-block no-reset">
-
+					<div class="block-title">
+						<span class="block-title-title">Default Costs</span>
+						<img class="question-img defn tooltipstered" defn="pop" src="img/question-mark.png">
+					</div>
+					<div class="block-content">
+						<div class="block-description">
+							Select an item below to modify its default cost.
+						</div>
+						<select class="dv-select form-control"></select>
+						<div class="dv-input-container">
+							<input class="dv-input form-control" />
+							<span class="dv-currency"></span>
+						</div>
+						<div class="dv-default-text"></div>
+					</div>
+					<div class="btn-container btn-col col-sm-12 center">
+						<button class="btn btn-primary proceed-button">Proceed to Costing</button>
+					</div>
 				</div>
 			</div>
 		</div>

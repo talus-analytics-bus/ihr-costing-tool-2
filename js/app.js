@@ -333,7 +333,7 @@ const App = {};
 
 
 	/* ------------------ Vendor Defaults ------------------- */
-	// activate tooltipster
+	// tooltipster defaults
 	$.tooltipster.setDefaults({
 		//plugins: ['follower'],
 		contentAsHTML: true,
@@ -343,4 +343,9 @@ const App = {};
 		theme: 'tooltipster-shadow',
 		maxWidth: 320,
 	});
+
+	// noty defaults
+	$.noty.defaults.type = 'warning';
+	$.noty.defaults.layout = 'center';
+	$.noty.defaults.timeout = 2000;
 })();

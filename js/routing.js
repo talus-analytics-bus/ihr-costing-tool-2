@@ -66,6 +66,7 @@ const Routing = {};
 			// user must have set country before proceeding to costing
 			if (!App.whoAmI.name) {
 				hasher.setHash('who');
+				noty({ text: '<b>Select a country before proceeding!</b>' });
 				return;
 			}
 

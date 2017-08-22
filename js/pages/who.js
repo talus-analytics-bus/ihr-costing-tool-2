@@ -1,7 +1,13 @@
 (() => {
 	App.initWho = (whoTab) => {
+		// check that user has entered the country first
+		if (whoTab !== 'country' && !App.whoAmI.name) {
+			noty({ text: '<b>Select a country before proceeding!</b>' });
+			hasher.setHash('who/country');
+			return;
+		}
 
-		/*Initialize country picker map*/
+		// call appropriate functions based on the whoTab
 		switch(whoTab) {
 			case 'country':
 				App.createLeafletMap();
@@ -69,17 +75,17 @@
 			functionInit: function(instance, helper) {
 				var defnName = instance["_$origin"].attr('defn');
 				if (defnName === 'pop') {
-					const content = 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+					const content = 'This is the estimated total population for the country chosen. The number can be changed using the edit box below';
 					instance.content(content);
 					return content;
 				}
 				else if (defnName === 'geo') {
-					const content = 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+					const content = 'This is the estimated total population for the country chosen. The number can be changed using the edit box below';
 					instance.content(content);
 					return content;
 				}
 				else if (defnName === 'phi') {
-					const content= 'This is the estimated total popluation for the country chosen. The number can be changed using the edit box below';
+					const content= 'This is the estimated total population for the country chosen. The number can be changed using the edit box below';
 					instance.content(content);
 					return content;
 				}
@@ -210,7 +216,56 @@
 	}
 
 	const initDefaultCostsTab = () => {
+		// look up exchange rate
+		const exchangeRateArray = App.currencies[App.whoAmI.currency].exchange_rates;
+		const exchangeRate = exchangeRateArray.find(rate => rate.convert_from === 'USD').multiplier;
 
+		// build inputs from global costs data
+		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
+		Util.populateSelect('.dv-select', defaultCosts, {
+			nameKey: 'name',
+			valKey: 'id',
+		});
+		$('.dv-select').on('change', () => {
+			updateCostDisplay();
+		});
+
+		$('.dv-input').on('change', function() {
+			const gbc = getCurrentGbc();
+			gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
+			checkIfDefault(gbc);
+		});
+
+		function updateCostDisplay() {
+			const gbc = getCurrentGbc();
+			$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
+			checkIfDefault(gbc);
+		}
+
+		function checkIfDefault(gbc) {
+			const isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
+			$('.dv-input').css('background-color', isDefault ? '#fff' : '#fff3cd');
+			if (isDefault) {
+				$('.dv-default-text').slideUp();
+			} else {
+				$('.dv-default-text')
+					.text(`Default: ${Util.comma(gbc.default_cost * exchangeRate)}`)
+					.slideDown();
+			}
+		}
+
+		function getCurrentGbc() {
+			const gbcId = $('.dv-select').val();
+			return App.globalBaseCosts.find(d => d.id === gbcId);
+		}
+
+		updateCostDisplay();
+
+		// fill out currency text
+		$('.dv-currency').text(App.whoAmI.currency);
+
+		// behavior for next button
+		$('.proceed-button').click(() => hasher.setHash('costs'));
 	}
 
 	const initPopDistTab = () => {

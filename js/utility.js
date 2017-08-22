@@ -2,7 +2,7 @@ const Util = {};
 
 (() => {
 
-    Util.comma = d3.format(',f'); // rounds down and adds commas appropriately
+    Util.comma = d3.format(',.0f'); // rounds down and adds commas appropriately
     Util.decimalOne = d3.format('.1f'); // formats to a one decimal significance
     Util.decimalTwo = d3.format('.2f'); // formats to a two decimal significance
     Util.percentize = d3.format('%'); // divides by 100 and adds a percentage symbol
