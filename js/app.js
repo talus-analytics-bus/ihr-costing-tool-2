@@ -295,9 +295,14 @@ const App = {};
 								}
 							});
 							if (input.selected) {
-								a.startupCost += input.startupCost;
-								a.capitalCost += input.capitalCost;
-								a.recurringCost += input.recurringCost;
+								if (input.isCustomCost) {
+									a.startupCost += input.customStartupCost;
+									a.recurringCost += input.customRecurringCost;
+								} else {
+									a.startupCost += input.startupCost;
+									a.capitalCost += input.capitalCost;
+									a.recurringCost += input.recurringCost;
+								}
 							}
 						});
 						ind.startupCost += a.startupCost;
@@ -322,6 +327,13 @@ const App = {};
 		if (!recurringCost) return App.moneyFormat(startupCost);
 		//if (!startupCost) return `${moneyFormat(recurringCost)}/yr`;
 		return `${App.moneyFormat(startupCost)} + ${App.moneyFormat(recurringCost)}/yr`;
+	}
+
+	// builds the cost text for an input when using a user-entered cost
+	App.getCustomCostText = (input) => {
+		if (!input.isCustomCost) return '';
+		return `${App.moneyFormat(input.customStartupCost)} + ` +
+			`${App.moneyFormat(input.customRecurringCost)}/yr`;
 	}
 
 	// gets the exchange rate for the selected currency to USD

@@ -20,6 +20,7 @@
 			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 			buildIndicatorContent();
+			setupActionContent();
 			if (actions.length) showAction(actions[0]);
 			updateTotalCosts();
 			attachNextButtonBehavior();
@@ -125,7 +126,6 @@
 				$('.action-header-empty-content').show();
 			}
 		}
-		setupActionContent();
 
 		function showAction(action) {
 			// make this header active
@@ -146,6 +146,13 @@
 				.attr('class', 'item-block');
 			newItems.append('div').attr('class', 'item-title');
 			newItems.append('div').attr('class', 'item-cost');
+			newItems.append('div').attr('class', 'item-default-cost');
+			const costInputContainer = newItems.append('div').attr('class', 'item-cost-input-container');
+			costInputContainer.append('input').attr('class', 'startup-cost-input form-control');
+			costInputContainer.append('span').text(`${App.whoAmI.currency_iso} +`);
+			costInputContainer.append('input').attr('class', 'recurring-cost-input form-control');
+			costInputContainer.append('span').text(App.whoAmI.currency_iso);
+
 			newItems.append('div')
 				.attr('class', 'item-select-button')
 				.text('Selected');
@@ -153,6 +160,9 @@
 			itemFooters.append('div')
 				.attr('class', 'item-edit-cost-button')
 				.text('Edit Item Cost');
+			itemFooters.append('div')
+				.attr('class', 'item-save-cost-button')
+				.text('Save Item Cost');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
 				.text('View Details')
@@ -167,7 +177,26 @@
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').html(d => App.getCostText(d));
+			items.select('.item-cost').html((d) => {
+				return d.isCustomCost ? App.getCustomCostText(d) : App.getCostText(d);
+			});
+			items.select('.item-default-cost')
+				.style('display', d => d.isCustomCost ? 'block' : 'none')
+				.text(d => `Default: ${App.getCostText(d)}`);
+			items.select('.startup-cost-input')
+				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
+				.on('change', function(d) {
+					d.isCustomCost = true;
+					d.customStartupCost = Util.getInputNumVal(this);
+					if (!d.customRecurringCost) d.customRecurringCost = d.recurringCost;
+				});
+			items.select('.recurring-cost-input')
+				.attr('value', d => Util.comma(d.recurringCost))
+				.on('change', function(d) {
+					d.isCustomCost = true;
+					d.customRecurringCost = Util.getInputNumVal(this);
+					if (!d.customStartupCost) d.customStartupCost = d.startupCost + d.capitalCost;
+				});
 			items.select('.item-select-button')
 				.classed('selected', d => d.selected)
 				.on('click', function(d) {
@@ -179,6 +208,44 @@
 
 					updateTotalCosts();
 				});
+
+			// clicking "edit cost" turns cost into an input
+			items.select('.item-edit-cost-button').on('click', function(d) {
+				const $container = $(this).closest('.item-block');
+				$container.find('.item-cost, .item-default-cost, .item-edit-cost-button')
+					.css('display', 'none');
+				$container.find('.item-cost-input-container').css('display', 'block');
+				$container.find('.item-save-cost-button').css('display', 'inline-block');
+			});
+
+			// clicking "save cost" saves the cost of the input
+			items.select('.item-save-cost-button').on('click', function(d) {
+				const $container = $(this).closest('.item-block');
+
+				// update text
+				if (d.isCustomCost) {
+					$container.find('.item-cost')
+						.css('display', 'block')
+						.text(App.getCustomCostText(d));
+					$container.find('.item-default-cost')
+						.css('display', 'block')
+						.text(`Default: ${App.getCostText(d)}`);
+				} else {
+					$container.find('.item-cost')
+						.css('display', 'block')
+						.text(App.getCostText(d));
+				}
+
+				// update all costs
+				updateTotalCosts();
+
+				// change display of inputs to display of text
+				$container.find('.item-cost-input-container, .item-save-cost-button')
+					.css('display', 'none');
+				$container.find('.item-edit-cost-button').css('display', 'inline-block');
+			});
+
+			// clicking "view details" show a list of line items
 			items.select('.item-view-details-button').each(function(d) {
 				const contentContainer = d3.select(document.createElement('div'));
 				const content = contentContainer.append('div')
@@ -213,13 +280,17 @@
 
 				// add startup cost table, if any startup costs
 				if (startupItems.length) {
+					let startupTitle = 'Startup/Capital Costs';
+					if (d.isCustomCost) startupTitle = `Default ${startupTitle}`;
 					buildTableInContent(startupItems, 'startupCost', {
-						title: 'Startup/Capital Costs',
+						title: startupTitle,
 					});
 				}
 				if (recurringItems.length) {
+					let recurringTitle = 'Recurring Costs';
+					if (d.isCustomCost) recurringTitle = `Default ${recurringTitle}`;
 					buildTableInContent(recurringItems, 'recurringCost', {
-						title: 'Recurring Costs',
+						title: recurringTitle,
 					});
 				}
 
@@ -265,25 +336,6 @@
 				hasher.setHash(`costs/${prevCapClass}/${prevIndClass}`);
 			});
 		}
-
-		
-		// TODO if previous hash was this CC, don't slide
-		if (!App.prevHash) App.prevHash = '';
-		const prevHashArr = App.prevHash.split('/');
-
-		if (prevHashArr[0] !== 'costs' || prevHashArr[1] !== capClass) {
-			$(`.${capClass}-block`).fadeOut(0, function(){$(this).fadeIn();});
-		}
-
-		// DEMO show the fake-block html in the AMR example
-		// TODO setup the block content dynamically
-		const demoScoringHtml = $('.fake-block').html();
-		$(`.${capClass.toLowerCase()}-block`).html(demoScoringHtml);
-		$('.fake-block').html('');
-
-
-		// update the hash history
-		App.prevHash = hasher.getHash();
 
 		buildContent();
 	};
