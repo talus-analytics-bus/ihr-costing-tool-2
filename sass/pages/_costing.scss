@@ -20,7 +20,7 @@
 }
 .action-headers {
 	padding: 10px 20px 7px;
-	background-color: #e6e6e6;
+	background-color: #f9f9f9;
 
 	.action-header-title {
 		font-weight: 600;
@@ -51,7 +51,7 @@
 	&:hover { color: #000; }
 	&.active {
 	 	color: #000;
-		@include gradient(#fff, $light-blue);
+		@include gradient(#fff, $grey);
 		.action-name,
 		.action-cost {
 			font-weight: 600;

@@ -18,7 +18,7 @@
   @include noselect;
 
   &.active {
-    @include hori-gradient($lightest-blue, white);
+    @include hori-gradient($light-grey, white);
   }
   .chevron {
     top: 3px;
@@ -43,7 +43,7 @@
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
   
-  &:first-child { border-top: 1px solid #999; }
+  &:first-child { border-top: $border; }
   &[level="1"] {
     margin-left: 50px;
     padding-top: 15px;
@@ -61,7 +61,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include hori-gradient($light-blue, white);
+    @include hori-gradient($grey, white);
   }
 }
 .block-link-cover {

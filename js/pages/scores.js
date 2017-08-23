@@ -114,6 +114,7 @@
 			scoreRows.append('td')
 				.attr('class', 'score-description-cell')
 				.text(d => ind.score_descriptions[d]);
+			scoreRows.append('td');
 		};
 		
 		// updates message on how many indicators have been scored

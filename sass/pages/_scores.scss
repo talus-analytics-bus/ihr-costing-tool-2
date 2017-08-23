@@ -27,14 +27,10 @@
 	}
 	td:first-child { padding-right: 6px; }
 	td:nth-child(2) { width: 350px; }
-	td::after {
-		display: block;
-		content: attr(content);
-		font-weight: bold;
-		height: 1px;
-		color: transparent;
-		overflow: hidden;
-		visibility: hidden;
+	td:last-child {
+		padding: 0;
+		width: 10px;
+		border-top: none;
 	}
 }
 .score-row {
@@ -43,6 +39,18 @@
 	vertical-align: top;
 
 	&.active { font-weight: 600; }
+	&:first-child td:last-child {
+		background-color: $jeeRed;
+	}
+	&:nth-child(2) td:last-child,
+	&:nth-child(3) td:last-child {
+		background-color: $jeeYellow;
+	}
+	&:nth-child(4) td:last-child,
+	&:nth-child(5) td:last-child {
+		background-color: $jeeGreen;
+	}
+
 	&:first-child.active,
 	&:first-child:hover {
 		background-color: rgba($jeeRed, 0.3);
@@ -62,7 +70,11 @@
 
 	td:first-child input {
 		position: relative;
-		top: 2px;
+		top: 3px;
+	}
+	td:nth-child(2) span {
+		position: relative;
+		top: -1px;
 	}
 	.rp-score-table-img {
 		position: relative;
