@@ -1,6 +1,7 @@
 const App = {};
 
 (() => {
+	App.demoMode = true;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -24,7 +25,7 @@ const App = {};
 		$('.dropdown-item').click(function() {
 				hasher.setHash($(this).attr('page'));
 		});
-		
+
 		// load country params data
 		d3.queue()
 			.defer(d3.json, 'data/country_specific_parameters.json')
@@ -47,6 +48,12 @@ const App = {};
 				App.globalBaseCosts = globalBaseCosts;
 				App.globalStaffMultipliers = globalStaffMultipliers;
 				App.whoAmI = {};
+
+				// default to US if in demo mode
+				if (App.demoMode) {
+					const usObj = App.countryParams.find(d => d.abbreviation === 'US');
+					App.whoAmI = Object.assign({}, usObj);
+				}
 
 				// add costs to each level of the jeeTree
 				App.updateAllCosts({
@@ -174,11 +181,13 @@ const App = {};
 		if (ind.score) {
 			if (User.targetScoreType === 'step') {
 				actions = ind.actions.filter((action) => {
+					if (typeof action.score_step_to === 'number') return false;
 					return action.score_step_to.includes(String(ind.score + 1));
 				});
 			} else if (User.targetScoreType === 'target') {
 				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
 				actions = ind.actions.filter((action) => {
+					if (typeof action.score_step_to === 'number') return false;
 					for (let k = 0; k < action.score_step_to.length; k++) {
 						if (scoresToGetTo.includes(+action.score_step_to[k])) return true;
 					}

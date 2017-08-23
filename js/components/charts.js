@@ -9,7 +9,7 @@ const Charts = {};
 	Charts.buildRadialProgress = (selector, data, param={}) => {
 		const margin = { top: 0, right: 15, bottom: 0, left: 15 };
 		const radius = param.radius || 35;
-		const chartContainer = d3.select(selector).append('svg')
+		const chartContainer = d3.selectAll(selector).append('svg')
 			.attr('class', 'rp-chart')
 			.attr('width', 2 * radius + margin.left + margin.right)
 			.attr('height', 2 * radius + margin.top + margin.bottom)
@@ -129,8 +129,8 @@ const Charts = {};
 	}
 
 	Charts.buildCostBarChart = (selector, data, param={}) => {
-		const margin = { top: 30, right: 50, bottom: 20, left: 100 };
-		const width = param.width || 800;
+		const margin = { top: 30, right: 60, bottom: 20, left: 100 };
+		const width = param.width || 450;
 		const height = param.height || 110;
 		const chartContainer = d3.select(selector).append('svg')
 			.attr('class', 'cost-bar-chart')
@@ -140,13 +140,15 @@ const Charts = {};
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 		const x = d3.scaleLinear()
-			.range([0, width]);
+			.range([0, width])
+			.nice();
 		const y = d3.scaleBand()
 			.paddingOuter(0.3)
 			.paddingInner(0.4)
 			.rangeRound([0, height]);
 
 		const xAxis = d3.axisTop()
+			.ticks(5)
 			.tickFormat(d3.format('$.3s'));
 		const yAxis = d3.axisLeft();
 		const xAxisG = chart.append('g').attr('class', 'x axis');

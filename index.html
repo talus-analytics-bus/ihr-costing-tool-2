@@ -455,7 +455,7 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
-			<div class="score-improvement-section results-section">
+			<!--<div class="score-improvement-section results-section">
 				<div class="score-improvement-warning">
 					Go to the <b>scoring</b> page and select indicator scores before viewing results!
 				</div>
@@ -468,11 +468,11 @@
 					</div>
 					<div class="bullet-chart-container"></div>
 				</div>
-			</div>
+			</div>-->
 			<div class="chart-section results-section">
 				<div class="chart-tab-container">
 					<div class="btn-group">
-						<div class="btn btn-secondary active" ind="type">Cost Explorer</div>
+						<div class="btn btn-secondary active" ind="type">Explorer</div>
 						<div class="btn btn-secondary" ind="time">Cost over Time</div>
 					</div>
 				</div>
@@ -489,53 +489,41 @@
 					</div>
 				</div>
 				<div class="chart-content" ind="type">
-					<div class="explorer-filters">
-						<div class="explorer-filter-header">
-							<svg viewBox="0 0 24 24" class="chevron">
-								<path d="M8 5v14l11-7z"></path>
-							</svg>
-							<span>Filter Data</span>
+					<div class="explorer-section">
+						<div class="explorer-instructions">
+							Check/uncheck capacities in the left-hand explorer to update results.
 						</div>
-						<div class="explorer-filter-content">
-							<div class="row">
-								<div class="col-sm-4">
-									<div class="explorer-filter-label">Core Capacity</div>
-									<select class="cc-select form-control" multiple="multiple"></select>
-								</div>
-								<div class="col-sm-4">
-									<div class="explorer-filter-label">Capacity</div>
-									<select class="capacity-select form-control" multiple="multiple"></select>
-								</div>
-								<div class="col-sm-4">
-									<div class="explorer-filter-label">Category</div>
-									<select class="category-select form-control" multiple="multiple"></select>
-								</div>
+						<div class="explorer-list-container">
+							<div class="explorer-list">
+								<div class="explorer-list-title">JEE Capacities</div>
+								<div class="explorer-list-content"></div>
 							</div>
 						</div>
-					</div>
-					<div class="explorer-summary">
-						<span class="summary-num-capacities"></span>
-						capacities,
-						<span class="summary-score-improvement"></span>
-						avg. score improvement
-					</div>
-					<div class="explorer-cost-summary row">
-						<div class="col-4">
-							<div class="explorer-startup-value explorer-cost-value"></div>
-							<div class="explorer-cost-text">Startup Cost</div>
-						</div>
-						<div class="col-4">
-							<div class="explorer-capital-value explorer-cost-value"></div>
-							<div class="explorer-cost-text">Capital Cost</div>
-						</div>
-						<div class="col-4">
-							<div class="explorer-recurring-value explorer-cost-value"></div>
-							<div class="explorer-cost-text">Recurring Cost</div>
-						</div>
-					</div>
-					<div class="explorer-cost-chart-container">
-						<div class="explorer-fixed-cost-chart"></div>
-						<div class="explorer-recurring-cost-chart"></div>
+						<div class="explorer-content">
+							<div class="explorer-si-content">
+								<span class="score-improvement-title">Average Score Improvement:</span>
+								<div class="rp-score-old rp-score-container"></div>
+								<div class="rp-score-to-text">to</div>
+								<div class="rp-score-new rp-score-container"></div>
+							</div>
+							<div class="explorer-startup-section">
+								<div class="explorer-cost-summary row">
+									<div class="col-12">
+										<div class="explorer-startup-value explorer-cost-value"></div>
+										<div class="explorer-cost-text">Startup/Capital Cost</div>
+									</div>
+								</div>
+								<div class="explorer-fixed-cost-chart explorer-cost-chart"></div>
+							</div>
+							<div class="explorer-recurring-section">
+								<div class="explorer-cost-summary row">
+									<div class="col-12">
+										<div class="explorer-recurring-value explorer-cost-value"></div>
+										<div class="explorer-cost-text">Recurring Cost</div>
+									</div>
+									<div class="explorer-recurring-cost-chart explorer-cost-chart"></div>
+								</div>
+							</div>
 					</div>
 				</div>
 			</div>

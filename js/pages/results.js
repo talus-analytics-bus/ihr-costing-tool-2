@@ -3,9 +3,18 @@
 		// establish constants
 		const scoreFormat = d3.format('.1f');
 		const scoreChangeFormat = d3.format('+.1f');
-		const moneyFormat = (num) => {
-			if (num < 100) return d3.format('$')(Math.round(num));
-			return d3.format('$,.3r')(num);
+
+
+		/* -------------------------- Demo Mode --------------------------*/
+		if (App.demoMode) {
+			App.jeeTree.forEach((cc) => {
+				cc.capacities.forEach((cap) => {
+					cap.indicators.forEach((ind) => {
+						ind.score = Math.round(0.5 + 5 * Math.random());
+					});
+				});
+			});
+			App.updateAllCosts();
 		}
 
 
@@ -125,6 +134,70 @@
 			},
 		});
 
+
+		// build explorer list
+		const expCcContainers = d3.select('.explorer-list-content').selectAll('.exp-cc')
+			.data(App.jeeTree)
+			.enter().append('div')
+				.attr('class', 'exp-cc-container');
+		const expCcs = expCcContainers.append('div')
+			.attr('class', 'exp-row exp-cc')
+			.on('click', (d) => {
+				// TODO toggling core capacity
+			});
+		expCcs.append('input')
+			.attr('type', 'checkbox')
+			.property('checked', true)
+			.on('change', (d) => {
+				// TODO check/unchecking core capacity
+			});
+		expCcs.append('div')
+			.attr('class', 'exp-list-label')
+			.text(d => d.name);
+
+		// add capacities
+		const expCapContainers = expCcContainers.selectAll('.exp-cap-container')
+			.data(d => d.capacities)
+			.enter().append('div')
+				.attr('class', 'exp-cap-container');
+		const expCaps = expCapContainers.append('div')
+			.attr('class', 'exp-row exp-cap')
+			.on('click', (d) => {
+				// TODO toggling capacity
+			});
+		expCaps.append('input')
+			.attr('type', 'checkbox')
+			.property('checked', true)
+			.on('change', (d) => {
+				// TODO check/unchecking capacity
+			});
+		expCaps.append('div')
+			.attr('class', 'exp-list-label')
+			.text(d => `${d.id.toUpperCase()} - ${d.name}`);
+
+		// add indicators
+		/*const expInds = expCapContainers.selectAll('.exp-ind')
+			.data(d => d.indicators)
+			.enter().append('div')
+				.attr('class', 'exp-row exp-ind')
+				.on('click', (d) => {
+					// TODO toggling indicator
+				});
+		expInds.append('input')
+			.attr('type', 'checkbox')
+			.property('checked', true)
+			.on('change', (d) => {
+				// TODO check/unchecking indicator
+			});
+		expInds.append('div')
+			.attr('class', 'exp-list-label')
+			.text(d => d.id.toUpperCase());*/
+
+		// functions for updating throughout the explorer
+		function updateList() {
+
+		}
+
 		function updateDropdowns() {
 			// update core capacity dropdown
 			const chosenCcs = [];
@@ -166,16 +239,15 @@
 			}
 
 			// update summary text
-			$('.summary-num-capacities').text(chosenCapNames.length);
-			$('.summary-score-improvement').text(scoreChangeFormat(1.2));
+			/*$('.summary-num-capacities').text(chosenCapNames.length);
+			$('.summary-score-improvement').text(scoreChangeFormat(1.2));*/
 
 			// update overall costs
 			const totalStartup = d3.sum(capData, d => d.startupCost);
 			const totalCapital = d3.sum(capData, d => d.capitalCost);
 			const totalRecurring = d3.sum(capData, d => d.recurringCost);
-			$('.explorer-startup-value').text(moneyFormat(totalStartup));
-			$('.explorer-capital-value').text(moneyFormat(totalCapital));
-			$('.explorer-recurring-value').text(`${moneyFormat(totalRecurring)}/yr`);
+			$('.explorer-startup-value').text(App.moneyFormat(totalStartup + totalCapital));
+			$('.explorer-recurring-value').text(`${App.moneyFormat(totalRecurring)}/yr`);
 
 			// update charts
 			fixedCostChart.update([
@@ -193,7 +265,7 @@
 					name: 'Recurring Cost',
 					data: capData.map(c => ({ name: c.name, value: c.recurringCost })),
 				}
-			]);
+			]);2
 		}
 
 		const fixedCostChart = Charts.buildCostBarChart('.explorer-fixed-cost-chart');
