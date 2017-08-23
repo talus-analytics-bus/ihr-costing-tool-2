@@ -18,7 +18,7 @@
   @include noselect;
 
   &.active {
-    @include hori-gradient($light-grey, white);
+    @include hori-gradient($lightest-blue, white);
   }
   .chevron {
     top: 3px;
@@ -61,7 +61,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include hori-gradient($grey, white);
+    @include hori-gradient($light-blue, white);
   }
 }
 .block-link-cover {

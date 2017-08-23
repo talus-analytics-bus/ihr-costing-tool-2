@@ -14,11 +14,14 @@
 				const targetScore = $(this).find('select').val();
 				User.setTargetScore(targetScore);
 			}
+
+			App.updateAllCosts();
 		});
 
 		$('.target-score-select').on('change', function() {
 			// save target score
 			User.setTargetScore($(this).val());
+			App.updateAllCosts();
 		});
 
 		// clicking "next" button takes user to "who am i" page

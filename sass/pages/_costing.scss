@@ -51,7 +51,7 @@
 	&:hover { color: #000; }
 	&.active {
 	 	color: #000;
-		@include gradient(#fff, $grey);
+		@include gradient(#fff, $light-blue);
 		.action-name,
 		.action-cost {
 			font-weight: 600;
@@ -60,7 +60,6 @@
 	&:nth-child(n+2) {
 		border-top: none;
 	}
-	span { margin: 0 5px; }
 	.action-name {
 	 	display: inline-block;
 	 	margin-right: 10px;
@@ -68,6 +67,10 @@
 	.action-scores {
 		margin-left: auto;
 		min-width: 60px;
+	}
+	.action-scores span {
+		margin: 0 5px;
+		font-size: 0.95em;
 	}
 	.rp-score {
 		width: 20px;

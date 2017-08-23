@@ -96,74 +96,48 @@
 
 	// country tab
 	const initCountryTab = () => {
-		const hasCountrySelected = () => App.whoAmI.hasOwnProperty('currency');
-		const hasCurrencySelected = () => App.whoAmI.selectedCurrency && App.whoAmI.selectedCurrency.hasOwnProperty('name');
-
 		// transforms currency object and adds code that matches with the original currencies.json key
-		const currencyObj = (key, obj) => Object.assign({}, obj, {
-			code: key,
-		});
-
+		const currencyObj = (key, obj) => Object.assign({}, obj, { code: key });
 		const changeDropdownLabel = (name) => {
 			d3.select('.currency-container > button').text(name);
 		}
 
-		// transform currencies object into array
+		// populate currency dropdown
 		const currenciesArray = Object.keys(App.currencies)
 			.map((key) => currencyObj(key, App.currencies[key]));
-
-		// if country is selected and no currency has been selected yet, select matching country currency as default
-		if (hasCountrySelected() && !hasCurrencySelected()) {
-			App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency_iso] ? currencyObj(App.whoAmI.currency_iso, App.currencies[App.whoAmI.currency_iso]) : {};
-			App.updateAllCosts();
-		}
-
-		// if there is selected currency, mark it as selected
-		if (hasCurrencySelected()) {
-			changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-		}
-
-		// prepare currency dropdown
 		d3.select('.currency-container-dropdown.dropdown-menu').selectAll('.currency-option')
 			.data(currenciesArray)
 			.enter().append('a')
 				.attr('class', 'currency-option dropdown-item')
-				.text((d) => d.name)
+				.text(d => d.name)
 				.on('click', (d) => {
 					changeDropdownLabel(d.name);
-					App.whoAmI.selectedCurrency = d;
+					App.whoAmI.currency_iso = d.iso.code;
 					App.updateAllCosts();
 				});
 
-		if (App.whoAmI.hasOwnProperty('name')) {
-			d3.select('.country-dropdown.dropdown > button')
-				.text(App.whoAmI.name);
-		}
 
-		/* Prepare the country dropdown*/
+		// populate country dropdown
 		d3.select('.country-dropdown.dropdown-menu').selectAll('.country-option')
 			.data(App.countryParams)
 			.enter().append('a')
 				.attr('class','country-option dropdown-item')
-				.text(function(d) { return d.name})
-				.on('click', function (d) {
+				.text(d => d.name)
+				.on('click', (d) => {
 					d3.select('.country-dropdown.dropdown > button').text(d.name);
 					countryDropdownToggle(d.abbreviation);
 					App.whoAmI = JSON.parse(JSON.stringify(d));
-
-					// if country is selected and no currency has been selected yet, select matching country currency as default
-					if (hasCountrySelected() && !hasCurrencySelected()) {
-						App.whoAmI.selectedCurrency = App.currencies[App.whoAmI.currency_iso] ? currencyObj(App.whoAmI.currency_iso, App.currencies[App.whoAmI.currency_iso]) : {};
-						changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-					}
-
-					// if there is selected currency, mark it as selected
-					if (hasCurrencySelected()) {
-						changeDropdownLabel(App.whoAmI.selectedCurrency.name);
-					}
-
 					App.updateAllCosts();
 				});
+
+		// initialize dropdown values with user values if any
+		if (App.whoAmI.name) {
+			d3.select('.country-dropdown.dropdown > button').text(App.whoAmI.name);
+		}
+		if (App.whoAmI.currency_iso) {
+			const currencyObj = App.currencies[App.whoAmI.currency_iso];
+			changeDropdownLabel(currencyObj.name);
+		}
 
 		// next button takes user to population page
 		$('.next-button').click(() => {

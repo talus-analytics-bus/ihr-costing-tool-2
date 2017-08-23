@@ -363,7 +363,7 @@ const App = {};
 		//plugins: ['follower'],
 		contentAsHTML: true,
 		trigger: 'hover',
-		anchor: 'top-center',
+		//anchor: 'top-center',
 		offset: [5, -25],
 		theme: 'tooltipster-shadow',
 		maxWidth: 320,

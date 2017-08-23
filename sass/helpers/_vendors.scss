@@ -1,5 +1,16 @@
-.dataTables_filter input {
-	width: 250px !important;
+/* --- Custom Dropdowns --- */
+.dropdown-item {
+	cursor: pointer;
+	@include noselect;
+	&:active {
+		background-color: lightsteelblue;
+	}
+}
+
+
+/* --- Tooltipster --- */
+.tooltipster-sidetip.tooltipster-shadow.tooltipster-top .tooltipster-box {
+	margin-bottom: 0;
 }
 
 
@@ -23,9 +34,7 @@
 
 
 /* --- Bootstrap Buttons --- */
-.btn {
-	cursor: pointer;
-}
+.btn { cursor: pointer; }
 .btn-primary {
 	@include gradient(#4a8bc3, #3071a9);
 	border-color: darken(#7c81b8, 8%);
@@ -46,101 +55,10 @@
 		color: #333;
 	}
 	&.active {
-		box-shadow: inset 0 4px 6px rgba(0,0,0,.125);
+		@include box-shadow(inset 0 4px 6px rgba(0,0,0,.125));
 	}
 }
 
-/* Material Icons support */
-.material-icons {
-	font-family: 'Material Icons';
-	font-weight: normal;
-	font-style: normal;
-	font-size: 24px;  /* Preferred icon size */
-	display: inline-block;
-	line-height: 1;
-	text-transform: none;
-	letter-spacing: normal;
-	word-wrap: normal;
-	white-space: nowrap;
-	direction: ltr;
-
-	/* Support for all WebKit browsers. */
-	-webkit-font-smoothing: antialiased;
-	/* Support for Safari and Chrome. */
-	text-rendering: optimizeLegibility;
-
-	/* Support for Firefox. */
-	-moz-osx-font-smoothing: grayscale;
-
-	/* Support for IE. */
-	font-feature-settings: 'liga';
-}
-
-
-
-/* ------------------------ Multiselect ------------------------ */
-.btn b.caret { margin-left: 3px; }
-.multiselect-container label { @include noselect; }
-
-/* ------------------------ Bootstrap Slider ------------------------ */
-.slider-tick.round { display: none; }
-.slider-handle { z-index: 10; }
-.slider-tick-container {
-	position: absolute;
-	width: 100%;
-	left: -3px;
-	z-index: 9;
-}
-.slider-tick-vert {
-	position: absolute;
-	width: 2px;
-	height: 5px;
-	top: 10px;
-	background-color: #999;
-}
-.slider-tick-label-container { margin-left: -22.5px !important; }
-.slider-tick-label { font-size: 0.85em; }
-.slider-img {
-	width: 20px;
-	height: 20px;
-}
-
-/* ------------------------ Noty ------------------------ */
+/* --- Noty --- */
 .noty_message { padding: 15px !important; }
 .noty_text { font-size: 1.1em; }
-
-/* ------------------------ Tooltipster ------------------------ */
-.tooltipster-default {
-	background-color: #fdfdfd;
-	border: none;
-	//border: 2px solid #999;
-	//@include box-shadow(1px 1px 3px rgba(0,0,0,0.3));
-
-	.tooltipster-content {
-		text-align: left;
-		color: #2c2c2c;
-	}
-}
-.tooltipster-shadow .tooltipster-content {
-	text-align: left;
-	padding: 5px 10px;
-	color: #666;
-}
-.tooltipster-title {
-	text-align: center;
-	font-size: 1.1em;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-/*
-.tooltipster-box {
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.1);
-	@include gradient(#f3f3f3, #fff);
-}*/
-.tooltipster-sidetip .tooltipster-box {
-	background: white;
-	border: 2px solid #ccc;
-	border-radius: 4px;
-}

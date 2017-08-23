@@ -7,11 +7,6 @@
 		const indicator = App.getIndicator(indId);
 		const actions = App.getNeededActions(indicator);
 
-		const moneyFormat = (num) => {
-			if (num < 100) return d3.format('$')(Math.round(num));
-			return d3.format('$,.3r')(num);
-		}
-
 		$('.go-to-results-button').click(() => hasher.setHash('results'));
 
 
@@ -56,21 +51,19 @@
 
 			// add indicator score
 			const scoreContainer = indSlots.append('div')
-				.attr('class', 'indicator-score');
-			scoreContainer.append('span')
-				.attr('class', 'score-none')
-				.style('display', d => User.getIndicatorScore(d.id) ? 'none' : 'inline')
-				.html('<i>No Score</i>');
-			for (let i = 1; i <= 5; i++) {
-				scoreContainer.append('img')
-					.attr('class', `rp-score`)
-					.attr('src', `img/rp-${i}.png`)
-					.attr('alt', i)
-					.attr('score', i)
-					.style('display', (d) => {
-						return +User.getIndicatorScore(d.id) === i ? 'inline' : 'none';
-					});
-			}
+				.attr('class', 'indicator-score')
+				.html((d) => {
+					const score = User.getIndicatorScore(d.id);
+					if (!score) return '<i>No Score</i>';
+
+					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
+					let scoreStr = `<img class="rp-score" src="img/rp-${score}.png" alt=${score} />`;
+					if (targetScore > score && score < 5) {
+						scoreStr += '<span> to </span>' +
+							`<img class="rp-score" src="img/rp-${targetScore}.png" alt=${targetScore} />`;
+					}
+					return scoreStr;
+				});
 
 			// add cost for each indicator
 			indSlots.append('div').attr('class', 'indicator-cost');
@@ -99,22 +92,22 @@
 						if (indicator.score) {
 							if (User.targetScoreType === 'step') {
 								return `<img class="rp-score" src="img/rp-${indicator.score}.png" />` +
-									' to ' +
+									'<span>to</span>' +
 									`<img class="rp-score" src="img/rp-${indicator.score + 1}.png" />`;
 							} else if (User.targetScoreType === 'target') {
 								let lowestScore = d.score_step_to[0] - 1;
 								if (indicator.score > lowestScore) lowestScore = indicator.score;
 								let highestScore = d.score_step_to[d.score_step_to.length - 1];
 								if (User.targetScore < highestScore) highestScore = User.targetScore;
-								return `<img class="rp-score" src="img/rp-$lowestScore}.png" />` +
-									' to ' +
+								return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
+									'<span>to</span>' +
 									`<img class="rp-score" src="img/rp-${highestScore}.png" />`;
 							}
 						} else {
 							const lowestScore = d.score_step_to[0] - 1;
 							const highestScore = d.score_step_to[d.score_step_to.length - 1];
 							return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
-								' to ' +
+								'<span>to</span>' +
 								`<img class="rp-score" src="img/rp-${highestScore}.png" />`;							
 						}
 						return '';
@@ -151,7 +144,7 @@
 			costInputContainer.append('input').attr('class', 'startup-cost-input form-control');
 			costInputContainer.append('span').text(`${App.whoAmI.currency_iso} +`);
 			costInputContainer.append('input').attr('class', 'recurring-cost-input form-control');
-			costInputContainer.append('span').text(App.whoAmI.currency_iso);
+			costInputContainer.append('span').text(`${App.whoAmI.currency_iso}/yr`);
 
 			newItems.append('div')
 				.attr('class', 'item-select-button')
@@ -270,12 +263,12 @@
 						.data(d.line_items)
 						.enter().append('tr');
 					sRows.append('td').text(li => li.name);
-					sRows.append('td').text(li => moneyFormat(li.cost));
+					sRows.append('td').text(li => App.moneyFormat(li.cost));
 
 					// add total cost
 					const sTotalRow = sTable.append('tr');
 					sTotalRow.append('td').text('Total');
-					sTotalRow.append('td').text(moneyFormat(d[ind]));
+					sTotalRow.append('td').text(App.moneyFormat(d[ind]));
 				}
 
 				// add startup cost table, if any startup costs
