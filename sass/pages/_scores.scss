@@ -35,37 +35,53 @@
 }
 .score-row {
 	cursor: pointer;
-	transition: background-color .5s ease;
 	vertical-align: top;
 
 	&.active { font-weight: 600; }
-	&:first-child td:last-child {
-		background-color: $jeeRed;
-	}
-	&:nth-child(2) td:last-child,
-	&:nth-child(3) td:last-child {
-		background-color: $jeeYellow;
-	}
-	&:nth-child(4) td:last-child,
-	&:nth-child(5) td:last-child {
-		background-color: $jeeGreen;
-	}
-
 	&:first-child.active,
 	&:first-child:hover {
-		background-color: rgba($jeeRed, 0.3);
+		@include gradient(rgba($jeeRed, 0.1), rgba($jeeRed, 0.4));
 	}
 	&:nth-child(2).active,
 	&:nth-child(2):hover,
 	&:nth-child(3).active,
 	&:nth-child(3):hover{
-		background-color: rgba($jeeYellow, 0.3);
+		@include gradient(rgba($jeeYellow, 0.2), rgba($jeeYellow, 0.6));
 	}
 	&:nth-child(4).active,
 	&:nth-child(4):hover,
 	&:nth-child(5).active,
 	&:nth-child(5):hover {
-		background-color: rgba($jeeGreen, 0.5);
+		@include gradient(rgba($jeeGreen, 0.2), rgba($jeeGreen, 0.8));
+	}
+
+	&:first-child td:last-child {
+		background-color: rgba($jeeRed, 0.9);
+	}
+	&:nth-child(2) td:last-child,
+	&:nth-child(3) td:last-child {
+		background-color: rgba($jeeYellow, 0.9);
+	}
+	&:nth-child(4) td:last-child,
+	&:nth-child(5) td:last-child {
+		background-color: rgba($jeeGreen, 0.9);
+	}
+
+	&:first-child:hover td:last-child,
+	&:first-child.active td:last-child {
+		background-color: $jeeRed;
+	}
+	&:nth-child(2):hover td:last-child,
+	&:nth-child(2).active td:last-child,
+	&:nth-child(3):hover td:last-child,
+	&:nth-child(3).active td:last-child {
+		background-color: $jeeYellow;
+	}
+	&:nth-child(4):hover td:last-child,
+	&:nth-child(4).active td:last-child,
+	&:nth-child(5):hover td:last-child,
+	&:nth-child(5).active td:last-child {
+		background-color: $jeeGreen;
 	}
 
 	td:first-child input {
