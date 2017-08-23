@@ -213,23 +213,28 @@
 	const initCountryDetailsTab = () => {
 		const geoDivisions = [
 			{
-				name: 'central_area_count',
+				nameAttr: 'central_area_name',
+				valueAttr: 'central_area_count',
 				description: 'Primary geographical division of the country',
-				values: ['Country', 'State', 'Province'],
+				nameValues: ['Country', 'State', 'Province'],
 			}, {
-				name: 'intermediate_1_area_count',
+				nameAttr: 'intermediate_1_area_name',
+				valueAttr: 'intermediate_1_area_count',
 				description: 'Secondary geographical division of the country',
-				values: ['Province', 'Municipality', 'District', 'State'],
+				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
-				name: 'intermediate_2_area_count',
+				nameAttr: 'intermediate_2_area_name',
+				valueAttr: 'intermediate_2_area_count',
 				description: 'Tertiary geographical division of the country',
-				values: ['Province', 'Municipality', 'District', 'State'],
+				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
-				name: 'local_area_count',
+				nameAttr: 'local_area_name',
+				valueAttr: 'local_area_count',
 				description: 'Local geographical division of the country',
-				values: ['Barangay', 'County', 'District', 'City'],
+				nameValues: ['Barangay', 'County', 'District', 'City'],
 			}
 		];
+		const emptyOptionText = '-- select one --';
 
 		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
 			.data(geoDivisions)
@@ -238,13 +243,21 @@
 		geoRows.append('td').append('select')
 			.attr('class', 'form-control')
 			.each(function(d) {
-				Util.populateSelect(this, d.values);
+				const nameValues = [emptyOptionText].concat(d.nameValues);
+				Util.populateSelect(this, nameValues);
+
+				const currNameVal = App.whoAmI[d.nameAttr];
+				if (currNameVal) $(this).val(currNameVal);
+			})
+			.on('change', function(d) {
+				const val = $(this).val();
+				App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : val;
 			});
 		geoRows.append('td').append('input')
 			.attr('class', 'form-control')
-			.attr('value', d => Util.comma(App.whoAmI.multipliers[d.name]))
+			.attr('value', d => Util.comma(App.whoAmI.multipliers[d.valueAttr]))
 			.on('change', function(d) {
-				App.whoAmI.multipliers[d.name] = Util.getInputNumVal(this);
+				App.whoAmI.multipliers[d.valueAttr] = Util.getInputNumVal(this);
 				App.updateAllCosts();
 			});
 
