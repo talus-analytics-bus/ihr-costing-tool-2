@@ -66,6 +66,18 @@ const App = {};
 	}
 
 
+	/* ------------------ Formatting Functions ------------------- */
+	App.numberFormat = (num) => {
+		if (num <= 100) return Math.round(num);
+		if (num <= 1e6) return d3.format(',.3r')(num);
+		return d3.format(',.3s')(num);
+	}
+
+	App.moneyFormat = (num) => {
+		return `${App.numberFormat(num)} ${App.whoAmI.currency_iso}`;
+	}
+
+
 	/* ------------------ jeeTree Getter Functions ------------------- */
 	App.normalCcIds = ['p', 'd', 'r'];
 
@@ -368,11 +380,6 @@ const App = {};
 		const numbers = input.match(/\d+/);
 		if (!numbers) return 1;
 		return numbers[0];
-	}
-
-	App.moneyFormat = (num) => {
-		if (num < 100) return `${Math.round(num)} ${App.whoAmI.currency_iso}`;
-		return `${d3.format(',.3r')(num)} ${App.whoAmI.currency_iso}`;
 	}
 
 

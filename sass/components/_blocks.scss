@@ -12,13 +12,14 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  @include border-left-radius(20px);
-  @include gradient(white, #f0f0f0);
+  @include border-left-radius(15px);
+  @include gradient(white, #e6e6e6);
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
 
   &.active {
     @include gradient(white, $light-blue);
+    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
   }
   .chevron {
     top: 3px;
@@ -39,7 +40,7 @@
   color: black;
   cursor: pointer;
   @include border-left-radius(15px);
-  @include gradient(white, #f0f0f0);
+  @include gradient(white, #e6e6e6);
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
   
@@ -61,6 +62,7 @@
     border-right: none;
     font-weight: bold;
     @include gradient(white, $light-blue);
+    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
   }
 }
 .block-score-bar {
@@ -80,10 +82,10 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  @include border-left-radius(25px);
+  @include border-left-radius(15px);
   background-color: transparent;
   &:hover {
-    @include hori-gradient(rgba(0,0,0,0.04), transparent);
+    @include hori-gradient(rgba(0,0,0,0.1), transparent);
   }
 }
 .block-link-title {

@@ -70,8 +70,6 @@
 
 		// build the score picker table
 		function buildScorePickerTable() {
-			const ind = App.getIndicator(indId);
-
 			const scoreRows = d3.select('.score-picker-table tbody').selectAll('tr')
 				.data(d3.range(1, 6))
 				.enter().append('tr')
@@ -92,6 +90,17 @@
 
 						// save user score
 						User.setIndicatorScore(indId, d);
+
+						// update color bar in tab navigation
+						const avgScore = d3.mean(capacity.indicators, ind => ind.score);
+						d3.select('.block-score-bar.active').attr('color', (d) => {
+							if (avgScore) {
+								if (avgScore < 2) return 'red';
+								if (avgScore < 4) return 'yellow';
+								return 'green';
+							}
+							return 'none';
+						});
 
 						// update score for active indicator
 						const scoreContainer = d3.select('.indicator-slot.active .indicator-score');
@@ -115,7 +124,7 @@
 
 			scoreRows.append('td')
 				.attr('class', 'score-description-cell')
-				.text(d => ind.score_descriptions[d]);
+				.text(d => indicator.score_descriptions[d]);
 			scoreRows.append('td');
 		};
 		
