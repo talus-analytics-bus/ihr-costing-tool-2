@@ -9,7 +9,9 @@
 
 		/* --------------- Input Block Overview and Links -------------- */		
 		function buildContent() {
-			App.buildTabNavigation('.block-link-container', capId);
+			App.buildTabNavigation('.block-link-container', capId, {
+				includeScoreBars: true,
+			});
 			buildCapacityDescription();
 			buildIndicatorContent();
 			buildScorePickerTable();

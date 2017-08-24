@@ -41,9 +41,6 @@
 		white-space: nowrap;
 		align-self: flex-start;
 	}
-	.indicator-name {
-
-	}
 	.indicator-score {
 		margin-left: auto;
 		white-space: nowrap;
@@ -89,7 +86,7 @@
 	position: relative;
 	margin-left: 60px;
 	border: $border;
-	padding: 15px 15px 25px;
+	padding: 20px 15px 25px;
 	overflow-x: auto;
 	white-space: nowrap;
 	background-color: #ccc;

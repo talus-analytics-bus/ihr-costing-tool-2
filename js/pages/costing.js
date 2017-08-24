@@ -95,7 +95,7 @@
 			let items = actionSlotContainers.append('div')
 				.attr('class', 'item-block-container')
 				.selectAll('.item-block')
-					.data(d => d.inputs);  // needs to be only the approriate inputs
+					.data(d => App.getNeededInputs(d.inputs, indicator.score));
 			items.exit().remove();
 
 			// add HTML structure to each new item

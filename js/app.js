@@ -187,12 +187,14 @@ const App = {};
 	}
 
 	App.getNeededInputs = (inputs, score) => {
+		if (!score) return inputs;
 		return inputs.filter((input) => {
 			return App.getNeededLineItems(input.line_items, score).length;
 		})
 	}
 
 	App.getNeededLineItems = (lineItems, score) => {
+		if (!score) return lineItems;
 		if (User.targetScoreType === 'step') {
 			return lineItems.filter((li) => {
 				return li.score_step_to.includes(String(+score + 1));

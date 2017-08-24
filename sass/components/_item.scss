@@ -19,9 +19,6 @@
 	.item-startup-cost-container {
 		margin-top: 20px;
 	}
-	.item-recurring-cost-container {
-		margin-bottom: 80px;
-	}
 	.item-startup-cost-container,
 	.item-recurring-cost-container {
 		div:first-child {
@@ -44,10 +41,8 @@
 		text-align: right;
 	}
 	.item-footer {
-		position: absolute;
-		left: 0;
-		bottom: 15px;
-		width: 100%;
+		margin-top: 50px;
+		margin-bottom: 15px;
 		text-align: center;
 	}
 	.item-view-details-button {
@@ -59,8 +54,8 @@
 		@include noselect;
 		@include gradient(#fff, #f0f0f0);
 		@include box-shadow(1px 1px 3px rgba(0,0,0,0.05));
-		&:nth-child(n+2) {
-			margin-left: 10px;
+		&:hover {
+			@include gradient(#fff, #e0e0e0);
 		}
 	}
 }

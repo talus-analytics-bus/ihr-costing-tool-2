@@ -1,5 +1,5 @@
 (() => {
-	App.buildTabNavigation = (selector, capId) => {
+	App.buildTabNavigation = (selector, capId, param={}) => {
 		const ccId = capId.split('.')[0];
 
 		// add a container for each core capacity
@@ -51,6 +51,17 @@
 		blockLinks.append('div')
 			.attr('class', 'block-link-title')
 			.html(d => `${d.id.toUpperCase()} - ${d.name}`);
+		blockLinks.append('div')
+			.attr('class', 'block-score-bar')
+			.attr('color', (d) => {
+				const avgScore = d3.mean(d.indicators, d => d.score);
+				if (avgScore) {
+					if (avgScore < 2) return 'red';
+					if (avgScore < 4) return 'yellow';
+					return 'green';
+				}
+				return 'none';
+			});
 		blockLinks.append('div').attr('class', 'block-link-cover');
 	};
 })();
