@@ -28,6 +28,16 @@ const Util = {};
 		return selector.split('-').join('.');
 	};
 
+		// sorts an array of object by a given key
+	Util.sortByKey = (array, key, reverse) => {
+		array.sort((a, b) => {
+			if (a[key] < b[key]) return -1;
+			else if (a[key] > b[key]) return 1;
+			else return 0;
+		});
+		return reverse ? array.reverse() : array;
+	};
+
 	/*
 	*	truncateText
 	*	For the given string, truncate to specified number of

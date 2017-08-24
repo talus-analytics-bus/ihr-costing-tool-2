@@ -35,25 +35,16 @@
 		text-align: right;
 	}
 }
-.country-block {
-	.country-control-container {
-		margin-top: 20px;
-		width: 100%;
-	}
-	.row { margin-left: 0; }
-	.dropdown button {
-		min-width: 150px;
-	}
-	.country-label {
-		font-weight: 600;
-		margin-bottom: 3px;
-	}
-}
 .population-block {
 	.input-container { margin-top: 10px; }
 	.population-input {
 		width: 140px;
 		margin-right: 5px;
+	}
+	.currency-section {
+		margin-top: 30px;
+		border-top: $light-border;
+		padding-top: 20px;
 	}
 }
 .country-details-block {

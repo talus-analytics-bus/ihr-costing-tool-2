@@ -118,12 +118,39 @@
 			<p>The IHR Costing Tool provides cost estimates to support practical planning for sustainable capacity development to prevent, detect, and respond to public health threats, as defined by the International Health Regulations (IHR).</p>
 			<p>This tool provides a framework to calculate costs for implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost calculations developed using best practices for achieving the technical standards specified in the Joint External Evaluation Tool (JEE).</p>
 			</div>
-
 			<div class="btn-col col-sm-12 center">
 				<button type="button" class="btn btn-primary enter-site">Enter</button>
 			</div>
 		</div>
 	</script>
+
+	<script id="country-template" type="text/x-handlebars-template">
+		<div class="country-container container">
+			<h1>Enter Country</h1>
+			<div class="map-container">
+				<div id="leaflet-map"></div>
+			</div>
+			<div class="country-control-container row">
+				<div class="col-6">
+					<div class="country-label country-country-label">Choose country:</div>
+					<div class="country-dropdown-container">
+						<div class="country-dropdown dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Choose country
+							</button>
+							<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="country-label">Search for country:</div>
+					<input class="form-control" />
+				</div>
+			</div>
+		</div>
+	</script>
+
 
 	<!-- Overview/Assessment Instructions page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
@@ -242,35 +269,18 @@
 			<!-- TODO add tabs (block links) -->
 			<div class="block-link-container block-link-costing"></div>
 			<div class="block-container input-block-container">
-				<div class="block country-block no-reset">
+				<div class="block currency-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title"><h1>Select Your Country and Currency</h1></span>
 					</div>
-					<div class="map-container">
-						<div id="leaflet-map" style="width: 800px; height: 400px"></div>
-					</div>
-					<div class="country-control-container row">
-						<div class="country-control-box col-6">
-							<div class="country-label country-country-labael">Choose country:</div>
-							<div class="country-dropdown-container">
-								<div class="country-dropdown dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Choose country
-									</button>
-									<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="country-control-box col-6">
-							<div class="country-label country-currency-label">Default currency:</div>
-							<div class="currency">
-								<div class="currency-container dropdown">
-									<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Choose currency
-									</button>
-									<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
-									</div>
+					<div class="country-control-box">
+						<div class="country-label country-currency-label">Default currency:</div>
+						<div class="currency">
+							<div class="currency-container dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Choose currency
+								</button>
+								<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
 								</div>
 							</div>
 						</div>
@@ -286,17 +296,29 @@
 						<span class="block-title-title">Population of the Country</span>
 					</div>
 					<div class="block-content">
-						<div class="block-description">
-							Default estimated total population for the selected country.
-							To edit the estimate, change the population below.
-						</div>
-						<div class="estimated-population">
-							<div><b>Estimated total population of the country:</b></div>
-							<div class="input-container">
-								<input id="population" class="population-input form-control" />
-								<span> people</span>
+						<div class="population-section">
+							<div class="block-description">
+								Default estimated total population for the selected country.
+								To edit the estimate, change the population below.
 							</div>
-							<div class="default-pop-text default-text"></div>
+							<div class="estimated-population">
+								<div><b>Estimated total population of the country:</b></div>
+								<div class="input-container">
+									<input id="population" class="population-input form-control" />
+									<span> people</span>
+								</div>
+								<div class="default-pop-text default-text"></div>
+							</div>
+						</div>
+						<div class="currency-section">
+							<div class="block-description">
+								The currency to use for costing.
+								To edit the currency, select a different one below.
+							</div>
+							<div>
+								<div><b>Currency:</b></div>
+								<select class="currency-select form-control"></select>
+							</div>
 						</div>
 					</div>
 					<div class="next-button-container">
@@ -566,6 +588,7 @@
 <script src="js/pages/contact.js"></script>
 <script src="js/pages/costing.js"></script>
 <script src="js/pages/costsInstructions.js"></script>
+<script src="js/pages/country.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
 <script src="js/pages/results.js"></script>

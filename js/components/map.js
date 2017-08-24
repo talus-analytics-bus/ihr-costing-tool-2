@@ -9,7 +9,7 @@
 			divId: 'leaflet-map',
 			view: {
 				coordinates: [20, 0],
-				zoom: 1.6,
+				zoom: 2,
 			},
 			url: 'https://api.mapbox.com/styles/v1/jpecht/cj6qlfi5m3lg62rmz8svshi43/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlY2h0IiwiYSI6ImNpdHhlMTc5NzAwczEydHFtbnZnankzNmEifQ.79pr8-kMwzRaEzUhvvgzsw',
 			options: {

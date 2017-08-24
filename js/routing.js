@@ -18,6 +18,11 @@ const Routing = {};
 			loadPage('home', App.initHome);
 			window.scrollTo(0, 0);
 		});
+		crossroads.addRoute('/country', () => {
+			loadPage('country', App.initCountry);
+			window.scrollTo(0, 0);
+		});
+
 		crossroads.addRoute('/overview', () => {
 			loadPage('overview', App.initOverview);
 			window.scrollTo(0, 0);
@@ -49,20 +54,13 @@ const Routing = {};
 		});
 
 		crossroads.addRoute('/costs', () => {
-			hasher.setHash('costs/country');
+			hasher.setHash('costs/population');
 		});
 		crossroads.addRoute('/costs/:{whoTab}:', (whoTab) => {
 			loadPage('who', App.initWho, whoTab);
 			window.scrollTo(0, 0);
 		});
 		crossroads.addRoute('/costs/:{ccId}:/:{indId}:', (ccId, indId) => {
-			// user must have set country before proceeding to costing
-			if (!App.whoAmI.name) {
-				hasher.setHash('costs');
-				noty({ text: '<b>Select a country before proceeding!</b>' });
-				return;
-			}
-
 			if (!indId && ccId) {
 				indId = '1';
 				hasher.setHash(`costs/${ccId}/${indId}`);
@@ -76,11 +74,6 @@ const Routing = {};
 		});
 
 		crossroads.addRoute('/results', () => {
-			if (!App.whoAmI.name) {
-				hasher.setHash('costs');
-				noty({ text: '<b>Select a country before proceeding!</b>' });
-				return;
-			}
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);
 		});
@@ -103,6 +96,14 @@ const Routing = {};
 	};
 
 	function loadPage(pageName, func, ...data) {
+		// user must have set country before proceeding to costing
+		if (pageName !== '' && !App.whoAmI.name) {
+			hasher.setHash('country');
+			noty({ text: '<b>Select a country before proceeding!</b>' });
+			return;
+		}
+
+		// load the HTML, set the navbar, call the callback
 		loadTemplate(pageName);
 		setNavigationBar(pageName, ...data);
 		if (func) func(...data);
