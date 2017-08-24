@@ -29,7 +29,9 @@
 }
 .score-improvement-text {
 	float: left;
-
+}
+.score-improvement-text,
+.explorer-si-content {
 	div, span { vertical-align: middle; }
 	.score-improvement-title {
 		font-weight: 600;
@@ -46,7 +48,7 @@
 	margin-top: 20px;
 }
 .chart-tab-container {
-	margin-top: 30px;
+	margin-top: 20px;
 	text-align: center;
 }
 .chart-content {
@@ -55,50 +57,64 @@
 }
 
 /* --- Cost Explorer --- */
-.explorer-filters {
+.explorer-instructions {
+	margin-top: 10px;
+	margin-bottom: 30px;
+	font-style: italic;
+	text-align: center;
+}
+.explorer-list-container {
+	float: left;
+	width: 320px;
+}
+.explorer-content {
+	margin-left: 360px;
+	margin-top: 10px;
+}
+.explorer-list {
+	padding: 10px 15px;
 	border: $border;
+	@include border-radius(5px);
+	@include gradient(#fdfdfd, #f6f6f6);
 
-	.explorer-filter-header {
-		padding: 1px 20px;
-		background-color: #f0f0f0;
-		font-size: 0.95rem;
+	.explorer-list-title {
+		margin: 5px 0 10px;
+		font-size: 1.1em;
 		font-weight: 600;
-		cursor: pointer;
-	}
-	.explorer-filter-header span {
-		position: relative;
-		top: -3px;
-		left: -7px;
-	}
-	.chevron {
-		position: relative;
-		top: 2px;
-		left: -5px;
-	}
-	.explorer-filter-content {
-		display: none;
-		padding: 15px 20px 20px;
-		border-top: $border;
-		background-color: white;
-		.row { margin: 0; }
-	}
-	.explorer-filter-label {
-		font-weight: 600;
-		margin-bottom: 2px;
+		text-align: center;
 	}
 }
-.explorer-summary {
-	margin-top: 30px;
+.explorer-list-content {
+	.exp-row {
+		padding: 0 5px;
+		white-space: nowrap;
+		cursor: pointer;
+		&:hover { background-color: #e0e0e0; }
+	}
+	.exp-cap {
+		margin-left: 20px;
+		font-size: 0.9em;
+	}
+	.exp-ind {
+		margin-left: 40px;
+		font-size: 0.9em;
+	}
+	input {
+		position: relative;
+		top: 4px;
+		margin-right: 5px;
+		vertical-align: top;
+	}
+	.exp-list-label {
+		display: inline-block;
+		white-space: normal;
+	}
+}
+.exp-cc input { top: 5px; }
+.explorer-si-content {
+	padding: 20px 0 0;
+	border-top: $light-border;
 	text-align: center;
-
-	span {
-		font-family: 'Raleway', sans-serif;
-		font-size: 1.4em;
-		font-weight: 600;
-	}
-	.summary-score-improvement {
-		color: green;
-	}
 }
 .explorer-cost-summary {
 	margin-top: 20px;
@@ -106,15 +122,23 @@
 
 	.explorer-cost-value {
 		font-family: 'Raleway', sans-serif;
-		font-size: 2.2em;
+		font-size: 2em;
 		font-weight: 600;
 	}
-	.explorer-cost-text {
-		margin-top: 5px;
-	}
 }
-.explorer-cost-chart-container {
+.explorer-startup-section,
+.explorer-recurring-section {
 	margin-top: 20px;
+	border-top: $light-border;
+	padding-top: 5px;
+}
+.explorer-cost-chart {
+	margin-top: 20px;
+	width: 100%;
+	text-align: center;
+}
+.explorer-recurring-cost-chart .bar {
+	fill: lightsteelblue;
 }
 
 
