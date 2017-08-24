@@ -110,15 +110,17 @@
 			const newItems = items.enter().append('div')
 				.attr('class', 'item-block');
 			newItems.append('div').attr('class', 'item-title');
-			const costInputContainer = newItems.append('div').attr('class', 'item-cost-input-container');
-			costInputContainer.append('input').attr('class', 'startup-cost-input form-control');
-			costInputContainer.append('span').text(`${App.whoAmI.currency_iso} +`);
-			costInputContainer.append('input').attr('class', 'recurring-cost-input form-control');
-			costInputContainer.append('span').text(`${App.whoAmI.currency_iso}/yr`);
+			
+			const startupContainer = newItems.append('div').attr('class', 'item-startup-cost-container');
+			startupContainer.append('div').text('Startup Cost: ');
+			startupContainer.append('input').attr('class', 'startup-cost-input form-control');
+			startupContainer.append('div').text(App.whoAmI.currency_iso);
+			
+			const recurringContainer = newItems.append('div').attr('class', 'item-recurring-cost-container');
+			recurringContainer.append('div').text('Recurring Cost: ');
+			recurringContainer.append('input').attr('class', 'recurring-cost-input form-control');
+			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
 
-			newItems.append('div')
-				.attr('class', 'item-select-button')
-				.text('Selected');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
@@ -147,17 +149,6 @@
 					d.isCustomCost = true;
 					d.customRecurringCost = Util.getInputNumVal(this);
 					if (!d.customStartupCost) d.customStartupCost = d.startupCost + d.capitalCost;
-				});
-			items.select('.item-select-button')
-				.classed('selected', d => d.selected)
-				.on('click', function(d) {
-					// user toggles an item
-					d.selected = !d.selected;
-					d3.select(this)
-						.classed('selected', d.selected)
-						.text(d.selected ? 'Selected': 'Select');
-
-					App.updateAllCosts();
 				});
 
 			// clicking "view details" show a list of line items
