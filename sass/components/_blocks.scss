@@ -18,7 +18,7 @@
   @include noselect;
 
   &.active {
-    @include gradient(white, $lightest-blue);
+    @include gradient(white, $light-blue);
   }
   .chevron {
     top: 3px;
@@ -61,7 +61,7 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include gradient(white, $lightest-blue);
+    @include gradient(white, $light-blue);
   }
 }
 .block-link-cover {

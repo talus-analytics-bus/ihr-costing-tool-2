@@ -12,12 +12,13 @@
 }
 .indicator-slot { 
 	border: $border;
-	padding: 8px 20px 8px 15px;
+	padding: 8px 15px 8px;
+	height: 40px;
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	@include gradient(#fff, #f0f0f0);
+	@include gradient(#fff, #d9d9d9);
 
 	&:nth-child(n+2) { border-top: none; }
 	&.empty { color: #555; }
@@ -25,7 +26,8 @@
 	&.active {
 		font-weight: 600;
 		color: #000;
-		@include gradient(#fff, $lightest-blue);
+		@include box-shadow(inset 2px 2px 4px rgba(0,0,0,0.3));
+		@include gradient(#fff, $light-blue);
 	}
 	.chevron {
 		position: relative;
@@ -47,27 +49,26 @@
 	width: 600px;
 	margin-left: 30px;
 	border: $border;
-	padding: 4px 20px;
+	padding: 5px 20px;
 	color: #444;
 	font-size: 0.9em;
 	cursor: pointer;
-	@include gradient(#fff, #f0f0f0);
+	@include box-shadow(1px 0px 2px rgba(0,0,0,0.1));
+	@include gradient(#fff, #d9d9d9);
 
 	&:hover { color: #000; }
 	&.active {
 	 	color: #000;
+		font-weight: 600;
+		@include box-shadow(inset 1px 1px 5px rgba(0,0,0,0.5));
 		@include gradient(#fff, $light-blue);
-		.action-name,
-		.action-cost {
-			font-weight: 600;
-		}
 	}
 	&:nth-child(n+2) {
 		border-top: none;
 	}
 	input {
 		position: relative;
-		top: 1px;
+		top: 2px;
 		margin-right: 10px;
 	}
 	.action-name {

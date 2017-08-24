@@ -10,7 +10,7 @@
 	vertical-align: top;
 	white-space: normal;
 	@include gradient(#f0f0f0, #fff);
-	@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
+	@include box-shadow(3px 3px 6px rgba(0,0,0,0.3));
 
 	.item-title {
 		font-family: 'Raleway', sans-serif;
