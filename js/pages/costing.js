@@ -15,7 +15,6 @@
 			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 			buildIndicatorContent();
-			setupActionContent();
 			if (actions.length) showAction(actions[0]);
 			attachNextButtonBehavior();
 		}
@@ -33,15 +32,24 @@
 			updateIndicatorProgress();
 
 			// add indicators to slots
-			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
+			const indSlotContainers = d3.select('.indicator-container').selectAll('.indicator-slot-container')
 				.data(capacity.indicators)
 				.enter().append('div')
-					.attr('class', 'indicator-slot')
-					.classed('active', d => d.id === indId)
-					.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
-					.on('click', (d, i) => {
-						hasher.setHash(`costs/${capClass}/${i+1}`);
-					});
+					.attr('class', 'indicator-slot-container');
+			const indSlots = indSlotContainers.append('div')
+				.attr('class', 'indicator-slot')
+				.classed('active', d => d.id === indId)
+				.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+				.on('click', (d, i) => {
+					hasher.setHash(`costs/${capClass}/${i+1}`);
+				});
+
+			// add arrow
+			const chevron = indSlots.append('svg')
+				.attr('class', 'chevron')
+				.classed('active', d => d.id === indId)
+				.attr('viewBox', '0 0 24 24');
+			chevron.append('path').attr('d', 'M8 5v14l11-7z');
 
 			// add indicator name
 			indSlots.append('div')
@@ -66,32 +74,28 @@
 
 			// add description
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
-		}
 
-		// set up list of actions for user to choose from
-		function setupActionContent() {
-			if (actions.length) {
-				// add every action for the indicator
-				const headers = d3.select('.action-header-content').selectAll('.action-header')
-					.data(actions)
-					.enter().append('div')
-						.attr('class', 'action-header')
-						.on('click', (d) => {
-							showAction(d);
-						});
-				headers.append('div')
-					.attr('class', 'action-name')
-					.text(d => d.name);
-			} else {
-				$('.action-header-content, .item-block-container').hide();
-				$('.action-header-empty-content').show();
-			}
+			// add actions under each indicator
+			const actionSlots = indSlotContainers.filter(d => d.id === indId).selectAll('.action-slot')
+				.data(actions)
+				.enter().append('div')
+					.attr('class', 'action-slot')
+					.on('click', d => showAction(d));
+			actionSlots.append('input').attr('type', 'radio');
+			actionSlots.append('div')
+				.attr('class', 'action-name')
+				.text(d => `${d.id.toUpperCase()} - ${d.name}`);
 		}
 
 		function showAction(action) {
 			// make this header active
-			d3.selectAll('.action-header')
-				.classed('active', d => d.id === action.id);
+			d3.selectAll('.action-slot')
+				.classed('active', d => d.id === action.id)
+				.select('input')
+					.property('checked', d => d.id === action.id);
+
+			// update action description
+			$('.action-description').html(`${action.id.toUpperCase()} - ${action.name}`);
 
 			// show correct items for this action
 			showItemBlocks(action);

@@ -5,11 +5,14 @@
 	margin-top: 15px;
 	margin-left: 30px;
 }
+.indicator-slot-container {
+	&:nth-last-child(n+2) .action-slot:last-child {
+		border-bottom: none;
+	}
+}
 .indicator-slot { 
-	width: 700px;
-	height: 40px;
-	padding: 0 20px;
 	border: $border;
+	padding: 8px 20px 8px 15px;
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
@@ -24,7 +27,15 @@
 		color: #000;
 		@include gradient(#fff, $lightest-blue);
 	}
-	.indicator-name { width: 360px; }
+	.chevron {
+		position: relative;
+		top: 0px;
+		width: 18px;
+		height: 18px;
+	}
+	.indicator-score {
+		margin-left: auto;
+	}
 	.indicator-score span {
 		margin: 0 2px;
 	}
@@ -32,8 +43,34 @@
 		font-style: italic;
 	}
 }
-.indicator-description {
-	font-family: 'Open Sans', sans-serif;
+.action-slot {
+	width: 600px;
 	margin-left: 30px;
-	line-height: inherit;
+	border: $border;
+	padding: 4px 20px;
+	color: #444;
+	font-size: 0.9em;
+	cursor: pointer;
+	@include gradient(#fff, #f0f0f0);
+
+	&:hover { color: #000; }
+	&.active {
+	 	color: #000;
+		@include gradient(#fff, $light-blue);
+		.action-name,
+		.action-cost {
+			font-weight: 600;
+		}
+	}
+	&:nth-child(n+2) {
+		border-top: none;
+	}
+	input {
+		position: relative;
+		top: 1px;
+		margin-right: 10px;
+	}
+	.action-name {
+		display: inline-block;
+	}
 }
