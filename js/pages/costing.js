@@ -82,33 +82,6 @@
 				headers.append('div')
 					.attr('class', 'action-name')
 					.text(d => d.name);
-				headers.append('div')
-					.attr('class', 'action-scores')
-					.html((d) => {
-						if (indicator.score) {
-							if (User.targetScoreType === 'step') {
-								return `<img class="rp-score" src="img/rp-${indicator.score}.png" />` +
-									'<span>to</span>' +
-									`<img class="rp-score" src="img/rp-${indicator.score + 1}.png" />`;
-							} else if (User.targetScoreType === 'target') {
-								let lowestScore = d.score_step_to[0] - 1;
-								if (indicator.score > lowestScore) lowestScore = indicator.score;
-								let highestScore = d.score_step_to[d.score_step_to.length - 1];
-								if (User.targetScore < highestScore) highestScore = User.targetScore;
-								return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
-									'<span>to</span>' +
-									`<img class="rp-score" src="img/rp-${highestScore}.png" />`;
-							}
-						} else {
-							const lowestScore = d.score_step_to[0] - 1;
-							const highestScore = d.score_step_to[d.score_step_to.length - 1];
-							return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
-								'<span>to</span>' +
-								`<img class="rp-score" src="img/rp-${highestScore}.png" />`;							
-						}
-						return '';
-
-					});
 			} else {
 				$('.action-header-content, .item-block-container').hide();
 				$('.action-header-empty-content').show();

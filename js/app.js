@@ -175,30 +175,38 @@ const App = {};
 
 
 	/* ------------------ Scoring Functions ------------------- */
+	// get the actions that satisfy the user's target score
 	App.getNeededActions = (ind) => {
+		// if indicator is not scored, display all actions for the user to see
+		if (!ind.score) return ind.actions;
+
 		// find actions that match the target score
-		let actions = [];
-		if (ind.score) {
-			if (User.targetScoreType === 'step') {
-				actions = ind.actions.filter((action) => {
-					if (typeof action.score_step_to === 'number') return false;
-					return action.score_step_to.includes(String(ind.score + 1));
-				});
-			} else if (User.targetScoreType === 'target') {
-				const scoresToGetTo = d3.range(ind.score + 1, User.targetScore + 1);
-				actions = ind.actions.filter((action) => {
-					if (typeof action.score_step_to === 'number') return false;
-					for (let k = 0; k < action.score_step_to.length; k++) {
-						if (scoresToGetTo.includes(+action.score_step_to[k])) return true;
-					}
-					return false;
-				});
-			}
-		} else {
-			// if indicator is not scored, display all actions for the user to see
-			actions = ind.actions;
+		return ind.actions.filter((action) => {
+			return App.getNeededInputs(action.inputs, ind.score).length;
+		});
+	}
+
+	App.getNeededInputs = (inputs, score) => {
+		return inputs.filter((input) => {
+			return App.getNeededLineItems(input.line_items, score).length;
+		})
+	}
+
+	App.getNeededLineItems = (lineItems, score) => {
+		if (User.targetScoreType === 'step') {
+			return lineItems.filter((li) => {
+				return li.score_step_to.includes(String(+score + 1));
+			});
+		} else if (User.targetScoreType === 'target') {
+			const scoresToGetTo = d3.range(+score + 1, User.targetScore + 1);
+			return lineItems.filter((li) => {
+				for (let k = 0; k < li.score_step_to.length; k++) {
+					if (scoresToGetTo.includes(+li.score_step_to[k])) return true;
+				}
+				return false;
+			});
 		}
-		return actions;
+		return [];
 	}
 
 	// returns average score for a set of given indicators
