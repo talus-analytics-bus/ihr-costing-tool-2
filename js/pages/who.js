@@ -104,13 +104,7 @@
 		// set the map's active country to the dropdown selection
 		const countryDropdownToggle = (countryCode) => {
 			d3.selectAll(".country")
-				.classed('active', false);
-			d3.selectAll('.country')
-				.each(function(d){
-					if (d.properties.code === countryCode) {
-						d3.select(this).classed('active',true);
-					}
-				});
+				.classed('active', d => d.properties.code === countryCode);
 		};
 
 		// populate currency dropdown

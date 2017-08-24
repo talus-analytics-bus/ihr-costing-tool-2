@@ -53,8 +53,11 @@
 
 			// add indicator name
 			indSlots.append('div')
+				.attr('class', 'indicator-id')
+				.text(d => `${d.id.toUpperCase()} - `);
+			indSlots.append('div')
 				.attr('class', 'indicator-name')
-				.text(d => `${d.id.toUpperCase()} - ${Util.truncateText(d.name)}`);
+				.text(d => Util.truncateText(d.name));
 
 			// add indicator score
 			const scoreContainer = indSlots.append('div')
@@ -76,34 +79,23 @@
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
 
 			// add actions under each indicator
-			const actionSlots = indSlotContainers.filter(d => d.id === indId).selectAll('.action-slot')
+			const actionSlotContainers = indSlotContainers.filter(d => d.id === indId).selectAll('.action-slot')
 				.data(actions)
 				.enter().append('div')
-					.attr('class', 'action-slot')
-					.on('click', d => showAction(d));
+					.attr('class', 'action-slot-container');
+			const actionSlots = actionSlotContainers.append('div')
+				.attr('class', 'action-slot')
+				.on('click', d => showAction(d));
 			actionSlots.append('input').attr('type', 'radio');
 			actionSlots.append('div')
 				.attr('class', 'action-name')
 				.text(d => `${d.id.toUpperCase()} - ${d.name}`);
-		}
 
-		function showAction(action) {
-			// make this header active
-			d3.selectAll('.action-slot')
-				.classed('active', d => d.id === action.id)
-				.select('input')
-					.property('checked', d => d.id === action.id);
-
-			// update action description
-			$('.action-description').html(`${action.id.toUpperCase()} - ${action.name}`);
-
-			// show correct items for this action
-			showItemBlocks(action);
-		}
-
-		function showItemBlocks(action) {
-			let items = d3.select('.item-block-container').selectAll('.item-block')
-				.data(action.inputs);  // TODO needs to be line items for action
+			// build container to put the items
+			let items = actionSlotContainers.append('div')
+				.attr('class', 'item-block-container')
+				.selectAll('.item-block')
+					.data(d => d.inputs);  // needs to be only the approriate inputs
 			items.exit().remove();
 
 			// add HTML structure to each new item
@@ -202,6 +194,25 @@
 
 				$(this).tooltipster('content', contentContainer.html());
 			});
+		}
+
+		function showAction(action) {
+			// make the correct action slot active
+			d3.selectAll('.action-slot-container, .action-slot')
+				.classed('active', d => d.id === action.id)
+				.select('input')
+					.property('checked', d => d.id === action.id);
+
+			// show correct item container
+			$('.action-slot-container:not(.active) .item-block-container').slideUp();
+			$('.action-slot-container.active .item-block-container').slideDown();
+
+			// update descriptions
+			if (actions.length) {
+				$('.action-description').html(`${action.id.toUpperCase()} - ${action.name}`);
+			} else {
+				$('.action-description').html('<i>No actions need to be taken to increase the score for this indicator</i>');
+			}
 		}
 
 

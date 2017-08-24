@@ -13,7 +13,6 @@
 .indicator-slot { 
 	border: $border;
 	padding: 8px 15px 8px;
-	height: 40px;
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
@@ -26,17 +25,28 @@
 	&.active {
 		font-weight: 600;
 		color: #000;
-		@include box-shadow(inset 2px 2px 4px rgba(0,0,0,0.3));
+		@include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.2));
 		@include gradient(#fff, $light-blue);
 	}
 	.chevron {
 		position: relative;
-		top: 0px;
-		width: 18px;
-		height: 18px;
+		top: 3px;
+		width: 16px;
+		height: 16px;
+		margin-right: 10px;
+		align-self: flex-start;
+	}
+	.indicator-id {
+		margin-right: 2px;
+		white-space: nowrap;
+		align-self: flex-start;
+	}
+	.indicator-name {
+
 	}
 	.indicator-score {
 		margin-left: auto;
+		white-space: nowrap;
 	}
 	.indicator-score span {
 		margin: 0 2px;
@@ -46,10 +56,9 @@
 	}
 }
 .action-slot {
-	width: 600px;
 	margin-left: 30px;
 	border: $border;
-	padding: 5px 20px;
+	padding: 6px 20px;
 	color: #444;
 	font-size: 0.9em;
 	cursor: pointer;
@@ -60,7 +69,7 @@
 	&.active {
 	 	color: #000;
 		font-weight: 600;
-		@include box-shadow(inset 1px 1px 5px rgba(0,0,0,0.5));
+		@include box-shadow(inset 1px 1px 5px rgba(0,0,0,0.3));
 		@include gradient(#fff, $light-blue);
 	}
 	&:nth-child(n+2) {
@@ -74,4 +83,14 @@
 	.action-name {
 		display: inline-block;
 	}
+}
+.item-block-container {
+	display: none;
+	position: relative;
+	margin-left: 60px;
+	border: $border;
+	padding: 15px 15px 25px;
+	overflow-x: auto;
+	white-space: nowrap;
+	background-color: #ccc;
 }
