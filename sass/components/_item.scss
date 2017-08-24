@@ -5,7 +5,7 @@
 	padding: 15px;
 	border: $border;
 	text-align: center;
-	width: 320px;
+	width: 360px;
 	height: 100%;
 	vertical-align: top;
 	white-space: normal;
@@ -16,18 +16,7 @@
 		font-family: 'Raleway', sans-serif;
 		font-size: 1.2em;
 	}
-	.item-cost {
-		margin-top: 10px;
-		font-size: 1.6em;
-		font-weight: 600;
-	}
-	.item-default-cost {
-		margin-top: 5px;
-		font-size: 0.9em;
-		font-weight: 600;
-	}
 	.item-cost-input-container {
-		display: none;
 		margin-top: 10px;
 	}
 	.startup-cost-input,
@@ -61,8 +50,6 @@
 		width: 100%;
 		text-align: center;
 	}
-	.item-edit-cost-button,
-	.item-save-cost-button,
 	.item-view-details-button {
 		display: inline-block;
 		padding: 2px 15px;

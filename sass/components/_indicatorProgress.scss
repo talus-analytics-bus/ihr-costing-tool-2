@@ -22,13 +22,9 @@
 	&.active {
 		font-weight: 600;
 		color: #000;
-		@include gradient(#fff, $light-blue);
+		@include gradient(#fff, $lightest-blue);
 	}
 	.indicator-name { width: 360px; }
-	.indicator-cost {
-		width: 200px;
-		text-align: right;
-	}
 	.indicator-score span {
 		margin: 0 2px;
 	}

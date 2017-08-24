@@ -101,6 +101,17 @@
 		const changeDropdownLabel = (name) => {
 			d3.select('.currency-container > button').text(name);
 		}
+		// set the map's active country to the dropdown selection
+		const countryDropdownToggle = (countryCode) => {
+			d3.selectAll(".country")
+				.classed('active', false);
+			d3.selectAll('.country')
+				.each(function(d){
+					if (d.properties.code === countryCode) {
+						d3.select(this).classed('active',true);
+					}
+				});
+		};
 
 		// populate currency dropdown
 		const currenciesArray = Object.keys(App.currencies)
@@ -127,6 +138,7 @@
 					d3.select('.country-dropdown.dropdown > button').text(d.name);
 					countryDropdownToggle(d.abbreviation);
 					App.whoAmI = JSON.parse(JSON.stringify(d));
+					changeDropdownLabel(App.whoAmI.currency_iso);
 					App.updateAllCosts();
 				});
 
@@ -139,14 +151,7 @@
 			changeDropdownLabel(currencyObj.name);
 		}
 
-		// next button takes user to population page
-		$('.next-button').click(() => {
-			if (!App.whoAmI.name) {
-				noty({ text: '<b>Select a country before proceeding!</b>' });
-				return;
-			}
-			hasher.setHash('costs/population');
-		});
+		// proceed button takes user to population page
 		$('.proceed-button').click(() => {
 			if (!App.whoAmI.name) {
 				noty({ text: '<b>Select a country before proceeding!</b>' });
@@ -179,32 +184,25 @@
 			}
 		}
 
-		$('.previous-button').click(() => hasher.setHash('costs/country'));
-		$('.next-button').click(() => hasher.setHash('costs/country-details'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
 	const initCountryDetailsTab = () => {
 		const geoDivisions = [
 			{
-				nameAttr: 'central_area_name',
-				valueAttr: 'central_area_count',
-				description: 'Primary geographical division of the country',
-				nameValues: ['Country', 'State', 'Province'],
-			}, {
 				nameAttr: 'intermediate_1_area_name',
 				valueAttr: 'intermediate_1_area_count',
-				description: 'Secondary geographical division of the country',
+				description: 'Intermediate 1 area count',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
-				description: 'Tertiary geographical division of the country',
+				description: 'Intermediate 2 area count',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
-				description: 'Local geographical division of the country',
+				description: 'Local area count',
 				nameValues: ['Barangay', 'County', 'District', 'City'],
 			}
 		];
@@ -270,8 +268,6 @@
 		phInputCell.append('span').text(d => d.unit);
 
 		// previous and next buttons
-		$('.previous-button').click(() => hasher.setHash('costs/population'));
-		$('.next-button').click(() => hasher.setHash('costs/default-costs'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
@@ -344,23 +340,6 @@
 
 
 		// behavior for next button
-		$('.previous-button').click(() => hasher.setHash('costs/country-details'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
-
-
-	/*
-	*	countryDropdownToggle
-	*	Set the map's active country to the dropdown selection
-	*/
-	const countryDropdownToggle = (countryCode) => {
-		d3.selectAll(".country")
-			.classed('active', false);
-		d3.selectAll('.country')
-			.each(function(d){
-				if (d.properties.code === countryCode) {
-					d3.select(this).classed('active',true);
-				}
-			});
-	};
 })();

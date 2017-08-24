@@ -246,41 +246,37 @@
 					<div class="block-title">
 						<span class="block-title-title"><h1>Select Your Country and Currency</h1></span>
 					</div>
-					<div class="row">
-						<div class="country-control-container">
-							<div class="">
-								<div class="country-label country-country-labael">Choose country:</div>
-								<div class="country-dropdown-container">
-									<div class="country-dropdown dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Choose country
-										</button>
-										<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-										</div>
-									</div>
-								</div>
-								<div class="country-label country-currency-label">Default currency:</div>
-								<div class="currency">
-									<div class="currency-container dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Choose currency
-										</button>
-										<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
-										</div>
+					<div class="map-container">
+						<div id="leaflet-map" style="width: 800px; height: 400px"></div>
+					</div>
+					<div class="country-control-container row">
+						<div class="country-control-box col-6">
+							<div class="country-label country-country-labael">Choose country:</div>
+							<div class="country-dropdown-container">
+								<div class="country-dropdown dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Choose country
+									</button>
+									<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="map-container">
-							<div style="clear:both"></div>
-							<div id="leaflet-map" style="width: 600px; height: 400px"></div>
+						<div class="country-control-box col-6">
+							<div class="country-label country-currency-label">Default currency:</div>
+							<div class="currency">
+								<div class="currency-container dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Choose currency
+									</button>
+									<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
@@ -304,23 +300,19 @@
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
 				<!-- Geographical Divisions -->
 				<div class="block country-details-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Geographical Division of the Country</span>
+						<span class="block-title-title">Geographic Division</span>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Default geographical divisions of the country describes how the country is organized by area groupings.
-							<br>To edit the defaults, change the details below.
+							Describes how the country is organized by geographic area groupings.
+							To edit the defaults, change the details below.
 						</div>
 						<table class="geo-division-table">
 							<tbody></tbody>
@@ -343,11 +335,7 @@
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
@@ -367,7 +355,6 @@
 						<div class="dv-default-text default-text"></div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
 						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>

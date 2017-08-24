@@ -18,7 +18,7 @@ const App = {};
 		$('.nav-item').click(function() {
 			// dropdown lists do not have associated pages
 			const page = $(this).attr('page');
-			if (page) hasher.setHash(page);
+			if (typeof page !== 'undefined') hasher.setHash(page);
 		});
 
 		// add the hrefs to the dropdown menu items

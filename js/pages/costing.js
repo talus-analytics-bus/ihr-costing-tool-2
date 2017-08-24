@@ -17,7 +17,6 @@
 			buildIndicatorContent();
 			setupActionContent();
 			if (actions.length) showAction(actions[0]);
-			updateTotalCosts();
 			attachNextButtonBehavior();
 		}
 
@@ -65,9 +64,6 @@
 					return scoreStr;
 				});
 
-			// add cost for each indicator
-			indSlots.append('div').attr('class', 'indicator-cost');
-
 			// add description
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
 		}
@@ -113,7 +109,6 @@
 						return '';
 
 					});
-				headers.append('div').attr('class', 'action-cost');
 			} else {
 				$('.action-header-content, .item-block-container').hide();
 				$('.action-header-empty-content').show();
@@ -138,8 +133,6 @@
 			const newItems = items.enter().append('div')
 				.attr('class', 'item-block');
 			newItems.append('div').attr('class', 'item-title');
-			newItems.append('div').attr('class', 'item-cost');
-			newItems.append('div').attr('class', 'item-default-cost');
 			const costInputContainer = newItems.append('div').attr('class', 'item-cost-input-container');
 			costInputContainer.append('input').attr('class', 'startup-cost-input form-control');
 			costInputContainer.append('span').text(`${App.whoAmI.currency_iso} +`);
@@ -150,12 +143,6 @@
 				.attr('class', 'item-select-button')
 				.text('Selected');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
-			itemFooters.append('div')
-				.attr('class', 'item-edit-cost-button')
-				.text('Edit Item Cost');
-			itemFooters.append('div')
-				.attr('class', 'item-save-cost-button')
-				.text('Save Item Cost');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
 				.text('View Details')
@@ -170,12 +157,6 @@
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').html((d) => {
-				return d.isCustomCost ? App.getCustomCostText(d) : App.getCostText(d);
-			});
-			items.select('.item-default-cost')
-				.style('display', d => d.isCustomCost ? 'block' : 'none')
-				.text(d => `Default: ${App.getCostText(d)}`);
 			items.select('.startup-cost-input')
 				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
 				.on('change', function(d) {
@@ -199,44 +180,8 @@
 						.classed('selected', d.selected)
 						.text(d.selected ? 'Selected': 'Select');
 
-					updateTotalCosts();
+					App.updateAllCosts();
 				});
-
-			// clicking "edit cost" turns cost into an input
-			items.select('.item-edit-cost-button').on('click', function(d) {
-				const $container = $(this).closest('.item-block');
-				$container.find('.item-cost, .item-default-cost, .item-edit-cost-button')
-					.css('display', 'none');
-				$container.find('.item-cost-input-container').css('display', 'block');
-				$container.find('.item-save-cost-button').css('display', 'inline-block');
-			});
-
-			// clicking "save cost" saves the cost of the input
-			items.select('.item-save-cost-button').on('click', function(d) {
-				const $container = $(this).closest('.item-block');
-
-				// update text
-				if (d.isCustomCost) {
-					$container.find('.item-cost')
-						.css('display', 'block')
-						.text(App.getCustomCostText(d));
-					$container.find('.item-default-cost')
-						.css('display', 'block')
-						.text(`Default: ${App.getCostText(d)}`);
-				} else {
-					$container.find('.item-cost')
-						.css('display', 'block')
-						.text(App.getCostText(d));
-				}
-
-				// update all costs
-				updateTotalCosts();
-
-				// change display of inputs to display of text
-				$container.find('.item-cost-input-container, .item-save-cost-button')
-					.css('display', 'none');
-				$container.find('.item-edit-cost-button').css('display', 'inline-block');
-			});
 
 			// clicking "view details" show a list of line items
 			items.select('.item-view-details-button').each(function(d) {
@@ -289,13 +234,6 @@
 
 				$(this).tooltipster('content', contentContainer.html());
 			});
-		}
-
-		// updates the total cost of the actions
-		function updateTotalCosts() {
-			App.updateAllCosts();
-			d3.selectAll('.action-cost').html(d => App.getCostText(d));
-			d3.selectAll('.indicator-cost').html(d => App.getCostText(d));
 		}
 
 

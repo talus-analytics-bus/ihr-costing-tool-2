@@ -8,10 +8,10 @@
 		const mapConfig = {
 			divId: 'leaflet-map',
 			view: {
-				coordinates: [0, 0],
-				zoom: 1,
+				coordinates: [20, 0],
+				zoom: 1.6,
 			},
-			url: 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+			url: 'https://api.mapbox.com/styles/v1/jpecht/cj6qlfi5m3lg62rmz8svshi43/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlY2h0IiwiYSI6ImNpdHhlMTc5NzAwczEydHFtbnZnankzNmEifQ.79pr8-kMwzRaEzUhvvgzsw',
 			options: {
 				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 				maxZoom: 8,
@@ -22,17 +22,15 @@
 			styles: {
 				default: {
 					stroke: true,
-					weight: 0.4,
+					weight: 0,
 					fill: true,
-					color: '#000',
-					fillColor: '#fff',
-					fillOpacity: 1
+					color: 'transparent',
 				},
 				active: {
 					fillColor: '#ff7a7a',
 				},
 				selected: {
-					fillColor: '#AA0000',
+					fillColor: '#dd0000',
 				}
 			}
 		};
@@ -42,12 +40,13 @@
 		let map, info, activeCountry = '';
 
 		const initMap = () => {
-			map = L.map(mapConfig.divId)
+			map = L.map(mapConfig.divId, { zoomSnap: 0.1 })
 				.setView(mapConfig.view.coordinates, mapConfig.view.zoom);
 
 			L.tileLayer(mapConfig.url, mapConfig.options).addTo(map);
 
-			info = L.control();
+			info = L.control({ position: 'topright' })
+				.setPosition('topright');
 
 			info.onAdd = function (map) {
 				this._div = L.DomUtil.create('div', 'info');
@@ -68,10 +67,6 @@
 				layer.setStyle(mapConfig.styles.active);
 
 				//info.update(layer.feature.properties);
-
-
-				//layer.bindPopup(layer.feature.properties.name, {closeButton: false, offset: L.point(-60, 0)});
-				//layer.openPopup();
 			}
 		}
 
@@ -80,7 +75,6 @@
 			if (activeCountry !== e.target.feature.properties.iso_a2) {
 				App.geoJson.resetStyle(e.target);
 				info.update();
-				//layer.closePopup();
 			}
 		}
 
@@ -138,6 +132,7 @@
 			});
 
 			info.addTo(map);
+			info.setPosition('topright');
 		}
 
 		// wrap in timeout to make sure that dom element is already present
