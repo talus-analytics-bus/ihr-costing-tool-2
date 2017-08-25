@@ -341,27 +341,76 @@
 			defaultCostsTree.push(tabNode);
 		}
 
-		// let mainSkipList = [];
-		// for (let i = 0; i < defaultCosts.length; i++) {
-		// 	const curDefaultCost = defaultCosts[i];
-		// 	if (mainSkipList.indexOf(curDefaultCost.tab_name) > -1) continue;
-		// 	else {
-		// 		let newTreeItem = {};
-		// 		newTreeItem[curDefaultCost.tab_name] = [];
-
-		// 		// get all GBC with this tab name
-		// 		const newTreeItemGbcs = defaultCosts.filter(gbc => gbc.tab_name === curDefaultCost.tab_name);
-
-		// 		// for each of the GBCs with this tab name
-		// 		for (let j = 0; j < newTreeItemGbcs.length; j++) {
-
-		// 		}
-		// 	}
-		// }
-
 		// add headers, subheaders, labels, text fields, costs, units, and descriptions
 		// to the page
 		// TODO
+
+		// for each tab name (main header)
+		for (let i = 0; i < defaultCostsTree.length; i++) {
+			// get current tab name
+			const tabNode = defaultCostsTree[i];
+			const tabName = Object.keys(tabNode)[0];
+
+			// add header for tab name
+			d3.select('.dv-container').append('h1')
+				.text(tabName);
+
+			// for each subheading group
+			for (let j = 0; j < tabNode[tabName].length; j++) {
+				// add row for the subheading group
+				const subCol = d3.select('.dv-container')
+					.append('div')
+						.attr('class','dv-subheading-row row')
+					.append('div')
+						.attr('class','dv-subheading-col col-sm-12');
+
+				// get subheader name
+				const subNode = tabNode[tabName][j];
+				const subName = Object.keys(subNode)[0];
+
+				// add header for subheading
+				subCol.append('h2')
+					.text(subName);
+
+				// for each item in the subheading group
+				for (let k = 0; k < subNode[subName].length; k++) {
+					// get item name
+					const itemNode = subNode[subName][k];
+					const itemName = itemNode.name;
+
+					// add row for the item group
+					const itemGroup = subCol
+						.append('div')
+							.attr('class','dv-item-row row')
+						.append('div')
+							.attr('class','dv-item-col col-sm-12');
+
+					// add header for item name
+					itemGroup.append('h3')
+						.attr('class','dv-item-name')
+						.text(itemName);
+
+					// add input for item cost
+					itemGroup.append('input')
+						.attr('class','dv-input form-control');
+
+					// add label for input currency
+					itemGroup.append('span')
+						.attr('class','dv-currency');
+
+					// add label for input unit
+					itemGroup.append('span')
+						.attr('class','dv-cost-unit')
+						.text(" " + itemNode.cost_unit);
+
+					// add text for item description
+					itemGroup.append('span')
+						.attr('class','dv-description')
+						.text(itemNode.description);
+				}
+			}			
+
+		}
 
 		// add Overhead Percentage, since it's not in the global base costs data structure
 		// and needs to be hardcoded in
