@@ -30,35 +30,38 @@
 		});
 
 		const currScore = App.getAverageCurrentScore(allIndicators);
-		Charts.buildRadialProgress('.rp-score-old', currScore);
-		if (!currScore) {
-			$('.score-improvement-warning')
-				.slideDown()
-				.on('click', () => hasher.setHash('scores'));
-		}
-
 		const newScore = App.getAverageTargetScore(allIndicators);
-		Charts.buildRadialProgress('.rp-score-new', newScore);
+		Charts.buildProgressChart('.progress-chart-overall', [currScore, newScore]);
 
-		// build bullet charts
-		const bulletData = App.jeeTree.map((cc) => {
-			const scoreFormat = d3.format('.1f');
+		const totalCost = d3.sum(App.jeeTree, d => d.startupCost);
+		Charts.buildCircleSummary('.circle-summary-total', totalCost, {
+			radius: 100,
+			label: 'Total',
+		});
+
+
+		const csb = d3.select('.circle-summary-section').selectAll('.circle-summary-box')
+			.data(App.jeeTree)
+			.enter().append('div');
+		csb.append('div').attr('class', (d, i) => `circle-summary-${i}`);
+		csb.append('div').attr('class', (d, i) => `progress-chart-${i}`);
+		csb.each((d, i) => {
 			const indicators = [];
-			cc.capacities.forEach((cap) => {
+			App.jeeTree[i].capacities.forEach((cap) => {
 				cap.indicators.forEach(ind => indicators.push(ind));
 			});
-			const oldScore = App.getAverageCurrentScore(indicators) || 0;
-			const newScore = App.getAverageTargetScore(indicators) || 0;
-			const newScoreText = newScore ? scoreFormat(newScore) : '?';
-			return {
-				name: cc.name,
-				subtitle: `Avg. Score: ${newScoreText}`,
-				ranges: [1, 3, 5],
-				measures: [oldScore, newScore],
-			};
+			const ccCurrScore = App.getAverageCurrentScore(indicators) || 0;
+			const ccNewScore = App.getAverageTargetScore(indicators) || 0;
+
+			Charts.buildCircleSummary(`.circle-summary-${i}`, App.jeeTree[i].startupCost, {
+				label: App.jeeTree[i].name,
+			});
+			Charts.buildProgressChart(`.progress-chart-${i}`, [ccCurrScore, ccNewScore], {
+				width: 150,
+				height: 16,
+				radius: 4,
+			});
 		});
-		const bulletCharts = Charts.buildBulletChart('.bullet-chart-container', bulletData);
-		bulletCharts.selectAll('.value').style('display', d => d ? 'inline' : 'none');
 
 
 		/* --------------------------- Cost Explorer Section ---------------------------*/

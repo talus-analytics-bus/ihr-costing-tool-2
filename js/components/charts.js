@@ -1,27 +1,22 @@
 const Charts = {};
 
 (() => {
-	const moneyFormat = (num) => {
-		if (num < 100) return d3.format('$')(Math.round(num));
-		return d3.format('$,.3r')(num);
-	}
-
-	Charts.buildRadialProgress = (selector, data, param={}) => {
-		const margin = { top: 0, right: 15, bottom: 0, left: 15 };
-		const radius = param.radius || 35;
+	Charts.buildProgressChart = (selector, data, param={}) => {
+		const margin = { top: 5, right: 5, bottom: 5, left: 5 };
+		const width = param.width || 800;
+		const height = param.height || 26;
 		const chartContainer = d3.selectAll(selector).append('svg')
-			.attr('class', 'rp-chart')
-			.attr('width', 2 * radius + margin.left + margin.right)
-			.attr('height', 2 * radius + margin.top + margin.bottom)
+			.classed('progress-chart', true)
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom)
 		const chart = chartContainer.append('g')
-			.attr('transform', `translate(${margin.left + radius}, ${margin.top + radius})`);
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-		const arcSep = param.arcSep || 10;
-		const tau = 2 * Math.PI;
-		const outerArc = d3.arc()
-			.innerRadius(radius - arcSep)
-			.outerRadius(radius)
-			.startAngle(0);
+		const circleRadius = param.radius || 6;
+
+		const x = d3.scaleLinear()
+			.domain([0, 5])
+			.range([0, width]);
 
 		// add glow definitions to svg
 		const defs = chartContainer.append('defs');
@@ -31,101 +26,79 @@ const Charts = {};
 			.attr('in', 'SourceGraphic')
 			.attr('stdDeviation', '1');
 
-		// add background
-		chart.append('path')
-			.attr('class', 'rp-background')
-			.datum({ endAngle: tau })
-			.attr('d', outerArc);
+		// draw rectangles
+		const rectData = [
+			{ x0: 0, x1: 1, color: '#c91414' },
+			{ x0: 1, x1: 3, color: '#d3cf11' },
+			{ x0: 3, x1: 5, color: '#0c6b0c' }
+		];
+		chart.selectAll('.color-bar')
+			.data(rectData)
+			.enter().append('rect')
+				.attr('x', d => x(d.x0))
+				.attr('width', d => x(d.x1) - x(d.x0))
+				.attr('height', height)
+				.style('fill', d => d.color)
+				.attr('filter', 'url(#blur)');
 
-		// add outer and inner circle
-		const outerCircle = chart.append('path')
-			.attr('class', 'rp-outer')
-			.datum({ endAngle: 0 })
-			.attr('d', outerArc)
-			.attr('filter', 'url(#blur)');
+		// draw base and ticks
+		chart.append('rect')
+			.attr('class', 'base')
+			.attr('width', width)
+			.attr('height', height);
+		chart.selectAll('.tick-line')
+			.data(d3.range(1, 5))
+			.enter().append('line')
+				.attr('class', 'tick-line')
+				.attr('x1', d => x(d))
+				.attr('x2', d => x(d))
+				.attr('y2', height);
 
-		// add label text
-		const label = chart.append('text')
-			.attr('class', 'rp-text')
-			.attr('dy', '.35em');
+		// add markers
+		chart.append('circle')
+			.attr('class', 'marker marker-0')
+			.attr('cx', x(data[0]))
+			.attr('cy', height / 2)
+			.attr('r', circleRadius);
+		chart.append('circle')
+			.attr('class', 'marker marker-1')
+			.attr('cx', x(data[1]))
+			.attr('cy', height / 2)
+			.attr('r', circleRadius);
 
-		// add update function
-		chart.initValue = (value) => {
-			const score = value || 0;
-			outerCircle
-				.style('fill', () => {
-					if (score < 2) return '#c82127';
-					else if (score < 4) return '#ede929';
-					return '#156c37';
-				})
-				.transition()
-					.duration(param.duration || 1500)
-					.attrTween('d', arcTween(outerArc, score / 5));
-			label.text(score ? d3.format('.1f')(score) : '?');
-		}
+		// add line between markers
+		chart.append('line')
+			.attr('class', 'marker-line')
+			.attr('x1', x(data[0]) + circleRadius)
+			.attr('x2', x(data[1]) - circleRadius)
+			.attr('y1', height / 2)
+			.attr('y2', height / 2);
 
-		function arcTween(arc, newValue) {
-			return function(d) {
-				const interpolate = d3.interpolate(d.endAngle, newValue * tau);
-				return function(t) {
-					d.endAngle = interpolate(t);
-					return arc(d);
-				}
-			}
-		}
-
-		chart.initValue(data);
 		return chart;
 	}
 
-	Charts.buildBulletChart = (selector, data, param={}) => {
-		const margin = { top: 5, right: 40, bottom: 30, left: 120 };
-		const width = param.width || 400;
-		const height = param.height || 30;
+	Charts.buildCircleSummary = (selector, data, param={}) => {
+		const margin = { top: 5, right: 5, bottom: 5, left: 5 };
+		const radius = param.radius || 70;
+		const chart = d3.selectAll(selector).append('svg')
+			.classed('circle-summary-chart', true)
+			.attr('width', 2 * radius + margin.left + margin.right)
+			.attr('height', 2 * radius + margin.top + margin.bottom)
+			.append('g')
+				.attr('transform', `translate(${margin.left + radius}, ${margin.top + radius})`);
 
-		const bullet = d3.bullet()
-			.width(width)
-			.height(height);
-
-		const chartContainers = d3.select(selector).selectAll('svg')
-			.data(data)
-			.enter().append('svg')
-				.attr('class', 'bullet-chart')
-				.attr('width', width + margin.left + margin.right)
-				.attr('height', height + margin.top + margin.bottom);
-		const charts = chartContainers.append('g')
-			.attr('transform', `translate(${margin.left}, ${margin.top})`)
-			.call(bullet);
-
-		const titles = charts.append('g')
-			.style('text-anchor', 'end')
-			.attr('transform', `translate(-6, ${height / 2})`);
-		titles.append('text')
-			.attr('class', 'title')
-			.text(d => d.name);
-		titles.append('text')
-			.attr('class', 'subtitle')
-			.attr('y', 15)
-			.text(d => d.subtitle);
-
-		// add gradient definition
-		const defs = charts.append('defs');
-		const lg = defs.append('linearGradient')
-			.attr('id', 'gradient')
-			.attr('x1', '0%')
-			.attr('x2', '0%')
-			.attr('y1', '0%')
-			.attr('y2', '100%');
-		lg.append('stop')
-			.attr('offset', '0%')
-			.style('stop-color', '#f0f0f0');
-		lg.append('stop')
-			.attr('offset', '100%')
-			.style('stop-color', '#e0e0e0');
-
-		charts.selectAll('.measure').style('fill', 'url(#gradient)');
-
-		return chartContainers;
+		chart.append('circle')
+			.attr('class', 'base')
+			.attr('r', radius);
+		chart.append('text')
+			.attr('class', 'value-text')
+			.attr('dy', '.35em')
+			.text(App.moneyFormat(data));
+		chart.append('text')
+			.attr('class', 'label-text')
+			.attr('y', '2rem')
+			.attr('dy', '.35em')
+			.text(param.label || '');
 	}
 
 	Charts.buildCostBarChart = (selector, data, param={}) => {
