@@ -413,7 +413,6 @@
 					} else if (gbcId !== null) {
 						const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
 						input.node().value = (Util.comma(gbc.cost * exchangeRate));
-						// $('.dv-currency').text(App.whoAmI.currency_iso);
 					}
 				} else {
 					const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
