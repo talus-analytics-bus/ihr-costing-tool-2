@@ -335,7 +335,7 @@
 							.attr('class','dv-item-col col-sm-12');
 
 					// add header for item name
-					itemGroup.append('span')
+					itemGroup.append('div')
 						.attr('class','dv-item-name')
 						.append('b')
 						.text(itemName);

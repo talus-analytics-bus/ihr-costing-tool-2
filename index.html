@@ -127,6 +127,7 @@
 	<script id="country-template" type="text/x-handlebars-template">
 		<div class="country-container container">
 			<h1>Enter Country</h1>
+			<p>Choose your country using the map, drop-down list, or search function.</p>
 			<div class="map-container">
 				<div id="leaflet-map"></div>
 			</div>
@@ -158,7 +159,7 @@
 		<div class="overview-container container container-text">
 			<h1>Assessment Instructions</h1>
 			<div>
-				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. These scores should be from a recently completed JEE assessment. Scores may either be uploaded automatically or entered manually. Upload uses reports from the JEE Technology Tool, an online source for completed JEE assessments.</p><p>The JEE Technology Tool was developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.</p>
+				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can either be uploaded automatically or entered manually. Score upload requires the report used by the JEE Technology Tool, an online source for completed JEE assessments.</p><p>The <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a> is a separate, open-access tool developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.</p>
 			</div>
 			<div>
 				<h2>Automatic Score Upload</h2>
@@ -174,7 +175,7 @@
 				<p>1. If no electronic report is available in the required format for upload, scores can be entered manually.</p>
 				<p>2. Click “Continue to Assessment” to begin entering scores.</p>
 				<div class="next-button-container">
-					<button type="button" class="overview-start btn btn-primary">Continue to Assessment</button>
+					<button type="button" class="next-button btn btn-primary">Continue to Assessment</button>
 				</div>
 			</div>
 		</div>
@@ -189,7 +190,7 @@
 					<h1>Assessment</h1>
 					<div class="core-capacity-name"></div>
 					<div class="score-instructions instructions">
-						For the following capacity, select a score for each indicator below that best matches the country's capabilities. Open the description below for more details.
+						Choose a score for each indicator below based on the current JEE assessment capacity. Open the description below for more details.
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
@@ -303,7 +304,7 @@
 				<!--The population block -->
 				<div class="block population-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Population of the Country</span>
+						<h1>Population of the Country</h1>
 					</div>
 					<div class="block-content">
 						<div class="population-section">
@@ -339,7 +340,7 @@
 				<!-- Geographical Divisions -->
 				<div class="block country-details-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Geographic Division</span>
+						<h1>Geographic Division</h1>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
@@ -354,7 +355,7 @@
 					<!-- Public Health Information -->
 					<div class="phi-section">
 						<div class="block-title">
-							<span class="block-title-title">Public Health Information</span>
+							<h1>Public Health Information</h1>
 						</div>
 						<div class="block-content">
 							<div class="block-description">
@@ -373,7 +374,7 @@
 
 				<div class="block default-costs-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Cost Assumptions</span>
+						<h1>Cost Assumptions</h1>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
