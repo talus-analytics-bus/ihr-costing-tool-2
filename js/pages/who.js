@@ -313,10 +313,14 @@
 				.attr('class','dv-h2')
 				.text(tabName);
 
+			// add container for subheading/content
+			const tabContent = d3.select('.dv-container').append('div')
+				.attr('class','dv-tab-content');
+
 			// for each subheading group
 			for (let j = 0; j < tabNode[tabName].length; j++) {
 				// add row for the subheading group
-				const subCol = d3.select('.dv-container')
+				const subCol = tabContent
 					.append('div')
 						.attr('class','dv-subheading-row row')
 					.append('div')
@@ -395,9 +399,15 @@
 		}
 
 		// add on-click for tab headers
-		$('.capacity-description-header').click(() => {
-			$('.capacity-description-details').toggle();
-			$('#chevron').toggleClass('rotate-chevron');
+		$('.dv-tab-content').slideUp();
+		$('.dv-tab-name-container').click(function() {
+			const curContainer = $(this);
+			curContainer.siblings('.dv-tab-content').not($(this).next()).slideUp();
+			curContainer.next().slideToggle(false);
+
+			curContainer.siblings().not($(this).next()).children('.chevron').removeClass('rotate-chevron');
+
+			curContainer.children('.chevron').toggleClass('rotate-chevron');
 		});
 
 		$('.dv-input').on('change', function() {
