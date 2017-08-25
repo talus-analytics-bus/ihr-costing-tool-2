@@ -99,5 +99,30 @@
 		width: 140px;
 		margin-right: 5px;
 		text-align: right;
+		vertical-align: top;
+	}
+	.dv-description {
+		font-style: italic;
+		display: inline-block;
+		float: right;
+		width: 400px;
+		vertical-align: top;
+	}
+	.dv-item-row {
+		margin-bottom: 20px;
+		margin-left: 10px;
+	}
+	.dv-subheading-row {
+		margin-left: 10px;
+	}
+	.dv-currency,
+	.dv-cost-unit,
+	.dv-description {
+		position: relative;
+		top: 5px;
+	}
+
+	.dv-item-name {
+		font-weight: normal;
 	}
 }
