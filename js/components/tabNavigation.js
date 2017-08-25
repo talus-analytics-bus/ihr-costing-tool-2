@@ -56,6 +56,10 @@
 			.attr('class', 'block-link-subtitle')
 			.classed('active', d => d.id === capId)
 			.html((d) => {
+				if (param.displayCostingProgress) {
+					const numCosted = App.getNumIndicatorsCosted(d);
+					return `${numCosted} of ${d.indicators.length}`;
+				}
 				const numScored = d.indicators.filter(ind => ind.score).length;
 				return `${numScored} of ${d.indicators.length}`;
 			});

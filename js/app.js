@@ -367,6 +367,17 @@ const App = {};
 			`${App.moneyFormat(input.customRecurringCost)}/yr`;
 	}
 
+	// returns the number of indicators the user has fully costed
+	App.getNumIndicatorsCosted = (capacity) => {
+		return capacity.indicators
+			.filter((ind) => {
+				return ind.actions.every((action) => {
+					return action.inputs.every(input => input.costed);
+				});
+			})
+			.length;
+	}
+
 	// gets the exchange rate for the selected currency to USD
 	App.getExchangeRate = () => {
 		if (!App.whoAmI.name) return 1;

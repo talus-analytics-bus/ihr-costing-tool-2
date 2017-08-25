@@ -12,7 +12,9 @@
 
 		/* --------------- Input Block Overview and Links -------------- */		
 		function buildContent() {
-			App.buildTabNavigation('.block-link-container', capId);
+			App.buildTabNavigation('.block-link-container', capId, {
+				displayCostingProgress: true,
+			});
 			buildCapacityDescription();
 			buildIndicatorContent();
 			if (actions.length) showAction(actions[0]);
@@ -86,10 +88,15 @@
 			const actionSlots = actionSlotContainers.append('div')
 				.attr('class', 'action-slot')
 				.on('click', d => showAction(d));
-			actionSlots.append('input').attr('type', 'radio');
+			const actionChevron = actionSlots.append('svg')
+				.attr('class', 'chevron')
+				.attr('viewBox', '0 0 24 24');
+			actionChevron.append('path').attr('d', 'M8 5v14l11-7z');
 			actionSlots.append('div')
 				.attr('class', 'action-name')
 				.text(d => `${d.id.toUpperCase()} - ${d.name}`);
+			actionSlots.append('div').attr('class', 'action-progress');
+			updateActionProgress();
 
 			// build container to put the items
 			const itemLeft = '155px';
@@ -184,6 +191,10 @@
 
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
+				.attr('class', 'item-save-button')
+				.classed('primary', d => !d.costed)
+				.text('Save Costs');
+			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
 				.text('View Details')
 				.each(function() {
@@ -200,18 +211,52 @@
 			items.select('.item-title').text(d => d.name);
 			items.select('.startup-cost-input')
 				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
+				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;
 					d.customStartupCost = Util.getInputNumVal(this);
 					if (!d.customRecurringCost) d.customRecurringCost = d.recurringCost;
+
+					d.costed = true;
+					const $container = $(this).closest('.item-block');
+					$container.find('input').css('color', 'black');
+					$container.find('.item-save-button').removeClass('primary');
+					App.updateAllCosts();
 				});
 			items.select('.recurring-cost-input')
 				.attr('value', d => Util.comma(d.recurringCost))
+				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;
 					d.customRecurringCost = Util.getInputNumVal(this);
 					if (!d.customStartupCost) d.customStartupCost = d.startupCost + d.capitalCost;
+
+					d.costed = true;
+					const $container = $(this).closest('.item-block');
+					$container.find('input').css('color', 'black');
+					$container.find('.item-save-button').removeClass('primary');
+					App.updateAllCosts();
 				});
+
+			// saving costs
+			items.select('.item-save-button').on('click', function(d) {
+				if (!d.costed) {
+					d.costed = true;
+					$(this)
+						.removeClass('primary')
+						.closest('.item-block').find('input')
+							.css('color', 'black');
+
+					// update action progress
+					updateActionProgress();
+
+					// check if indicator is fully costed
+					const numCosted = App.getNumIndicatorsCosted(capacity);
+					d3.select('.block-link-subtitle.active')
+						.text(`${numCosted} of ${capacity.indicators.length}`);
+				}
+				App.updateAllCosts();
+			});
 
 			// clicking "view details" show a list of line items
 			items.select('.item-view-details-button').each(function(d) {
@@ -267,8 +312,8 @@
 			// make the correct action slot active
 			d3.selectAll('.action-slot-container, .action-slot')
 				.classed('active', d => d.id === action.id)
-				.select('input')
-					.property('checked', d => d.id === action.id);
+				.select('.chevron')
+					.classed('active', d => d.id === action.id);
 
 			// show correct item container
 			const minHeight = '310px';
@@ -301,10 +346,18 @@
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
 			const numInds = capacity.indicators.length;
-			const numScored = numInds - d3.selectAll('.empty').nodes().length;
+			const numScored = App.getNumIndicatorsCosted(capacity);
 			d3.select('.indicator-progress')
 				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
+
+		// updates message on number of inputs scored for each action
+		function updateActionProgress() {
+			d3.selectAll('.action-progress').text((d) => {
+				const numInputsCosted = d.inputs.filter(input => input.costed).length;
+				return `${numInputsCosted} of ${d.inputs.length} items costed`;
+			});
+		}
 
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
