@@ -288,7 +288,7 @@
 		  "cost": 0.6,
 		  "cost_unit": "% per year",
 		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
-		  "id": "gbc.op",
+		  "id": "overhead",
 		  "name": "Overhead percentage",
 		  "tab_name": "Personnel compensation",
 		  "subheading_name": "Salaries"
@@ -391,7 +391,8 @@
 
 					// add input for item cost
 					itemGroup.append('input')
-						.attr('class','dv-input form-control');
+						.attr('class','dv-input form-control')
+						.attr('gbcid', itemNode.id);
 
 					// add label for input currency, if item is not
 					// "overhead percentage"
@@ -413,10 +414,6 @@
 			}			
 
 		}
-
-		// add Overhead Percentage, since it's not in the global base costs data structure
-		// and needs to be hardcoded in
-		// TODO
 
 		// tell user if they set the cost to non-default value
 		// TODO
@@ -455,16 +452,36 @@
 		});
 
 		function updateCostDisplay() {
-			const gbcId = $('.dv-select').val();
-			if (gbcId === 'overhead') {
-				$('.dv-input').val(Util.comma(100 * App.whoAmI.staff_overhead_perc));
-				$('.dv-currency').text('%');
-			} else {
-				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
-				$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
-				$('.dv-currency').text(App.whoAmI.currency_iso);
-			}
-			checkIfDefault(gbcId);
+			// select all cost displays
+			const allCosts = d3.selectAll('.dv-input');
+
+			// for each, find and populate correct cost
+			allCosts.each(function() {
+				// select current input
+				const input = d3.select(this);
+
+				// get gbcId
+				const gbcId = input.attr('gbcid');
+				if (gbcId === 'overhead') {
+					input.node().value = (Util.comma(100 * App.whoAmI.staff_overhead_perc));
+				} else if (gbcId !== null) {
+					const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+					input.node().value = (Util.comma(gbc.cost * exchangeRate));
+					$('.dv-currency').text(App.whoAmI.currency_iso);
+				}
+			});
+
+			// // OLD CODE BELOW
+			// const gbcId = $('.dv-select').val();
+			// if (gbcId === 'overhead') {
+			// 	$('.dv-input').val(Util.comma(100 * App.whoAmI.staff_overhead_perc));
+			// 	$('.dv-currency').text('%');
+			// } else {
+			// 	const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+			// 	$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
+			// 	$('.dv-currency').text(App.whoAmI.currency_iso);
+			// }
+			// checkIfDefault(gbcId);
 		}
 
 		function checkIfDefault(gbcId) {
