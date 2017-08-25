@@ -299,6 +299,7 @@
 			}
 			// add header for tab name
 			d3.select('.dv-container').append('h2')
+				.attr('class','dv-h2')
 				.text(tabName);
 
 
@@ -317,6 +318,7 @@
 
 				// add header for subheading
 				subCol.append('h3')
+					.attr('class','dv-h3')
 					.text(subName);
 
 				// for each item in the subheading group
@@ -333,8 +335,9 @@
 							.attr('class','dv-item-col col-sm-12');
 
 					// add header for item name
-					itemGroup.append('h4')
+					itemGroup.append('span')
 						.attr('class','dv-item-name')
+						.append('b')
 						.text(itemName);
 
 					// add item input group
