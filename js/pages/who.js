@@ -224,7 +224,7 @@
 		defaultCosts.push({
 		  "cost": 0.6,
 		  "cost_unit": "% per year",
-		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+		  "description": "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
 		  "id": "gbc.overhead",
 		  "name": "Overhead percentage",
 		  "tab_name": "Personnel compensation",
