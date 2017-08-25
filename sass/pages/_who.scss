@@ -49,6 +49,9 @@
 		border-top: $light-border;
 		padding-top: 20px;
 	}
+	.currency-select-label {
+		margin-bottom: 10px;
+	}
 }
 .country-details-block {
 	.phi-section {
@@ -82,18 +85,15 @@
 		vertical-align: top;
 	}
 	.dv-description {
-		font-style: italic;
 		display: inline-block;
-		float: right;
-		width: 400px;
+		float: left;
+		width: 380px;
 		vertical-align: top;
 		padding-bottom: 10px;
 	}
 	.dv-item-row {
 		margin-left: 10px;
 		padding: 10px;
-		&:nth-child(even) { background-color: #f9f9f9; }
-		&:nth-child(odd) { background-color: #e6e6e6; }
 	}
 	.dv-subheading-row {
 		font-family: 'Open Sans', sans-serif;
@@ -108,21 +108,48 @@
 		font-size: 1.3em;
 	}
 	.dv-currency,
-	.dv-cost-unit,
-	.dv-description {
+	.dv-cost-unit {
 		position: relative;
 		top: 5px;
 	}
 	.dv-item-name {
 		font-weight: 600;
-		margin-bottom: 7px;
+		// margin-bottom: 7px;
 	}
 	.dv-input-group {
 		display: inline-block;
+	}
+	.dv-item-name {
+		float: left;
+	}
+	.dv-input-group {
+		margin-left: 60px;
 	}
 	.dv-divider {
 		border-top: $light-border;
 		margin-bottom: 20px;
 		margin-top: 20px;
 	}
+	h2.dv-h2 {
+		font-size: 1.3em; // to match block-title-title size
+	}
+	h3.dv-h3 {
+		font-size: 1.2em;
+		font-weight: normal;
+	}
+	.dv-tab-name-container {
+		display: flex;
+		padding-top: 5px;
+		border-radius: 10px;
+		box-sizing: border-box;
+		cursor: pointer;
+		.rotate-chevron {
+			-webkit-transform: rotate(90deg);
+			-ms-transform: rotate(90deg);
+			transform: rotate(90deg);
+		}
+	}
+}
+.block-title-title {
+	font-size: 1.3em;
 }

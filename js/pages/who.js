@@ -133,17 +133,17 @@
 			{
 				nameAttr: 'intermediate_1_area_name',
 				valueAttr: 'intermediate_1_area_count',
-				description: 'Intermediate 1 area count',
+				description: 'Intermediate (e.g., province, district)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
-				description: 'Intermediate 2 area count',
+				description: 'Intermediate 2 (optional)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
-				description: 'Local area count',
+				description: 'Local (e.g., county, city)',
 				nameValues: ['Barangay', 'County', 'District', 'City'],
 			}
 		];
@@ -179,16 +179,16 @@
 		const phMults = [
 			{
 				name: 'central_hospitals_count',
-				description: 'Estimated total number of health care facilities in the country',
-				unit: 'facilities',
+				description: 'Number of health care facilities in the country',
+				unit: 'facilities / country',
 			},/* {
 				name: 'central_epi_count',
 				description: 'Estimated total number of epidemiologists in the country',
 				unit: 'people',
 			}, */{
 				name: 'central_chw_count',
-				description: 'Estimated total number of community health workers in the country',
-				unit: 'people',
+				description: 'Number of community health workers in the country',
+				unit: 'people / country',
 			}
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
@@ -224,7 +224,7 @@
 		defaultCosts.push({
 		  "cost": 0.6,
 		  "cost_unit": "% per year",
-		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+		  "description": "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
 		  "id": "gbc.overhead",
 		  "name": "Overhead percentage",
 		  "tab_name": "Personnel compensation",
@@ -292,20 +292,35 @@
 			const tabNode = defaultCostsTree[i];
 			const tabName = Object.keys(tabNode)[0];
 
-				// add a divider if this isn't the final main header
-			if (true) {
+			// add a divider if this isn't the first header
+			if (i > 0) {
 				d3.select('.dv-container').append('div')
 					.attr('class','dv-divider');
 			}
+
+			// add container for tab name header
+			const tabHeader = d3.select('.dv-container').append('div')
+				.attr('class','dv-tab-name-container');
+
+			// add chevron for tab name
+			const chevron = tabHeader.append('svg')
+				.attr('class', 'chevron')
+				.attr('viewBox', '0 0 24 24');
+			chevron.append('path').attr('d', 'M8 5v14l11-7z');
+
 			// add header for tab name
-			d3.select('.dv-container').append('h2')
+			tabHeader.append('h2')
+				.attr('class','dv-h2')
 				.text(tabName);
 
+			// add container for subheading/content
+			const tabContent = d3.select('.dv-container').append('div')
+				.attr('class','dv-tab-content');
 
 			// for each subheading group
 			for (let j = 0; j < tabNode[tabName].length; j++) {
 				// add row for the subheading group
-				const subCol = d3.select('.dv-container')
+				const subCol = tabContent
 					.append('div')
 						.attr('class','dv-subheading-row row')
 					.append('div')
@@ -317,6 +332,7 @@
 
 				// add header for subheading
 				subCol.append('h3')
+					.attr('class','dv-h3')
 					.text(subName);
 
 				// for each item in the subheading group
@@ -335,7 +351,16 @@
 					// add header for item name
 					itemGroup.append('div')
 						.attr('class','dv-item-name')
+						.append('b')
 						.text(itemName);
+
+					// add break
+					itemGroup.append('br');
+					
+					// add text for item description
+					itemGroup.append('span')
+						.attr('class','dv-description')
+						.text(itemNode.description);
 
 					// add item input group
 					const inputGroup = itemGroup.append('div')
@@ -369,14 +394,22 @@
 					// add default text warning
 					inputGroup.append('div')
 						.attr('class','dv-default-text default-text');
-					
-					// add text for item description
-					itemGroup.append('span')
-						.attr('class','dv-description')
-						.text(itemNode.description);
 				}
 			}			
 		}
+
+		// add on-click for tab headers
+		$('.dv-tab-content').first().slideUp();
+		$('.dv-tab-name-container').click(function() {
+			const curContainer = $(this);
+			curContainer.siblings('.dv-tab-content').not($(this).next()).slideUp();
+			curContainer.next().slideToggle(false);
+
+			curContainer.siblings().not($(this).next()).children('.chevron').removeClass('rotate-chevron');
+
+			curContainer.children('.chevron').toggleClass('rotate-chevron');
+		});
+		$('.dv-tab-name-container').first().trigger('click')
 
 		$('.dv-input').on('change', function() {
 			const input = d3.select(this);
