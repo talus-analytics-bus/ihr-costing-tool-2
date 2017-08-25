@@ -399,7 +399,7 @@
 		}
 
 		// add on-click for tab headers
-		$('.dv-tab-content').slideUp();
+		$('.dv-tab-content').first().slideUp();
 		$('.dv-tab-name-container').click(function() {
 			const curContainer = $(this);
 			curContainer.siblings('.dv-tab-content').not($(this).next()).slideUp();
@@ -409,6 +409,7 @@
 
 			curContainer.children('.chevron').toggleClass('rotate-chevron');
 		});
+		$('.dv-tab-name-container').first().trigger('click')
 
 		$('.dv-input').on('change', function() {
 			const input = d3.select(this);
