@@ -181,11 +181,11 @@
 				name: 'central_hospitals_count',
 				description: 'Estimated total number of health care facilities in the country',
 				unit: 'facilities',
-			}, {
+			},/* {
 				name: 'central_epi_count',
 				description: 'Estimated total number of epidemiologists in the country',
 				unit: 'people',
-			}, {
+			}, */{
 				name: 'central_chw_count',
 				description: 'Estimated total number of community health workers in the country',
 				unit: 'people',
