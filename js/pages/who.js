@@ -282,6 +282,83 @@
 		// find global base costs to show on page for user review
 		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
 
+		// add overhead percentage to the default costs so it is included in the
+		// page for user review
+		defaultCosts.push({
+		  "cost": 0.6,
+		  "cost_unit": "per year",
+		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+		  "id": "gbc.op",
+		  "name": "Overhead percentage",
+		  "tab_name": "Personnel compensation",
+		  "subheading_name": "Salaries"
+		});
+
+		// make tree version of the GBCs so they can be added to the page in the
+		// correct groups
+
+		// get unique tab names
+		const tabNames = _.unique(_.pluck(defaultCosts, 'tab_name'));
+
+		// declare tree
+		const defaultCostsTree = [];
+
+		// for each unique tab name
+		for (let i = 0; i < tabNames.length; i++) {
+			// get current tab name
+			const curTab = tabNames[i];
+
+			// create tree node for tab
+			const tabNode = {};
+			tabNode[curTab] = [];
+
+			// get GBCs with this tab name
+			const tabGbcs = defaultCosts.filter(gbc => gbc.tab_name === curTab);
+
+			// get subheaders if they exist
+			const subNames = _.unique(_.pluck(tabGbcs, 'subheading_name'));
+
+			// for each subheading name
+			for (let j = 0; j < subNames.length; j++) {
+				// get current sub name
+				const curSub = subNames[j];
+
+				// create tree node for subheading
+				const subNode = {};
+				subNode[curSub] = [];
+
+				// get GBC with this sub name
+				const subGbcs = tabGbcs.filter(gbc => gbc.subheading_name === curSub);
+
+				// push these GBCs to the sub node
+				subNode[curSub] = subGbcs;
+				
+				// push the sub node to the tab node
+				tabNode[curTab].push(subNode);
+			}
+
+			// push tab node to tree
+			defaultCostsTree.push(tabNode);
+		}
+
+		// let mainSkipList = [];
+		// for (let i = 0; i < defaultCosts.length; i++) {
+		// 	const curDefaultCost = defaultCosts[i];
+		// 	if (mainSkipList.indexOf(curDefaultCost.tab_name) > -1) continue;
+		// 	else {
+		// 		let newTreeItem = {};
+		// 		newTreeItem[curDefaultCost.tab_name] = [];
+
+		// 		// get all GBC with this tab name
+		// 		const newTreeItemGbcs = defaultCosts.filter(gbc => gbc.tab_name === curDefaultCost.tab_name);
+
+		// 		// for each of the GBCs with this tab name
+		// 		for (let j = 0; j < newTreeItemGbcs.length; j++) {
+
+		// 		}
+		// 	}
+		// }
+
 		// add headers, subheaders, labels, text fields, costs, units, and descriptions
 		// to the page
 		// TODO
