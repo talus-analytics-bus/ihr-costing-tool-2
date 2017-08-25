@@ -286,7 +286,7 @@
 		// page for user review
 		defaultCosts.push({
 		  "cost": 0.6,
-		  "cost_unit": "per year",
+		  "cost_unit": "% per year",
 		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
 		  "id": "gbc.op",
 		  "name": "Overhead percentage",
@@ -343,7 +343,6 @@
 
 		// add headers, subheaders, labels, text fields, costs, units, and descriptions
 		// to the page
-		// TODO
 
 		// for each tab name (main header)
 		for (let i = 0; i < defaultCostsTree.length; i++) {
@@ -352,7 +351,7 @@
 			const tabName = Object.keys(tabNode)[0];
 
 			// add header for tab name
-			d3.select('.dv-container').append('h1')
+			d3.select('.dv-container').append('h2')
 				.text(tabName);
 
 			// for each subheading group
@@ -369,7 +368,7 @@
 				const subName = Object.keys(subNode)[0];
 
 				// add header for subheading
-				subCol.append('h2')
+				subCol.append('h3')
 					.text(subName);
 
 				// for each item in the subheading group
@@ -386,7 +385,7 @@
 							.attr('class','dv-item-col col-sm-12');
 
 					// add header for item name
-					itemGroup.append('h3')
+					itemGroup.append('h4')
 						.attr('class','dv-item-name')
 						.text(itemName);
 
@@ -394,9 +393,12 @@
 					itemGroup.append('input')
 						.attr('class','dv-input form-control');
 
-					// add label for input currency
-					itemGroup.append('span')
-						.attr('class','dv-currency');
+					// add label for input currency, if item is not
+					// "overhead percentage"
+					if (itemName !== "Overhead percentage") {
+						itemGroup.append('span')
+							.attr('class','dv-currency');
+					}
 
 					// add label for input unit
 					itemGroup.append('span')
