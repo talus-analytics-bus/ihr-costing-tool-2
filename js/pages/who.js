@@ -133,17 +133,17 @@
 			{
 				nameAttr: 'intermediate_1_area_name',
 				valueAttr: 'intermediate_1_area_count',
-				description: 'Intermediate 1 area count',
+				description: 'Intermediate (e.g., province, district)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
-				description: 'Intermediate 2 area count',
+				description: 'Intermediate 2 (optional)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
-				description: 'Local area count',
+				description: 'Local (e.g., county, city)',
 				nameValues: ['Barangay', 'County', 'District', 'City'],
 			}
 		];
@@ -179,16 +179,16 @@
 		const phMults = [
 			{
 				name: 'central_hospitals_count',
-				description: 'Estimated total number of health care facilities in the country',
-				unit: 'facilities',
+				description: 'Number of health care facilities in the country',
+				unit: 'facilities / country',
 			},/* {
 				name: 'central_epi_count',
 				description: 'Estimated total number of epidemiologists in the country',
 				unit: 'people',
 			}, */{
 				name: 'central_chw_count',
-				description: 'Estimated total number of community health workers in the country',
-				unit: 'people',
+				description: 'Number of community health workers in the country',
+				unit: 'people / country',
 			}
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
