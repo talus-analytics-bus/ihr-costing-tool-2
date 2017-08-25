@@ -121,8 +121,15 @@
 		position: relative;
 		top: 5px;
 	}
-
 	.dv-item-name {
 		font-weight: normal;
+	}
+	.dv-input-group {
+		display: inline-block;
+	}
+	.dv-divider {
+		border-top: 1px solid #ccc;
+		margin-bottom: 20px;
+		margin-top: 20px;
 	}
 }

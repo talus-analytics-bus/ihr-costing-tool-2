@@ -38,7 +38,7 @@
 				name: 'Country Details',
 			}, {
 				abbr: 'default-costs',
-				name: 'Default Costs',
+				name: 'Cost Assumptions',
 			}
 		];
 
@@ -350,9 +350,15 @@
 			const tabNode = defaultCostsTree[i];
 			const tabName = Object.keys(tabNode)[0];
 
+				// add a divider if this isn't the final main header
+			if (true) {
+				d3.select('.dv-container').append('div')
+					.attr('class','dv-divider');
+			}
 			// add header for tab name
 			d3.select('.dv-container').append('h2')
 				.text(tabName);
+
 
 			// for each subheading group
 			for (let j = 0; j < tabNode[tabName].length; j++) {
@@ -389,22 +395,30 @@
 						.attr('class','dv-item-name')
 						.text(itemName);
 
+					// add item input group
+					const inputGroup = itemGroup.append('div')
+						.attr('class','dv-input-group');
+
 					// add input for item cost
-					itemGroup.append('input')
+					inputGroup.append('input')
 						.attr('class','dv-input form-control')
 						.attr('gbcid', itemNode.id);
 
 					// add label for input currency, if item is not
 					// "overhead percentage"
 					if (itemName !== "Overhead percentage") {
-						itemGroup.append('span')
+						inputGroup.append('span')
 							.attr('class','dv-currency');
 					}
 
 					// add label for input unit
-					itemGroup.append('span')
+					inputGroup.append('span')
 						.attr('class','dv-cost-unit')
 						.text(" " + itemNode.cost_unit);
+
+					// add default text warning
+					inputGroup.append('div')
+						.attr('class','dv-default-text default-text');
 
 					// add text for item description
 					itemGroup.append('span')
@@ -412,32 +426,7 @@
 						.text(itemNode.description);
 				}
 			}			
-
 		}
-
-		// tell user if they set the cost to non-default value
-		// TODO
-
-		// save any changes the user makes to the cost values
-		// TODO
-
-		// begin old code --------------------------------------------------------- //
-		// // look up exchange rate
-		// const exchangeRate = App.getExchangeRate();
-
-		// // build inputs from global costs data
-		// const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
-
-		// add "overhead" to list of global costs
-		defaultCosts.splice(3, 0, { name: 'Salary Overhead', id: 'overhead' });
-
-		Util.populateSelect('.dv-select', defaultCosts, {
-			nameKey: 'name',
-			valKey: 'id',
-		});
-		$('.dv-select').on('change', () => {
-			updateCostDisplay();
-		});
 
 		$('.dv-input').on('change', function() {
 			const input = d3.select(this);
@@ -471,17 +460,6 @@
 				}
 				checkIfDefault(gbcId, this);
 			});
-
-			// // OLD CODE BELOW
-			// const gbcId = $('.dv-select').val();
-			// if (gbcId === 'overhead') {
-			// 	$('.dv-input').val(Util.comma(100 * App.whoAmI.staff_overhead_perc));
-			// 	$('.dv-currency').text('%');
-			// } else {
-			// 	const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
-			// 	$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
-			// 	$('.dv-currency').text(App.whoAmI.currency_iso);
-			// }
 		}
 
 		function checkIfDefault(gbcId, selector) {
@@ -501,10 +479,12 @@
 			input.style('background-color', () => {
 				return isDefault ? '#fff' : inputNonDefaultColor;
 			});
+			const inputDefaultText = $(d3.select(input.node().parentNode).select('.dv-default-text').node());
+			console.log(input)
 			if (isDefault) {
-				$('.dv-default-text').slideUp();
+				inputDefaultText.slideUp();
 			} else {
-				$('.dv-default-text')
+				inputDefaultText
 					.text(defaultText)
 					.slideDown();
 			}
