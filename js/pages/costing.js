@@ -15,9 +15,7 @@
 			App.buildTabNavigation('.block-link-container', capId);
 			buildCapacityDescription();
 			buildIndicatorContent();
-			setupActionContent();
 			if (actions.length) showAction(actions[0]);
-			updateTotalCosts();
 			attachNextButtonBehavior();
 		}
 
@@ -34,20 +32,32 @@
 			updateIndicatorProgress();
 
 			// add indicators to slots
-			const indSlots = d3.select('.indicator-container').selectAll('.indicator-slot')
+			const indSlotContainers = d3.select('.indicator-container').selectAll('.indicator-slot-container')
 				.data(capacity.indicators)
 				.enter().append('div')
-					.attr('class', 'indicator-slot')
-					.classed('active', d => d.id === indId)
-					.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
-					.on('click', (d, i) => {
-						hasher.setHash(`costs/${capClass}/${i+1}`);
-					});
+					.attr('class', 'indicator-slot-container');
+			const indSlots = indSlotContainers.append('div')
+				.attr('class', 'indicator-slot')
+				.classed('active', d => d.id === indId)
+				.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+				.on('click', (d, i) => {
+					hasher.setHash(`costs/${capClass}/${i+1}`);
+				});
+
+			// add arrow
+			const chevron = indSlots.append('svg')
+				.attr('class', 'chevron')
+				.classed('active', d => d.id === indId)
+				.attr('viewBox', '0 0 24 24');
+			chevron.append('path').attr('d', 'M8 5v14l11-7z');
 
 			// add indicator name
 			indSlots.append('div')
+				.attr('class', 'indicator-id')
+				.text(d => `${d.id.toUpperCase()} - `);
+			indSlots.append('div')
 				.attr('class', 'indicator-name')
-				.text(d => `${d.id.toUpperCase()} - ${Util.truncateText(d.name)}`);
+				.text(d => Util.truncateText(d.name));
 
 			// add indicator score
 			const scoreContainer = indSlots.append('div')
@@ -65,97 +75,45 @@
 					return scoreStr;
 				});
 
-			// add cost for each indicator
-			indSlots.append('div').attr('class', 'indicator-cost');
-
 			// add description
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
-		}
 
-		// set up list of actions for user to choose from
-		function setupActionContent() {
-			if (actions.length) {
-				// add every action for the indicator
-				const headers = d3.select('.action-header-content').selectAll('.action-header')
-					.data(actions)
-					.enter().append('div')
-						.attr('class', 'action-header')
-						.on('click', (d) => {
-							showAction(d);
-						});
-				headers.append('div')
-					.attr('class', 'action-name')
-					.text(d => d.name);
-				headers.append('div')
-					.attr('class', 'action-scores')
-					.html((d) => {
-						if (indicator.score) {
-							if (User.targetScoreType === 'step') {
-								return `<img class="rp-score" src="img/rp-${indicator.score}.png" />` +
-									'<span>to</span>' +
-									`<img class="rp-score" src="img/rp-${indicator.score + 1}.png" />`;
-							} else if (User.targetScoreType === 'target') {
-								let lowestScore = d.score_step_to[0] - 1;
-								if (indicator.score > lowestScore) lowestScore = indicator.score;
-								let highestScore = d.score_step_to[d.score_step_to.length - 1];
-								if (User.targetScore < highestScore) highestScore = User.targetScore;
-								return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
-									'<span>to</span>' +
-									`<img class="rp-score" src="img/rp-${highestScore}.png" />`;
-							}
-						} else {
-							const lowestScore = d.score_step_to[0] - 1;
-							const highestScore = d.score_step_to[d.score_step_to.length - 1];
-							return `<img class="rp-score" src="img/rp-${lowestScore}.png" />` +
-								'<span>to</span>' +
-								`<img class="rp-score" src="img/rp-${highestScore}.png" />`;							
-						}
-						return '';
+			// add actions under each indicator
+			const actionSlotContainers = indSlotContainers.filter(d => d.id === indId).selectAll('.action-slot')
+				.data(actions)
+				.enter().append('div')
+					.attr('class', 'action-slot-container');
+			const actionSlots = actionSlotContainers.append('div')
+				.attr('class', 'action-slot')
+				.on('click', d => showAction(d));
+			actionSlots.append('input').attr('type', 'radio');
+			actionSlots.append('div')
+				.attr('class', 'action-name')
+				.text(d => `${d.id.toUpperCase()} - ${d.name}`);
 
-					});
-				headers.append('div').attr('class', 'action-cost');
-			} else {
-				$('.action-header-content, .item-block-container').hide();
-				$('.action-header-empty-content').show();
-			}
-		}
-
-		function showAction(action) {
-			// make this header active
-			d3.selectAll('.action-header')
-				.classed('active', d => d.id === action.id);
-
-			// show correct items for this action
-			showItemBlocks(action);
-		}
-
-		function showItemBlocks(action) {
-			let items = d3.select('.item-block-container').selectAll('.item-block')
-				.data(action.inputs);  // TODO needs to be line items for action
+			// build container to put the items
+			let items = actionSlotContainers.append('div')
+				.attr('class', 'item-block-container')
+				.selectAll('.item-block')
+					.data(d => App.getNeededInputs(d.inputs, indicator.score));
 			items.exit().remove();
 
 			// add HTML structure to each new item
 			const newItems = items.enter().append('div')
 				.attr('class', 'item-block');
 			newItems.append('div').attr('class', 'item-title');
-			newItems.append('div').attr('class', 'item-cost');
-			newItems.append('div').attr('class', 'item-default-cost');
-			const costInputContainer = newItems.append('div').attr('class', 'item-cost-input-container');
-			costInputContainer.append('input').attr('class', 'startup-cost-input form-control');
-			costInputContainer.append('span').text(`${App.whoAmI.currency_iso} +`);
-			costInputContainer.append('input').attr('class', 'recurring-cost-input form-control');
-			costInputContainer.append('span').text(`${App.whoAmI.currency_iso}/yr`);
+			
+			const startupContainer = newItems.append('div').attr('class', 'item-startup-cost-container');
+			startupContainer.append('div').text('Startup Cost: ');
+			startupContainer.append('input').attr('class', 'startup-cost-input form-control');
+			startupContainer.append('div').text(App.whoAmI.currency_iso);
+			
+			const recurringContainer = newItems.append('div').attr('class', 'item-recurring-cost-container');
+			recurringContainer.append('div').text('Recurring Cost: ');
+			recurringContainer.append('input').attr('class', 'recurring-cost-input form-control');
+			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
 
-			newItems.append('div')
-				.attr('class', 'item-select-button')
-				.text('Selected');
 			const itemFooters = newItems.append('div').attr('class', 'item-footer');
-			itemFooters.append('div')
-				.attr('class', 'item-edit-cost-button')
-				.text('Edit Item Cost');
-			itemFooters.append('div')
-				.attr('class', 'item-save-cost-button')
-				.text('Save Item Cost');
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
 				.text('View Details')
@@ -170,12 +128,6 @@
 
 			items = newItems.merge(items);
 			items.select('.item-title').text(d => d.name);
-			items.select('.item-cost').html((d) => {
-				return d.isCustomCost ? App.getCustomCostText(d) : App.getCostText(d);
-			});
-			items.select('.item-default-cost')
-				.style('display', d => d.isCustomCost ? 'block' : 'none')
-				.text(d => `Default: ${App.getCostText(d)}`);
 			items.select('.startup-cost-input')
 				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
 				.on('change', function(d) {
@@ -190,53 +142,6 @@
 					d.customRecurringCost = Util.getInputNumVal(this);
 					if (!d.customStartupCost) d.customStartupCost = d.startupCost + d.capitalCost;
 				});
-			items.select('.item-select-button')
-				.classed('selected', d => d.selected)
-				.on('click', function(d) {
-					// user toggles an item
-					d.selected = !d.selected;
-					d3.select(this)
-						.classed('selected', d.selected)
-						.text(d.selected ? 'Selected': 'Select');
-
-					updateTotalCosts();
-				});
-
-			// clicking "edit cost" turns cost into an input
-			items.select('.item-edit-cost-button').on('click', function(d) {
-				const $container = $(this).closest('.item-block');
-				$container.find('.item-cost, .item-default-cost, .item-edit-cost-button')
-					.css('display', 'none');
-				$container.find('.item-cost-input-container').css('display', 'block');
-				$container.find('.item-save-cost-button').css('display', 'inline-block');
-			});
-
-			// clicking "save cost" saves the cost of the input
-			items.select('.item-save-cost-button').on('click', function(d) {
-				const $container = $(this).closest('.item-block');
-
-				// update text
-				if (d.isCustomCost) {
-					$container.find('.item-cost')
-						.css('display', 'block')
-						.text(App.getCustomCostText(d));
-					$container.find('.item-default-cost')
-						.css('display', 'block')
-						.text(`Default: ${App.getCostText(d)}`);
-				} else {
-					$container.find('.item-cost')
-						.css('display', 'block')
-						.text(App.getCostText(d));
-				}
-
-				// update all costs
-				updateTotalCosts();
-
-				// change display of inputs to display of text
-				$container.find('.item-cost-input-container, .item-save-cost-button')
-					.css('display', 'none');
-				$container.find('.item-edit-cost-button').css('display', 'inline-block');
-			});
 
 			// clicking "view details" show a list of line items
 			items.select('.item-view-details-button').each(function(d) {
@@ -291,11 +196,23 @@
 			});
 		}
 
-		// updates the total cost of the actions
-		function updateTotalCosts() {
-			App.updateAllCosts();
-			d3.selectAll('.action-cost').html(d => App.getCostText(d));
-			d3.selectAll('.indicator-cost').html(d => App.getCostText(d));
+		function showAction(action) {
+			// make the correct action slot active
+			d3.selectAll('.action-slot-container, .action-slot')
+				.classed('active', d => d.id === action.id)
+				.select('input')
+					.property('checked', d => d.id === action.id);
+
+			// show correct item container
+			$('.action-slot-container:not(.active) .item-block-container').slideUp();
+			$('.action-slot-container.active .item-block-container').slideDown();
+
+			// update descriptions
+			if (actions.length) {
+				$('.action-description').html(`${action.id.toUpperCase()} - ${action.name}`);
+			} else {
+				$('.action-description').html('<i>No actions need to be taken to increase the score for this indicator</i>');
+			}
 		}
 
 

@@ -118,12 +118,40 @@
 			<p>The IHR Costing Tool provides cost estimates to support practical planning for sustainable capacity development to prevent, detect, and respond to public health threats, as defined by the International Health Regulations (IHR).</p>
 			<p>This tool provides a framework to calculate costs for implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost calculations developed using best practices for achieving the technical standards specified in the Joint External Evaluation Tool (JEE).</p>
 			</div>
-
 			<div class="btn-col col-sm-12 center">
 				<button type="button" class="btn btn-primary enter-site">Enter</button>
 			</div>
 		</div>
 	</script>
+
+	<script id="country-template" type="text/x-handlebars-template">
+		<div class="country-container container">
+			<h1>Enter Country</h1>
+			<div class="map-container">
+				<div id="leaflet-map"></div>
+			</div>
+			<div class="country-control-container row">
+				<div class="col-6">
+					<div class="country-label country-country-label">Choose country:</div>
+					<select class="country-dropdown form-control"></select>
+				</div>
+				<div class="col-6">
+					<div class="country-label">Search for country:</div>
+					<div class="country-search-container">
+						<input class="country-search-input form-control" placeholder="search for a country..." />
+						<div class="live-search-results-container">
+							<div class="live-search-no-results-text">No results found</div>
+							<div class="live-search-results-contents"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="next-button-container">
+				<button type="button" class="btn btn-primary go-to-assessment-button">Continue to Assessment</button>
+			</div>
+		</div>
+	</script>
+
 
 	<!-- Overview/Assessment Instructions page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
@@ -181,7 +209,7 @@
 							</div>
 						</div>
 						<div class='start-button-container center margin-top-20'>
-							<button type="button" class="btn btn-secondary go-to-costing-button">Go to costing</button>
+							<button type="button" class="btn btn-secondary go-to-costing-button">Go to Costing</button>
 						</div>
 					</div>
 				</div>
@@ -196,19 +224,6 @@
 			<div>
 				<h1>Costing Instructions</h1>
 				<p>The goal of the IHR Costing Tool is to provide national leaders with realistic cost information to plan for initial IHR compliance and sustainable public health capacity development.</p>
-			</div>
-			<div>
-				<h2>Before Starting</h2>
-				<p>
-					Current JEE assessment scores are needed to use the IHR Costing Tool. Indicator scores should be from a recent JEE assessment report. The full JEE Tool is available <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">here</a>.
-				</p>
-				<p>It is also useful to have any local cost information in use for public health planning available before starting. This includes salary information for public health workers (e.g. laboratory technicians, epidemiologists, etc.), costs for training, meetings, common laboratory supplies, and office equipment. Default costs are provided throughout the tool where available, but should be replaced by country-specific data wherever possible for the most accurate cost estimates.</p>
-			</div>
-			<div>
-				<h2>Process Overview</h2>
-				<p>First, the tool is customized for country-specific costing including currency, country population, geopolitical organization, and public health infrastructure.</p>
-				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
-				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
 			</div>
 			<div>
 				<h2>Select Target Score</h2>
@@ -230,6 +245,19 @@
 					</div>
 				</div>
 			</div>
+			<div>
+				<h2>Before Starting</h2>
+				<p>
+					Current JEE assessment scores are needed to use the IHR Costing Tool. Indicator scores should be from a recent JEE assessment report. The full JEE Tool is available <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">here</a>.
+				</p>
+				<p>It is also useful to have any local cost information in use for public health planning available before starting. This includes salary information for public health workers (e.g. laboratory technicians, epidemiologists, etc.), costs for training, meetings, common laboratory supplies, and office equipment. Default costs are provided throughout the tool where available, but should be replaced by country-specific data wherever possible for the most accurate cost estimates.</p>
+			</div>
+			<div>
+				<h2>Process Overview</h2>
+				<p>First, the tool is customized for country-specific costing including currency, country population, geopolitical organization, and public health infrastructure.</p>
+				<p>After customizing for the country, current JEE assessment scores are used to define what spending is required to further IHR implementation. The tool calculates costs based on stepping to the next capacity level (score) for all indicators. JEE assessment scores are either selected sequentially for each JEE indicator or uploaded using a specified file format. Based on the new target score for each capacity, the tool steps through the costing process which involves reviewing default cost calculations, supplying specific local costs, and in select cases choosing between two approaches to achieve a capacity.</p>
+				<p>Finally, after all indicator assessment scores are entered and costing is complete, the interactive results page summarizes cost information by core capacity or indicator with ability to view costs by type (e.g. human capabilities, technology, consumables, etc.) and by start-up, recurring annual costs, or a 5-year cost estimate.</p>
+			</div>
 			<div class="start-button-container">
 				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
 			</div>
@@ -242,45 +270,24 @@
 			<!-- TODO add tabs (block links) -->
 			<div class="block-link-container block-link-costing"></div>
 			<div class="block-container input-block-container">
-				<div class="block country-block no-reset">
+				<div class="block currency-block no-reset">
 					<div class="block-title">
 						<span class="block-title-title"><h1>Select Your Country and Currency</h1></span>
 					</div>
-					<div class="row">
-						<div class="country-control-container">
-							<div class="">
-								<div class="country-label country-country-labael">Choose country:</div>
-								<div class="country-dropdown-container">
-									<div class="country-dropdown dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Choose country
-										</button>
-										<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-										</div>
-									</div>
-								</div>
-								<div class="country-label country-currency-label">Default currency:</div>
-								<div class="currency">
-									<div class="currency-container dropdown">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Choose currency
-										</button>
-										<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
-										</div>
-									</div>
+					<div class="country-control-box">
+						<div class="country-label country-currency-label">Default currency:</div>
+						<div class="currency">
+							<div class="currency-container dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Choose currency
+								</button>
+								<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
 								</div>
 							</div>
 						</div>
-						<div class="map-container">
-							<div style="clear:both"></div>
-							<div id="leaflet-map" style="width: 600px; height: 400px"></div>
-						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
@@ -290,37 +297,45 @@
 						<span class="block-title-title">Population of the Country</span>
 					</div>
 					<div class="block-content">
-						<div class="block-description">
-							Default estimated total population for the selected country.
-							To edit the estimate, change the population below.
-						</div>
-						<div class="estimated-population">
-							<div><b>Estimated total population of the country:</b></div>
-							<div class="input-container">
-								<input id="population" class="population-input form-control" />
-								<span> people</span>
+						<div class="population-section">
+							<div class="block-description">
+								Default estimated total population for the selected country.
+								To edit the estimate, change the population below.
 							</div>
-							<div class="default-pop-text default-text"></div>
+							<div class="estimated-population">
+								<div><b>Estimated total population of the country:</b></div>
+								<div class="input-container">
+									<input id="population" class="population-input form-control" />
+									<span> people</span>
+								</div>
+								<div class="default-pop-text default-text"></div>
+							</div>
+						</div>
+						<div class="currency-section">
+							<div class="block-description">
+								The currency to use for costing.
+								To edit the currency, select a different one below.
+							</div>
+							<div>
+								<div><b>Currency:</b></div>
+								<select class="currency-select form-control"></select>
+							</div>
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
 				<!-- Geographical Divisions -->
 				<div class="block country-details-block no-reset">
 					<div class="block-title">
-						<span class="block-title-title">Geographical Division of the Country</span>
+						<span class="block-title-title">Geographic Division</span>
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Default geographical divisions of the country describes how the country is organized by area groupings.
-							<br>To edit the defaults, change the details below.
+							Describes how the country is organized by geographic area groupings.
+							To edit the defaults, change the details below.
 						</div>
 						<table class="geo-division-table">
 							<tbody></tbody>
@@ -343,11 +358,7 @@
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
-						<button class="btn btn-primary next-button">Next</button>
-						<div>
-							<button type="button" class="btn btn-secondary proceed-button">Proceed to Costing</button>
-						</div>
+						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
 
@@ -362,7 +373,6 @@
 						<div class="dv-container"></div>
 					</div>
 					<div class="next-button-container">
-						<button class="btn btn-secondary previous-button">Previous</button>
 						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
 					</div>
 				</div>
@@ -386,14 +396,14 @@
 						<h4 class="indicator-progress"></h4>
 						<div class="indicator-container"></div>
 					</div>
-					<h5 class='indicator-description'></h5>
-					<div class='action-container'>
-						<div class='action-headers'>
-							<div class='action-header-title'>Actions to Achieve Compliance:</div>
-							<div class='action-header-content'></div>
-							<div class="action-header-empty-content">
-								No actions are needed to achieve the target score for this indicator.
-							</div>
+					<div class="item-section">
+						<div class="indicator-description-container">
+							<b>Indicator:</b>
+							<div class='indicator-description'></div>
+						</div>
+						<div class="action-description-container">
+							<b>Action:</b>
+							<div class="action-description"></div>
 						</div>
 						<div class='item-block-container'></div>
 					</div>
@@ -404,11 +414,8 @@
 								<button type="button" class="btn btn-primary next-cost"><i class="material-icons">skip_next</i></button>
 							</div>
 						</div>
-						<div class='margin-top-10'></div>
-						<div class='btn-row row'>
-							<div class='btn-col col-sm-12 center'>
-								<button type="button" class="btn btn-secondary go-to-results-button">Go to Results</button>
-							</div>
+						<div class='start-button-container center margin-top-20'>
+							<button type="button" class="btn btn-secondary go-to-results-button">Go to Results</button>
 						</div>
 					</div>
 				</div>
@@ -554,6 +561,7 @@
 <!-- Other -->
 <script src="lib/bullet.js"></script>
 <script src="lib/popper.js"></script>
+<script src="lib/fuse.min.js"></script>
 <script src="lib/tether.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 <script src="lib/bootstrap-multiselect.js"></script>
@@ -577,6 +585,7 @@
 <script src="js/pages/contact.js"></script>
 <script src="js/pages/costing.js"></script>
 <script src="js/pages/costsInstructions.js"></script>
+<script src="js/pages/country.js"></script>
 <script src="js/pages/home.js"></script>
 <script src="js/pages/overview.js"></script>
 <script src="js/pages/results.js"></script>

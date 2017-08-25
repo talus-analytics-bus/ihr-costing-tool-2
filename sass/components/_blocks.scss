@@ -6,19 +6,20 @@
 .block-link-capabilities-header {
   position: relative;
   color: black;
-  padding: 15px 30px;
+  padding: 15px 30px 15px 25px;
   border: $border;
   font-family: 'Open Sans', sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  @include border-left-radius(20px);
-  @include hori-gradient(#f0f0f0, white);
+  @include border-left-radius(15px);
+  @include gradient(white, #e6e6e6);
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
 
   &.active {
-    @include hori-gradient($lightest-blue, white);
+    @include gradient(white, $light-blue);
+    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
   }
   .chevron {
     top: 3px;
@@ -30,7 +31,7 @@
   position: relative;
   width: 90%;
   left: 10%;
-  padding: 10px 30px 10px 30px;
+  padding: 10px 30px;
   border-right: $border;
   border-bottom: $border;
   border-left: $border;
@@ -39,7 +40,7 @@
   color: black;
   cursor: pointer;
   @include border-left-radius(15px);
-  @include hori-gradient(#f0f0f0, white);
+  @include gradient(white, #e6e6e6);
   @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
   @include noselect;
   
@@ -49,7 +50,6 @@
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 45px;
-    .block-status { top: 17px; }
     .block-link-arrow {
       top: 20px;
       width: 13px;
@@ -61,8 +61,20 @@
   &.active {
     border-right: none;
     font-weight: bold;
-    @include hori-gradient($light-blue, white);
+    @include gradient(white, $light-blue);
+    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
   }
+}
+.block-score-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 7px;
+  height: 100%;
+
+  &[color="red"] { background-color: rgba($jeeRed, 0.8); }
+  &[color="yellow"] { background-color: rgba($jeeYellow, 1); }
+  &[color="green"] { background-color: rgba($jeeGreen, 1); }
 }
 .block-link-cover {
   position: absolute;
@@ -70,29 +82,17 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  @include border-left-radius(25px);
+  @include border-left-radius(15px);
   background-color: transparent;
   &:hover {
-    @include hori-gradient(rgba(0,0,0,0.04), transparent);
+    @include hori-gradient(rgba(0,0,0,0.1), transparent);
   }
 }
 .block-link-title {
   font-size: 1.1em;
-  // font-weight: 600;
 }
-.block-status {
-  position: absolute;
-  top: 22px;
-  right: 30px;
-}
-.block-link-arrow {
-  position: absolute;
-  top: 14px;
-  left: 12px;
-  width: 15px;
-  height: 15px;
-  opacity: 0.7;
-}
+
+
 /* --- Block Content --- */
 .block-container { border-top: $light-border; }
 .block {

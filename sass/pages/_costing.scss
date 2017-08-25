@@ -9,86 +9,20 @@
 .costing-instructions {
 	margin-top: 20px;
 }
-.action-container {
-	margin: 30px 0 20px;
-	border: $border;
+.indicator-description-container,
+.action-description-container {
+	max-width: 700px;
 	margin-left: 30px;
-}
-.choose-action-instructions {
-	font-style: italic;
-	margin-top: 10px;
-}
-.action-headers {
-	padding: 10px 20px 7px;
-	background-color: #f9f9f9;
-
-	.action-header-title {
-		font-weight: 600;
-		font-variant: small-caps;
-		margin-bottom: -2px;
-	}
-}
-.action-header-content {
-	margin: 10px 30px;
-	width: 650px;
-}
-.action-header-empty-content {
-	display: none;
-	margin: 25px 20px 20px;
-	text-align: center;
-	font-style: italic;
-}
-.action-header {
-	display: flex;
-	border: $border;	
-	padding: 4px 20px;
-	color: #444;
-	font-size: 0.9em;
-	justify-content: space-between;
-	cursor: pointer;
-	@include gradient(#fff, #f0f0f0);
-
-	&:hover { color: #000; }
-	&.active {
-	 	color: #000;
-		@include gradient(#fff, $light-blue);
-		.action-name,
-		.action-cost {
-			font-weight: 600;
-		}
-	}
-	&:nth-child(n+2) {
-		border-top: none;
-	}
-	.action-name {
-	 	display: inline-block;
-	 	margin-right: 10px;
-	}
-	.action-scores {
-		margin-left: auto;
-		min-width: 60px;
-	}
-	.action-scores span {
-		margin: 0 5px;
-		font-size: 0.95em;
-	}
-	.rp-score {
-		width: 20px;
-		height: 20px;
-	}
-	.action-cost {
-		display: inline-block;
-		min-width: 180px;
-		text-align: right;
-	}
-}
-.item-block-container {
-	position: relative;
-	border-top: $border;
-	padding: 15px 15px 25px;
-	background-color: #c9c9c9;
-	overflow-x: auto;
+	margin-bottom: 5px;
 	white-space: nowrap;
+
+	b, div {
+		display: inline-block;
+		white-space: normal;
+		vertical-align: top;
+	}
+	b { width: 80px; }
+	div { margin-left: 2px; }
 }
 .go-to-results-button {
 	margin-top: 10px;

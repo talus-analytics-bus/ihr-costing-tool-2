@@ -5,30 +5,32 @@
 	padding: 15px;
 	border: $border;
 	text-align: center;
-	width: 320px;
+	width: 360px;
 	height: 100%;
 	vertical-align: top;
 	white-space: normal;
 	@include gradient(#f0f0f0, #fff);
-	@include box-shadow(2px 2px 5px rgba(0,0,0,0.2));
+	@include box-shadow(3px 3px 6px rgba(0,0,0,0.3));
 
 	.item-title {
 		font-family: 'Raleway', sans-serif;
 		font-size: 1.2em;
 	}
-	.item-cost {
-		margin-top: 10px;
-		font-size: 1.6em;
-		font-weight: 600;
+	.item-startup-cost-container {
+		margin-top: 20px;
 	}
-	.item-default-cost {
-		margin-top: 5px;
-		font-size: 0.9em;
-		font-weight: 600;
-	}
-	.item-cost-input-container {
-		display: none;
-		margin-top: 10px;
+	.item-startup-cost-container,
+	.item-recurring-cost-container {
+		div:first-child {
+			display: inline-block;
+			width: 111px;
+			text-align: right;
+		}
+		div:last-child {
+			display: inline-block;
+			width: 60px;
+			text-align: left;
+		}
 	}
 	.startup-cost-input,
 	.recurring-cost-input {
@@ -38,31 +40,11 @@
 		padding: 6px 12px;
 		text-align: right;
 	}
-
-	.item-select-button {
-		margin: 20px 0 80px;
-		display: inline-block;
-		padding: 2px 35px;
-		border: $border;
-		font-size: 0.8rem;
-		cursor: pointer;
-		@include noselect;
-		@include gradient(#fff, #e0e0e0);
-		&.selected {
-			border: 1px solid rgba(0,0,0,0.1);
-			color: white;
-			@include gradient(#4a8bc3, #3071a9);
-		}
-	}
 	.item-footer {
-		position: absolute;
-		left: 0;
-		bottom: 15px;
-		width: 100%;
+		margin-top: 50px;
+		margin-bottom: 15px;
 		text-align: center;
 	}
-	.item-edit-cost-button,
-	.item-save-cost-button,
 	.item-view-details-button {
 		display: inline-block;
 		padding: 2px 15px;
@@ -72,12 +54,9 @@
 		@include noselect;
 		@include gradient(#fff, #f0f0f0);
 		@include box-shadow(1px 1px 3px rgba(0,0,0,0.05));
-		&:nth-child(n+2) {
-			margin-left: 10px;
+		&:hover {
+			@include gradient(#fff, #e0e0e0);
 		}
-	}
-	.item-save-cost-button {
-		display: none;
 	}
 }
 .item-details-container {
