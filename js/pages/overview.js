@@ -1,5 +1,5 @@
 (() => {
 	App.initOverview = () => {
-		$('.overview-start').click(() => { hasher.setHash('scores/'); });
+		$('.next-button').click(() => { hasher.setHash('scores/'); });
 	}
 })();

@@ -156,28 +156,26 @@
 	<!-- Overview/Assessment Instructions page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
 		<div class="overview-container container container-text">
+			<h1>Assessment Instructions</h1>
 			<div>
-				<h1>Assessment Instructions</h1>
 				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. These scores should be from a recently completed JEE assessment. Scores may either be uploaded automatically or entered manually. Upload uses reports from the JEE Technology Tool, an online source for completed JEE assessments.</p><p>The JEE Technology Tool was developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.</p>
-				</div>
-				<div>
+			</div>
+			<div>
 				<h2>Automatic Score Upload</h2>
 				<p>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</p>
 				<p>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</p>
 				<p>3.  Click “Continue to Assessment” to review uploaded scores.</p>
-				<div class="button-group">
-					<div>
-						<button type="button" class="btn btn-primary">Select a File</button>
-					</div>
+				<div class="upload-button-container">
+					<button type="button" class="btn btn-secondary">Select a File</button>
 				</div>
-				<div>
+			</div>
+			<div>
 				<h2>Manual Score Entry</h2>
 				<p>1. If no electronic report is available in the required format for upload, scores can be entered manually.</p>
 				<p>2. Click “Continue to Assessment” to begin entering scores.</p>
-				<div class="button-group">
-					<div>
-						<button type="button" class="btn btn-primary">Continue to Assessment</button>
-					</div>
+				<div class="next-button-container">
+					<button type="button" class="overview-start btn btn-primary">Continue to Assessment</button>
+				</div>
 			</div>
 		</div>
 	</script>

@@ -54,6 +54,7 @@
 			.html(d => `${d.id.toUpperCase()} - ${d.name}`);
 		blockLinks.append('div')
 			.attr('class', 'block-link-subtitle')
+			.classed('active', d => d.id === capId)
 			.html((d) => {
 				const numScored = d.indicators.filter(ind => ind.score).length;
 				return `${numScored} of ${d.indicators.length}`;

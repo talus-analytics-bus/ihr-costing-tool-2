@@ -2,14 +2,11 @@
 	& > div:nth-child(n+2) {
 		margin-top: 15px;
 	}
-  .button-group {
-    margin-top: 20px;
-    margin-bottom: 20px;
-
-    p { margin-bottom: 10px; }
+  .upload-button-container {
+    margin-bottom: 25px;
   }
-  div.start-button-container {
+  div.next-button-container {
   	text-align: center;
-  	margin-top: 25px;
+  	margin-top: 30px;
   }
 }
