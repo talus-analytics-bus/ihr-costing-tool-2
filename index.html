@@ -133,20 +133,21 @@
 			<div class="country-control-container row">
 				<div class="col-6">
 					<div class="country-label country-country-label">Choose country:</div>
-					<div class="country-dropdown-container">
-						<div class="country-dropdown dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Choose country
-							</button>
-							<div class="country-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-							</div>
-						</div>
-					</div>
+					<select class="country-dropdown form-control"></select>
 				</div>
 				<div class="col-6">
 					<div class="country-label">Search for country:</div>
-					<input class="form-control" />
+					<div class="country-search-container">
+						<input class="country-search-input form-control" placeholder="search for a country..." />
+						<div class="live-search-results-container">
+							<div class="live-search-no-results-text">No results found</div>
+							<div class="live-search-results-contents"></div>
+						</div>
+					</div>
 				</div>
+			</div>
+			<div class="next-button-container">
+				<button type="button" class="btn btn-primary go-to-assessment-button">Continue to Assessment</button>
 			</div>
 		</div>
 	</script>
@@ -565,6 +566,7 @@
 <!-- Other -->
 <script src="lib/bullet.js"></script>
 <script src="lib/popper.js"></script>
+<script src="lib/fuse.min.js"></script>
 <script src="lib/tether.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 <script src="lib/bootstrap-multiselect.js"></script>

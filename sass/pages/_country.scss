@@ -1,11 +1,17 @@
 #leaflet-map {
 	width: 100%;
-	height: 500px;
+	height: 480px;
 }
 .country-container {
+	.map-container {
+		position: relative;
+		z-index: 10;
+	}
 	.country-control-container {
+		position: relative;
 		margin-top: 20px;
 		width: 100%;
+		z-index: 1000;
 	}
 	.row { margin-left: 0; }
 	.dropdown button {
@@ -15,4 +21,45 @@
 		font-weight: 600;
 		margin-bottom: 3px;
 	}
+	.next-button-container {
+		margin-top: 30px;
+		text-align: center;
+	}
 }
+.country-search-container {
+	position: relative;
+}
+.live-search-results-container {
+  display: none;
+  position: absolute;
+  bottom: 38px;
+  width: 300px;
+  background-color: white;
+  border-left: $light-border;
+  border-right: $light-border;
+  text-align: left;
+}
+.live-search-no-results-text {
+  display: none;
+  padding: 10px;
+  text-align: center;
+  border-top: $light-border;
+  font-style: italic;
+  font-size: 0.9em;
+}
+.live-search-results-box {
+  padding: 10px;
+  border-top: $light-border;
+  cursor: pointer;
+  @include gradient(#fff, #f9f9f9);
+  &:first-child { border-top: $light-border; }
+  &:hover {
+    @include gradient(#eee, #e8e8e8);
+    div { color: #000; }
+  }
+}
+.live-search-results-title {
+	font-size: 1rem;
+	font-weight: 600;
+}
+.live-search-results-subtitle { font-size: 0.8rem; }

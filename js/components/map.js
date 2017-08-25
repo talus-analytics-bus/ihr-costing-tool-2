@@ -5,7 +5,7 @@
 	App.createLeafletMap = () => {
 
 		const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
-		const mapConfig = {
+		App.mapConfig = {
 			divId: 'leaflet-map',
 			view: {
 				coordinates: [20, 0],
@@ -31,19 +31,20 @@
 				},
 				selected: {
 					fillColor: '#dd0000',
+					weight: 1,
+					color: '#333',
 				}
 			}
 		};
 
 
-
 		let map, info, activeCountry = '';
 
 		const initMap = () => {
-			map = L.map(mapConfig.divId, { zoomSnap: 0.1 })
-				.setView(mapConfig.view.coordinates, mapConfig.view.zoom);
+			map = L.map(App.mapConfig.divId, { zoomSnap: 0.1 })
+				.setView(App.mapConfig.view.coordinates, App.mapConfig.view.zoom);
 
-			L.tileLayer(mapConfig.url, mapConfig.options).addTo(map);
+			L.tileLayer(App.mapConfig.url, App.mapConfig.options).addTo(map);
 
 			info = L.control({ position: 'topright' })
 				.setPosition('topright');
@@ -64,7 +65,7 @@
 			const layer = e.target;
 
 			if (activeCountry !== layer.feature.properties.iso_a2) {
-				layer.setStyle(mapConfig.styles.active);
+				layer.setStyle(App.mapConfig.styles.active);
 
 				//info.update(layer.feature.properties);
 			}
@@ -84,8 +85,6 @@
 			if (abbreviation === activeCountry) {
 				activeCountry = '';
 				App.geoJson.resetStyle(e.target);
-				d3.select('.country-dropdown.dropdown > button')
-					.text('Choose country');
 				App.whoAmI = {};
 				return;
 			}
@@ -93,19 +92,13 @@
 
 			App.geoJson.eachLayer((layer) => {
 				if (abbreviation === layer.feature.properties.iso_a2) {
-					layer.setStyle(mapConfig.styles.selected);
+					layer.setStyle(App.mapConfig.styles.selected);
 				} else {
 					App.geoJson.resetStyle(layer);
 				}
 			});
 
-			const countryParam = _.findWhere(App.countryParams, {abbreviation});
-			d3.select('.country-dropdown.dropdown > button')
-				.text(countryParam.name);
-			App.whoAmI = JSON.parse(JSON.stringify(countryParam));
-			App.updateAllCosts();
-			d3.select('.currency-container > button').text(App.currencies[App.whoAmI.currency_iso].name);
-
+			App.updateCountry(abbreviation);
 		}
 
 		const featureEventHandlers = (feature, layer) => {
@@ -117,16 +110,16 @@
 
 			// check if country has already been selected
 			if (App.whoAmI.hasOwnProperty('abbreviation') && App.whoAmI.abbreviation === layer.feature.properties.iso_a2) {
-				layer.setStyle(mapConfig.styles.selected);
+				layer.setStyle(App.mapConfig.styles.selected);
 				activeCountry = App.whoAmI.abbreviation;
 
 			}
 		}
 
 		const renderMap = () => {
-			$.getJSON('data/custom.geo.json' , (data) => {
+			$.getJSON('data/custom.geo.json', (data) => {
 				App.geoJson = L.geoJson(data, {
-					style: mapConfig.styles.default,
+					style: App.mapConfig.styles.default,
 					onEachFeature: featureEventHandlers,
 				}).addTo(map);
 			});
@@ -137,9 +130,10 @@
 
 		// wrap in timeout to make sure that dom element is already present
 		setTimeout(() => {
-
 			initMap();
 			renderMap();
 		}, 100);
+
+		return map;
 	}
 })();
