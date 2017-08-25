@@ -92,15 +92,84 @@
 				.text(d => `${d.id.toUpperCase()} - ${d.name}`);
 
 			// build container to put the items
-			let items = actionSlotContainers.append('div')
+			const itemLeft = '155px';
+			const itemOffRight = '800px';
+			const itemOffLeft = '-800px';
+			const itemContainers = actionSlotContainers.append('div')
 				.attr('class', 'item-block-container')
-				.selectAll('.item-block')
-					.data(d => App.getNeededInputs(d.inputs, indicator.score));
-			items.exit().remove();
+				.each(d => d.itemShownIndex = 0);
 
-			// add HTML structure to each new item
+			// add arrows for each item block container and progress text
+			itemContainers.append('div')
+				.attr('class', 'item-block-progress-text')
+				.text(d => `Item 1 of ${App.getNeededInputs(d.inputs, indicator.score).length}`);
+			itemContainers.append('div')
+				.attr('class', 'item-block-arrow-prev item-block-arrow')
+				.style('display', 'none')
+				.on('click', function(d) {
+					// scroll to previous item
+					const $container = $(this).parent();
+					$container.find(`.item-block[item-index=${d.itemShownIndex}]`).animate({
+						left: itemOffRight,
+					});
+					d.itemShownIndex--;
+					$container.find(`.item-block[item-index=${d.itemShownIndex}]`).animate({
+						left: itemLeft,
+					});
+
+					// update progress text
+					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
+					$container.find('.item-block-progress-text')
+						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+
+					// hide previous button if at beginning
+					if (d.itemShownIndex === 0) $(this).hide();
+
+					// show next button
+					$container.find('.item-block-arrow-next').show();
+				})
+				.append('img')
+					.attr('src', 'img/prev-arrow.png')
+					.attr('alt', 'Previous');
+			itemContainers.append('div')
+				.attr('class', 'item-block-arrow-next item-block-arrow')
+				.style('display', (d) => {
+					return App.getNeededInputs(d.inputs, indicator.score).length > 1 ? 'block' : 'none';
+				})
+				.on('click', function(d) {
+					// scroll to next item
+					const $container = $(this).parent();
+					$container.find(`.item-block[item-index=${d.itemShownIndex}]`).animate({
+						left: itemOffLeft,
+					});
+					d.itemShownIndex++;
+					$container.find(`.item-block[item-index=${d.itemShownIndex}]`).animate({
+						left: itemLeft,
+					});
+
+					// update progress text
+					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
+					$container.find('.item-block-progress-text')
+						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+
+					// hide next button if at end
+					if (d.itemShownIndex + 1 >= numItems) $(this).hide();
+
+					// show previous button
+					$container.find('.item-block-arrow-prev').show();
+				})
+				.append('img')
+					.attr('src', 'img/next-arrow.png')
+					.attr('alt', 'Next');
+
+			// add/update the items in the item containers
+			let items = itemContainers.selectAll('.item-block')
+				.data(d => App.getNeededInputs(d.inputs, indicator.score));
+			items.exit().remove();			
+
 			const newItems = items.enter().append('div')
-				.attr('class', 'item-block');
+				.attr('class', 'item-block')
+				.attr('item-index', (d, i) => i);
 			newItems.append('div').attr('class', 'item-title');
 			
 			const startupContainer = newItems.append('div').attr('class', 'item-startup-cost-container');
@@ -126,7 +195,8 @@
 					});
 				});
 
-			items = newItems.merge(items);
+			items = newItems.merge(items)
+				.style('left', (d, i) => (i === 0) ? itemLeft : itemOffRight);
 			items.select('.item-title').text(d => d.name);
 			items.select('.startup-cost-input')
 				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
@@ -149,14 +219,15 @@
 				const content = contentContainer.append('div')
 					.attr('class', 'item-details-container');
 				
-				const startupItems = d.line_items.filter((li) => {
+				const lineItems = App.getNeededLineItems(d.line_items, indicator.score);
+				const startupItems = lineItems.filter((li) => {
 					return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 				});
-				const recurringItems = d.line_items.filter((li) => {
+				const recurringItems = lineItems.filter((li) => {
 					return li.line_item_type === 'recurring';
 				});
 
-				function buildTableInContent(data, ind, param={}) {
+				function buildTableInContent(data, param={}) {
 					const startupBox = content.append('div');
 					startupBox.append('div')
 						.attr('class', 'item-details-title')
@@ -165,7 +236,7 @@
 						.attr('class', 'line-item-table table table-condensed table-striped')
 						.append('tbody');
 					const sRows = sTable.selectAll('tr')
-						.data(d.line_items)
+						.data(data)
 						.enter().append('tr');
 					sRows.append('td').text(li => li.name);
 					sRows.append('td').text(li => App.moneyFormat(li.cost));
@@ -173,23 +244,19 @@
 					// add total cost
 					const sTotalRow = sTable.append('tr');
 					sTotalRow.append('td').text('Total');
-					sTotalRow.append('td').text(App.moneyFormat(d[ind]));
+					sTotalRow.append('td').text(App.moneyFormat(d3.sum(data, li => li.cost)));
 				}
 
 				// add startup cost table, if any startup costs
 				if (startupItems.length) {
 					let startupTitle = 'Startup/Capital Costs';
 					if (d.isCustomCost) startupTitle = `Default ${startupTitle}`;
-					buildTableInContent(startupItems, 'startupCost', {
-						title: startupTitle,
-					});
+					buildTableInContent(startupItems, { title: startupTitle });
 				}
 				if (recurringItems.length) {
 					let recurringTitle = 'Recurring Costs';
 					if (d.isCustomCost) recurringTitle = `Default ${recurringTitle}`;
-					buildTableInContent(recurringItems, 'recurringCost', {
-						title: recurringTitle,
-					});
+					buildTableInContent(recurringItems, { title: recurringTitle });
 				}
 
 				$(this).tooltipster('content', contentContainer.html());
@@ -204,8 +271,23 @@
 					.property('checked', d => d.id === action.id);
 
 			// show correct item container
-			$('.action-slot-container:not(.active) .item-block-container').slideUp();
-			$('.action-slot-container.active .item-block-container').slideDown();
+			const minHeight = '310px';
+			$('.action-slot-container:not(.active) .item-block-container')
+				.css('height', minHeight)
+				.css('min-height', '0px')
+				.slideUp(400, function() {
+					$(this)
+						.css('height', 'auto')
+						.css('min-height', minHeight);
+				});
+			$('.action-slot-container.active .item-block-container')
+				.css('height', minHeight)
+				.css('min-height', '0px')
+				.slideDown(400, function() {
+					$(this)
+						.css('height', 'auto')
+						.css('min-height', minHeight);
+				});
 
 			// update descriptions
 			if (actions.length) {

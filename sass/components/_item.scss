@@ -1,12 +1,48 @@
-.item-block {
-	display: inline-block;
+.item-block-container {
+	display: none;
 	position: relative;
+	height: 450px;
+	margin-left: 60px;
+	border: $border;
+	padding: 10px 15px 25px;
+	overflow: hidden;
+	white-space: nowrap;
+	background-color: #ccc;
+}
+.item-block-progress-text {
+	text-align: center;
+	font-weight: 600;
+}
+.item-block-arrow {
+	position: absolute;
+	top: 135px;
+	padding: 4px 10px 8px;
+	border: 1px solid #999;
+	cursor: pointer;
+	@include noselect;
+	@include border-radius(3px);
+	@include gradient(#f0f0f0, #d0d0d0);
+	@include box-shadow(0 1px 0 rgba(255,255,255,0.6) inset);
+
+	&:hover {
+		@include gradient(#e0e0e0, #c0c0c0);
+	}
+	img {
+		width: 15px;
+		height: 19px;
+	}
+}
+.item-block-arrow-prev { left: 30px; }
+.item-block-arrow-next { right: 30px; }
+.item-block {
+	position: absolute;
+	top: 40px;
+	left: 155px;
 	margin: 0 15px;
 	padding: 15px;
 	border: $border;
 	text-align: center;
-	width: 360px;
-	height: 100%;
+	width: 400px;
 	vertical-align: top;
 	white-space: normal;
 	@include gradient(#f0f0f0, #fff);
@@ -41,7 +77,7 @@
 		text-align: right;
 	}
 	.item-footer {
-		margin-top: 50px;
+		margin-top: 30px;
 		margin-bottom: 15px;
 		text-align: center;
 	}
