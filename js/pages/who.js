@@ -24,7 +24,7 @@
 				name: 'Country Details',
 			}, {
 				abbr: 'default-costs',
-				name: 'Default Costs',
+				name: 'Cost Assumptions',
 			}
 		];
 
@@ -216,62 +216,243 @@
 		// look up exchange rate
 		const exchangeRate = App.getExchangeRate();
 
-		// build inputs from global costs data
+		// find global base costs to show on page for user review
 		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
 
-		// add "overhead" to list of global costs
-		defaultCosts.splice(3, 0, { name: 'Salary Overhead', id: 'overhead' });
+		// add overhead percentage to the default costs so it is included in the
+		// page for user review
+		defaultCosts.push({
+		  "cost": 0.6,
+		  "cost_unit": "% per year",
+		  "description": "The additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+		  "id": "gbc.overhead",
+		  "name": "Overhead percentage",
+		  "tab_name": "Personnel compensation",
+		  "subheading_name": "Salaries"
+		});
 
-		Util.populateSelect('.dv-select', defaultCosts, {
-			nameKey: 'name',
-			valKey: 'id',
-		});
-		$('.dv-select').on('change', () => {
-			updateCostDisplay();
-		});
+		// add meeting attendee data
+		for (let i = 0; i < App.globalStaffMultipliers.length; i++) {
+			defaultCosts.push(App.globalStaffMultipliers[i]);
+		}
+
+		// make tree version of the GBCs so they can be added to the page in the
+		// correct groups
+
+		// get unique tab names
+		const tabNames = _.unique(_.pluck(defaultCosts, 'tab_name'));
+
+		// declare tree
+		const defaultCostsTree = [];
+
+		// for each unique tab name
+		for (let i = 0; i < tabNames.length; i++) {
+			// get current tab name
+			const curTab = tabNames[i];
+
+			// create tree node for tab
+			const tabNode = {};
+			tabNode[curTab] = [];
+
+			// get GBCs with this tab name
+			const tabGbcs = defaultCosts.filter(gbc => gbc.tab_name === curTab);
+
+			// get subheaders if they exist
+			const subNames = _.unique(_.pluck(tabGbcs, 'subheading_name'));
+
+			// for each subheading name
+			for (let j = 0; j < subNames.length; j++) {
+				// get current sub name
+				const curSub = subNames[j];
+
+				// create tree node for subheading
+				const subNode = {};
+				subNode[curSub] = [];
+
+				// get GBC with this sub name
+				const subGbcs = tabGbcs.filter(gbc => gbc.subheading_name === curSub);
+
+				// push these GBCs to the sub node
+				subNode[curSub] = subGbcs;
+				
+				// push the sub node to the tab node
+				tabNode[curTab].push(subNode);
+			}
+
+			// push tab node to tree
+			defaultCostsTree.push(tabNode);
+		}
+
+		// add headers, subheaders, labels, text fields, costs, units, and descriptions
+		// to the page
+
+		// for each tab name (main header)
+		for (let i = 0; i < defaultCostsTree.length; i++) {
+			// get current tab name
+			const tabNode = defaultCostsTree[i];
+			const tabName = Object.keys(tabNode)[0];
+
+				// add a divider if this isn't the final main header
+			if (true) {
+				d3.select('.dv-container').append('div')
+					.attr('class','dv-divider');
+			}
+			// add header for tab name
+			d3.select('.dv-container').append('h2')
+				.text(tabName);
+
+
+			// for each subheading group
+			for (let j = 0; j < tabNode[tabName].length; j++) {
+				// add row for the subheading group
+				const subCol = d3.select('.dv-container')
+					.append('div')
+						.attr('class','dv-subheading-row row')
+					.append('div')
+						.attr('class','dv-subheading-col col-sm-12');
+
+				// get subheader name
+				const subNode = tabNode[tabName][j];
+				const subName = Object.keys(subNode)[0];
+
+				// add header for subheading
+				subCol.append('h3')
+					.text(subName);
+
+				// for each item in the subheading group
+				for (let k = 0; k < subNode[subName].length; k++) {
+					// get item name
+					const itemNode = subNode[subName][k];
+					const itemName = itemNode.name;
+
+					// add row for the item group
+					const itemGroup = subCol
+						.append('div')
+							.attr('class','dv-item-row row')
+						.append('div')
+							.attr('class','dv-item-col col-sm-12');
+
+					// add header for item name
+					itemGroup.append('div')
+						.attr('class','dv-item-name')
+						.text(itemName);
+
+					// add item input group
+					const inputGroup = itemGroup.append('div')
+						.attr('class','dv-input-group');
+
+					// add input for item cost
+					inputGroup.append('input')
+						.attr('class','dv-input form-control')
+						.attr('gbcid', itemNode.id);
+
+					// if it's a BGC:
+					if (itemNode.id.indexOf('gbc') > -1) {
+						// add label for input currency, if item is not
+						// "overhead percentage"
+						if (itemName !== "Overhead percentage") {
+							inputGroup.append('span')
+								.attr('class','dv-currency');
+						}
+						// add label for input unit
+						inputGroup.append('span')
+							.attr('class','dv-cost-unit')
+							.text(" " + itemNode.cost_unit);
+
+					} else {
+						// add label for input unit
+						inputGroup.append('span')
+							.attr('class','dv-cost-unit')
+							.text(" attendees");
+					}
+
+					// add default text warning
+					inputGroup.append('div')
+						.attr('class','dv-default-text default-text');
+					
+					// add text for item description
+					itemGroup.append('span')
+						.attr('class','dv-description')
+						.text(itemNode.description);
+				}
+			}			
+		}
 
 		$('.dv-input').on('change', function() {
-			const gbcId = $('.dv-select').val();
-			if (gbcId === 'overhead') {
-				App.whoAmI.staff_overhead_perc = Util.getInputNumVal(this) / 100;
+			const input = d3.select(this);
+			const gbcId = input.attr('gbcid');
+			if (gbcId.indexOf('gbc') > -1) {
+				if (gbcId === 'gbc.overhead') {
+					App.whoAmI.staff_overhead_perc = Util.getInputNumVal(this) / 100;
+				} else if (gbcId !== null) {
+					const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+					gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
+				}
 			} else {
-				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
-				gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
+				const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
+				gsm.count = Util.getInputNumVal(this);
 			}
-			checkIfDefault(gbcId);
+			
+			checkIfDefault(gbcId, this);
 			App.updateAllCosts();
 		});
 
 		function updateCostDisplay() {
-			const gbcId = $('.dv-select').val();
-			if (gbcId === 'overhead') {
-				$('.dv-input').val(Util.comma(100 * App.whoAmI.staff_overhead_perc));
-				$('.dv-currency').text('%');
-			} else {
-				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
-				$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
-				$('.dv-currency').text(App.whoAmI.currency_iso);
-			}
-			checkIfDefault(gbcId);
+			// select all cost displays
+			const allCosts = d3.selectAll('.dv-input');
+			// for each, find and populate correct cost
+			allCosts.each(function() {
+				// select current input
+				const input = d3.select(this);
+
+				// get gbcId
+				const gbcId = input.attr('gbcid');
+				if (gbcId.indexOf('gbc') > -1) {
+					if (gbcId === 'gbc.overhead') {
+						input.node().value = (Util.comma(100 * App.whoAmI.staff_overhead_perc));
+					} else if (gbcId !== null) {
+						const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+						input.node().value = (Util.comma(gbc.cost * exchangeRate));
+					}
+				} else {
+					const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
+					input.node().value = (Util.comma(gsm.count));
+					$('.dv-currency').text(App.whoAmI.currency_iso);
+				}
+				
+				checkIfDefault(gbcId, this);
+			});
 		}
 
-		function checkIfDefault(gbcId) {
+		function checkIfDefault(gbcId, selector) {
+			const input = d3.select(selector);
+
 			let isDefault = true;
 			let defaultText = 'Default: ';
-			if (gbcId === 'overhead') {
-				isDefault = App.whoAmI.staff_overhead_perc === 0.6;
-				defaultText += '60';
+			if (gbcId.indexOf('gbc') > -1) {
+				if (gbcId === 'gbc.overhead') {
+					isDefault = App.whoAmI.staff_overhead_perc === 0.6;
+					defaultText += '60';
+				} else if (gbcId !== null) {
+					const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
+					isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
+					defaultText += Util.comma(gbc.default_cost * exchangeRate);
+				}
 			} else {
-				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
-				isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
-				defaultText += Util.comma(gbc.default_cost * exchangeRate);
+				const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
+				isDefault = gsm.default_count === gsm.count;
+				defaultText += Util.comma(gsm.default_count);
 			}
+			
 
-			$('.dv-input').css('background-color', isDefault ? '#fff' : inputNonDefaultColor);
+			input.style('background-color', () => {
+				return isDefault ? '#fff' : inputNonDefaultColor;
+			});
+			const inputDefaultText = $(d3.select(input.node().parentNode).select('.dv-default-text').node());
 			if (isDefault) {
-				$('.dv-default-text').slideUp();
+				inputDefaultText.slideUp();
 			} else {
-				$('.dv-default-text')
+				inputDefaultText
 					.text(defaultText)
 					.slideDown();
 			}
