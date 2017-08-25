@@ -53,16 +53,11 @@
 			.attr('class', 'block-link-title')
 			.html(d => `${d.id.toUpperCase()} - ${d.name}`);
 		blockLinks.append('div')
-			.attr('class', 'block-score-bar')
+			.attr('class', 'block-link-subtitle')
 			.classed('active', d => d.id === capId)
-			.attr('color', (d) => {
-				const avgScore = d3.mean(d.indicators, d => d.score);
-				if (avgScore) {
-					if (avgScore < 2) return 'red';
-					if (avgScore < 4) return 'yellow';
-					return 'green';
-				}
-				return '';
+			.html((d) => {
+				const numScored = d.indicators.filter(ind => ind.score).length;
+				return `${numScored} of ${d.indicators.length}`;
 			});
 		blockLinks.append('div').attr('class', 'block-link-cover');
 	};

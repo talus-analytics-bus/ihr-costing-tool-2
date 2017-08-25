@@ -138,7 +138,7 @@
 				<div class="col-6">
 					<div class="country-label">Search for country:</div>
 					<div class="country-search-container">
-						<input class="country-search-input form-control" placeholder="search for a country..." />
+						<input class="country-search-input form-control" placeholder="enter country name (e.g. Albania)..." />
 						<div class="live-search-results-container">
 							<div class="live-search-no-results-text">No results found</div>
 							<div class="live-search-results-contents"></div>
@@ -156,17 +156,26 @@
 	<!-- Overview/Assessment Instructions page tempate -->
 	<script id="overview-template" type="text/x-handlebars-template">
 		<div class="overview-container container container-text">
+			<h1>Assessment Instructions</h1>
 			<div>
-				<h1>Assessment Instructions</h1>
-				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool.</p>
-				<p>Either upload scores exported from the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a> or continue to enter scores manually.</p>
-				<div class="button-group">
-					<div>
-						<button type="button" class="btn btn-primary">Select a File to Upload</button>
-						<button type="button" class="btn btn-primary overview-start">Continue to Manual Score Entry</button>
-					</div>
+				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. These scores should be from a recently completed JEE assessment. Scores may either be uploaded automatically or entered manually. Upload uses reports from the JEE Technology Tool, an online source for completed JEE assessments.</p><p>The JEE Technology Tool was developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.</p>
+			</div>
+			<div>
+				<h2>Automatic Score Upload</h2>
+				<p>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</p>
+				<p>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</p>
+				<p>3.  Click “Continue to Assessment” to review uploaded scores.</p>
+				<div class="upload-button-container">
+					<button type="button" class="btn btn-secondary">Select a File</button>
 				</div>
-				<p>The JEE Technology Tool developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and is powered by Qlik Technologies.</p>
+			</div>
+			<div>
+				<h2>Manual Score Entry</h2>
+				<p>1. If no electronic report is available in the required format for upload, scores can be entered manually.</p>
+				<p>2. Click “Continue to Assessment” to begin entering scores.</p>
+				<div class="next-button-container">
+					<button type="button" class="overview-start btn btn-primary">Continue to Assessment</button>
+				</div>
 			</div>
 		</div>
 	</script>
@@ -427,77 +436,14 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
-			<!--<div class="score-improvement-section results-section">
-				<div class="score-improvement-warning">
-					Go to the <b>scoring</b> page and select indicator scores before viewing results!
+			<div class="score-improvement-section results-section">
+				<div class="progress-chart-overall"></div>
+				<div class="circle-summary-section">
+					<div class="circle-summary-total"></div>
 				</div>
-				<div class="score-improvement-content">
-					<div class="score-improvement-text">
-						<span class="score-improvement-title">Score Improvement:</span>
-						<div class="rp-score-old rp-score-container"></div>
-						<div class="rp-score-to-text">to</div>
-						<div class="rp-score-new rp-score-container"></div>
-					</div>
-					<div class="bullet-chart-container"></div>
-				</div>
-			</div>-->
+			</div>
 			<div class="chart-section results-section">
-				<div class="chart-tab-container">
-					<div class="btn-group">
-						<div class="btn btn-secondary active" ind="type">Explorer</div>
-						<div class="btn btn-secondary" ind="time">Cost over Time</div>
-					</div>
-				</div>
-				<div class="chart-content" ind="time">
-					<div class="cost-chart-container"></div>
-					<div class="cost-chart-options">
-						<div class="cost-chart-option">
-							<span>View cost by:</span>
-							<select class="view-cost-by-select form-control">
-								<option value="core">Core Capacity</option>
-								<option value="capacity" selected>Capacity</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="chart-content" ind="type">
-					<div class="explorer-section">
-						<div class="explorer-instructions">
-							Check/uncheck capacities in the left-hand explorer to update results.
-						</div>
-						<div class="explorer-list-container">
-							<div class="explorer-list">
-								<div class="explorer-list-title">JEE Capacities</div>
-								<div class="explorer-list-content"></div>
-							</div>
-						</div>
-						<div class="explorer-content">
-							<div class="explorer-si-content">
-								<span class="score-improvement-title">Average Score Improvement:</span>
-								<div class="rp-score-old rp-score-container"></div>
-								<div class="rp-score-to-text">to</div>
-								<div class="rp-score-new rp-score-container"></div>
-							</div>
-							<div class="explorer-startup-section">
-								<div class="explorer-cost-summary row">
-									<div class="col-12">
-										<div class="explorer-startup-value explorer-cost-value"></div>
-										<div class="explorer-cost-text">Startup/Capital Cost</div>
-									</div>
-								</div>
-								<div class="explorer-fixed-cost-chart explorer-cost-chart"></div>
-							</div>
-							<div class="explorer-recurring-section">
-								<div class="explorer-cost-summary row">
-									<div class="col-12">
-										<div class="explorer-recurring-value explorer-cost-value"></div>
-										<div class="explorer-cost-text">Recurring Cost</div>
-									</div>
-									<div class="explorer-recurring-cost-chart explorer-cost-chart"></div>
-								</div>
-							</div>
-					</div>
-				</div>
+				<div class="cost-chart"></div>
 			</div>
 		</div>
 	</script>

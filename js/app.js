@@ -377,9 +377,7 @@ const App = {};
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
-		const numbers = input.match(/\d+/);
-		if (!numbers) return 1;
-		return numbers[0];
+		return Util.strToFloat(input);
 	}
 
 

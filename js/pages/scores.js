@@ -75,6 +75,10 @@
 				.enter().append('tr')
 					.attr('class', 'score-row')
 					.on('click', function(d) {
+						const currRow = d3.select(this);
+						const wasChecked = currRow.select('input').property('checked');
+						const newScore = wasChecked ? undefined : d;
+
 						// deactivate all rows and unselect radio buttons
 						d3.selectAll('.score-row')
 							.classed('active', false)
@@ -82,32 +86,24 @@
 								.property('checked', false);
 
 						// toggle row clicked
-						const currRow = d3.select(this);
-						const isChecked = currRow.property('checked');
-						currRow.classed('active', !isChecked)
+						currRow.classed('active', !wasChecked)
 							.select('input')
-								.property('checked', !isChecked);
+								.property('checked', !wasChecked);
 
 						// save user score
-						User.setIndicatorScore(indId, d);
-
-						// update color bar in tab navigation
-						const avgScore = d3.mean(capacity.indicators, ind => ind.score);
-						d3.select('.block-score-bar.active').attr('color', (d) => {
-							if (avgScore) {
-								if (avgScore < 2) return 'red';
-								if (avgScore < 4) return 'yellow';
-								return 'green';
-							}
-							return 'none';
-						});
+						User.setIndicatorScore(indId, newScore);
 
 						// update score for active indicator
 						const scoreContainer = d3.select('.indicator-slot.active .indicator-score');
-						scoreContainer.select('.score-none').style('display', 'none');
-						scoreContainer.selectAll('img').style('display', function() {
-							return (+$(this).attr('score') === +d) ? 'inline' : 'none';
-						});
+						if (newScore) {
+							scoreContainer.select('.score-none').style('display', 'none');
+							scoreContainer.selectAll('img').style('display', function() {
+								return (+$(this).attr('score') === +d) ? 'inline' : 'none';
+							});
+						} else {
+							scoreContainer.select('.score-none').style('display', 'inline');
+							scoreContainer.selectAll('img').style('display', 'none');
+						}
 
 						updateIndicatorProgress();
 					});
@@ -134,6 +130,9 @@
 			const numScored = capacity.indicators.filter(ind => ind.score).length;
 			d3.select('.indicator-progress')
 				.text(`Select a score for each indicator (${numScored} of ${numInds}):`);
+
+			// update color bar in tab navigation
+			d3.select('.block-link-subtitle.active').text(`${numScored} of ${numInds}`);
 		};
 
 		// define the behavior for the "previous" and "next" button

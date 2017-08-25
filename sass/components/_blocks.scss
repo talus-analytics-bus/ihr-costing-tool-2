@@ -28,10 +28,12 @@
   }
 }
 .block-link {
+  display: flex;
+  justify-content: space-between;
   position: relative;
   width: 90%;
   left: 10%;
-  padding: 10px 30px;
+  padding: 10px 15px 10px 30px;
   border-right: $border;
   border-bottom: $border;
   border-left: $border;
@@ -59,22 +61,10 @@
 
   &.hidden { display: none; }
   &.active {
-    border-right: none;
     font-weight: bold;
     @include gradient(white, $light-blue);
     @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
   }
-}
-.block-score-bar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 7px;
-  height: 100%;
-
-  &[color="red"] { background-color: rgba($jeeRed, 0.8); }
-  &[color="yellow"] { background-color: rgba($jeeYellow, 1); }
-  &[color="green"] { background-color: rgba($jeeGreen, 1); }
 }
 .block-link-cover {
   position: absolute;
@@ -89,7 +79,17 @@
   }
 }
 .block-link-title {
+  display: inline-block;
   font-size: 1.1em;
+  vertical-align: top;
+}
+.block-link-subtitle {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  color: #333;
 }
 
 
@@ -101,11 +101,6 @@
   text-align: left;
   border-bottom: $light-border;
   @include box-sizing();
-}
-.block-title {
-  font-size: 1.3em;
-  color: #555;
-  margin-bottom: 10px;
 }
 .block-content { margin-top: 5px; }
 .block-description {
