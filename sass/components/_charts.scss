@@ -45,66 +45,6 @@
 		text-anchor: middle;
 	}
 }
-.cost-bar-chart {
-	.bar {
-		fill: steelblue;
-		stroke: white;
-	}
-	.bar:hover {
-		fill: #c91414;
-	}
-	.selected-label {
-		font-size: 0.75em;
-	}
-	.total-label {
-		font-size: 0.85em;
-	}
-	.x.axis .tick text { font-size: 1.1em; }
-	.y.axis .tick text { font-size: 1.3em; }
-}
 .cost-chart {
-	.line {
-		fill: none;
-		stroke: #ccc;
-	}
-	.total-line {
-		fill: none;
-		stroke: #1a237e;
-		stroke-width: 2;
-	}
-	.area {
-		fill: lightsteelblue;
-		stroke: none;
-	}
-	.label-line {
-		stroke: #333;
-		stroke-dasharray: 2,2;
-	}
-	.label-text {
-		font-size: 0.75em;
-	}
-}
-.cc-tooltip {
-	text-align: center;
-	padding: 10px;
 
-	.cc-tooltip-title {
-		font-size: 1.2em;
-		font-weight: 300;
-		color: #333;
-	}
-	.cc-tooltip-block {
-		display: inline-block;
-		margin: 25px 15px 0;
-	}
-	.cc-tooltip-block div:first-child {
-		font-family: 'Raleway', sans-serif;
-		font-size: 1.7em;
-		font-weight: 600;
-		color: #555;
-	}
-	.cc-tooltip-block div:nth-child(2) {
-		margin-top: 8px;
-		font-size: 0.9em;
-	}
 }

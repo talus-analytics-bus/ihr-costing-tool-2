@@ -18,8 +18,7 @@
 		}
 
 
-		/* ---------------------- Score Improvement Section ----------------------*/
-		// build score improvement radial progress svgs
+		/* ---------------------- Data Wrangling ----------------------*/
 		const allIndicators = [];
 		App.jeeTree.forEach((cc) => {
 			cc.capacities.forEach((cap) => {
@@ -29,6 +28,8 @@
 			});
 		});
 
+
+		/* ---------------------- Score Improvement Section ----------------------*/
 		const currScore = App.getAverageCurrentScore(allIndicators);
 		const newScore = App.getAverageTargetScore(allIndicators);
 		Charts.buildProgressChart('.progress-chart-overall', [currScore, newScore]);
@@ -64,19 +65,11 @@
 		});
 
 
-		/* --------------------------- Cost Explorer Section ---------------------------*/
-		// toggling filter display
-		$('.explorer-filter-header').click(function() {
-			const chevron = $(this).find('.chevron');
-			if (chevron.hasClass('active')) {
-				chevron.removeClass('active');
-				$('.explorer-filter-content').slideUp();
-			} else {
-				chevron.addClass('active');
-				$('.explorer-filter-content').slideDown();
-			}
-		});
+		/* --------------------------- Cost Chart Section ---------------------------*/
+		Charts.buildCostChart('.cost-chart', allIndicators);
 
+
+		/* --------------------------- Filter Section ---------------------------*/
 		// populate filters
 		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
 		
@@ -137,70 +130,6 @@
 			},
 		});
 
-
-		// build explorer list
-		const expCcContainers = d3.select('.explorer-list-content').selectAll('.exp-cc')
-			.data(App.jeeTree)
-			.enter().append('div')
-				.attr('class', 'exp-cc-container');
-		const expCcs = expCcContainers.append('div')
-			.attr('class', 'exp-row exp-cc')
-			.on('click', (d) => {
-				// TODO toggling core capacity
-			});
-		expCcs.append('input')
-			.attr('type', 'checkbox')
-			.property('checked', true)
-			.on('change', (d) => {
-				// TODO check/unchecking core capacity
-			});
-		expCcs.append('div')
-			.attr('class', 'exp-list-label')
-			.text(d => d.name);
-
-		// add capacities
-		const expCapContainers = expCcContainers.selectAll('.exp-cap-container')
-			.data(d => d.capacities)
-			.enter().append('div')
-				.attr('class', 'exp-cap-container');
-		const expCaps = expCapContainers.append('div')
-			.attr('class', 'exp-row exp-cap')
-			.on('click', (d) => {
-				// TODO toggling capacity
-			});
-		expCaps.append('input')
-			.attr('type', 'checkbox')
-			.property('checked', true)
-			.on('change', (d) => {
-				// TODO check/unchecking capacity
-			});
-		expCaps.append('div')
-			.attr('class', 'exp-list-label')
-			.text(d => `${d.id.toUpperCase()} - ${d.name}`);
-
-		// add indicators
-		/*const expInds = expCapContainers.selectAll('.exp-ind')
-			.data(d => d.indicators)
-			.enter().append('div')
-				.attr('class', 'exp-row exp-ind')
-				.on('click', (d) => {
-					// TODO toggling indicator
-				});
-		expInds.append('input')
-			.attr('type', 'checkbox')
-			.property('checked', true)
-			.on('change', (d) => {
-				// TODO check/unchecking indicator
-			});
-		expInds.append('div')
-			.attr('class', 'exp-list-label')
-			.text(d => d.id.toUpperCase());*/
-
-		// functions for updating throughout the explorer
-		function updateList() {
-
-		}
-
 		function updateDropdowns() {
 			// update core capacity dropdown
 			const chosenCcs = [];
@@ -228,107 +157,6 @@
 				.multiselect('deselect', unchosenCapNames, false);
 		}
 
-		function updateExplorer() {
-			// get data for updating
-			let capData = [];
-			if (chosenCapNames.length) {
-				allCapacities.forEach((cap) => {
-					if (chosenCapNames.includes(cap.name)) {
-						capData.push(cap);
-					}
-				});
-			} else {
-				capData = allCapacities.slice(0);
-			}
-
-			// update summary text
-			/*$('.summary-num-capacities').text(chosenCapNames.length);
-			$('.summary-score-improvement').text(scoreChangeFormat(1.2));*/
-
-			// update overall costs
-			const totalStartup = d3.sum(capData, d => d.startupCost);
-			const totalCapital = d3.sum(capData, d => d.capitalCost);
-			const totalRecurring = d3.sum(capData, d => d.recurringCost);
-			$('.explorer-startup-value').text(App.moneyFormat(totalStartup + totalCapital));
-			$('.explorer-recurring-value').text(`${App.moneyFormat(totalRecurring)}/yr`);
-
-			// update charts
-			fixedCostChart.update([
-				{
-					name: 'Startup Cost',
-					data: capData.map(c => ({ name: c.name, value: c.startupCost })),
-				},
-				{
-					name: 'Capital Cost',
-					data: capData.map(c => ({ name: c.name, value: c.capitalCost })),
-				}
-			]);
-			recurringCostChart.update([
-				{
-					name: 'Recurring Cost',
-					data: capData.map(c => ({ name: c.name, value: c.recurringCost })),
-				}
-			]);2
-		}
-
-		const fixedCostChart = Charts.buildCostBarChart('.explorer-fixed-cost-chart');
-		const recurringCostChart = Charts.buildCostBarChart('.explorer-recurring-cost-chart', null, {
-			height: 55,
-			totalTextFormat: d => `${d}/yr total`,
-		});
-
 		updateDropdowns();
-		updateExplorer();
-
-
-		/* --------------------------- Cost Chart Section ---------------------------*/
-		// switching between chart content
-		$('.chart-tab-container .btn').on('click', function() {
-			$(this).addClass('active')
-				.siblings().removeClass('active');
-
-			const ind = $(this).attr('ind');
-			$('.chart-content').slideUp();
-			$(`.chart-content[ind=${ind}]`).slideDown();
-		});
-		const activeInd = $('.chart-tab-container .btn.active').attr('ind');
-		$(`.chart-content[ind=${activeInd}]`).show();
-
-
-		// establish fake data
-		const dt = 0.1;  // in years
-		const costByCapacityData = [];
-		const costByCoreData = [];
-		App.jeeTree.forEach((core) => {
-			core.capacities.forEach((capacity) => {
-				capacity.trendData = [];
-				for (let i = 0; i <= 5; i += dt) {
-					capacity.trendData.push({
-						year: i,
-						totalCost: capacity.startupCost + (i * capacity.recurringCost),
-					});
-				}
-				costByCapacityData.push(capacity);
-			});
-
-			core.trendData = [];
-			for (let i = 0; i <= 5; i+= dt) {
-				core.trendData.push({
-					year: i,
-					totalCost: core.startupCost + (i * core.recurringCost),
-				});
-			}
-			costByCoreData.push(core);
-		});
-
-		// build cost chart
-		const costChart = Charts.buildCostChart('.cost-chart-container', costByCapacityData);
-
-		// switching between showing cost by cc or capacity
-		$('.view-cost-by-select').on('change', function() {
-			const type = $(this).val();
-			if (type === 'core') costChart.updateData(costByCoreData);
-			else if (type === 'capacity') costChart.updateData(costByCapacityData);
-		});
 	}
 })();
