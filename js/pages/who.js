@@ -417,7 +417,6 @@
 				return isDefault ? '#fff' : inputNonDefaultColor;
 			});
 			const inputDefaultText = $(d3.select(input.node().parentNode).select('.dv-default-text').node());
-			console.log(input)
 			if (isDefault) {
 				inputDefaultText.slideUp();
 			} else {
