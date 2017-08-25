@@ -292,8 +292,8 @@
 			const tabNode = defaultCostsTree[i];
 			const tabName = Object.keys(tabNode)[0];
 
-				// add a divider if this isn't the final main header
-			if (true) {
+			// add a divider if this isn't the first header
+			if (i > 0) {
 				d3.select('.dv-container').append('div')
 					.attr('class','dv-divider');
 			}
@@ -340,6 +340,14 @@
 						.append('b')
 						.text(itemName);
 
+					// add break
+					itemGroup.append('br');
+					
+					// add text for item description
+					itemGroup.append('span')
+						.attr('class','dv-description')
+						.text(itemNode.description);
+
 					// add item input group
 					const inputGroup = itemGroup.append('div')
 						.attr('class','dv-input-group');
@@ -372,11 +380,6 @@
 					// add default text warning
 					inputGroup.append('div')
 						.attr('class','dv-default-text default-text');
-					
-					// add text for item description
-					itemGroup.append('span')
-						.attr('class','dv-description')
-						.text(itemNode.description);
 				}
 			}			
 		}
