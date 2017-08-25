@@ -134,6 +134,13 @@
 		font-size: 1.2em;
 		font-weight: normal;
 	}
+	.dv-tab-name-container {
+		display: flex;
+		padding-top: 5px;
+		border-radius: 10px;
+		box-sizing: border-box;
+		cursor: pointer;
+	}
 }
 .block-title-title {
 	font-size: 1.3em;

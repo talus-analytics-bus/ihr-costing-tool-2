@@ -297,11 +297,21 @@
 				d3.select('.dv-container').append('div')
 					.attr('class','dv-divider');
 			}
+
+			// add container for tab name header
+			const tabHeader = d3.select('.dv-container').append('div')
+				.attr('class','dv-tab-name-container');
+
+			// add chevron for tab name
+			const chevron = tabHeader.append('svg')
+				.attr('class', 'chevron')
+				.attr('viewBox', '0 0 24 24');
+			chevron.append('path').attr('d', 'M8 5v14l11-7z');
+
 			// add header for tab name
-			d3.select('.dv-container').append('h2')
+			tabHeader.append('h2')
 				.attr('class','dv-h2')
 				.text(tabName);
-
 
 			// for each subheading group
 			for (let j = 0; j < tabNode[tabName].length; j++) {
@@ -383,6 +393,12 @@
 				}
 			}			
 		}
+
+		// add on-click for tab headers
+		$('.capacity-description-header').click(() => {
+			$('.capacity-description-details').toggle();
+			$('#chevron').toggleClass('rotate-chevron');
+		});
 
 		$('.dv-input').on('change', function() {
 			const input = d3.select(this);
