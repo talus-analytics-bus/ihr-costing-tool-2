@@ -279,8 +279,29 @@
 		// look up exchange rate
 		const exchangeRate = App.getExchangeRate();
 
-		// build inputs from global costs data
+		// find global base costs to show on page for user review
 		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
+
+		// add headers, subheaders, labels, text fields, costs, units, and descriptions
+		// to the page
+		// TODO
+
+		// add Overhead Percentage, since it's not in the global base costs data structure
+		// and needs to be hardcoded in
+		// TODO
+
+		// tell user if they set the cost to non-default value
+		// TODO
+
+		// save any changes the user makes to the cost values
+		// TODO
+
+		// begin old code --------------------------------------------------------- //
+		// // look up exchange rate
+		// const exchangeRate = App.getExchangeRate();
+
+		// // build inputs from global costs data
+		// const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
 
 		// add "overhead" to list of global costs
 		defaultCosts.splice(3, 0, { name: 'Salary Overhead', id: 'overhead' });
