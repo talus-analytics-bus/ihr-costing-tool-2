@@ -440,21 +440,21 @@
 		});
 
 		$('.dv-input').on('change', function() {
-			const gbcId = $('.dv-select').val();
+			const input = d3.select(this);
+			const gbcId = input.attr('gbcid');
 			if (gbcId === 'overhead') {
 				App.whoAmI.staff_overhead_perc = Util.getInputNumVal(this) / 100;
-			} else {
+			} else if (gbcId !== null) {
 				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
 				gbc.cost = Util.getInputNumVal(this) / exchangeRate;  // store cost in USD
 			}
-			checkIfDefault(gbcId);
+			checkIfDefault(gbcId, this);
 			App.updateAllCosts();
 		});
 
 		function updateCostDisplay() {
 			// select all cost displays
 			const allCosts = d3.selectAll('.dv-input');
-
 			// for each, find and populate correct cost
 			allCosts.each(function() {
 				// select current input
@@ -469,6 +469,7 @@
 					input.node().value = (Util.comma(gbc.cost * exchangeRate));
 					$('.dv-currency').text(App.whoAmI.currency_iso);
 				}
+				checkIfDefault(gbcId, this);
 			});
 
 			// // OLD CODE BELOW
@@ -481,22 +482,25 @@
 			// 	$('.dv-input').val(Util.comma(gbc.cost * exchangeRate));
 			// 	$('.dv-currency').text(App.whoAmI.currency_iso);
 			// }
-			// checkIfDefault(gbcId);
 		}
 
-		function checkIfDefault(gbcId) {
+		function checkIfDefault(gbcId, selector) {
+			const input = d3.select(selector);
+
 			let isDefault = true;
 			let defaultText = 'Default: ';
 			if (gbcId === 'overhead') {
 				isDefault = App.whoAmI.staff_overhead_perc === 0.6;
 				defaultText += '60';
-			} else {
+			} else if (gbcId !== null) {
 				const gbc = App.globalBaseCosts.find(d => d.id === gbcId);
 				isDefault = Math.round(gbc.default_cost) === Math.round(gbc.cost);
 				defaultText += Util.comma(gbc.default_cost * exchangeRate);
 			}
 
-			$('.dv-input').css('background-color', isDefault ? '#fff' : inputNonDefaultColor);
+			input.style('background-color', () => {
+				return isDefault ? '#fff' : inputNonDefaultColor;
+			});
 			if (isDefault) {
 				$('.dv-default-text').slideUp();
 			} else {
