@@ -185,8 +185,10 @@
 
 			// build the front of the item block
 			itemFront.append('div')
-				.attr('class', 'item-title')
-				.text(d => d.name);
+				.attr('class', 'item-title-container')
+				.append('div')
+					.attr('class', 'item-title')
+					.text(d => d.name);
 
 			const startupContainer = itemFront.append('div')
 				.attr('class', 'item-startup-cost-container');
@@ -273,7 +275,9 @@
 				startupBox.append('div')
 					.attr('class', 'item-details-title')
 					.text(title);
-				const sTable = startupBox.append('table')
+				const sTableContainer = startupBox.append('div')
+					.attr('class', 'line-item-table-container');
+				const sTable = sTableContainer.append('table')
 					.attr('class', 'line-item-table table table-condensed table-striped')
 					.append('tbody');
 				const sRows = sTable.selectAll('tr')
@@ -335,7 +339,7 @@
 					.classed('active', d => d.id === action.id);
 
 			// show correct item container
-			const minHeight = '310px';
+			const minHeight = '340px';
 			$('.action-slot-container:not(.active) .item-block-container')
 				.css('height', minHeight)
 				.css('min-height', '0px')

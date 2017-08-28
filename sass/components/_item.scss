@@ -1,7 +1,6 @@
 .item-block-container {
 	display: none;
 	position: relative;
-	height: 450px;
 	margin-left: 60px;
 	border: $border;
 	padding: 10px 15px 25px;
@@ -36,8 +35,8 @@
 .item-block-arrow-next { right: 30px; }
 .item-block {
 	position: absolute;
-	width: 400px;
-	min-height: 250px;
+	width: 420px;
+	height: 280px;
 	top: 40px;
 	left: 155px;
 	margin: 0 15px;
@@ -75,6 +74,11 @@
 	.item-front-shell {
 		padding: 15px;
 	}
+	.item-title-container {
+		min-height: 50px;
+		max-height: 81px;
+		overflow-y: auto;
+	}
 	.item-title {
 		font-family: 'Raleway', sans-serif;
 		font-size: 1.2em;
@@ -104,8 +108,10 @@
 		text-align: right;
 	}
 	.item-footer {
-		margin-top: 30px;
-		margin-bottom: 15px;
+		position: absolute;
+		left: 0;
+		bottom: 20px;
+		width: 100%;
 		text-align: center;
 	}
 	.item-save-button,
@@ -143,8 +149,12 @@
 		font-size: 1.1em;
 		font-weight: 600;
 	}
-	.line-item-table {
+	.line-item-table-container {
+		height: 140px;
+		overflow-y: auto;
 		margin-bottom: 20px;
+	}
+	.line-item-table {
 		td {
 			border-top: none;
 			padding: 3px 10px;
