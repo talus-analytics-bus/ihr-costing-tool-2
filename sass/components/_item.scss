@@ -17,7 +17,7 @@
 	position: absolute;
 	top: 135px;
 	padding: 4px 10px 8px;
-	border: 1px solid #999;
+	border: $border;
 	cursor: pointer;
 	@include noselect;
 	@include border-radius(3px);
@@ -36,18 +36,45 @@
 .item-block-arrow-next { right: 30px; }
 .item-block {
 	position: absolute;
+	width: 400px;
+	height: 250px;
 	top: 40px;
 	left: 155px;
 	margin: 0 15px;
-	padding: 15px;
 	border: $border;
 	text-align: center;
-	width: 400px;
 	vertical-align: top;
 	white-space: normal;
+	perspective: 1000px;
 	@include gradient(#f0f0f0, #fff);
 	@include box-shadow(3px 3px 6px rgba(0,0,0,0.3));
 
+	.item-shell {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transition: 0.7s;
+		transform-style: preserve-3d;
+	}
+	&.active .item-shell {
+		transform: rotateY(-180deg);
+	}
+	.front, .back {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+	}
+	.front { z-index: 2; }
+	.back { transform: rotateY(180deg); }
+
+	.item-front-shell {
+		padding: 15px;
+	}
 	.item-title {
 		font-family: 'Raleway', sans-serif;
 		font-size: 1.2em;
@@ -82,7 +109,8 @@
 		text-align: center;
 	}
 	.item-save-button,
-	.item-view-details-button {
+	.item-view-details-button,
+	.item-return-to-front-button {
 		display: inline-block;
 		margin: 0 5px;
 		border: $border;
@@ -122,6 +150,7 @@
 		td {
 			border-top: none;
 			padding: 3px 10px;
+			text-align: left;
 		}
 		td:last-child { text-align: right; }
 		tr:last-child { font-weight: 600; }

@@ -169,47 +169,30 @@
 					.attr('src', 'img/next-arrow.png')
 					.attr('alt', 'Next');
 
-			// add/update the items in the item containers
+			// build the item blocks for each action
 			let items = itemContainers.selectAll('.item-block')
-				.data(d => App.getNeededInputs(d.inputs, indicator.score));
-			items.exit().remove();			
+				.data(d => App.getNeededInputs(d.inputs, indicator.score))
+				.enter().append('div')
+					.attr('class', 'item-block')
+					.attr('item-index', (d, i) => i)
+					.style('left', (d, i) => (i === 0) ? itemLeft : itemOffRight);
+			const itemShells = items.append('div').attr('class', 'item-shell');
+			const itemFront = itemShells.append('div')
+				.attr('class', 'front')
+				.append('div')
+					.attr('class', 'item-front-shell');
+			const itemBack = itemShells.append('div').attr('class', 'back');
 
-			const newItems = items.enter().append('div')
-				.attr('class', 'item-block')
-				.attr('item-index', (d, i) => i);
-			newItems.append('div').attr('class', 'item-title');
-			
-			const startupContainer = newItems.append('div').attr('class', 'item-startup-cost-container');
+			// build the front of the item block
+			itemFront.append('div')
+				.attr('class', 'item-title')
+				.text(d => d.name);
+
+			const startupContainer = itemFront.append('div')
+				.attr('class', 'item-startup-cost-container');
 			startupContainer.append('div').text('Startup Cost: ');
-			startupContainer.append('input').attr('class', 'startup-cost-input form-control');
-			startupContainer.append('div').text(App.whoAmI.currency_iso);
-			
-			const recurringContainer = newItems.append('div').attr('class', 'item-recurring-cost-container');
-			recurringContainer.append('div').text('Recurring Cost: ');
-			recurringContainer.append('input').attr('class', 'recurring-cost-input form-control');
-			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
-
-			const itemFooters = newItems.append('div').attr('class', 'item-footer');
-			itemFooters.append('div')
-				.attr('class', 'item-save-button')
-				.classed('primary', d => !d.costed)
-				.text('Save Costs');
-			itemFooters.append('div')
-				.attr('class', 'item-view-details-button')
-				.text('View Details')
-				.each(function() {
-					$(this).tooltipster({
-						theme: 'tooltipster-shadow',
-						maxWidth: 400,
-						trigger: 'click',
-						side: ['top', 'right', 'bottom', 'left'],
-					});
-				});
-
-			items = newItems.merge(items)
-				.style('left', (d, i) => (i === 0) ? itemLeft : itemOffRight);
-			items.select('.item-title').text(d => d.name);
-			items.select('.startup-cost-input')
+			startupContainer.append('input')
+				.attr('class', 'startup-cost-input form-control')
 				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
@@ -223,7 +206,13 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
-			items.select('.recurring-cost-input')
+			startupContainer.append('div').text(App.whoAmI.currency_iso);
+			
+			const recurringContainer = itemFront.append('div')
+				.attr('class', 'item-recurring-cost-container');
+			recurringContainer.append('div').text('Recurring Cost: ');
+			recurringContainer.append('input')
+				.attr('class', 'recurring-cost-input form-control')
 				.attr('value', d => Util.comma(d.recurringCost))
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
@@ -237,75 +226,92 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
+			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
 
-			// saving costs
-			items.select('.item-save-button').on('click', function(d) {
-				if (!d.costed) {
-					d.costed = true;
-					$(this)
-						.removeClass('primary')
-						.closest('.item-block').find('input')
-							.css('color', 'black');
+			const itemFooters = itemFront.append('div').attr('class', 'item-footer');
+			itemFooters.append('div')
+				.attr('class', 'item-save-button')
+				.classed('primary', d => !d.costed)
+				.text('Save Costs')
+				.on('click', function(d) {
+					if (!d.costed) {
+						d.costed = true;
+						$(this)
+							.removeClass('primary')
+							.closest('.item-block').find('input')
+								.css('color', 'black');
 
-					// update action progress
-					updateActionProgress();
+						// update action progress
+						updateActionProgress();
 
-					// check if indicator is fully costed
-					const numCosted = App.getNumIndicatorsCosted(capacity);
-					d3.select('.block-link-subtitle.active')
-						.text(`${numCosted} of ${capacity.indicators.length}`);
-				}
-				App.updateAllCosts();
-			});
-
-			// clicking "view details" show a list of line items
-			items.select('.item-view-details-button').each(function(d) {
-				const contentContainer = d3.select(document.createElement('div'));
-				const content = contentContainer.append('div')
-					.attr('class', 'item-details-container');
-				
-				const lineItems = App.getNeededLineItems(d.line_items, indicator.score);
-				const startupItems = lineItems.filter((li) => {
-					return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
+						// check if indicator is fully costed
+						const numCosted = App.getNumIndicatorsCosted(capacity);
+						d3.select('.block-link-subtitle.active')
+							.text(`${numCosted} of ${capacity.indicators.length}`);
+					}
+					App.updateAllCosts();
 				});
-				const recurringItems = lineItems.filter((li) => {
-					return li.line_item_type === 'recurring';
+			itemFooters.append('div')
+				.attr('class', 'item-view-details-button')
+				.text('View Details')
+				.on('click', function() {
+					$(this).closest('.item-block').toggleClass('active');
 				});
 
-				function buildTableInContent(data, param={}) {
-					const startupBox = content.append('div');
-					startupBox.append('div')
-						.attr('class', 'item-details-title')
-						.text(param.title || 'Cost');
-					const sTable = startupBox.append('table')
-						.attr('class', 'line-item-table table table-condensed table-striped')
-						.append('tbody');
-					const sRows = sTable.selectAll('tr')
-						.data(data)
-						.enter().append('tr');
-					sRows.append('td').text(li => li.name);
-					sRows.append('td').text(li => App.moneyFormat(li.cost));
 
-					// add total cost
-					const sTotalRow = sTable.append('tr');
-					sTotalRow.append('td').text('Total');
-					sTotalRow.append('td').text(App.moneyFormat(d3.sum(data, li => li.cost)));
-				}
+			// build the back of the card
+			const backContent = itemBack.append('div')
+				.attr('class', 'item-details-container');
 
-				// add startup cost table, if any startup costs
-				if (startupItems.length) {
-					let startupTitle = 'Startup/Capital Costs';
-					if (d.isCustomCost) startupTitle = `Default ${startupTitle}`;
-					buildTableInContent(startupItems, { title: startupTitle });
-				}
-				if (recurringItems.length) {
-					let recurringTitle = 'Recurring Costs';
-					if (d.isCustomCost) recurringTitle = `Default ${recurringTitle}`;
-					buildTableInContent(recurringItems, { title: recurringTitle });
-				}
+			function buildTableInContent(title, dataFilterFunc) {
+				const startupBox = backContent.append('div')
+					.style('display', (d) => {
+						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+						const lineItems = allLineItems.filter(dataFilterFunc);
+						return lineItems.length ? 'block' : 'none';
+					});
+				startupBox.append('div')
+					.attr('class', 'item-details-title')
+					.text(title);
+				const sTable = startupBox.append('table')
+					.attr('class', 'line-item-table table table-condensed table-striped')
+					.append('tbody');
+				const sRows = sTable.selectAll('tr')
+					.data((d) => {
+						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+						return allLineItems.filter(dataFilterFunc);
+					})
+					.enter().append('tr');
+				sRows.append('td').text(li => li.name);
+				sRows.append('td').text(li => App.moneyFormat(li.cost));
 
-				$(this).tooltipster('content', contentContainer.html());
+				// add total cost
+				const sTotalRow = sTable.append('tr');
+				sTotalRow.append('td').text('Total');
+				sTotalRow.append('td').text((d) => {
+						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+						const lineItems = allLineItems.filter(dataFilterFunc);
+					return App.moneyFormat(d3.sum(lineItems, li => li.cost))
+				});
+			}
+
+			// add startup and recurring cost tables
+			buildTableInContent('Default Startup/Capital Costs', (li) => {
+				return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 			});
+			buildTableInContent('Default Recurring Costs', (li) => {
+				return li.line_item_type === 'recurring';
+			});
+
+			// add button to return to view of front of card
+			backContent.append('div')
+				.attr('class', 'item-footer')
+				.append('div')
+					.attr('class', 'item-return-to-front-button')
+					.text('Return to Edit Cost')
+					.on('click', function() {
+						$(this).closest('.item-block').toggleClass('active');
+					});
 		}
 
 		function showAction(action) {
