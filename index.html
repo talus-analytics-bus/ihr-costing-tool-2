@@ -112,6 +112,7 @@
 		</table>
 	</div>
 
+
 	<!-- TEMPLATES -->
 	<!-- Home page tempate -->
 	<script id="home-template" type="text/x-handlebars-template">
@@ -132,9 +133,6 @@
 		<div class="country-container container">
 			<h1>Enter Country</h1>
 			<p>Choose your country using the map, drop-down list, or search function.</p>
-			<div class="map-container">
-				<div id="leaflet-map"></div>
-			</div>
 			<div class="country-control-container row">
 				<div class="col-6">
 					<div class="country-label country-country-label">Choose country:</div>
@@ -150,6 +148,9 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="map-container">
+				<div id="leaflet-map"></div>
 			</div>
 			<div class="next-button-container">
 				<button type="button" class="btn btn-primary go-to-assessment-button">Continue to Assessment</button>
@@ -305,7 +306,7 @@
 				<!--The population block -->
 				<div class="block population-block no-reset">
 					<div class="block-title">
-						<h1>Population of the Country</h1>
+						<h1>Country Population</h1>
 					</div>
 					<div class="block-content">
 						<div class="population-section">
@@ -447,7 +448,27 @@
 				<div class="summary-text-section"></div>
 			</div>
 			<div class="chart-section results-section">
-				<div class="cost-chart"></div>
+				<div class="cost-chart-filter-container">
+					<div class="cost-chart-filter-box">
+						<div class="cost-chart-filter-title">
+							Cost Chart Options
+						</div>
+						<div class="cost-chart-filter-section">
+							<div>
+								View cost by:
+							</div>
+							<div class="radio">
+								<input type="radio" />
+								<span>Indicator</span>
+							</div>
+							<div class="cost-chart-radio-label">
+								<input type="radio" />
+								<span>Category</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cost-chart-container"></div>
 			</div>
 		</div>
 	</script>

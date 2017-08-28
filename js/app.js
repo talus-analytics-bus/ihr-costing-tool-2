@@ -51,7 +51,7 @@ const App = {};
 
 				// default to US if in demo mode
 				if (App.demoMode) {
-					const usObj = App.countryParams.find(d => d.abbreviation === 'US');
+					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
 					App.whoAmI = Object.assign({}, usObj);
 				}
 
@@ -79,6 +79,10 @@ const App = {};
 
 	App.moneyFormatShort = (num) => {
 		return `${d3.format(',.3s')(num)} ${App.whoAmI.currency_iso}`;
+	}
+
+	App.moneyFormatLong = (num) => {
+		return `${d3.format(',')(num)} ${App.whoAmI.currency_iso}`;
 	}
 
 
@@ -320,6 +324,9 @@ const App = {};
 
 								// convert to correct currency
 								li.cost *= exchangeRate;
+
+								// round to nearest one
+								li.cost = Math.round(li.cost);
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;

@@ -36,7 +36,7 @@ const Charts = {};
 			.attr('y', -1)
 			.attr('width', 6)
 			.attr('height', 6)
-			.attr('fill', 'lightsteelblue')
+			.attr('fill', 'white')
 			.attr('stroke', 'none');
 		pattern.append('path')
 			.attr('d', 'M-1,1 l2,-2, M0,4 l4,-4, M3,5 l2,-2')
@@ -45,14 +45,14 @@ const Charts = {};
 
 		// draw rectangles
 		const rectData = [
-			{ x0: 0, x1: 1, color: '#c91414' },
-			{ x0: 1, x1: 3, color: '#d3cf11' },
-			{ x0: 3, x1: 5, color: '#0c6b0c' }
+			{ x0: 0, x1: 1, color: 'rgb(200, 33, 39)' },
+			{ x0: 1, x1: 3, color: 'rgb(247, 236, 19)' },
+			{ x0: 3, x1: 5, color: 'rgb(21, 108, 55)' }
 		];
 		chart.selectAll('.color-bar')
 			.data(rectData)
 			.enter().append('rect')
-				.attr('class', 'color-barZZ')
+				.attr('class', 'color-bar')
 				.attr('x', d => x(d.x0))
 				.attr('width', d => x(d.x1) - x(d.x0))
 				.attr('height', height)
@@ -95,33 +95,9 @@ const Charts = {};
 		return chart;
 	}
 
-	Charts.buildCircleSummary = (selector, data, param={}) => {
-		const margin = { top: 5, right: 5, bottom: 5, left: 5 };
-		const radius = param.radius || 70;
-		const chart = d3.selectAll(selector).append('svg')
-			.classed('circle-summary-chart', true)
-			.attr('width', 2 * radius + margin.left + margin.right)
-			.attr('height', 2 * radius + margin.top + margin.bottom)
-			.append('g')
-				.attr('transform', `translate(${margin.left + radius}, ${margin.top + radius})`);
-
-		chart.append('circle')
-			.attr('class', 'base')
-			.attr('r', radius);
-		chart.append('text')
-			.attr('class', 'value-text')
-			.attr('dy', '.35em')
-			.text(App.moneyFormat(data));
-		chart.append('text')
-			.attr('class', 'label-text')
-			.attr('y', '2rem')
-			.attr('dy', '.35em')
-			.text(param.label || '');
-	}
-
 	Charts.buildCostChart = (selector, data, param={}) => {
 		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
-		const width = 800;
+		const width = 600;
 		const height = 300;
 		const chartContainer = d3.select(selector).append('svg')
 			.attr('class', 'cost-chart')

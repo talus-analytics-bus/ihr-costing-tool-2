@@ -37,7 +37,7 @@
 .item-block {
 	position: absolute;
 	width: 400px;
-	height: 250px;
+	min-height: 250px;
 	top: 40px;
 	left: 155px;
 	margin: 0 15px;
@@ -138,21 +138,22 @@
 	padding: 20px 20px 10px;
 	color: #333;
 
-	& > div:nth-child(n+2) {
-		margin-top: 20px;
-	}
 	.item-details-title {
 		margin-bottom: 10px;
 		font-size: 1.1em;
 		font-weight: 600;
 	}
 	.line-item-table {
+		margin-bottom: 20px;
 		td {
 			border-top: none;
 			padding: 3px 10px;
 			text-align: left;
 		}
-		td:last-child { text-align: right; }
+		td:last-child {
+			text-align: right;
+			white-space: nowrap;
+		}
 		tr:last-child { font-weight: 600; }
 		tr:last-child td { border-top: 1px solid #999; }
 	}
@@ -164,4 +165,9 @@
 		margin-left: 10px;
 		cursor: pointer;
 	}
+}
+.li-tooltip-content {
+	padding: 10px;
+	font-size: 1rem;
+	font-weight: 400;
 }

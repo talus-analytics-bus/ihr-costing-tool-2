@@ -288,12 +288,15 @@
 					.attr('class', 'line-item-description-button')
 					.attr('src', 'img/question-mark.png')
 					.each(function(d) {
+						let contentStr = `<div class="li-tooltip-content">`;
+						contentStr += `<b>${d.name}:</b> ${d.description}`;
+						contentStr += `</div>`;
 						$(this).tooltipster({
 							trigger: 'click',
-							content: d.description,
+							content: contentStr,
 						});
 					});
-				sRows.append('td').text(li => App.moneyFormat(li.cost));
+				sRows.append('td').text(li => App.moneyFormatLong(li.cost));
 
 				// add total cost
 				const sTotalRow = sTable.append('tr');
@@ -301,7 +304,7 @@
 				sTotalRow.append('td').text((d) => {
 						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
 						const lineItems = allLineItems.filter(dataFilterFunc);
-					return App.moneyFormat(d3.sum(lineItems, li => li.cost))
+					return App.moneyFormatLong(d3.sum(lineItems, li => li.cost))
 				});
 			}
 

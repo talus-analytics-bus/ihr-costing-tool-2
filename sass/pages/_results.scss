@@ -57,106 +57,36 @@
 	}
 }
 
-/* --- Cost Explorer --- */
-.explorer-instructions {
-	margin-top: 10px;
-	margin-bottom: 30px;
-	font-style: italic;
-	text-align: center;
-}
-.explorer-list-container {
-	float: left;
-	width: 320px;
-}
-.explorer-content {
-	margin-left: 360px;
-	margin-top: 10px;
-}
-.explorer-list {
-	padding: 10px 15px;
-	border: $border;
-	@include border-radius(5px);
-	@include gradient(#fdfdfd, #f6f6f6);
-
-	.explorer-list-title {
-		margin: 5px 0 10px;
-		font-size: 1.1em;
-		font-weight: 600;
-		text-align: center;
-	}
-}
-.explorer-list-content {
-	.exp-row {
-		padding: 0 5px;
-		white-space: nowrap;
-		cursor: pointer;
-		&:hover { background-color: #e0e0e0; }
-	}
-	.exp-cap {
-		margin-left: 20px;
-		font-size: 0.9em;
-	}
-	.exp-ind {
-		margin-left: 40px;
-		font-size: 0.9em;
-	}
-	input {
-		position: relative;
-		top: 4px;
-		margin-right: 5px;
-		vertical-align: top;
-	}
-	.exp-list-label {
-		display: inline-block;
-		white-space: normal;
-	}
-}
-.exp-cc input { top: 5px; }
-.explorer-si-content {
-	padding: 20px 0 0;
-	border-top: $light-border;
-	text-align: center;
-}
-.explorer-cost-summary {
-	margin-top: 20px;
-	text-align: center;
-
-	.explorer-cost-value {
-		font-family: 'Raleway', sans-serif;
-		font-size: 2em;
-		font-weight: 600;
-	}
-}
-.explorer-startup-section,
-.explorer-recurring-section {
-	margin-top: 20px;
-	border-top: $light-border;
-	padding-top: 5px;
-}
-.explorer-cost-chart {
-	margin-top: 20px;
-	width: 100%;
-	text-align: center;
-}
-.explorer-recurring-cost-chart .bar {
-	fill: lightsteelblue;
-}
-
 
 /* --- Cost Chart --- */
-.cost-chart-container {
+.cost-chart-filter-container {
+	float: left;
+	width: 300px;
 	text-align: center;
-	svg { display: inline-block; }
 }
-.cost-chart-options {
-	padding: 15px 30px;
-	border: 1px solid #ccc;
+.cost-chart-filter-box {
+	margin-top: 40px;
+	width: 250px;
+	border: $border;
+	padding: 10px 20px;
+	text-align: left;
+	@include gradient(#fff, #f0f0f0);
 
-	.cost-chart-option {
-		display: inline-block;
+	.cost-chart-filter-title {
+		text-align: center;
+		font-weight: 600;
+		font-size: 1.1rem;
+		margin-bottom: 10px;
 	}
-	select {
-		display: inline-block;
-		margin-left: 10px;
+	.cost-chart-radio-label {
+		margin-left: 15px;
+
+		input {
+			position: relative;
+			top: 1px;
+		}
 	}
+}
+.cost-chart-container {
+	margin-left: 300px;
 }

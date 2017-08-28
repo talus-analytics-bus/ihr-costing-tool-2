@@ -49,8 +49,8 @@
 			.data(App.jeeTree)
 			.enter().append('div')
 				.attr('class', 'summary-text-box');
-		csb.append('div').attr('class', (d, i) => `summary-text-${i}`);
 		csb.append('div').attr('class', (d, i) => `progress-chart-${i}`);
+		csb.append('div').attr('class', (d, i) => `summary-text-${i}`);
 		csb.each((d, i) => {
 			const indicators = [];
 			d.capacities.forEach((cap) => {
@@ -58,14 +58,14 @@
 			});
 			const ccCurrScore = App.getAverageCurrentScore(indicators) || 0;
 			const ccNewScore = App.getAverageTargetScore(indicators) || 0;
-
-			const summaryText = `Cost for ${d.name}<br>core capacity`;
-			addSummaryText(`.summary-text-${i}`, d.startupCost, summaryText);
 			Charts.buildProgressChart(`.progress-chart-${i}`, [ccCurrScore, ccNewScore], {
 				width: 180,
 				height: 16,
 				radius: 4,
 			});
+
+			const summaryText = `Cost for ${d.name}<br>core capacity`;
+			addSummaryText(`.summary-text-${i}`, d.startupCost, summaryText);
 		});
 
 		function addSummaryText(selector, cost, text, param={}) {
@@ -89,7 +89,7 @@
 				capIndData.push(indCopy);
 			});
 		});
-		Charts.buildCostChart('.cost-chart', capIndData);
+		Charts.buildCostChart('.cost-chart-container', capIndData);
 
 
 		/* --------------------------- Filter Section ---------------------------*/
