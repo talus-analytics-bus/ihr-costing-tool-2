@@ -24,6 +24,15 @@
 	b { width: 80px; }
 	div { margin-left: 2px; }
 }
+.no-actions-container {
+	padding: 20px 30px;
+	background-color: #ccc;
+	margin-left: 30px;
+	border-left: $border;
+	border-right: $border;
+	font-style: italic;
+	text-align: center;
+}
 .go-to-results-button {
 	margin-top: 10px;
 }

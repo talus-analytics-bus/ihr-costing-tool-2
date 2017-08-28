@@ -70,7 +70,7 @@
 
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
 					let scoreStr = `<img class="rp-score" src="img/rp-${score}.png" alt=${score} />`;
-					if (targetScore > score && score < 5) {
+					if (targetScore > score && score < 4) {
 						scoreStr += '<span> to </span>' +
 							`<img class="rp-score" src="img/rp-${targetScore}.png" alt=${targetScore} />`;
 					}
@@ -80,13 +80,25 @@
 			// add description
 			$('.indicator-description').html(`${indId.toUpperCase()} - ${indicator.name}`);
 
+			// get the indicator that the user is on
+			const indSlotContainer = indSlotContainers.filter(d => d.id === indId);
+
+			// if no actions (bc score is 4 or 5), display text saying so
+			if (!actions.length) {
+				indSlotContainer.append('div')
+					.attr('class', 'no-actions-container')
+					.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus commodo imperdiet bibendum. Morbi egestas sagittis arcu eget suscipit.');
+				return;
+			}
+
 			// add actions under each indicator
-			const actionSlotContainers = indSlotContainers.filter(d => d.id === indId).selectAll('.action-slot')
+			const actionSlotContainers = indSlotContainer.selectAll('.action-slot')
 				.data(actions)
 				.enter().append('div')
 					.attr('class', 'action-slot-container');
 			const actionSlots = actionSlotContainers.append('div')
 				.attr('class', 'action-slot')
+				.attr('action-id', d => d.id)
 				.on('click', d => showAction(d));
 			const actionChevron = actionSlots.append('svg')
 				.attr('class', 'chevron')
@@ -230,6 +242,10 @@
 				});
 			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
 
+			itemFront.append('div')
+				.attr('class', 'item-save-cost-text')
+				.text('Costs Saved!');
+
 			const itemFooters = itemFront.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
 				.attr('class', 'item-save-button')
@@ -250,6 +266,11 @@
 						const numCosted = App.getNumIndicatorsCosted(capacity);
 						d3.select('.block-link-subtitle.active')
 							.text(`${numCosted} of ${capacity.indicators.length}`);
+					} else {
+						// flash "costs saved!" text
+						const saveCostText = $(this).closest('.item-block').find('.item-save-cost-text');
+						saveCostText.show();
+						setTimeout(() => { saveCostText.fadeOut(800); }, 1000);
 					}
 					App.updateAllCosts();
 				});
@@ -377,8 +398,9 @@
 		// updates message on number of inputs scored for each action
 		function updateActionProgress() {
 			d3.selectAll('.action-progress').text((d) => {
-				const numInputsCosted = d.inputs.filter(input => input.costed).length;
-				return `${numInputsCosted} of ${d.inputs.length} items costed`;
+				const inputs = App.getNeededInputs(d.inputs, indicator.score);
+				const numInputsCosted = inputs.filter(input => input.costed).length;
+				return `${numInputsCosted} of ${inputs.length} items costed`;
 			});
 		}
 

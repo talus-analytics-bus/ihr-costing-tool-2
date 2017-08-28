@@ -382,8 +382,8 @@ const App = {};
 	App.getNumIndicatorsCosted = (capacity) => {
 		return capacity.indicators
 			.filter((ind) => {
-				return ind.actions.every((action) => {
-					return action.inputs.every(input => input.costed);
+				return App.getNeededActions(ind).every((action) => {
+					return App.getNeededInputs(action.inputs, ind.score).every(input => input.costed);
 				});
 			})
 			.length;
