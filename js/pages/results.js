@@ -37,34 +37,47 @@
 		Charts.buildProgressChart('.progress-chart-overall', [currScore, newScore]);
 
 		const totalCost = d3.sum(App.jeeTree, d => d.startupCost);
-		Charts.buildCircleSummary('.circle-summary-total', totalCost, {
-			radius: 100,
-			label: 'Total',
-		});
+		const totalCostContainer = d3.select('.summary-text-total').append('div');
+		totalCostContainer.append('div')
+			.attr('class', 'total-cost-number')
+			.text(App.moneyFormat(totalCost));
+		totalCostContainer.append('div')
+			.attr('class', 'total-cost-number-text')
+			.text('Total Cost');
 
-
-		const csb = d3.select('.circle-summary-section').selectAll('.circle-summary-box')
+		const csb = d3.select('.summary-text-section').selectAll('.summary-text-box')
 			.data(App.jeeTree)
-			.enter().append('div');
-		csb.append('div').attr('class', (d, i) => `circle-summary-${i}`);
+			.enter().append('div')
+				.attr('class', 'summary-text-box');
+		csb.append('div').attr('class', (d, i) => `summary-text-${i}`);
 		csb.append('div').attr('class', (d, i) => `progress-chart-${i}`);
 		csb.each((d, i) => {
 			const indicators = [];
-			App.jeeTree[i].capacities.forEach((cap) => {
+			d.capacities.forEach((cap) => {
 				cap.indicators.forEach(ind => indicators.push(ind));
 			});
 			const ccCurrScore = App.getAverageCurrentScore(indicators) || 0;
 			const ccNewScore = App.getAverageTargetScore(indicators) || 0;
 
-			Charts.buildCircleSummary(`.circle-summary-${i}`, App.jeeTree[i].startupCost, {
-				label: App.jeeTree[i].name,
-			});
+			const summaryText = `Cost for ${d.name}<br>core capacity`;
+			addSummaryText(`.summary-text-${i}`, d.startupCost, summaryText);
 			Charts.buildProgressChart(`.progress-chart-${i}`, [ccCurrScore, ccNewScore], {
-				width: 150,
+				width: 180,
 				height: 16,
 				radius: 4,
 			});
 		});
+
+		function addSummaryText(selector, cost, text, param={}) {
+			const container = d3.select(selector).append('div')
+				.attr('class', 'big-number-container');
+			const value = container.append('div')
+				.attr('class', 'big-number')
+				.text(App.moneyFormat(cost));
+			container.append('div')
+				.attr('class', 'big-number-text')
+				.html(text);
+		}
 
 
 		/* --------------------------- Cost Chart Section ---------------------------*/

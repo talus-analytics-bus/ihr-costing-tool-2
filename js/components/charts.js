@@ -120,7 +120,7 @@ const Charts = {};
 	}
 
 	Charts.buildCostChart = (selector, data, param={}) => {
-		const margin = { top: 60, right: 30, bottom: 40, left: 95 };
+		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
 		const width = 800;
 		const height = 300;
 		const chartContainer = d3.select(selector).append('svg')
@@ -149,8 +149,10 @@ const Charts = {};
 		// define axes
 		const xAxis = d3.axisBottom(x);
 		const yAxis = d3.axisLeft()
-			.ticks(9)
-			.tickFormat(d3.format('$,.3s'));
+			.ticks(7)
+			.tickFormat((num) => {
+				return (num === 0) ? '0' : d3.format(',.3s')(num);
+			});
 
 		// add axes
 		chart.append('g')
@@ -163,10 +165,15 @@ const Charts = {};
 		// add axes labels
 		chart.append('text')
 			.attr('class', 'axis-label')
+			.attr('x', width / 2)
+			.attr('y', height + 50)
+			.text('Capacity ID');
+		chart.append('text')
+			.attr('class', 'axis-label')
 			.attr('transform', 'rotate(-90)')
 			.attr('x', -height / 2)
 			.attr('y', -80)
-			.text('Total Cost');
+			.text(`Indicator Cost (in ${App.whoAmI.currency_iso})`);
 
 
 		// update function

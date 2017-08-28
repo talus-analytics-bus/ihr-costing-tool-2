@@ -7,12 +7,53 @@
 
 
 /* --- Score Improvement Section --- */
-.circle-summary-section {
-	margin-top: 20px;
+.summary-text-total {
+	float: left;
+	margin-left: 20px;
+	text-align: center;
 
-	& > div {
+	.total-cost-number {
+		white-space: nowrap;
+		font-family: 'Raleway', sans-serif;
+		font-size: 2.1rem;
+		font-weight: 600;
+	}
+	.total-cost-number-text {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: #777;
+	}
+}
+.progress-chart-overall {
+	margin-left: 140px;
+}
+.summary-text-section {
+	margin-top: 60px;
+	margin-left: 50px;
+
+	.summary-text-box {
 		display: inline-block;
 		vertical-align: top;
+		width: 240px;
+	}
+	.progress-chart {
+		margin-top: 10px;
+	}
+}
+.big-number-container {
+	text-align: center;
+
+	.big-number {
+		white-space: nowrap;
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.7rem;
+		font-weight: 600;
+	}
+	.big-number-text {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: #777;
+		line-height: 1.25;
 	}
 }
 

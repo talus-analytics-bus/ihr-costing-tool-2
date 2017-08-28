@@ -49,8 +49,8 @@
 						Assessment
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" page="overview">Instructions</a>
-						<a class="dropdown-item" page="scores" >Score Assessment</a>
+						<a class="dropdown-item" page="overview">Instructions and Upload</a>
+						<a class="dropdown-item" page="scores" >Enter Assessment</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -59,7 +59,8 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" page="costsinstructions">Instructions</a>
-						<a class="dropdown-item" page="costs" >Costing</a>
+						<a class="dropdown-item" page="costs/population">Set Default Values</a>
+						<a class="dropdown-item" page="costs/p-1/1">Enter Costs</a>
 					</div>
 				</li>
 				<li class="nav-item" page="results">
@@ -439,10 +440,11 @@
 		<div class="results-container container">
 			<h1>Results</h1>
 			<div class="score-improvement-section results-section">
-				<div class="progress-chart-overall"></div>
-				<div class="circle-summary-section">
-					<div class="circle-summary-total"></div>
+				<div>
+					<div class="summary-text-total"></div>
+					<div class="progress-chart-overall"></div>
 				</div>
+				<div class="summary-text-section"></div>
 			</div>
 			<div class="chart-section results-section">
 				<div class="cost-chart"></div>

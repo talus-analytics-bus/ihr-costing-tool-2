@@ -77,6 +77,10 @@ const App = {};
 		return `${App.numberFormat(num)} ${App.whoAmI.currency_iso}`;
 	}
 
+	App.moneyFormatShort = (num) => {
+		return `${d3.format(',.3s')(num)} ${App.whoAmI.currency_iso}`;
+	}
+
 
 	/* ------------------ jeeTree Getter Functions ------------------- */
 	App.normalCcIds = ['p', 'd', 'r'];
