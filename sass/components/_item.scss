@@ -41,13 +41,10 @@
 	top: 40px;
 	left: 155px;
 	margin: 0 15px;
-	border: $border;
 	text-align: center;
 	vertical-align: top;
 	white-space: normal;
 	perspective: 1000px;
-	@include gradient(#f0f0f0, #fff);
-	@include box-shadow(3px 3px 6px rgba(0,0,0,0.3));
 
 	.item-shell {
 		position: absolute;
@@ -55,8 +52,11 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+		border: $border;
 		transition: 0.7s;
 		transform-style: preserve-3d;
+		@include gradient(#f0f0f0, #fff);
+		@include box-shadow(3px 3px 6px rgba(0,0,0,0.3));
 	}
 	&.active .item-shell {
 		transform: rotateY(-180deg);
@@ -155,5 +155,13 @@
 		td:last-child { text-align: right; }
 		tr:last-child { font-weight: 600; }
 		tr:last-child td { border-top: 1px solid #999; }
+	}
+	.line-item-description-button {
+		position: relative;
+		top: -2px;
+		width: 17px;
+		height: 17px;
+		margin-left: 10px;
+		cursor: pointer;
 	}
 }

@@ -282,7 +282,17 @@
 						return allLineItems.filter(dataFilterFunc);
 					})
 					.enter().append('tr');
-				sRows.append('td').text(li => li.name);
+				const sNameCell = sRows.append('td');
+				sNameCell.append('span').text(li => li.name);
+				sNameCell.append('img')
+					.attr('class', 'line-item-description-button')
+					.attr('src', 'img/question-mark.png')
+					.each(function(d) {
+						$(this).tooltipster({
+							trigger: 'click',
+							content: d.description,
+						});
+					});
 				sRows.append('td').text(li => App.moneyFormat(li.cost));
 
 				// add total cost
