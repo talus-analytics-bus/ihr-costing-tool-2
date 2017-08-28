@@ -85,9 +85,15 @@
 
 			// if no actions (bc score is 4 or 5), display text saying so
 			if (!actions.length) {
+				let noActionText = 'There are no actions needed to increase the current score for this indicator';
+				if (indicator.score === 4) {
+					noActionText = 'Costs to increase from score <b>4</b> to <b>5</b> are highly country-specific and are not included in the IHR Costing Tool.';
+				} else if (indicator.score === 5) {
+					noActionText = 'Indicators with a score of <b>5</b> do not require costing (no new actions required).';
+				}
 				indSlotContainer.append('div')
 					.attr('class', 'no-actions-container')
-					.text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus commodo imperdiet bibendum. Morbi egestas sagittis arcu eget suscipit.');
+					.html(noActionText);
 				return;
 			}
 

@@ -6,43 +6,79 @@
 }
 
 
+/* --- Cost Type Section --- */
+.cost-type-section {
+	border: $border;
+	padding: 20px 50px;
+	text-align: center;
+	@include border-radius(10px);
+}
+.cost-type-row {
+	button {
+		width: 180px;
+		@include noselect;
+	}
+}
+.cost-duration-row {
+	.btn-group {
+		position: relative;
+		left: -268px;
+	}
+	button {
+		border-top: none;
+		@include noselect;
+	}
+}
+
+
 /* --- Score Improvement Section --- */
+.score-improvement-section {
+	margin-top: 20px;
+	border: $border;
+	padding: 20px 20px 30px;
+	@include border-radius(10px);
+}
+.score-improvement-title {
+	text-align: center;
+	font-size: 1.4rem;
+	margin-bottom: 25px;
+}
 .summary-text-total {
 	float: left;
+	margin-top: 1px;
 	margin-left: 20px;
 	text-align: center;
 
+	.total-cost-number-text {
+		font-size: 1.3rem;
+		font-variant: small-caps;
+	}
 	.total-cost-number {
+		margin-top: -4px;
 		white-space: nowrap;
 		font-family: 'Raleway', sans-serif;
-		font-size: 2.1rem;
+		font-size: 2.2rem;
 		font-weight: 600;
-	}
-	.total-cost-number-text {
-		font-size: 0.95rem;
-		font-weight: 600;
-		color: #777;
 	}
 }
 .progress-chart-overall {
-	margin-left: 140px;
+	margin-top: 5px;
+	margin-left: 200px;
 }
 .summary-text-section {
-	margin-top: 60px;
-	margin-left: 50px;
+	margin-top: 30px;
 
 	.summary-text-box {
 		display: inline-block;
 		vertical-align: top;
-		width: 240px;
-	}
-	.progress-chart {
-		margin-top: 10px;
-	}
-}
-.big-number-container {
-	text-align: center;
+		width: 220px;
+		padding: 5px 10px;
+		border: $light-border;
+		cursor: pointer;
+		@include gradient(#f0f0f0, #f9f9f9);
 
+		&:nth-child(n+2) { border-left: none; }
+	}
 	.big-number {
 		white-space: nowrap;
 		font-family: 'Raleway', sans-serif;
@@ -50,15 +86,18 @@
 		font-weight: 600;
 	}
 	.big-number-text {
-		font-size: 0.95rem;
-		font-weight: 600;
-		color: #777;
-		line-height: 1.25;
+		font-size: 1.25rem;
+		font-variant: small-caps;
 	}
 }
 
-
 /* --- Cost Chart --- */
+.chart-section {
+	border: $border;
+	margin-top: 20px;
+	padding: 10px 20px;
+	@include border-radius(10px);
+}
 .cost-chart-filter-container {
 	float: left;
 	width: 300px;
@@ -78,12 +117,18 @@
 		font-size: 1.1rem;
 		margin-bottom: 10px;
 	}
-	.cost-chart-radio-label {
-		margin-left: 15px;
+	.filter-label {
+		margin-bottom: 4px;
+	}
+	.filter-row {
+		margin-top: 2px;
+		margin-left: 10px;
+		cursor: pointer;
 
 		input {
 			position: relative;
 			top: 1px;
+			margin-right: 10px;
 		}
 	}
 }

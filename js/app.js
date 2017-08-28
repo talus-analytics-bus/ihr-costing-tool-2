@@ -357,7 +357,7 @@ const App = {};
 				});
 				cc.startupCost += cap.startupCost;
 				cc.capitalCost += cap.capitalCost;
-				cc.recurringCost2 += cap.recurringCost;
+				cc.recurringCost += cap.recurringCost;
 			});
 		});
 	}
@@ -406,10 +406,8 @@ const App = {};
 	/* ------------------ Vendor Defaults ------------------- */
 	// tooltipster defaults
 	$.tooltipster.setDefaults({
-		//plugins: ['follower'],
 		contentAsHTML: true,
 		trigger: 'hover',
-		//anchor: 'top-center',
 		offset: [5, -25],
 		theme: 'tooltipster-shadow',
 		maxWidth: 320,

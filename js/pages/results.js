@@ -1,8 +1,8 @@
 (() => {
 	App.initResults = () => {
 		// establish constants
-		const scoreFormat = d3.format('.1f');
-		const scoreChangeFormat = d3.format('+.1f');
+		let costType = 'total';
+		let totalCostDuration = 1;
 
 
 		/* -------------------------- Demo Mode --------------------------*/
@@ -30,53 +30,77 @@
 			});
 		});
 
+		function getCost(d) {
+			if (costType === 'total') {
+				let cost = d.startupCost + d.capitalCost;
+				return cost += totalCostDuration * d.recurringCost;
+			} else if (costType === 'startup') {
+				return d.startupCost;
+			} else if (costType === 'capital') {
+				return d.capitalCost;
+			} else if (costType === 'recurring') {
+				return d.recurringCost;
+			}
+			return 0;
+		}
+
+
+		/* ---------------------- Cost Type Section ----------------------*/
+		$('.cost-type-row button').on('click', function onClick() {
+			$(this).addClass('active')
+				.siblings().removeClass('active');
+			costType = $(this).attr('value');
+			if (costType === 'total') $('.cost-duration-row').slideDown();
+			else $('.cost-duration-row').slideUp();
+			updateResults();
+		});
+		$('.cost-duration-row button').on('click', function onClick() {
+			$(this).addClass('active')
+				.siblings().removeClass('active');
+			totalCostDuration = +$(this).attr('value');
+			updateResults();
+		});
+
+
+		/* ---------------------- Updating Functions ----------------------*/
+		function updateResults() {
+			updateSummaryCosts();
+		}
+
 
 		/* ---------------------- Score Improvement Section ----------------------*/
 		const currScore = App.getAverageCurrentScore(allIndicators);
 		const newScore = App.getAverageTargetScore(allIndicators);
 		Charts.buildProgressChart('.progress-chart-overall', [currScore, newScore]);
 
-		const totalCost = d3.sum(App.jeeTree, d => d.startupCost);
-		const totalCostContainer = d3.select('.summary-text-total').append('div');
-		totalCostContainer.append('div')
-			.attr('class', 'total-cost-number')
-			.text(App.moneyFormat(totalCost));
-		totalCostContainer.append('div')
-			.attr('class', 'total-cost-number-text')
-			.text('Total Cost');
-
-		const csb = d3.select('.summary-text-section').selectAll('.summary-text-box')
+		const stb = d3.select('.summary-text-section').selectAll('.summary-text-box')
 			.data(App.jeeTree)
 			.enter().append('div')
 				.attr('class', 'summary-text-box');
-		csb.append('div').attr('class', (d, i) => `progress-chart-${i}`);
-		csb.append('div').attr('class', (d, i) => `summary-text-${i}`);
-		csb.each((d, i) => {
-			const indicators = [];
-			d.capacities.forEach((cap) => {
-				cap.indicators.forEach(ind => indicators.push(ind));
-			});
-			const ccCurrScore = App.getAverageCurrentScore(indicators) || 0;
-			const ccNewScore = App.getAverageTargetScore(indicators) || 0;
-			Charts.buildProgressChart(`.progress-chart-${i}`, [ccCurrScore, ccNewScore], {
-				width: 180,
-				height: 16,
-				radius: 4,
-			});
+		stb.append('div')
+			.attr('class', 'big-number-text')
+			.html(d => `${d.name} Cost`);
+		stb.append('div').attr('class', 'big-number');
 
-			const summaryText = `Cost for ${d.name}<br>core capacity`;
-			addSummaryText(`.summary-text-${i}`, d.startupCost, summaryText);
-		});
+		// initialize total cost number so transition works
+		d3.select('.total-cost-number').text(App.moneyFormat(1e6));
 
-		function addSummaryText(selector, cost, text, param={}) {
-			const container = d3.select(selector).append('div')
-				.attr('class', 'big-number-container');
-			const value = container.append('div')
-				.attr('class', 'big-number')
-				.text(App.moneyFormat(cost));
-			container.append('div')
-				.attr('class', 'big-number-text')
-				.html(text);
+		
+		function updateSummaryCosts() {
+			// update total cost
+			const totalCost = d3.sum(App.jeeTree, d => getCost(d));
+			d3.select('.total-cost-number').transition()
+				.duration(1000)
+				.tween('text', function tweenFunc() {
+					const that = d3.select(this);
+					const i = d3.interpolateNumber(Util.strToFloat(that.text()), totalCost);
+					return t => that.text(App.moneyFormat(i(t)));
+				});
+
+			// update core capacity costs
+			d3.selectAll('.summary-text-box .big-number').text((d) => {
+				return App.moneyFormat(getCost(d));
+			});
 		}
 
 
@@ -93,7 +117,7 @@
 
 
 		/* --------------------------- Filter Section ---------------------------*/
-		// populate filters
+		/*// populate filters
 		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
 		
 		let chosenCapNames = [];
@@ -178,6 +202,8 @@
 				.multiselect('deselect', unchosenCapNames, false);
 		}
 
-		updateDropdowns();
+		updateDropdowns();*/
+
+		updateResults();
 	}
 })();

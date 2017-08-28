@@ -7,20 +7,15 @@
 	<link rel="icon" href="img/favicon.ico">
 
 	<!-- ----- CSS Files ----- -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/css?family=Raleway:600,400" rel="stylesheet">
 	<link href="css/tether.min.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-multiselect.css" rel="stylesheet">
-	<link href="css/datatables.min.css" rel="stylesheet">
 	<link href="css/nprogress.min.css" rel="stylesheet">
-	<link href="css/tooltipster.css" rel="stylesheet" type="text/css">
-	<link href="css/tooltipster-shadow.css" rel="stylesheet" type="text/css">
 	<link href="css/tooltipster.bundle.min.css" rel="stylesheet">
-	<link href="css/tooltipster-follower.min.css" rel="stylesheet">
 	<link href="css/tooltipster-sideTip-shadow.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
 		  integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
 		  crossorigin=""/>
@@ -441,9 +436,30 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
+			<div class="cost-type-section">
+				<div class="cost-type-row">
+					<div class="btn-group">
+						<button class="btn btn-secondary active" value="total">Total Cost</button>
+						<button class="btn btn-secondary" value="startup">Startup Cost</button>
+						<button class="btn btn-secondary" value="capital">Capital Cost</button>
+						<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
+					</div>
+				</div>
+				<div class="cost-duration-row">
+					<div class="btn-group">
+						<button class="btn btn-secondary active" value="1">1 yr</button>
+						<button class="btn btn-secondary" value="3">3 yr</button>
+						<button class="btn btn-secondary" value="5">5 yr</button>
+					</div>
+				</div>
+			</div>
 			<div class="score-improvement-section results-section">
+				<div class="score-improvement-title">Cost Summary</div>
 				<div>
-					<div class="summary-text-total"></div>
+					<div class="summary-text-total">
+						<div class="total-cost-number-text">Total Cost</div>
+						<div class="total-cost-number"></div>
+					</div>
 					<div class="progress-chart-overall"></div>
 				</div>
 				<div class="summary-text-section"></div>
@@ -455,12 +471,12 @@
 							Cost Chart Options
 						</div>
 						<div class="cost-chart-filter-section">
-							<label>View cost by:</label>
-							<div class="radio">
-								<label><input type="radio" />Indicator</label>
+							<div class="filter-label">View cost by:</div>
+							<div class="filter-row">
+								<input type="radio" checked />Indicator
 							</div>
-							<div class="radio">
-								<label><input type="radio" />Category</label>
+							<div class="filter-row">
+								<input type="radio" />Category
 							</div>
 						</div>
 					</div>
@@ -475,7 +491,8 @@
 		<div class="background-container container container-text">
 			<h1>Background/Acknowledgements</h1>
 			<div>
-				Placeholder background text
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dapibus nulla. Quisque eu risus commodo, efficitur eros vitae, tempor est. Curabitur eleifend luctus velit nec aliquet. Fusce sagittis quis urna eget semper. In cursus fringilla commodo. Donec facilisis sodales nunc, id interdum purus convallis vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla eget est ut metus molestie feugiat sed id nulla. Ut mollis sem vitae massa laoreet interdum.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dapibus nulla. Quisque eu risus commodo, efficitur eros vitae, tempor est. Curabitur eleifend luctus velit nec aliquet. Fusce sagittis quis urna eget semper. In cursus fringilla commodo. Donec facilisis sodales nunc, id interdum purus convallis vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla eget est ut metus molestie feugiat sed id nulla. Ut mollis sem vitae massa laoreet interdum.</p>
 			</div>
 		</div>
 	</script>

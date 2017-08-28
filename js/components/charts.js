@@ -2,9 +2,9 @@ const Charts = {};
 
 (() => {
 	Charts.buildProgressChart = (selector, data, param={}) => {
-		const margin = { top: 5, right: 5, bottom: 5, left: 5 };
-		const width = param.width || 800;
-		const height = param.height || 26;
+		const margin = { top: 35, right: 5, bottom: 35, left: 5 };
+		const width = param.width || 700;
+		const height = param.height || 36;
 		const chartContainer = d3.selectAll(selector).append('svg')
 			.classed('progress-chart', true)
 			.attr('width', width + margin.left + margin.right)
@@ -12,7 +12,7 @@ const Charts = {};
 		const chart = chartContainer.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-		const circleRadius = param.radius || 6;
+		const circleRadius = param.radius || 9;
 		const rectHeight = param.rectHeight || height / 2;
 
 		const x = d3.scaleLinear()
@@ -92,12 +92,38 @@ const Charts = {};
 			.attr('cy', height / 2)
 			.attr('r', circleRadius);
 
+		// add labels
+		chart.append('line')
+			.attr('class', 'label-line')
+			.attr('x1', x(data[0]))
+			.attr('x2', x(data[0]))
+			.attr('y1', -10)
+			.attr('y2', (height / 2) - circleRadius);
+		chart.append('text')
+			.attr('class', 'label-text')
+			.attr('x', x(data[0]))
+			.attr('y', -21)
+			.attr('dy', '.35em')
+			.text('Old Score');
+		chart.append('line')
+			.attr('class', 'label-line')
+			.attr('x1', x(data[1]))
+			.attr('x2', x(data[1]))
+			.attr('y1', height + 10)
+			.attr('y2', (height / 2) + circleRadius);
+		chart.append('text')
+			.attr('class', 'label-text')
+			.attr('x', x(data[1]))
+			.attr('y', height + 21)
+			.attr('dy', '.35em')
+			.text('New Score')
+
 		return chart;
 	}
 
 	Charts.buildCostChart = (selector, data, param={}) => {
 		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
-		const width = 600;
+		const width = 580;
 		const height = 300;
 		const chartContainer = d3.select(selector).append('svg')
 			.attr('class', 'cost-chart')
@@ -105,6 +131,16 @@ const Charts = {};
 			.attr('height', height + margin.top + margin.bottom);
 		const chart = chartContainer.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		// add clip path
+		const defs = chartContainer.append('defs');
+		const chartClip = defs.append('clipPath').attr('id', 'chart-clip');
+		chartClip.append('rect')
+			.attr('y', -margin.top)
+			.attr('width', width + margin.right)
+			.attr('height', height + margin.top);
+		const chartBody = chart.append('g')
+			.attr('clip-path', 'url(#chart-clip)');
 
 		// define scales
 		const x = d3.scaleBand()
@@ -149,7 +185,7 @@ const Charts = {};
 			.attr('transform', 'rotate(-90)')
 			.attr('x', -height / 2)
 			.attr('y', -80)
-			.text(`Indicator Cost (in ${App.whoAmI.currency_iso})`);
+			.text(`Startup Cost (in ${App.whoAmI.currency_iso})`);
 
 
 		// update function
@@ -160,7 +196,7 @@ const Charts = {};
 			yAxisG.call(yAxis);
 
 			// add a circle for each indicator
-			const indBlobs = chart.selectAll('.indicator-blob')
+			const indBlobs = chartBody.selectAll('.indicator-blob')
 				.data(newData);
 			indBlobs.exit().remove();
 			indBlobs.enter().append('circle')

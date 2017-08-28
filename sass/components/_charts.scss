@@ -23,6 +23,15 @@
 		stroke: #333;
 		stroke-width: 2;
 	}
+	.label-line {
+		stroke: #333;
+		stroke-dasharray: 2,2;
+	}
+	.label-text {
+		text-anchor: middle;
+		font-size: 0.95rem;
+		font-weight: 600;
+	}
 }
 .cost-chart {
 
