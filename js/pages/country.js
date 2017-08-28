@@ -13,6 +13,7 @@
 		$('.country-dropdown').on('change', function() {
 			App.updateCountry($(this).val());
 		});
+		if (App.whoAmI.abbreviation) $('.country-dropdown').val(App.whoAmI.abbreviation);
 
 
 		// set the map's active country to the dropdown selection
@@ -113,7 +114,6 @@
 			// update all costs
 			App.updateAllCosts();
 		}
-
 
 		// next button behavior
 		$('.go-to-assessment-button').click(() => hasher.setHash('overview'));
