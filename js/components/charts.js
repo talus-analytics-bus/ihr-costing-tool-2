@@ -13,6 +13,7 @@ const Charts = {};
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 		const circleRadius = param.radius || 6;
+		const rectHeight = param.rectHeight || height / 2;
 
 		const x = d3.scaleLinear()
 			.domain([0, 5])
@@ -25,6 +26,22 @@ const Charts = {};
 		filter.append('feGaussianBlur')
 			.attr('in', 'SourceGraphic')
 			.attr('stdDeviation', '1');
+		const pattern = defs.append('pattern')
+			.attr('id', 'diagonalHatch')
+			.attr('patternUnits', 'userSpaceOnUse')
+			.attr('width', 4)
+			.attr('height', 4);
+		pattern.append('rect')
+			.attr('x', -1)
+			.attr('y', -1)
+			.attr('width', 6)
+			.attr('height', 6)
+			.attr('fill', 'lightsteelblue')
+			.attr('stroke', 'none');
+		pattern.append('path')
+			.attr('d', 'M-1,1 l2,-2, M0,4 l4,-4, M3,5 l2,-2')
+			.attr('stroke', 'black')
+			.attr('stroke-width', 0.5);
 
 		// draw rectangles
 		const rectData = [
@@ -35,6 +52,7 @@ const Charts = {};
 		chart.selectAll('.color-bar')
 			.data(rectData)
 			.enter().append('rect')
+				.attr('class', 'color-barZZ')
 				.attr('x', d => x(d.x0))
 				.attr('width', d => x(d.x1) - x(d.x0))
 				.attr('height', height)
@@ -46,13 +64,21 @@ const Charts = {};
 			.attr('class', 'base')
 			.attr('width', width)
 			.attr('height', height);
-		chart.selectAll('.tick-line')
-			.data(d3.range(1, 5))
-			.enter().append('line')
-				.attr('class', 'tick-line')
-				.attr('x1', d => x(d))
-				.attr('x2', d => x(d))
-				.attr('y2', height);
+
+		// add bars
+		chart.append('rect')
+			.attr('class', 'bar bar-0')
+			.attr('x', x(0))
+			.attr('y', (height - rectHeight) / 2)
+			.attr('width', x(data[0]) - x(0))
+			.attr('height', rectHeight);
+		chart.append('rect')
+			.attr('class', 'bar bar-1')
+			.attr('x', x(data[0]))
+			.attr('y', (height - rectHeight) / 2)
+			.attr('width', x(data[1]) - x(data[0]))
+			.attr('height', rectHeight)
+			.style('fill', 'url(#diagonalHatch)');
 
 		// add markers
 		chart.append('circle')
@@ -65,14 +91,6 @@ const Charts = {};
 			.attr('cx', x(data[1]))
 			.attr('cy', height / 2)
 			.attr('r', circleRadius);
-
-		// add line between markers
-		chart.append('line')
-			.attr('class', 'marker-line')
-			.attr('x1', x(data[0]) + circleRadius)
-			.attr('x2', x(data[1]) - circleRadius)
-			.attr('y1', height / 2)
-			.attr('y2', height / 2);
 
 		return chart;
 	}
@@ -102,7 +120,7 @@ const Charts = {};
 	}
 
 	Charts.buildCostChart = (selector, data, param={}) => {
-		const margin = { top: 60, right: 30, bottom: 40, left: 85 };
+		const margin = { top: 60, right: 30, bottom: 40, left: 95 };
 		const width = 800;
 		const height = 300;
 		const chartContainer = d3.select(selector).append('svg')
@@ -112,19 +130,26 @@ const Charts = {};
 		const chart = chartContainer.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-		const colorScale = d3.scaleOrdinal(d3.schemeCategory20c);
-
 		// define scales
 		const x = d3.scaleBand()
-			.domain(data.map(d => d.id))
+			.domain(data.map(d => d.capId.toUpperCase()))
 			.range([0, width]);
 		const y = d3.scaleLinear()
 			.range([height, 0]);
 		const bandwidth = x.bandwidth();
 
+		// additional scales
+		const colorScale = d3.scaleLinear()
+			.domain([0, width])
+			.range(['rgba(255,0,0,0.5)', 'rgba(0,66,118,0.5)']);
+		const radiusScale = d3.scaleLinear()
+			.domain([height, 0])
+			.range([5, 25]);
+
 		// define axes
 		const xAxis = d3.axisBottom(x);
 		const yAxis = d3.axisLeft()
+			.ticks(9)
 			.tickFormat(d3.format('$,.3s'));
 
 		// add axes
@@ -140,7 +165,7 @@ const Charts = {};
 			.attr('class', 'axis-label')
 			.attr('transform', 'rotate(-90)')
 			.attr('x', -height / 2)
-			.attr('y', -70)
+			.attr('y', -80)
 			.text('Total Cost');
 
 
@@ -157,32 +182,37 @@ const Charts = {};
 			indBlobs.exit().remove();
 			indBlobs.enter().append('circle')
 				.attr('class', 'indicator-blob')
-				.attr('r', 5)
+				.attr('r', d => radiusScale(y(d.startupCost)))
 				.each(function() {
 					$(this).tooltipster({ maxWidth: 400, content: '' });
 				})
 				.merge(indBlobs).transition()
-					.attr('cx', d => x(d.id) + bandwidth / 2)
+					.attr('cx', (d) => {
+						const xVal = x(d.capId.toUpperCase()) + bandwidth / 2;
+						const jitter = (bandwidth / 2) * (Math.random() - 0.5);
+						return xVal + jitter;
+					})
 					.attr('cy', d => y(d.startupCost))
-					.style('fill', d => colorScale(d.id))
+					.style('fill', d => colorScale(x(d.capId.toUpperCase())))
 					.each(function(d, i) {
-						/*const capacity = newData[i];
+						const capacity = App.getCapacity(d.capId);
 						$(this).tooltipster('content',
 							'<div class="cc-tooltip">' +
 								`<div class="cc-tooltip-title">${capacity.name}</div>` +
+								`<div class="cc-tooltip-subtitle">${d.name}</div>` +
 								'<div class="cc-tooltip-block">' +
-									`<div>${moneyFormat(d[1 / dt].totalCost)}</div>` +
-									`<div>Year 1 Cost</div>` +
+									`<div>${App.moneyFormat(d.startupCost)}</div>` +
+									`<div>Startup Cost</div>` +
 								'</div>' +
 								'<div class="cc-tooltip-block">' +
-									`<div>${moneyFormat(d[3 / dt].totalCost)}</div>` +
-									`<div>Year 3 Cost</div>` +
+									`<div>${App.moneyFormat(d.capitalCost)}</div>` +
+									`<div>Capital Cost</div>` +
 								'</div>' +
 								'<div class="cc-tooltip-block">' +
-									`<div>${moneyFormat(d[5 / dt].totalCost)}</div>` +
-									`<div>Year 5 Cost</div>` +
+									`<div>${App.moneyFormat(d.recurringCost)}/yr</div>` +
+									`<div>Recurring Cost</div>` +
 								'</div>' +
-							'</div>');*/
+							'</div>');
 					});
 		};
 

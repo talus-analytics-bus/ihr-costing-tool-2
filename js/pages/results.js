@@ -19,9 +19,11 @@
 
 
 		/* ---------------------- Data Wrangling ----------------------*/
+		const allCapacities = [];
 		const allIndicators = [];
 		App.jeeTree.forEach((cc) => {
 			cc.capacities.forEach((cap) => {
+				allCapacities.push(cap);
 				cap.indicators.forEach((ind) => {
 					allIndicators.push(ind);
 				});
@@ -66,16 +68,22 @@
 
 
 		/* --------------------------- Cost Chart Section ---------------------------*/
-		Charts.buildCostChart('.cost-chart', allIndicators);
+		const capIndData = [];
+		allCapacities.forEach((cap) => {
+			cap.indicators.forEach((ind) => {
+				const indCopy = Object.assign({}, ind);
+				indCopy.capId = cap.id;
+				capIndData.push(indCopy);
+			});
+		});
+		Charts.buildCostChart('.cost-chart', capIndData);
 
 
 		/* --------------------------- Filter Section ---------------------------*/
 		// populate filters
 		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
 		
-		let allCapacities = [];
 		let chosenCapNames = [];
-		App.jeeTree.forEach(cc => allCapacities = allCapacities.concat(cc.capacities));
 		Util.populateSelect('.capacity-select', allCapacities.map(d => d.name));
 
 		const categories = ['Consumable Materials', 'Durable Equipment', 'Human Capabilities', 'Physical Infrastructure', 'Technology', 'Tools and Processes'];

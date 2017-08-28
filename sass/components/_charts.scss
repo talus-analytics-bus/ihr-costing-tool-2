@@ -1,9 +1,9 @@
 .tick text {
-	font-size: 1.05em;
+	font-size: 0.9rem;
 }
 .axis-label {
 	text-anchor: middle;
-	font-size: 0.85em;
+	font-size: 1rem;
 }
 
 
@@ -14,18 +14,13 @@
 		stroke: #333;
 		stroke-width: 1;
 	}
-	.tick-line {
-		stroke: rgba(0,0,0,0.9);
-		stroke-dasharray: 2,2;
-		stroke-width: 1;
+	.bar {
+		fill: #777;
+		stroke: none;
 	}
 	.marker {
 		fill: white;
 		stroke: #333;
-		stroke-width: 2;
-	}
-	.marker-line {
-		stroke: rgba(0,0,0,0.9);
 		stroke-width: 2;
 	}
 }
@@ -47,4 +42,33 @@
 }
 .cost-chart {
 
+}
+.cc-tooltip {
+	text-align: center;
+	padding: 10px;
+
+	.cc-tooltip-title {
+		font-size: 1.2em;
+		color: #333;
+	}
+	.cc-tooltip-subtitle {
+		font-size: 1.1em;
+		font-weight: 300;
+		color: #333;
+		margin-top: 5px;
+	}
+	.cc-tooltip-block {
+		display: inline-block;
+		margin: 25px 15px 0;
+	}
+	.cc-tooltip-block div:first-child {
+		font-family: 'Raleway', sans-serif;
+		font-size: 1.7em;
+		font-weight: 600;
+		color: #555;
+	}
+	.cc-tooltip-block div:nth-child(2) {
+		margin-top: 8px;
+		font-size: 0.9em;
+	}
 }
