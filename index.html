@@ -131,7 +131,7 @@
 	<script id="country-template" type="text/x-handlebars-template">
 		<div class="country-container container">
 			<h1>Enter Country</h1>
-			<p>Choose your country using the map, drop-down list, or search function.</p>
+			<p>Choose your country using the map, drop-down list, or search function. Then, click “Continue to Assessment” to begin.</p>
 			<div class="map-container">
 				<div id="leaflet-map"></div>
 			</div>
@@ -169,7 +169,7 @@
 				<h2>Automatic Score Upload</h2>
 				<p>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</p>
 				<p>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</p>
-				<p>3.  Click “Continue to Assessment” to review uploaded scores.</p>
+				<p>3.  Click “Continue to Scores” to review uploaded scores.</p>
 				<div class="upload-button-container">
 					<button type="button" class="btn btn-secondary">Select a File</button>
 				</div>
@@ -177,9 +177,9 @@
 			<div>
 				<h2>Manual Score Entry</h2>
 				<p>1. If no electronic report is available in the required format for upload, scores can be entered manually.</p>
-				<p>2. Click “Continue to Assessment” to begin entering scores.</p>
+				<p>2. Click “Continue to Scores” to begin entering scores.</p>
 				<div class="next-button-container">
-					<button type="button" class="next-button btn btn-primary">Continue to Assessment</button>
+					<button type="button" class="next-button btn btn-primary">Continue to Scores</button>
 				</div>
 			</div>
 		</div>
@@ -194,7 +194,8 @@
 					<h1>Assessment</h1>
 					<div class="core-capacity-name"></div>
 					<div class="score-instructions instructions">
-						Choose a score for each indicator below based on the current JEE assessment capacity. Open the description below for more details.
+						<p>Choose a score for each indicator below based on the current JEE assessment capacity. Any previously uploaded scores are pre-populated for review.</p>
+						<p>Use arrows at the bottom of the page to move forward and backward between indicators. Use the navigation bar menu on the left to track progress entering JEE scores and if you want to quickly switch between core capacities.</p>
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
