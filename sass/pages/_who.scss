@@ -12,6 +12,14 @@
 		top: 12px;
 		left: 15px;
 	}
+	.block-link {
+		left: 0%;
+		width: 100%;
+		&[level="1"] {
+			left: 10%;
+			width: 90%;
+		}
+	}
 	.block-link-title { font-size: 1.25em; }
 	.block-title-title {
 		font-size: 1.25em;
@@ -92,18 +100,14 @@
 		padding-bottom: 10px;
 	}
 	.dv-item-row {
-		margin-left: 10px;
+		margin-left: 0;
 		padding: 10px;
 	}
 	.dv-subheading-row {
 		font-family: 'Open Sans', sans-serif;
-		margin-left: 40px;
-		border-left: $light-border;
-		padding: 10px 10px 20px;
-		&:first-child { margin-top: 10px; }
+		padding: 10px 0 20px;
 	}
 	.dv-subheading-row h3 {
-		margin-bottom: 20px;
 		font-weight: 400;
 		font-size: 1.3em;
 	}
@@ -123,7 +127,7 @@
 		float: left;
 	}
 	.dv-input-group {
-		margin-left: 60px;
+		margin-left: 30px;
 	}
 	.dv-divider {
 		border-top: $light-border;
@@ -134,8 +138,7 @@
 		font-size: 1.3em; // to match block-title-title size
 	}
 	h3.dv-h3 {
-		font-size: 1.2em;
-		font-weight: normal;
+		font-size: 1.3em;
 	}
 	.dv-tab-name-container {
 		display: flex;

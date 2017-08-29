@@ -1,7 +1,42 @@
 (() => {
 	const inputNonDefaultColor = '#fff3cd';
+	const blocks = [
+		{
+			abbr: 'population',
+			name: 'Population and Currency',
+		}, {
+			abbr: 'country-details',
+			name: 'Country Details',
+		}, {
+			abbr: 'default-costs',
+			name: 'Cost Assumptions',
+			children: ['personnel', 'technology', 'printing', 'meetings'],
+		}, {
+			abbr: 'personnel',
+			tabName: 'Personnel compensation',
+			name: 'Personnel Compensation',
+			level: 1,
+		}, {
+			abbr: 'technology',
+			name: 'Technology',
+			level: 1,
+		}, {
+			abbr: 'printing',
+			name: 'Printing',
+			level: 1,
+		}, {
+			abbr: 'meetings',
+			name: 'Meetings',
+			level: 1,
+		}
+	];
 
 	App.initWho = (whoTab) => {
+		if (whoTab === 'default-costs') {
+			hasher.setHash('costs/personnel');
+			return;
+		}
+
 		// call appropriate functions based on the whoTab
 		switch(whoTab) {
 			case 'population':
@@ -9,39 +44,42 @@
 				break;
 			case 'country-details':
 				initCountryDetailsTab();
-			case 'default-costs':
-				initDefaultCostsTab();
+				break;
 			default:
+				initDefaultCostsTab(whoTab);
 		}
 
 		/* ------------ Input Block Overview and Links ---------- */
-		const blocks = [
-			{
-				abbr: 'population',
-				name: 'Population and Currency',
-			}, {
-				abbr: 'country-details',
-				name: 'Country Details',
-			}, {
-				abbr: 'default-costs',
-				name: 'Cost Assumptions',
-			}
-		];
 
 		// add a tab for each of the blocks
 		const blockLinks = d3.select('.block-link-container').selectAll('.block-link')
 			.data(blocks)
 			.enter().append('div')
 				.attr('class', 'block-link')
-				.classed('active', d => whoTab === d.abbr)
+				.attr('level', d => d.level)
+				.classed('active', (d) => {
+					if (d.children) return d.children.includes(whoTab);
+					return whoTab === d.abbr;
+				})
+				.style('display', (d) => {
+					if (d.level) {
+						if (['personnel', 'technology', 'printing', 'meetings'].includes(whoTab)) {
+							return 'inline-block';
+						}
+						return 'none';
+					}
+					return 'inline-block';
+				})
 				.on('click', d => hasher.setHash(`costs/${d.abbr}`));
 
 		// add an arrow to indicate which block is showing
 		const chevron = blockLinks.append('svg')
 			.attr('class', 'chevron')
+			.classed('active', d => d.abbr === 'default-costs')
 			.attr('viewBox', '0 0 24 24')
 			.attr('src', 'img/chevron-right.png')
 			.style('display', (d) => {
+				if (d.children && d.children.includes(whoTab)) return 'inline';
 				return whoTab === d.abbr ? 'inline' : 'none';
 			});
 		chevron.append('path')
@@ -52,9 +90,6 @@
 			.attr('class', 'block-link-title')
 			.html(d => d.name);
 		blockLinks.append('div').attr('class', 'block-link-cover');
-
-		// show the correct block content
-		$(`.${whoTab}-block`).slideDown();
 
 		// add tooltips
 		$('.defn').tooltipster({
@@ -81,6 +116,9 @@
 
 
 	const initPopDistTab = () => {
+		// show the correct block content
+		$(`.population-block`).slideDown();
+
 		const defaultPop = App.countryParams.find(d => d.name === App.whoAmI.name).multipliers.population;
 
 		// set population defaults and behavior
@@ -129,6 +167,9 @@
 	}
 
 	const initCountryDetailsTab = () => {
+		// show the correct block content
+		$(`.country-details-block`).slideDown();
+
 		const geoDivisions = [
 			{
 				nameAttr: 'intermediate_1_area_name',
@@ -212,28 +253,40 @@
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
-	const initDefaultCostsTab = () => {
+	const initDefaultCostsTab = (whoTab) => {
+		// show the correct block content
+		$(`.default-costs-block`).slideDown();
+
 		// look up exchange rate
 		const exchangeRate = App.getExchangeRate();
 
 		// find global base costs to show on page for user review
-		const defaultCosts = App.globalBaseCosts.filter(gbc => gbc.show_on_dv);
+		const defaultCosts = App.globalBaseCosts.filter((gbc) => {
+			if (!gbc.show_on_dv) return false;
+			const blockInfo = blocks.find(b => b.abbr === whoTab);
+			if (blockInfo.tabName) return gbc.tab_name === blockInfo.tabName;
+			return gbc.tab_name === blockInfo.name;
+		});
 
 		// add overhead percentage to the default costs so it is included in the
 		// page for user review
-		defaultCosts.push({
-		  "cost": 0.6,
-		  "cost_unit": "% per year",
-		  "description": "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
-		  "id": "gbc.overhead",
-		  "name": "Overhead percentage",
-		  "tab_name": "Personnel compensation",
-		  "subheading_name": "Salaries"
-		});
+		if (whoTab === 'personnel') {
+			defaultCosts.push({
+			  "cost": 0.6,
+			  "cost_unit": "% per year",
+			  "description": "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+			  "id": "gbc.overhead",
+			  "name": "Overhead percentage",
+			  "tab_name": "Personnel compensation",
+			  "subheading_name": "Salaries",
+			});
+		}
 
 		// add meeting attendee data
-		for (let i = 0; i < App.globalStaffMultipliers.length; i++) {
-			defaultCosts.push(App.globalStaffMultipliers[i]);
+		if (whoTab === 'meetings') {
+			for (let i = 0; i < App.globalStaffMultipliers.length; i++) {
+				defaultCosts.push(App.globalStaffMultipliers[i]);
+			}
 		}
 
 		// make tree version of the GBCs so they can be added to the page in the
@@ -298,21 +351,6 @@
 					.attr('class','dv-divider');
 			}
 
-			// add container for tab name header
-			const tabHeader = d3.select('.dv-container').append('div')
-				.attr('class','dv-tab-name-container');
-
-			// add chevron for tab name
-			const chevron = tabHeader.append('svg')
-				.attr('class', 'chevron')
-				.attr('viewBox', '0 0 24 24');
-			chevron.append('path').attr('d', 'M8 5v14l11-7z');
-
-			// add header for tab name
-			tabHeader.append('h2')
-				.attr('class','dv-h2')
-				.text(tabName);
-
 			// add container for subheading/content
 			const tabContent = d3.select('.dv-container').append('div')
 				.attr('class','dv-tab-content');
@@ -322,9 +360,9 @@
 				// add row for the subheading group
 				const subCol = tabContent
 					.append('div')
-						.attr('class','dv-subheading-row row')
+						.attr('class','dv-subheading-row')
 					.append('div')
-						.attr('class','dv-subheading-col col-sm-12');
+						.attr('class','dv-subheading-col');
 
 				// get subheader name
 				const subNode = tabNode[tabName][j];
@@ -399,18 +437,6 @@
 		}
 
 		// add on-click for tab headers
-		$('.dv-tab-content').first().slideUp();
-		$('.dv-tab-name-container').click(function() {
-			const curContainer = $(this);
-			curContainer.siblings('.dv-tab-content').not($(this).next()).slideUp();
-			curContainer.next().slideToggle(false);
-
-			curContainer.siblings().not($(this).next()).children('.chevron').removeClass('rotate-chevron');
-
-			curContainer.children('.chevron').toggleClass('rotate-chevron');
-		});
-		$('.dv-tab-name-container').first().trigger('click')
-
 		$('.dv-input').on('change', function() {
 			const input = d3.select(this);
 			const gbcId = input.attr('gbcid');
