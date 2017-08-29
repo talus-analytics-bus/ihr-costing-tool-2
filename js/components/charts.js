@@ -238,4 +238,8 @@ const Charts = {};
 		chart.updateData(data);
 		return chart;
 	}
+
+	Charts.buildBubblePack = () => {
+		console.log("building bubble pack chart");
+	};
 })();
