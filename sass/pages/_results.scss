@@ -99,7 +99,7 @@
 	margin-top: 40px;
 	width: 250px;
 	border: $border;
-	padding: 10px 20px;
+	padding: 10px 20px 20px;
 	text-align: left;
 	@include gradient(#fff, #f0f0f0);
 
@@ -107,10 +107,14 @@
 		text-align: center;
 		font-weight: 600;
 		font-size: 1.1rem;
-		margin-bottom: 10px;
+	}
+	.cost-chart-filter-section {
+		margin-top: 15px;
+		&:nth-child(n+2) { margin-top: 20px; }
 	}
 	.filter-label {
 		margin-bottom: 4px;
+		font-weight: 600;
 	}
 	.filter-row {
 		margin-top: 2px;

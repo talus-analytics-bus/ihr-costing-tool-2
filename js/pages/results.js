@@ -28,6 +28,7 @@
 				allCapacities.push(cap);
 				cap.indicators.forEach((ind) => {
 					const indCopy = Object.assign({}, ind);
+					indCopy.ccId = cc.id;
 					indCopy.capId = cap.id;
 
 					if (indCopy.score) {
@@ -87,11 +88,18 @@
 
 
 		function getChartData() {
+			let indData;
 			if (costChartCategory === 'capacity') {
-				return allIndicators;
+				indData = allIndicators;
 			} else if (costChartCategory === 'category') {
-				return indicatorsByTag;
+				indData = indicatorsByTag;
 			}
+
+			// apply filters to indicators
+			const ccIds = $('.cc-select').val();
+			indData = indData.filter(ind => ccIds.includes(ind.ccId));
+
+			return indData;
 		}
 
 		function getChartCategoryFunc() {
@@ -208,20 +216,18 @@
 
 
 		/* --------------------------- Filter Section ---------------------------*/
-		/*// populate filters
-		Util.populateSelect('.cc-select', App.jeeTree.map(d => d.name));
-		
-		let chosenCapNames = [];
-		Util.populateSelect('.capacity-select', allCapacities.map(d => d.name));
-
-		const categories = ['Consumable Materials', 'Durable Equipment', 'Human Capabilities', 'Physical Infrastructure', 'Technology', 'Tools and Processes'];
-		Util.populateSelect('.category-select', categories);
-
+		// populate filters
+		Util.populateSelect('.cc-select', App.jeeTree, {
+			nameKey: 'name',
+			valKey: 'id',
+			selected: true,
+		});
 		$('.cc-select').multiselect({
 			includeSelectAllOption: true,
 			numberDisplayed: 1,
+			buttonClass: 'btn btn-secondary',
 			onChange: (option, checked) => {
-				const capNamesSelected = App.jeeTree
+				/*const capNamesSelected = App.jeeTree
 					.find(cc => cc.name === option.val()).capacities
 					.map(cap => cap.name);
 				if (checked) {
@@ -236,11 +242,14 @@
 					chosenCapNames = chosenCapNames
 						.filter(capName => !capNamesSelected.includes(capName));
 				}
-				updateDropdowns();
-				updateExplorer();
+				updateDropdowns();*/
+				updateCostChart();
 			},
 		});
-		$('.capacity-select').multiselect({
+
+
+
+		/*$('.capacity-select').multiselect({
 			includeSelectAllOption: true,
 			numberDisplayed: 0,
 			onChange: (option, checked) => {
