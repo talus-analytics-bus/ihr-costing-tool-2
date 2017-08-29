@@ -188,9 +188,9 @@
 			if (costType === 'total') {
 				prefix = `${totalCostDuration}-Year`;
 			} else {
-				prefix = costType.charAt(0) + costType.slice(1);
+				prefix = costType.charAt(0).toUpperCase() + costType.slice(1);
 			}
-			costChart.updateYAxisLabel(`${prefix} Cost (in ${App.whoAmI.currency_iso})`);
+			costChart.updateYAxisLabel(`${prefix} Cost`);
 		}
 
 

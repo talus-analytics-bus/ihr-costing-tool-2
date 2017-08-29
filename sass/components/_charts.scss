@@ -37,6 +37,24 @@
 	.indicator-blob:hover {
 		stroke: rgba(0,0,0,0.8);
 	}
+	.tick text {
+		cursor: default;
+		color: #555;
+	}
+	.y.axis .domain { display: none; }
+	.x-axis-label {
+		font-weight: 600;
+		text-anchor: start;
+	}
+	.y-axis-label-1 {
+		color: #777;
+		font-weight: 600;
+	}
+	.y-axis-label-1,
+	.y-axis-label-2 {
+		font-size: 0.9rem;
+		text-anchor: end;
+	}
 }
 .cc-tooltip {
 	text-align: center;

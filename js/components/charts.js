@@ -122,9 +122,9 @@ const Charts = {};
 	}
 
 	Charts.buildCostChart = (selector, param={}) => {
-		const margin = { top: 40, right: 30, bottom: 65, left: 95 };
+		const margin = { top: 70, right: 30, bottom: 70, left: 100 };
 		const width = 800;
-		const height = 280;
+		const height = 260;
 		const chartContainer = d3.select(selector).append('svg')
 			.attr('class', 'cost-chart')
 			.attr('width', width + margin.left + margin.right)
@@ -159,7 +159,7 @@ const Charts = {};
 		// define axes
 		const xAxis = d3.axisBottom();
 		const yAxis = d3.axisLeft()
-			.ticks(7)
+			.ticks(6)
 			.tickFormat((num) => {
 				return (num === 0) ? '0' : d3.format(',.3s')(num);
 			});
@@ -167,20 +167,22 @@ const Charts = {};
 		// add axes
 		const xAxisG = chart.append('g')
 			.attr('class', 'x axis')
-			.attr('transform', `translate(0, ${height})`)
+			.attr('transform', `translate(0, ${height})`);
 		const yAxisG = chart.append('g')
 			.attr('class', 'y axis');
 
 		// add axes labels
 		const xAxisLabel = chart.append('text')
-			.attr('class', 'axis-label')
-			.attr('x', width / 2)
+			.attr('class', 'axis-label x-axis-label')
+			.attr('x', 5)
 			.attr('y', height + 60);
 		const yAxisLabel = chart.append('text')
-			.attr('class', 'axis-label')
-			.attr('transform', 'rotate(-90)')
-			.attr('x', -height / 2)
-			.attr('y', -80);
+			.attr('class', 'axis-label y-axis-label-1')
+			.attr('y', -22);
+		chart.append('text')
+			.attr('class', 'axis-label y-axis-label-2')
+			.attr('y', -5)
+			.text(`(in ${App.whoAmI.currency_iso})`);
 
 
 		// update functions
@@ -194,7 +196,19 @@ const Charts = {};
 			yAxisG.call(yAxis);
 
 			const bandwidth = x.bandwidth();
-			xAxisG.selectAll('.tick text').call(wrap, bandwidth);
+
+			// wrap x-axis labels and attach tooltip
+			xAxisG.selectAll('.tick text')
+				.call(wrap, bandwidth);
+			xAxisG.selectAll('.tick text').each(function(d) {
+				const cap = App.getCapacity(d);
+				if (cap) {
+					$(this).tooltipster({ content: `<b>${d}</b> - ${cap.name}` });
+				}
+			});
+
+			// move y-axis labels a little to the left
+			yAxisG.selectAll('.tick text').attr('x', -11);
 
 			// add a circle for each indicator
 			const indBlobs = chartBody.selectAll('.indicator-blob')
