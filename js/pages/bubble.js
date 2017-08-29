@@ -5,6 +5,9 @@
 	 * Initialize the bubble chart, which will be transplanted into the Results page later
 	 */
 	App.initBubble = () => {
+		// establish constants
+		let costType = 'total';
+		let totalCostDuration = 1;
 
 		/* getTestTotals
 		 * Assign random indicator scores and get the total costs for each
@@ -53,7 +56,7 @@
 		};
 
 		// TEST get test totals for function tag costs
-		testTotals();
+		const testTotals = getTestTotals();
 
 		// Build bubble pack chart for function tag costs by cost type
 		// (total [1, 3 5yr], start-up, recurring, capital)
