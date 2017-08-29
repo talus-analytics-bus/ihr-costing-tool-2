@@ -129,12 +129,17 @@
 }
 
 /* --- Cost Chart --- */
+.chart-section-title {
+	margin-bottom: 15px;
+}
 .cost-chart-container {
 	margin-top: 5px;
 	text-align: center;
 }
-.cost-chart-filter-container {
-
+.cost-chart-instructions {
+	text-align: left;
+	margin-bottom: 30px;
+	max-width: 700px;
 }
 .cost-chart-filter-box {
 	margin-top: 20px;
