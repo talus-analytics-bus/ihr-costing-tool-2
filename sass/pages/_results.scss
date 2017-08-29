@@ -1,4 +1,5 @@
 .results-container {
+	position: relative;
 	font-family: 'Open Sans', sans-serif;
 }
 .results-section {
@@ -13,6 +14,13 @@
 	text-align: center;
 	font-size: 1.4rem;
 	margin-bottom: 25px;
+}
+.results-button-container {
+	position: absolute;
+	top: 25px;
+	right: 50px;
+
+	button { margin-left: 10px; }
 }
 
 
