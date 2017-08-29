@@ -168,9 +168,9 @@
 			// update x axis label
 			let xLabel = '';
 			if (costChartCategory === 'capacity') {
-				xLabel = 'Capacity ID';
+				xLabel = 'Capacity';
 			} else if (costChartCategory === 'category') {
-				xLabel = 'Function Tag';
+				xLabel = 'Category';
 			}
 			costChart.updateXAxisLabel(xLabel);
 
