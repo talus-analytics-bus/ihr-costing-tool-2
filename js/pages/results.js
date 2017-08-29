@@ -163,7 +163,26 @@
 		}
 
 		function updateCostChart() {
-			costChart.update(getChartData(), getChartCategoryFunc(), getCostFunc());			
+			costChart.update(getChartData(), getChartCategoryFunc(), getCostFunc());
+
+			// update x axis label
+			let xLabel = '';
+			if (costChartCategory === 'capacity') {
+				xLabel = 'Capacity ID';
+			} else if (costChartCategory === 'category') {
+				xLabel = 'Function Tag';
+			}
+			costChart.updateXAxisLabel(xLabel);
+
+
+			// update y axis label
+			let prefix = '';
+			if (costType === 'total') {
+				prefix = `${totalCostDuration}-Year`;
+			} else {
+				prefix = costType.charAt(0) + costType.slice(1);
+			}
+			costChart.updateYAxisLabel(`${prefix} Cost (in ${App.whoAmI.currency_iso})`);
 		}
 
 

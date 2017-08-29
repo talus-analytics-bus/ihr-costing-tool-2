@@ -172,20 +172,18 @@ const Charts = {};
 			.attr('class', 'y axis');
 
 		// add axes labels
-		chart.append('text')
+		const xAxisLabel = chart.append('text')
 			.attr('class', 'axis-label')
 			.attr('x', width / 2)
-			.attr('y', height + 50)
-			.text('Capacity ID');
-		chart.append('text')
+			.attr('y', height + 60);
+		const yAxisLabel = chart.append('text')
 			.attr('class', 'axis-label')
 			.attr('transform', 'rotate(-90)')
 			.attr('x', -height / 2)
-			.attr('y', -80)
-			.text(`Startup Cost (in ${App.whoAmI.currency_iso})`);
+			.attr('y', -80);
 
 
-		// update function
+		// update functions
 		chart.update = (indicators, xValFunc, yValFunc) => {
 			// set scales
 			x.domain(indicators.map(xValFunc));
@@ -194,7 +192,9 @@ const Charts = {};
 			yAxis.scale(y);
 			xAxisG.call(xAxis);			
 			yAxisG.call(yAxis);
+
 			const bandwidth = x.bandwidth();
+			xAxisG.selectAll('.tick text').call(wrap, bandwidth);
 
 			// add a circle for each indicator
 			const indBlobs = chartBody.selectAll('.indicator-blob')
@@ -236,6 +236,13 @@ const Charts = {};
 							'</div>');
 					});
 		};
+
+		chart.updateXAxisLabel = (text) => {
+			xAxisLabel.text(text);
+		}
+		chart.updateYAxisLabel = (text) => {
+			yAxisLabel.text(text);
+		}
 
 		return chart;
 	}
