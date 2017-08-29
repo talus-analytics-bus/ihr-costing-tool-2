@@ -60,6 +60,11 @@
 
 		// Build bubble pack chart for function tag costs by cost type
 		// (total [1, 3 5yr], start-up, recurring, capital)
-		Charts.buildBubblePack(testTotals, costType);
+		const bubbleParam = {
+			costType: costType
+		};
+		const selector = '.cost-chart-container';
+		const data = testTotals;
+		Charts.buildBubblePack(selector, data, bubbleParam);
 	};
 })();

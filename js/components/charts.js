@@ -239,7 +239,15 @@ const Charts = {};
 		return chart;
 	}
 
-	Charts.buildBubblePack = () => {
-		console.log("building bubble pack chart");
+	Charts.buildBubblePack = (selector, data, param={}) => {
+		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
+		const width = 580;
+		const height = 300;
+		const chartContainer = d3.select(selector).append('svg')
+			.attr('class', 'cost-chart')
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
+		const chart = chartContainer.append('g')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
 	};
 })();
