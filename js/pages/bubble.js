@@ -61,7 +61,8 @@
 		// Build bubble pack chart for function tag costs by cost type
 		// (total [1, 3 5yr], start-up, recurring, capital)
 		const bubbleParam = {
-			costType: costType
+			costType: costType,
+			totalCostDuration: totalCostDuration
 		};
 		const selector = '.cost-chart-container';
 		const data = testTotals;
