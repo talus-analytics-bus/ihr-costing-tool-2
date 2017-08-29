@@ -503,19 +503,27 @@
 				</div>
 				<div class="cost-chart-container"></div>
 				<div class="cost-chart-filter-container">
-					<div class="cost-chart-filter-box">
-						<div class="view-cost-by-box cost-chart-filter-section">
+					<div class="cost-chart-filter-box row">
+						<div class="view-cost-by-box col-3">
 							<div class="filter-label">View cost by:</div>
 							<div class="filter-row" value="capacity">
 								<input type="radio" checked />Capacity
 							</div>
 							<div class="filter-row" value="category">
-								<input type="radio" />Category
+								<input type="radio" />CDC Function
 							</div>
 						</div>
-						<div class="cost-chart-filter-section">
+						<div class="col-3">
 							<div class="filter-label">Core Capacity</div>
 							<select class="cc-select form-control" multiple="multiple"></select>
+						</div>
+						<div class="col-3">
+							<div class="filter-label">Capacity</div>
+							<select class="capacity-select form-control" multiple="multiple"></select>
+						</div>
+						<div class="col-3">
+							<div class="filter-label">CDC Function</div>
+							<select class="category-select form-control" multiple="multiple"></select>
 						</div>
 					</div>
 				</div>

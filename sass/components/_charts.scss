@@ -34,7 +34,9 @@
 	}
 }
 .cost-chart {
-
+	.indicator-blob:hover {
+		stroke: rgba(0,0,0,0.8);
+	}
 }
 .cc-tooltip {
 	text-align: center;
@@ -42,13 +44,8 @@
 
 	.cc-tooltip-title {
 		font-size: 1.3em;
-		color: #333;
-	}
-	.cc-tooltip-subtitle {
-		font-size: 1.05em;
 		font-weight: 300;
 		color: #333;
-		margin-top: 5px;
 	}
 	.cc-tooltip-block {
 		display: inline-block;

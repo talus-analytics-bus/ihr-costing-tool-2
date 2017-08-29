@@ -45,7 +45,7 @@
 								const lineItems = App.getNeededLineItems(input.line_items, indCopy.score);
 								const totalCost = d3.sum(lineItems, li => li.cost);
 								lineItems.forEach((li) => {
-									const tag = li.category_tag;
+									const tag = li.function_tag;
 									if (!distByTag[tag]) distByTag[tag] = 0;
 									if (totalCost) distByTag[tag] += li.cost / totalCost;
 									else distByTag[tag] += 1;
@@ -73,13 +73,19 @@
 
 						// push to data
 						for (let tag in indCopy.costByTag) {
-							const indClone = Object.assign({}, indCopy);
-							const tagCosts = indCopy.costByTag[tag];
-							indClone.category_tag = tag;
-							for (let c in tagCosts) {
-								indClone[c] = tagCosts[c];
+							if (tag) {
+								const indClone = Object.assign({}, indCopy);
+								const tagCosts = indCopy.costByTag[tag];
+								if (tag.indexOf('Planning') === 0 || tag.indexOf('Analysis') === 0) {
+									indClone.category_tag = tag.split(' ')[0];
+								} else {
+									indClone.category_tag = tag;
+								}
+								for (let c in tagCosts) {
+									indClone[c] = tagCosts[c];
+								}
+								indicatorsByTag.push(indClone);
 							}
-							indicatorsByTag.push(indClone);
 						}
 					}
 				});
@@ -172,7 +178,7 @@
 			if (costChartCategory === 'capacity') {
 				xLabel = 'Capacity';
 			} else if (costChartCategory === 'category') {
-				xLabel = 'Category';
+				xLabel = 'CDC Function';
 			}
 			costChart.updateXAxisLabel(xLabel);
 
@@ -258,7 +264,15 @@
 			valKey: 'id',
 			selected: true,
 		});
-		$('.cc-select').multiselect({
+		Util.populateSelect('.capacity-select', allCapacities, {
+			nameKey: 'name',
+			valKey: 'id',
+			selected: true,
+		});
+		Util.populateSelect('.category-select', [1, 2, 3], {
+			selected: true,
+		});
+		$('.cc-select, .capacity-select, .category-select').multiselect({
 			includeSelectAllOption: true,
 			numberDisplayed: 1,
 			buttonClass: 'btn btn-secondary',

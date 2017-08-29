@@ -8,13 +8,13 @@
 	text-align: center;
 	@include border-radius(10px);
 
-	&:nth-child(n+2) { margin-top: 20px; }
+	&:nth-child(n+2) { margin-top: 25px; }
 }
 .results-section-title {
-	text-align: center;
-	font-size: 1.4rem;
-	font-weight: 600;
 	margin-bottom: 20px;
+	font-size: 1.5em;
+	font-weight: 600;
+	text-align: left;
 }
 .results-button-container {
 	position: absolute;
@@ -27,26 +27,25 @@
 
 /* --- Cost Type Section --- */
 .cost-type-filter-container {
-	margin: 0 -30px;
-	padding: 15px 30px;
-	border-top: $border;
-	border-bottom: $border;
-	background-color: #bbb;
+	font-size: 0.8em;
+	text-align: left;
+	button {
+		padding: 5px 15px;
+		@include noselect;
+	}
 }
 .cost-type-row {
-	button {
-		width: 180px;
-		@include noselect;
+	button:first-child {
+		width: 158px;
 	}
 }
 .cost-duration-row {
-	.btn-group {
-		position: relative;
-		left: -268px;
-	}
+	position: relative;
+	left: 1px;
+
 	button {
 		border-top: none;
-		@include noselect;
+		padding: 5px 12px;
 	}
 }
 
@@ -142,15 +141,10 @@
 }
 .cost-chart-filter-box {
 	margin-top: 20px;
-	width: 250px;
-	border: $border;
+	border-top: $light-border;
 	padding: 20px;
 	text-align: left;
-	@include gradient(#fff, #f0f0f0);
 
-	.cost-chart-filter-section {
-		&:nth-child(n+2) { margin-top: 20px; }
-	}
 	.filter-label {
 		margin-bottom: 4px;
 		font-weight: 600;

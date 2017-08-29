@@ -151,7 +151,7 @@ const Charts = {};
 		// additional scales
 		const colorScale = d3.scaleLinear()
 			.domain([0, width])
-			.range(['rgba(255,0,0,0.5)', 'rgba(0,66,118,0.5)']);
+			.range(['rgba(255,0,0,0.7)', 'rgba(0,66,118,0.7)']);
 		const radiusScale = d3.scaleLinear()
 			.domain([height, 0])
 			.range([5, 25]);
@@ -219,8 +219,7 @@ const Charts = {};
 						const capacity = App.getCapacity(d.capId);
 						$(this).tooltipster('content',
 							'<div class="cc-tooltip">' +
-								`<div class="cc-tooltip-title">${capacity.name}</div>` +
-								`<div class="cc-tooltip-subtitle">${d.name}</div>` +
+								`<div class="cc-tooltip-title">${d.id.toUpperCase()} - ${d.name}</div>` +
 								'<div class="cc-tooltip-block">' +
 									`<div>${App.moneyFormat(d.startupCost)}</div>` +
 									`<div>Startup Cost</div>` +
