@@ -135,6 +135,41 @@
 		}
 
 
+		/* ---------------------- Updating Functions ----------------------*/
+		function updateResults() {
+			updateSummaryCosts();
+			updateCostChart();
+		}
+
+		function updateCostChart() {
+			costChart.update(getChartData(), getChartCategoryFunc(), getCostFunc());
+			updateCostChartXAxis();
+			updateCostChartYAxis();
+		}
+
+		function updateCostChartXAxis() {
+			// update x axis label
+			let xLabel = '';
+			if (costChartCategory === 'capacity') {
+				xLabel = 'Capacity';
+			} else if (costChartCategory === 'category') {
+				xLabel = 'CDC Function';
+			}
+			costChart.updateXAxisLabel(xLabel);
+		}
+
+		function updateCostChartYAxis() {
+			// update y axis label
+			let prefix = '';
+			if (costType === 'total') {
+				prefix = `${totalCostDuration}-Year`;
+			} else {
+				prefix = costType.charAt(0).toUpperCase() + costType.slice(1);
+			}
+			costChart.updateYAxisLabel(`${prefix} Cost`);
+		}
+
+
 		/* ---------------------- Cost Type Section ----------------------*/
 		$('.cost-type-row button').on('click', function onClick() {
 			costType = $(this).attr('value');
@@ -143,14 +178,18 @@
 				.siblings().removeClass('active');
 			if (costType === 'total') $('.cost-duration-row').slideDown();
 			else $('.cost-duration-row').slideUp();
-			updateResults();
+
+			updateCostChartYAxis();
+			costChart.update(null, null, getCostFunc());
 		});
 		$('.cost-duration-row button').on('click', function onClick() {
 			totalCostDuration = +$(this).attr('value');
 
 			$(`.cost-duration-row button[value="${totalCostDuration}"]`).addClass('active')
 				.siblings().removeClass('active');
-			updateResults();
+
+			updateCostChartYAxis();
+			costChart.update(null, null, getCostFunc());
 		});
 
 
@@ -162,36 +201,11 @@
 			costChartCategory = $row.attr('value');
 			updateCostChart();
 		});
-
-
-		/* ---------------------- Updating Functions ----------------------*/
-		function updateResults() {
-			updateSummaryCosts();
+		$('.reset-button').on('click', () => {
+			// resets chart
+			// TODO possibly resets filters
 			updateCostChart();
-		}
-
-		function updateCostChart() {
-			costChart.update(getChartData(), getChartCategoryFunc(), getCostFunc());
-
-			// update x axis label
-			let xLabel = '';
-			if (costChartCategory === 'capacity') {
-				xLabel = 'Capacity';
-			} else if (costChartCategory === 'category') {
-				xLabel = 'CDC Function';
-			}
-			costChart.updateXAxisLabel(xLabel);
-
-
-			// update y axis label
-			let prefix = '';
-			if (costType === 'total') {
-				prefix = `${totalCostDuration}-Year`;
-			} else {
-				prefix = costType.charAt(0).toUpperCase() + costType.slice(1);
-			}
-			costChart.updateYAxisLabel(`${prefix} Cost`);
-		}
+		});
 
 
 		/* ---------------------- Score Improvement Section ----------------------*/

@@ -18,6 +18,11 @@ const Util = {};
 		return parseFloat(str.replace(/[^\d\.\-]/g, ""));
 	};
 
+	// capitalizes words
+	Util.capitalize = (str) => {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
 	/*
 	*	getIndicatorClass
 	*	For the given indicator ID, returns its CSS class

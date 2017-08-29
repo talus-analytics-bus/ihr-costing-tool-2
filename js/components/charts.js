@@ -178,18 +178,28 @@ const Charts = {};
 			.attr('y', height + 60);
 		const yAxisLabel = chart.append('text')
 			.attr('class', 'axis-label y-axis-label-1')
-			.attr('y', -22);
+			.attr('y', -32);
 		chart.append('text')
 			.attr('class', 'axis-label y-axis-label-2')
-			.attr('y', -5)
+			.attr('y', -15)
 			.text(`(in ${App.whoAmI.currency_iso})`);
 
 
 		// update functions
-		chart.update = (indicators, xValFunc, yValFunc) => {
+		chart.update = (newData, newXValFunc, newYValFunc) => {
+			// use current data and value functions if any arguments are null
+			const data = newData || chart.currData;
+			if (newData) chart.currData = newData;
+
+			const xValFunc = newXValFunc || chart.currXValFunc;
+			if (newXValFunc) chart.currXValFunc = newXValFunc;
+
+			const yValFunc = newYValFunc || chart.currYValFunc;
+			if (newYValFunc) chart.currYValFunc = newYValFunc;
+
 			// set scales
-			x.domain(indicators.map(xValFunc));
-			y.domain([0, 1.1 * d3.max(indicators, yValFunc)]);
+			x.domain(data.map(xValFunc));
+			y.domain([0, 1.1 * d3.max(data, yValFunc)]);
 			xAxis.scale(x);
 			yAxis.scale(y);
 			xAxisG.call(xAxis);			
@@ -201,9 +211,18 @@ const Charts = {};
 			xAxisG.selectAll('.tick text')
 				.call(wrap, bandwidth);
 			xAxisG.selectAll('.tick text').each(function(d) {
-				const cap = App.getCapacity(d);
-				if (cap) {
-					$(this).tooltipster({ content: `<b>${d}</b> - ${cap.name}` });
+				if (!$(this).hasClass('tooltipstered')) {
+					const cap = App.getCapacity(d);
+					if (cap) {
+						$(this).tooltipster({ content: `<b>${d}</b> - ${cap.name}` });
+						return;
+					}
+
+					const ind = App.getIndicator(d.toLowerCase());
+					if (ind) {
+						$(this).tooltipster({ content: `<b>${d}</b> - ${ind.name}` });
+						return;
+					}
 				}
 			});
 
@@ -212,42 +231,60 @@ const Charts = {};
 
 			// add a circle for each indicator
 			const indBlobs = chartBody.selectAll('.indicator-blob')
-				.data(indicators);
+				.data(data);
 			indBlobs.exit().remove();
 			indBlobs.enter().append('circle')
 				.attr('class', 'indicator-blob')
 				.each(function() {
 					$(this).tooltipster({ maxWidth: 400, content: '' });
 				})
-				.merge(indBlobs).transition()
-					.duration(1200)
-					.attr('r', d => radiusScale(y(yValFunc(d))))
-					.attr('cx', (d) => {
-						const xVal = x(xValFunc(d)) + bandwidth / 2;
-						const jitter = (bandwidth / 2) * (Math.random() - 0.5);
-						return xVal + jitter;
+				.merge(indBlobs)
+					.on('click', function(d) {
+						if (d.type === 'indicator') {
+							const capacity = App.getCapacity(d.capId);
+							let actions = [];
+							capacity.indicators.forEach((ind) => {
+								actions = actions.concat(ind.actions);
+							});
+
+							const getIndIdFunc = (action) => {
+								const actionIdArr = action.id.split('.');
+								actionIdArr.pop();
+								const indId = actionIdArr.join('.');
+								return indId.toUpperCase();
+							}
+							chart.update(actions, getIndIdFunc, yValFunc);
+						}
 					})
-					.attr('cy', d => y(yValFunc(d)))
-					.style('fill', d => colorScale(x(xValFunc(d))))
-					.each(function(d, i) {
-						const capacity = App.getCapacity(d.capId);
-						$(this).tooltipster('content',
-							'<div class="cc-tooltip">' +
-								`<div class="cc-tooltip-title">${d.id.toUpperCase()} - ${d.name}</div>` +
-								'<div class="cc-tooltip-block">' +
-									`<div>${App.moneyFormat(d.startupCost)}</div>` +
-									`<div>Startup Cost</div>` +
-								'</div>' +
-								'<div class="cc-tooltip-block">' +
-									`<div>${App.moneyFormat(d.capitalCost)}</div>` +
-									`<div>Capital Cost</div>` +
-								'</div>' +
-								'<div class="cc-tooltip-block">' +
-									`<div>${App.moneyFormat(d.recurringCost)}/yr</div>` +
-									`<div>Recurring Cost</div>` +
-								'</div>' +
-							'</div>');
-					});
+					.transition()
+						.duration(1200)
+						.attr('r', d => radiusScale(y(yValFunc(d))))
+						.attr('cx', (d) => {
+							const xVal = x(xValFunc(d)) + bandwidth / 2;
+							const jitter = (bandwidth / 2) * (Math.random() - 0.5);
+							return xVal + jitter;
+						})
+						.attr('cy', d => y(yValFunc(d)))
+						.style('fill', d => colorScale(x(xValFunc(d))))
+						.each(function(d, i) {
+							$(this).tooltipster('content',
+								'<div class="cc-tooltip">' +
+									`<div class="cc-tooltip-title">${Util.capitalize(d.type)} (${d.id.toUpperCase()})</div>` +
+									`<div class="cc-tooltip-subtitle">${d.name}</div>` +
+									'<div class="cc-tooltip-block">' +
+										`<div>${App.moneyFormat(d.startupCost)}</div>` +
+										`<div>Startup Cost</div>` +
+									'</div>' +
+									'<div class="cc-tooltip-block">' +
+										`<div>${App.moneyFormat(d.capitalCost)}</div>` +
+										`<div>Capital Cost</div>` +
+									'</div>' +
+									'<div class="cc-tooltip-block">' +
+										`<div>${App.moneyFormat(d.recurringCost)}/yr</div>` +
+										`<div>Recurring Cost</div>` +
+									'</div>' +
+								'</div>');
+						});
 		};
 
 		chart.updateXAxisLabel = (text) => {

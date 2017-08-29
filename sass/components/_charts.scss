@@ -43,6 +43,7 @@
 	}
 	.y.axis .domain { display: none; }
 	.x-axis-label {
+		font-size: 0.95rem;
 		font-weight: 600;
 		text-anchor: start;
 	}
@@ -62,8 +63,13 @@
 
 	.cc-tooltip-title {
 		font-size: 1.3em;
+		color: #333;
+	}
+	.cc-tooltip-subtitle {
+		font-size: 1.3em;
 		font-weight: 300;
 		color: #333;
+		margin-top: 10px;
 	}
 	.cc-tooltip-block {
 		display: inline-block;
