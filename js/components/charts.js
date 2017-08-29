@@ -240,6 +240,18 @@ const Charts = {};
 	}
 
 	Charts.buildBubblePack = (selector, data, param={}) => {
+		// define color scale
+		// const bubbleColorArr = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486']; // purples
+		const bubbleColorScale = {
+		  "Coordination / leadership": "#f2f0f7",
+		  "Planning including assessment, design, planning, policy, legislation": "#dadaeb",
+		  "Strengthening HR capacity": "#bcbddc",
+		  "Strengthening infrastructure": "#9e9ac8",
+		  "Operations / implementation": "#807dba",
+		  "Analysis including data quality and dissemination": "#6a51a3",
+		  "Use and review mechanisms": "#4a1486"
+		};
+
 		// setup svg
 		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
 		const width = 580;
@@ -338,7 +350,7 @@ const Charts = {};
 			.attr('id', d => d.id)
 			.attr('r', 0)
 			.attr('class','bubble')
-			.style('fill', d => scaleColor(d.cat))
+			.style('fill', d => bubbleColorScale[d.name])
 			.transition().duration(2000).ease(d3.easeElasticOut)
 				.tween('circleIn', (d) => {
 					let i = d3.interpolateNumber(0, d.radius);
