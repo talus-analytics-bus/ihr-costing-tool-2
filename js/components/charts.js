@@ -242,6 +242,7 @@ const Charts = {};
 	Charts.buildBubblePack = (selector, data, param={}) => {
 		// define color scale
 		// const bubbleColorArr = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486']; // purples
+		// http://colorbrewer2.org/#type=sequential&scheme=Purples&n=7
 		const bubbleColorScale = {
 		  "Coordination / leadership": "#f2f0f7",
 		  "Planning including assessment, design, planning, policy, legislation": "#dadaeb",
