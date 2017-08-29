@@ -131,17 +131,19 @@
 
 		/* ---------------------- Cost Type Section ----------------------*/
 		$('.cost-type-row button').on('click', function onClick() {
-			$(this).addClass('active')
-				.siblings().removeClass('active');
 			costType = $(this).attr('value');
+
+			$(`.cost-type-row button[value="${costType}"]`).addClass('active')
+				.siblings().removeClass('active');
 			if (costType === 'total') $('.cost-duration-row').slideDown();
 			else $('.cost-duration-row').slideUp();
 			updateResults();
 		});
 		$('.cost-duration-row button').on('click', function onClick() {
-			$(this).addClass('active')
-				.siblings().removeClass('active');
 			totalCostDuration = +$(this).attr('value');
+
+			$(`.cost-duration-row button[value="${totalCostDuration}"]`).addClass('active')
+				.siblings().removeClass('active');
 			updateResults();
 		});
 
@@ -196,9 +198,24 @@
 			.enter().append('div')
 				.attr('class', 'summary-text-box');
 		stb.append('div')
+			.attr('class', (d) => {
+				let indicators = [];
+				d.capacities.forEach((cap) => {
+					indicators = indicators.concat(cap.indicators);
+				});
+				const currScore = App.getAverageCurrentScore(indicators);
+
+				let color = 'green';
+				if (currScore < 2) color = 'red';
+				else if (currScore < 4) color = 'yellow';
+				return `summary-text-box-veil ${color}`;
+			});
+		const stbContent = stb.append('div')
+			.attr('class', 'summary-text-box-content');
+		stbContent.append('div')
 			.attr('class', 'big-number-text')
 			.html(d => `${d.name} Cost`);
-		stb.append('div').attr('class', 'big-number');
+		stbContent.append('div').attr('class', 'big-number');
 
 		// initialize total cost number so transition works
 		d3.select('.total-cost-number').text(App.moneyFormat(1e6));
@@ -217,15 +234,15 @@
 
 		function animateText(selector, newValue) {
 			const element = d3.select(selector);
-			/*if (isNaN(Util.strToFloat(element.text()))) element.text(App.moneyFormat(1e6));
+			if (isNaN(Util.strToFloat(element.text()))) element.text(App.moneyFormat(1e6));
 			element.transition()
 				.duration(300)
 				.tween('text', function tweenFunc(d) {
 					const that = d3.select(this);
 					const i = d3.interpolateNumber(Util.strToFloat(that.text()), newValue);
 					return t => that.text(App.moneyFormat(i(t)));
-				});*/
-			element.text(App.moneyFormat(newValue));
+				});
+			// element.text(App.moneyFormat(newValue));
 		}
 
 
