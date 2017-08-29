@@ -67,10 +67,14 @@ const App = {};
 
 
 	/* ------------------ Formatting Functions ------------------- */
+	App.siFormat = (num) => {
+		return d3.format(',.3s')(num).replace('G', 'B');
+	}
+
 	App.numberFormat = (num) => {
 		if (num <= 100) return Math.round(num);
 		if (num <= 1e6) return d3.format(',.3r')(num);
-		return d3.format(',.3s')(num);
+		return App.siFormat(num);
 	}
 
 	App.moneyFormat = (num) => {
@@ -78,7 +82,7 @@ const App = {};
 	}
 
 	App.moneyFormatShort = (num) => {
-		return `${d3.format(',.3s')(num)} ${App.whoAmI.currency_iso}`;
+		return `${App.siFormat(num)} ${App.whoAmI.currency_iso}`;
 	}
 
 	App.moneyFormatLong = (num) => {
