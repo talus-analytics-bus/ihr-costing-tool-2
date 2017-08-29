@@ -104,7 +104,7 @@ const Charts = {};
 			.attr('x', x(data[0]))
 			.attr('y', -21)
 			.attr('dy', '.35em')
-			.text('Old Score');
+			.text('Current Score');
 		chart.append('line')
 			.attr('class', 'label-line')
 			.attr('x1', x(data[1]))
@@ -116,7 +116,7 @@ const Charts = {};
 			.attr('x', x(data[1]))
 			.attr('y', height + 21)
 			.attr('dy', '.35em')
-			.text('New Score')
+			.text('Target Score')
 
 		return chart;
 	}
