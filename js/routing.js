@@ -77,6 +77,10 @@ const Routing = {};
 			loadPage('results', App.initResults);
 			window.scrollTo(0, 0);
 		});
+		crossroads.addRoute('/bubble', () => {
+			loadPage('bubble', App.initBubble);
+			window.scrollTo(0, 0);
+		});
 		crossroads.addRoute('/background', () => {
 			loadPage('background', App.initBackground);
 			window.scrollTo(0, 0);
