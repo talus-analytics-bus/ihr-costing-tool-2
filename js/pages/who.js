@@ -289,6 +289,11 @@
 			}
 		}
 
+		// for printing, add subheading_name
+		defaultCosts.forEach((dc) => {
+			if (dc.tab_name === 'Printing') dc.subheading_name = 'Printing';
+		});
+
 		// make tree version of the GBCs so they can be added to the page in the
 		// correct groups
 

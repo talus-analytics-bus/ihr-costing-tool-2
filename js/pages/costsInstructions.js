@@ -19,9 +19,18 @@
 		});
 
 		$('.target-score-select').on('change', function() {
+			const score = $(this).val();
+
 			// save target score
-			User.setTargetScore($(this).val());
+			User.setTargetScore(score);
 			App.updateAllCosts();
+
+			// change color bar
+			if (+score === 4) {
+				$('.color-bar').css('background-color', '#87c764');
+			} else {
+				$('.color-bar').css('background-color', '#ede929');
+			}
 		});
 
 		// clicking "next" button takes user to "who am i" page
