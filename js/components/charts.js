@@ -308,13 +308,14 @@ const Charts = {};
 
 		// we use pack() to automatically calculate radius conveniently only
 		// and get only the leaves
+		const minRadius = 5;
 		let nodes = pack(root).leaves().map(node => {
 			const data = node.data;
 			return {
 				x: centerX + (node.x - centerX) * 3, // magnify start position to have transition to center movement
 				y: centerY + (node.y - centerY) * 3,
 				r: 0, // for tweening
-				radius: node.r, //original radius
+				radius: node.r + minRadius, //original radius
 				id: data.cat + '.' + (data.name.replace(/\s/g, '-')),
 				cat: data.cat,
 				name: data.name,
@@ -350,6 +351,8 @@ const Charts = {};
 			.attr('id', d => d.id)
 			.attr('r', 0)
 			.attr('class','bubble')
+			.attr('stroke', d => d3.color(bubbleColorScale[d.name]).darker().toString())
+			.attr('stroke-width','1px')
 			.style('fill', d => bubbleColorScale[d.name])
 			.transition().duration(2000).ease(d3.easeElasticOut)
 				.tween('circleIn', (d) => {
@@ -370,7 +373,7 @@ const Charts = {};
 
 		node.on('mouseover', function(currentNode) {
 			// black ring
-			const circle = d3.select(this);
+			const circle = d3.select(this).select('circle');
 			circle
 				.attr('stroke-width','3px')
 				.attr('stroke','black');
@@ -378,9 +381,10 @@ const Charts = {};
 
 		node.on('mouseout', function(currentNode) {
 			// rmv ring
-			const circle = d3.select(this);
+			const circle = d3.select(this).select('circle');
 			circle
-				.attr('stroke','none');
+				.attr('stroke', d => d3.color(bubbleColorScale[d.name]).darker().toString())
+				.attr('stroke-width','1px')
 		});
 
 		function ticked() {
