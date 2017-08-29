@@ -3,11 +3,18 @@ var app = require('express')();
 var server = require('http').Server(app);
 var path = require('path');
 var axios = require('axios');
+var xlsx = require('xlsx');
 
 // Routing
 // if no hash, send to index
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, '/', 'index.html'));
+});
+
+// test XLSX package
+app.get('/xlsx', function(req, res) {
+	console.log("Hello SX!")
+	// res.sendFile(path.join(__dirname, '/', 'index.html'));
 });
 
 // if hash, send to requested resource
