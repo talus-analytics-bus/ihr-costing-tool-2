@@ -2,16 +2,22 @@
 	font-family: 'Open Sans', sans-serif;
 }
 .results-section {
+	border: $border;
+	padding: 20px 50px;
 	text-align: center;
+	@include border-radius(10px);
+
+	&:nth-child(n+2) { margin-top: 20px; }
+}
+.results-section-title {
+	text-align: center;
+	font-size: 1.4rem;
+	margin-bottom: 25px;
 }
 
 
 /* --- Cost Type Section --- */
 .cost-type-section {
-	border: $border;
-	padding: 20px 50px;
-	text-align: center;
-	@include border-radius(10px);
 }
 .cost-type-row {
 	button {
@@ -32,17 +38,6 @@
 
 
 /* --- Score Improvement Section --- */
-.score-improvement-section {
-	margin-top: 20px;
-	border: $border;
-	padding: 20px 20px 30px;
-	@include border-radius(10px);
-}
-.score-improvement-title {
-	text-align: center;
-	font-size: 1.4rem;
-	margin-bottom: 25px;
-}
 .summary-text-total {
 	float: left;
 	margin-top: 1px;
@@ -92,11 +87,8 @@
 }
 
 /* --- Cost Chart --- */
-.chart-section {
-	border: $border;
-	margin-top: 20px;
-	padding: 10px 20px;
-	@include border-radius(10px);
+.chart-section-title {
+	margin-bottom: 0;
 }
 .cost-chart-filter-container {
 	float: left;
@@ -134,4 +126,7 @@
 }
 .cost-chart-container {
 	margin-left: 300px;
+}
+.cost-chart {
+	.tick text { cursor: default; }
 }

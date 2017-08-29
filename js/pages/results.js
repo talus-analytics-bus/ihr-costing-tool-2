@@ -1,6 +1,7 @@
 (() => {
 	App.initResults = () => {
 		// establish constants
+		let costChartCategory = 'capacity';
 		let costType = 'total';
 		let totalCostDuration = 1;
 
@@ -21,27 +22,102 @@
 		/* ---------------------- Data Wrangling ----------------------*/
 		const allCapacities = [];
 		const allIndicators = [];
+		const indicatorsByTag = [];
 		App.jeeTree.forEach((cc) => {
 			cc.capacities.forEach((cap) => {
 				allCapacities.push(cap);
 				cap.indicators.forEach((ind) => {
-					allIndicators.push(ind);
+					const indCopy = Object.assign({}, ind);
+					indCopy.capId = cap.id;
+
+					if (indCopy.score) {
+						allIndicators.push(indCopy);
+
+						indCopy.costByTag = {};
+						const actions = App.getNeededActions(indCopy);
+						actions.forEach((a) => {
+							const inputs = App.getNeededInputs(a.inputs, indCopy.score);
+							inputs.forEach((input) => {
+								// get function tag distribution by looking at line item costs
+								// TODO should be calculating distribution for recurring/startup cost separately
+								const distByTag = {};
+								const lineItems = App.getNeededLineItems(input.line_items, indCopy.score);
+								const totalCost = d3.sum(lineItems, li => li.cost);
+								lineItems.forEach((li) => {
+									const tag = li.category_tag;
+									if (!distByTag[tag]) distByTag[tag] = 0;
+									if (totalCost) distByTag[tag] += li.cost / totalCost;
+									else distByTag[tag] += 1;
+								});
+
+								for (let tag in distByTag) {
+									if (!indCopy.costByTag[tag]) {
+										indCopy.costByTag[tag] = {
+											startupCost: 0,
+											capitalCost: 0,
+											recurringCost: 0,
+										};
+									}
+									if (input.isCustomCost) {
+										indCopy.costByTag[tag].startupCost += Math.round(distByTag[tag] * input.customStartupCost);
+										indCopy.costByTag[tag].recurringCost += Math.round(distByTag[tag] * input.customRecurringCost);
+									} else {
+										indCopy.costByTag[tag].startupCost += Math.round(distByTag[tag] * input.startupCost);
+										indCopy.costByTag[tag].capitalCost += Math.round(distByTag[tag] * input.capitalCost);
+										indCopy.costByTag[tag].recurringCost += Math.round(distByTag[tag] * input.recurringCost);
+									}
+								}
+							});
+						});
+
+						// push to data
+						for (let tag in indCopy.costByTag) {
+							const indClone = Object.assign({}, indCopy);
+							const tagCosts = indCopy.costByTag[tag];
+							indClone.category_tag = tag;
+							for (let c in tagCosts) {
+								indClone[c] = tagCosts[c];
+							}
+							indicatorsByTag.push(indClone);
+						}
+					}
 				});
 			});
 		});
 
-		function getCost(d) {
-			if (costType === 'total') {
-				let cost = d.startupCost + d.capitalCost;
-				return cost += totalCostDuration * d.recurringCost;
-			} else if (costType === 'startup') {
-				return d.startupCost;
-			} else if (costType === 'capital') {
-				return d.capitalCost;
-			} else if (costType === 'recurring') {
-				return d.recurringCost;
+
+		function getChartData() {
+			if (costChartCategory === 'capacity') {
+				return allIndicators;
+			} else if (costChartCategory === 'category') {
+				return indicatorsByTag;
 			}
-			return 0;
+		}
+
+		function getChartCategoryFunc() {
+			if (costChartCategory === 'capacity') {
+				return d => d.capId.toUpperCase();
+			} else if (costChartCategory === 'category') {
+				return d => d.category_tag;
+			}
+			return d => 0;
+		}
+
+		function getCostFunc() {
+			if (costType === 'total') {
+				return d => d.startupCost + d.capitalCost + (totalCostDuration * d.recurringCost);
+			} else if (costType === 'startup') {
+				return d => d.startupCost;
+			} else if (costType === 'capital') {
+				return d => d.capitalCost;
+			} else if (costType === 'recurring') {
+				return d => d.recurringCost;
+			}
+			return d => 0;
+		}
+
+		function getCost(d) {
+			return getCostFunc()(d);
 		}
 
 
@@ -62,9 +138,24 @@
 		});
 
 
+		/* ---------------------- Cost Chart Filter Section ----------------------*/
+		$('.view-cost-by-box .filter-row').on('click', function onClick() {
+			const $row = $(this);
+			$row.find('input').prop('checked', true);
+			$row.siblings('.filter-row').find('input').prop('checked', false);
+			costChartCategory = $row.attr('value');
+			updateCostChart();
+		});
+
+
 		/* ---------------------- Updating Functions ----------------------*/
 		function updateResults() {
 			updateSummaryCosts();
+			updateCostChart();
+		}
+
+		function updateCostChart() {
+			costChart.update(getChartData(), getChartCategoryFunc(), getCostFunc());			
 		}
 
 
@@ -85,35 +176,35 @@
 		// initialize total cost number so transition works
 		d3.select('.total-cost-number').text(App.moneyFormat(1e6));
 
-		
+
 		function updateSummaryCosts() {
 			// update total cost
 			const totalCost = d3.sum(App.jeeTree, d => getCost(d));
-			d3.select('.total-cost-number').transition()
-				.duration(1000)
-				.tween('text', function tweenFunc() {
-					const that = d3.select(this);
-					const i = d3.interpolateNumber(Util.strToFloat(that.text()), totalCost);
-					return t => that.text(App.moneyFormat(i(t)));
-				});
+			animateText('.total-cost-number', totalCost);
 
 			// update core capacity costs
-			d3.selectAll('.summary-text-box .big-number').text((d) => {
-				return App.moneyFormat(getCost(d));
+			d3.selectAll('.summary-text-box .big-number').each(function animate(d) {
+				animateText(this, getCost(d));
 			});
+		}
+
+		function animateText(selector, newValue) {
+			const element = d3.select(selector);
+			/*if (isNaN(Util.strToFloat(element.text()))) element.text(App.moneyFormat(1e6));
+			element.transition()
+				.duration(300)
+				.tween('text', function tweenFunc(d) {
+					const that = d3.select(this);
+					const i = d3.interpolateNumber(Util.strToFloat(that.text()), newValue);
+					return t => that.text(App.moneyFormat(i(t)));
+				});*/
+			element.text(App.moneyFormat(newValue));
 		}
 
 
 		/* --------------------------- Cost Chart Section ---------------------------*/
-		const capIndData = [];
-		allCapacities.forEach((cap) => {
-			cap.indicators.forEach((ind) => {
-				const indCopy = Object.assign({}, ind);
-				indCopy.capId = cap.id;
-				capIndData.push(indCopy);
-			});
-		});
-		Charts.buildCostChart('.cost-chart-container', capIndData);
+		// initialize cost chart
+		const costChart = Charts.buildCostChart('.cost-chart-container');
 
 
 		/* --------------------------- Filter Section ---------------------------*/

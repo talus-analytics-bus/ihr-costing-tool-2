@@ -121,7 +121,7 @@ const Charts = {};
 		return chart;
 	}
 
-	Charts.buildCostChart = (selector, data, param={}) => {
+	Charts.buildCostChart = (selector, param={}) => {
 		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
 		const width = 580;
 		const height = 300;
@@ -144,11 +144,9 @@ const Charts = {};
 
 		// define scales
 		const x = d3.scaleBand()
-			.domain(data.map(d => d.capId.toUpperCase()))
 			.range([0, width]);
 		const y = d3.scaleLinear()
 			.range([height, 0]);
-		const bandwidth = x.bandwidth();
 
 		// additional scales
 		const colorScale = d3.scaleLinear()
@@ -159,7 +157,7 @@ const Charts = {};
 			.range([5, 25]);
 
 		// define axes
-		const xAxis = d3.axisBottom(x);
+		const xAxis = d3.axisBottom();
 		const yAxis = d3.axisLeft()
 			.ticks(7)
 			.tickFormat((num) => {
@@ -167,10 +165,9 @@ const Charts = {};
 			});
 
 		// add axes
-		chart.append('g')
+		const xAxisG = chart.append('g')
 			.attr('class', 'x axis')
 			.attr('transform', `translate(0, ${height})`)
-			.call(xAxis);
 		const yAxisG = chart.append('g')
 			.attr('class', 'y axis');
 
@@ -189,30 +186,35 @@ const Charts = {};
 
 
 		// update function
-		chart.updateData = (newData) => {
-			// define scales
-			y.domain([0, 1.1 * d3.max(newData, d => d.startupCost)]);
+		chart.update = (indicators, xValFunc, yValFunc) => {
+			// set scales
+			x.domain(indicators.map(xValFunc));
+			y.domain([0, 1.1 * d3.max(indicators, yValFunc)]);
+			xAxis.scale(x);
 			yAxis.scale(y);
+			xAxisG.call(xAxis);			
 			yAxisG.call(yAxis);
+			const bandwidth = x.bandwidth();
 
 			// add a circle for each indicator
 			const indBlobs = chartBody.selectAll('.indicator-blob')
-				.data(newData);
+				.data(indicators);
 			indBlobs.exit().remove();
 			indBlobs.enter().append('circle')
 				.attr('class', 'indicator-blob')
-				.attr('r', d => radiusScale(y(d.startupCost)))
 				.each(function() {
 					$(this).tooltipster({ maxWidth: 400, content: '' });
 				})
 				.merge(indBlobs).transition()
+					.duration(1200)
+					.attr('r', d => radiusScale(y(yValFunc(d))))
 					.attr('cx', (d) => {
-						const xVal = x(d.capId.toUpperCase()) + bandwidth / 2;
+						const xVal = x(xValFunc(d)) + bandwidth / 2;
 						const jitter = (bandwidth / 2) * (Math.random() - 0.5);
 						return xVal + jitter;
 					})
-					.attr('cy', d => y(d.startupCost))
-					.style('fill', d => colorScale(x(d.capId.toUpperCase())))
+					.attr('cy', d => y(yValFunc(d)))
+					.style('fill', d => colorScale(x(xValFunc(d))))
 					.each(function(d, i) {
 						const capacity = App.getCapacity(d.capId);
 						$(this).tooltipster('content',
@@ -235,7 +237,6 @@ const Charts = {};
 					});
 		};
 
-		chart.updateData(data);
 		return chart;
 	}
 })();
