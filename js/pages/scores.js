@@ -75,6 +75,7 @@
 				.enter().append('tr')
 					.attr('class', 'score-row')
 					.on('click', function(d) {
+						console.log('2');
 						const currRow = d3.select(this);
 						const wasChecked = currRow.select('input').property('checked');
 						const newScore = wasChecked ? undefined : d;
@@ -109,7 +110,11 @@
 					});
 
 			scoreRows.append('td').append('input')
-				.attr('type', 'radio');
+				.attr('type', 'radio')
+				.on('click', function() {
+					// toggle an extra checked to become a... triple toggle!
+					$(this).prop('checked', !$(this).prop('checked'));
+				});
 
 			const scoreLabels = scoreRows.append('td');
 			scoreLabels.append('img')
