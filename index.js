@@ -57,7 +57,7 @@ app.post('/lineItemExport', function(req, res) {
 			  "intermediate_1_area_count": "Intermediate 1 area count",
 			  "intermediate_2_area_count": "Intermediate 2 area count",
 			  "local_area_count": "Local area count",
-			  "local_area_count": "Local area count",
+			  "intermediate_1_and_local_area_count": "Intermediate 1 area count and local area count",
 			  "central_hospitals_count": "Central hospitals count",
 			  "central_chw_count": "Central community health workers count",
 			  "central_epi_count": "Central epidemiologists count",
@@ -114,16 +114,39 @@ app.post('/lineItemExport', function(req, res) {
 		         			costsSheet.cell("L" + n).value(curGbc.cost_unit);
 
 							// Country multiplier
-							if (lineItem.country_multiplier !== "") {
+							const country_multiplier_key = lineItem.country_multiplier;
+							if (country_multiplier_key !== "") {
 								// get country multiplier
-		         				costsSheet.cell("M" + n).value(curGbc.cost_unit);
+								let country_multiplier = 1;
+								if (country_multiplier_key === 'intermediate_1_and_local_area_count') {
+									country_multiplier = whoAmI.multipliers.intermediate_1_area_count + whoAmI.multipliers.local_area_count;
+								} else {
+									country_multiplier = whoAmI.multipliers[country_multiplier_key];
+								}
+		         				
+		         				costsSheet.cell("M" + n).value(country_multiplier);
 
+								// Country multiplier unit
+		         				costsSheet.cell("N" + n).value(countryParamHash[country_multiplier_key]);
 
-							// Country multiplier unit
 							}
 
 							// Custom multiplier 1
-							// Custom multiplier 1 unit
+							if (lineItem.custom_multiplier_1 !== "") {
+								// get number
+								console.log(lineItem.custom_multiplier_1);
+								const cm1Arr = lineItem.custom_multiplier_1.toString().split(" ");
+								const cm1Num = cm1Arr[0];
+		         				costsSheet.cell("O" + n).value(cm1Num);
+
+								// get unit
+								cm1Arr.splice(0,1);
+								const cm1Unit = cm1Arr.join(" ");
+
+		         				costsSheet.cell("O" + n).value(cm1Unit);
+								// Custom multiplier 1 unit
+							}
+
 							// Custom multiplier 2
 							// Custom multiplier 2 unit
 							// Staff multiplier
