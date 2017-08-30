@@ -14,6 +14,7 @@ const App = {};
 	App.exportLineItems = () => {
 
 		// get needed actions with needed line items
+		// TODO update per Jeff
 		let indArray = [];
 		App.jeeTree.forEach((cc) => {
 		    cc.capacities.forEach((cap) => {
@@ -30,27 +31,7 @@ const App = {};
 		    });
 		});
 
-
-		// inputArray.forEach(function(input) {
-		// 	input.line_items.forEach(function(lineItem) {
-		// 		delete lineItem.where_find_base_cost;
-		// 		delete lineItem.staff_multiplier_modified;
-		// 		delete lineItem.function_tag;
-		// 		delete lineItem.category_tag;
-		// 		delete lineItem.base_cost_modified;
-		// 		delete lineItem.user_included_in_costing;
-		// 		delete lineItem.description;
-		// 		delete lineItem.references;
-		// 		console.log(lineItem);
-		// 	});
-		// });
-
-		console.log(indArray)
-
 		var xhr = new XMLHttpRequest();
-		// const xhrParams = '?inputs=' + JSON.stringify([{meow:1}]);
-		// const xhrParams = '';
-		// const xhrParams = '?inputs=' + encodeURIComponent(JSON.stringify(inputArray));
 		xhr.open('POST', '/lineItemExport', true);
 		xhr.responseType = 'blob';
 		xhr.setRequestHeader('Content-type', 'application/json');
@@ -72,6 +53,7 @@ const App = {};
 				indicators: indArray, 
 				currencyCode: App.whoAmI.currency_iso,
 				exchangeRate: App.getExchangeRate(),
+				whoAmI: App.whoAmI,
 				gbc: App.globalBaseCosts,
 				gsm: App.globalStaffMultipliers
 			}

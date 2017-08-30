@@ -38,6 +38,9 @@ app.post('/lineItemExport', function(req, res) {
          	const gbc = req.body.gbc;
          	const gsm = req.body.gsm;
 
+         	// get country params
+         	const whoAmI = req.body.whoAmI;
+
          	// get exchange rate
          	const exchangeRate = req.body.exchangeRate;
 
@@ -46,6 +49,19 @@ app.post('/lineItemExport', function(req, res) {
 			  "start-up": "Start-up",
 			  "recurring": "Recurring",
 			  "capital": "Capital"
+			}
+
+			// hash table for country parameters
+			const countryParamHash = {
+			  "central_area_count": "Central area count",
+			  "intermediate_1_area_count": "Intermediate 1 area count",
+			  "intermediate_2_area_count": "Intermediate 2 area count",
+			  "local_area_count": "Local area count",
+			  "local_area_count": "Local area count",
+			  "central_hospitals_count": "Central hospitals count",
+			  "central_chw_count": "Central community health workers count",
+			  "central_epi_count": "Central epidemiologists count",
+			  "null": ""
 			}
 
          	// track sheet row
@@ -89,13 +105,23 @@ app.post('/lineItemExport', function(req, res) {
 
 							// Base cost name
 							const curGbc = gbc.find(d => d.id === lineItem.base_cost);
-							console.log(lineItem);
-		         			costsSheet.cell("I" + n).value(curGbc.name);
+		         			costsSheet.cell("J" + n).value(curGbc.name);
 
 							// Base cost amount
+		         			costsSheet.cell("K" + n).value(curGbc.cost * exchangeRate);
+		         			
 							// Base cost unit
+		         			costsSheet.cell("L" + n).value(curGbc.cost_unit);
+
 							// Country multiplier
+							if (lineItem.country_multiplier !== "") {
+								// get country multiplier
+		         				costsSheet.cell("M" + n).value(curGbc.cost_unit);
+
+
 							// Country multiplier unit
+							}
+
 							// Custom multiplier 1
 							// Custom multiplier 1 unit
 							// Custom multiplier 2
