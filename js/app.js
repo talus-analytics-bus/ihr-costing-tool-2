@@ -49,9 +49,9 @@ const App = {};
 				App.globalStaffMultipliers = globalStaffMultipliers;
 				App.whoAmI = {};
 
-				// default to Kenya if in demo mode
+				// default to Switzerland if in demo mode
 				if (App.demoMode) {
-					const usObj = App.countryParams.find(d => d.abbreviation === 'KE');
+					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
 					App.whoAmI = Object.assign({}, usObj);
 				}
 
