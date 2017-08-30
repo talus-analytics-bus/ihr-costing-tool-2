@@ -19,6 +19,7 @@
   "homepage": "https://github.com/talus-analytics/ihr-costing-tool-2#readme",
   "dependencies": {
     "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "http": "0.0.0",
     "node-sass": "^4.5.3",

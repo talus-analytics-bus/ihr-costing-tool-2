@@ -10,6 +10,131 @@ const App = {};
 		5: 'Sustainable Capacity',
 	};
 
+	// TODO move this function to appropriate place in code
+	App.exportLineItems = () => {
+
+		// get needed actions with needed line items
+		let indArray = [];
+		App.jeeTree.forEach((cc) => {
+		    cc.capacities.forEach((cap) => {
+		        cap.indicators.forEach((ind) => {
+		            indArray = indArray.concat(ind);
+		            // const actions = App.getNeededActions(ind);
+		            // actions.forEach((a) => {
+		            //     const inputs = App.getNeededInputs(a.inputs, ind.score);
+		            //     // inputs.forEach((i) => {
+		            //     //     const lineItems = App.getNeededLineItems(i.line_items, ind.score);
+		            //     // });
+		            // });
+		        });
+		    });
+		});
+
+
+		// inputArray.forEach(function(input) {
+		// 	input.line_items.forEach(function(lineItem) {
+		// 		delete lineItem.where_find_base_cost;
+		// 		delete lineItem.staff_multiplier_modified;
+		// 		delete lineItem.function_tag;
+		// 		delete lineItem.category_tag;
+		// 		delete lineItem.base_cost_modified;
+		// 		delete lineItem.user_included_in_costing;
+		// 		delete lineItem.description;
+		// 		delete lineItem.references;
+		// 		console.log(lineItem);
+		// 	});
+		// });
+
+		console.log(indArray)
+
+		var xhr = new XMLHttpRequest();
+		// const xhrParams = '?inputs=' + JSON.stringify([{meow:1}]);
+		// const xhrParams = '';
+		// const xhrParams = '?inputs=' + encodeURIComponent(JSON.stringify(inputArray));
+		xhr.open('POST', '/lineItemExport', true);
+		xhr.responseType = 'blob';
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.onload = function(e) {
+		    if (this.status == 200) {
+		        var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+		        var downloadUrl = URL.createObjectURL(blob);
+		        var a = document.createElement("a");
+		        a.href = downloadUrl;
+		        a.download = "IHR Costing Tool - Line Item Export.xlsx";
+		        document.body.appendChild(a);
+		        a.click();
+		    } else {
+		    	// TODO show error
+		    }
+		};
+		// xhr.send('inputs=ipsum');
+		// console.log(inputArray)
+		xhr.send(JSON.stringify({indicators: indArray}));
+
+		// $.get('lineItemExport', data2) // PASS THE DATA AS THE SECOND PARAMETER
+		//     .success(
+		//         function(success){
+		//             console.log(success)
+		//         })
+		//     .error(
+		//         function(error){
+		//             console.log(error)
+		//         });
+
+		// $.get('lineItemExport', JSON.stringify({inputs: inputArray}), function(data) {
+		// 	console.log(data);
+		// });
+
+		// $.ajax({
+		// 	type: 'post',
+		// 	// data: params.filters,
+		// 	// data: JSON.stringify({meow: 'inputArray'}),
+		// 	data: JSON.stringify({inputs: inputArray}),
+		// 	// headers: {'Authorization-Token': '20lQLz13fgES56ngXYqnGDQTRPqY5bF7'},
+		// 	url: 'lineItemExport',
+		// 	headers: {
+		//         'Content-Type': 'application/json'
+		//         // 'Content-Length': Buffer.byteLength(data)
+		//     },
+		// 	success: function(data) {
+		// 		console.log(data);
+		// 		// // if using simulation data, ignore any calls from before the day of the sim at 8am
+		// 		// const filterSimData = true;
+		// 		// if (App.useSimData && filterSimData) {
+		// 		// 	let simEarliestTime = new Date('6/28/2017');
+		// 		// 	simEarliestTime.setHours(0);
+		// 		// 	simEarliestTime.setMinutes(0);
+		// 		// 	simEarliestTime.setSeconds(0);
+
+		// 		// 	let simLatestTime = new Date('6/28/2017');
+		// 		// 	simLatestTime.setHours(23);
+		// 		// 	simLatestTime.setMinutes(59);
+		// 		// 	simLatestTime.setSeconds(59);
+
+		// 		// 	let tempData = data;
+		// 		// 	let outputData = [];
+		// 		// 	tempData.data.forEach(d => {
+		// 		// 		const curStamp = new Date(d.Client_CreateStamp);
+		// 		// 		if ( curStamp >= simEarliestTime && curStamp <= simLatestTime) outputData.push(d);
+		// 		// 	});
+		// 		// 	// console.log(outputData)
+		// 		// 	tempData.data = outputData;
+		// 		// 	callback(tempData);
+
+		// 		// } else {
+		// 		// 	// console.log(data)
+		// 		// 	callback(data);
+		// 		// 	// callback(JSON.parse(data));
+		// 		// }
+		// 	},
+		// 	error: function(){
+		// 		console.log('error');
+		// 	}
+		// });
+
+
+	};
+
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
 
