@@ -193,7 +193,7 @@
 			if (costChartCategory === 'capacity') {
 				xLabel = 'Capacity';
 			} else if (costChartCategory === 'category') {
-				xLabel = 'CDC Function';
+				xLabel = 'Function';
 			}
 			costChart.updateXAxisLabel(xLabel);
 		}
