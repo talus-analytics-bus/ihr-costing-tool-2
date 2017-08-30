@@ -14,6 +14,10 @@ app.get('/', function(req, res) {
 // test XLSX package
 app.get('/xlsx', function(req, res) {
 	console.log("Hello SX!")
+	const test = xlsx.utils.book_new();
+	const written = xlsx.writeFile(test, 'out.xlsx');
+	console.log(test)
+
 	// res.sendFile(path.join(__dirname, '/', 'index.html'));
 });
 
