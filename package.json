@@ -26,6 +26,6 @@
     "nodecli": "0.0.1",
     "path": "^0.12.7",
     "scss-compile": "^0.1.7",
-    "xlsx": "^0.11.3"
+    "xlsx-populate": "^1.10.0"
   }
 }
