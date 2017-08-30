@@ -11,8 +11,10 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, '/', 'index.html'));
 });
 
-// test XLSX package
-app.get('/xlsxWrite', function(req, res) {
+// lineItemExport
+// Routine to read line item export template XLS, write user line items,
+// and download result to browser
+app.get('/lineItemExport', function(req, res) {
 	// Load line item export template XLS
 	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Line Item Export.xlsx")
 	    .then(workbook => {
