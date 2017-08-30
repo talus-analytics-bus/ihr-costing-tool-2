@@ -298,4 +298,162 @@ const Charts = {};
 
 		return chart;
 	}
+
+	Charts.buildBubblePack = (selector, data, param={}) => {
+		// define color scale
+		// const bubbleColorArr = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486']; // purples
+		// http://colorbrewer2.org/#type=sequential&scheme=Purples&n=7
+		const bubbleColorScale = {
+		  "Coordination / leadership": "#f2f0f7",
+		  "Planning including assessment, design, planning, policy, legislation": "#dadaeb",
+		  "Strengthening HR capacity": "#bcbddc",
+		  "Strengthening infrastructure": "#9e9ac8",
+		  "Operations / implementation": "#807dba",
+		  "Analysis including data quality and dissemination": "#6a51a3",
+		  "Use and review mechanisms": "#4a1486"
+		};
+
+		// setup svg
+		const margin = { top: 60, right: 30, bottom: 60, left: 95 };
+		const width = 580;
+		const height = 300;
+		const chartContainer = d3.select(selector).append('svg')
+			.attr('class', 'bubble-chart')
+			.attr('width', width + margin.left + margin.right)
+			.attr('height', height + margin.top + margin.bottom);
+		const chart = chartContainer.append('g')
+			.attr('class','bubble-pack')
+			.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+		// setup data
+		const newData = [];
+		for (let i = 0; i < Object.keys(data).length; i++) {
+			const newObj = {};
+			const curKey = Object.keys(data)[i];
+			newObj.name = curKey;
+			if (param.costType === 'total') {
+				newObj.value = data[curKey]['start-up'] + (data[curKey].recurring * param.totalCostDuration) + data[curKey].capital;
+			} else {
+				// TODO other filter views, like startup, capital, recurring
+			}
+			newData.push(newObj);
+		}
+		data = newData;
+
+		let svg = chart;
+		let centerX = width * 0.5;
+		let centerY = height * 0.5;
+		let strength = 0.05;
+		let focusedNode;
+
+		let format = d3.format(',d');
+
+		let scaleColor = d3.scaleOrdinal(d3.schemeCategory20);
+
+		// use pack to calculate radius of the circle
+		let pack = d3.pack()
+			.size([width, height ])
+			.padding(1.5);
+
+		let forceCollide = d3.forceCollide(d => d.r + 1);
+
+		// use the force
+		let simulation = d3.forceSimulation()
+			.force('charge', d3.forceManyBody())
+			.force('collide', forceCollide)
+			.force('x', d3.forceX(centerX).strength(strength))
+			.force('y', d3.forceY(centerY).strength(strength));
+
+		let root = d3.hierarchy({ children: data })
+			.sum(d => d.value);
+
+		// we use pack() to automatically calculate radius conveniently only
+		// and get only the leaves
+		const minRadius = 5;
+		let nodes = pack(root).leaves().map(node => {
+			const data = node.data;
+			return {
+				x: centerX + (node.x - centerX) * 3, // magnify start position to have transition to center movement
+				y: centerY + (node.y - centerY) * 3,
+				r: 0, // for tweening
+				radius: node.r + minRadius, //original radius
+				//id: data.cat + '.' + (data.name.replace(/\s/g, '-')),
+				id: data.cat,
+				cat: data.cat,
+				name: data.name,
+				value: data.value,
+				icon: data.icon,
+				desc: data.desc,
+			};
+		});
+		simulation.nodes(nodes).on('tick', ticked);
+
+		svg.style('background-color', '#eee');
+		let node = svg.selectAll('.node')
+			.data(nodes)
+			.enter().append('g')
+			.attr('class', 'node')
+			.call(d3.drag()
+				.on('start', (d) => {
+					if (!d3.event.active) { simulation.alphaTarget(0.2).restart(); }
+					d.fx = d.x;
+					d.fy = d.y;
+				})
+				.on('drag', (d) => {
+					d.fx = d3.event.x;
+					d.fy = d3.event.y;
+				})
+				.on('end', (d) => {
+					if (!d3.event.active) { simulation.alphaTarget(0); }
+					d.fx = null;
+					d.fy = null;
+				}));
+
+		node.append('circle')
+			.attr('id', d => d.id)
+			.attr('r', 0)
+			.attr('class','bubble')
+			//.attr('stroke', d => d3.color(bubbleColorScale[d.name]).darker().toString())
+			.attr('stroke-width','1px')
+			//.style('fill', d => bubbleColorScale[d.name])
+			.transition().duration(2000).ease(d3.easeElasticOut)
+				.tween('circleIn', (d) => {
+					let i = d3.interpolateNumber(0, d.radius);
+					return (t) => {
+						d.r = i(t);
+						simulation.force('collide', forceCollide);
+					};
+				});
+
+		node.append('clipPath')
+			.attr('id', d => `clip-${d.id}`)
+			.append('use')
+			.attr('xlink:href', d => `#${d.id}`);
+
+		node.append('title')
+			.text(d => (d.name + '\n' + format(d.value)));
+
+		node.on('mouseover', function(currentNode) {
+			// black ring
+			const circle = d3.select(this).select('circle');
+			circle
+				.attr('stroke-width','3px')
+				.attr('stroke','black');
+		});
+
+		node.on('mouseout', function(currentNode) {
+			// rmv ring
+			const circle = d3.select(this).select('circle');
+			circle
+				.attr('stroke', d => d3.color(bubbleColorScale[d.name]).darker().toString())
+				.attr('stroke-width','1px')
+		});
+
+		function ticked() {
+			node
+				.attr('transform', d => `translate(${d.x},${d.y})`)
+				.select('circle')
+					.attr('r', d => d.r);
+		}
+	};
 })();

@@ -26,7 +26,10 @@
 		const allCores = [];
 		const allCapacities = [];
 		const allIndicators = [];
+
 		const indicatorsByTag = [];
+		const tagCostDict = {};
+		
 		App.jeeTree.forEach((cc) => {
 			let ccHasOneComplete = false;
 
@@ -84,6 +87,7 @@
 						// push to data
 						for (let tag in indCopy.costByTag) {
 							if (tag) {
+								// add an indicator/tag combo to array
 								const indClone = Object.assign({}, indCopy);
 								const tagCosts = indCopy.costByTag[tag];
 								if (tag.indexOf('Planning') === 0 || tag.indexOf('Analysis') === 0) {
@@ -95,6 +99,18 @@
 									indClone[c] = tagCosts[c];
 								}
 								indicatorsByTag.push(indClone);
+
+								// add to total tag cost
+								if (!tagCostDict[tag]) {
+									tagCostDict[tag] = {
+										startupCost: 0,
+										capitalCost: 0,
+										recurringCost: 0,
+									};
+								}
+								for (let c in tagCosts) {
+									tagCostDict[tag][c] += tagCosts[c];
+								}
 							}
 						}
 					}
@@ -304,9 +320,15 @@
 		}
 
 
-		/* --------------------------- Cost Chart Section ---------------------------*/
+		/* --------------------------- Chart Sections ---------------------------*/
 		// initialize cost chart
 		const costChart = Charts.buildCostChart('.cost-chart-container');
+
+		// initialize bubble chart
+		/*const bubbleChart = Charts.buildBubblePack('.bubble-chart', tagCostDict, {
+			costType,
+			totalCostDuration,
+		});*/
 
 
 		/* --------------------------- Filter Section ---------------------------*/
