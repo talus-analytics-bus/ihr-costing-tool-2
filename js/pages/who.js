@@ -180,12 +180,12 @@
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermediate 2 (optional)',
-				nameValues: ['Province', 'Municipality', 'District', 'State'],
+				nameValues: ['Province', 'Municipality', 'District', 'State', 'County'],
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
 				description: 'Local (e.g., county, city)',
-				nameValues: ['Barangay', 'County', 'District', 'City'],
+				nameValues: ['Barangay', 'City', 'Constituency', 'County', 'District'],
 			}
 		];
 		const emptyOptionText = '-- select one --';

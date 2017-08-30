@@ -168,7 +168,8 @@
 		<div class="overview-container container container-text">
 			<h1>Assessment Instructions</h1>
 			<div>
-				Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.
+				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
+				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.</p>
 			</div>
 			<div>
 			<h2>Upload Prior Session</h2>
@@ -259,6 +260,7 @@
 		<div class="costs-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
+				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.</p>
 				<p>Costs associated with implementing the International Health Regulations depend on the target score level a country wants to achieve as well as population size, geopolitical organization, and public health infrastructure. Note that no additional costs are calculated for indicators that have already achieved a score of 4 - Demonstrated Capacity.</p>
 			</div>
 			<div>
@@ -358,8 +360,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Describes how the country is organized by geographic area groupings.
-							To edit the defaults, change the details below.
+							These inputs describe how the country is organized by geopolitical areas. Intermediate and local inputs are required and the second indermediate level is optional.
 						</div>
 						<table class="geo-division-table">
 							<tbody></tbody>
@@ -373,7 +374,7 @@
 						</div>
 						<div class="block-content">
 							<div class="block-description">
-								Default public health information describes the estimated number of public heathcare facilities and workers within the country.
+								Default public health information describes the estimated number of public heathcare facilities and workers within the country. These inputs are required.
 								To edit the defaults, change the details below.
 							</div>
 							<table class="ph-table">
@@ -392,7 +393,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							The assumed costs of frequently costed items are listed below. Review the default values for the costs and modify as needed.
+							Default cost values for frequently costed items are listed below. Review the default values for the costs and modify as needed.  Editing these defaults is optional.
 						</div>
 						<div class="dv-container"></div>
 					</div>
@@ -458,8 +459,12 @@
 			</div>
 			<div class="results-content">
 				<div class="results-instructions">
-					A total of <b><span class="num-costed-indicators"></span> of 48</b> total indicators have been scored and costed for <b><span class="num-costed-capacities"></span> of 19</b> capacities.
-					<br>These data are included in the results page below.
+					<p>
+						Results below include <b><span class="num-costed-indicators"></span> of 48</b> total indicators with completed scoring and costing for <b><span class="num-costed-capacities"></span> of 19</b> capacities.
+					</p>
+					<p>
+						To view additional details for costing calculations, use the Export Detailed Report button to download a results spreadsheet. The detailed report can not  be uploaded back into the tool. To continue work at a later date, click the Download IHR Data File button to store the data file on your computer. Changes to score and cost inputs must be made by uploading the data file on the Assessment Instructions and Upload page and using the IHR Costing Tool website to edit (changes can not be made to the file before uploading). 
+					</p>
 				</div>
 				<div class="results-button-container">
 					<button class="view-table-button btn btn-secondary">View Data Table</button>
@@ -474,7 +479,10 @@
 				</div>
 				<div class="results-main-content">
 					<div class="score-improvement-section results-section">
-						<div class="results-section-title">Cost Overview</div>
+						<div class="results-section-title">Cost Summary</div>
+						<div class="cost-chart-instructions">
+							Total cost below summarizes costs associated with moving from the current capacity level score to the selected target score for all completed indicators, as shown on the colored bar. Total costs are broken out for core capacities grouped under Prevent, Detect, Respond, and Other IHR-related hazards and Points of Entry. Use the buttons to view by cost type or by 1, 3, or 5 year totals.
+						</div>
 						<div class="cost-type-filter-container">
 							<div class="cost-type-row">
 								<div class="btn-group">
@@ -502,9 +510,9 @@
 						<div class="summary-text-section"></div>
 					</div>
 					<div class="chart-section results-section">
-						<div class="chart-section-title results-section-title">Cost Information</div>
+						<div class="chart-section-title results-section-title">Costs by Core Capacity and Funtional Category</div>
 						<div class="cost-chart-instructions">
-							Lorem ipsum dolor sit amet, nam unum facilisis cotidieque an. Ius ne dicant pertinax, no has modus falli. Mei probo similique dissentiet ut, ad perfecto forensibus instructior vim. Eu ius sale dicat delenit. An eam quando dicant, pro in brute etiam.
+							This graph shows costs either by JEE Assessment Tool indicator or function (e.g. operations/implementation). Costs are graphed by absolute cost on the vertical axis, and each circle is sized by the relative cost contribution of that indicator or function. Use the buttons to view by cost type or by 1, 3, or 5 year totals. Apply filters below the graph to a select a subset of Core Capacities, Indicators, or functions.
 						</div>
 						<div class="cost-type-filter-container">
 							<div class="cost-type-row">
@@ -590,7 +598,7 @@
 			<h1>Background</h1>
 			<div>
 				<h2>Acknowledgements</h2>
-				<p>We thank the entire research team at the Center for Global Health Science and Security for their research support in developing the IHR costing tool.  Initial research and tool development was supported by the U.S. Defense Threat Reduction Agency- Cooperative, Biological Engagement Program and the Department of State Biosecurity Engagement Program.  The conceptual framework was strengthened through collaboration with the World Health Organization and its technical partners. Current efforts were supported by Open Philanthropy Project and Georgetown University Medical Center. We are grateful to partners and colleagues for their feedback and support of this project, including:  the World Health Organization, the Centers for Disease Control and Prevention, the World Bank, McKinsey and Company, the GHSA Private Sector Roundtable, Tom Frieden, Peter Sands, Anas El Turabi, and Phil Saynisch. All remaining errors in the tool are our own.</p>
+				<p>We thank the entire research team at the Center for Global Health Science and Security for their research support in developing the IHR costing tool.  Initial research and tool development were supported by the U.S. Defense Threat Reduction Agency- Cooperative, Biological Engagement Program and the Department of State Biosecurity Engagement Program.  The conceptual framework was strengthened through collaboration with the World Health Organization and its technical partners. Current efforts were supported by Open Philanthropy Project and Georgetown University Medical Center. We are grateful to partners and colleagues for their feedback and support of this project, including:  the World Health Organization, the Centers for Disease Control and Prevention, the World Bank, McKinsey and Company, the GHSA Private Sector Roundtable, Tom Frieden, Peter Sands, Anas El Turabi, and Phil Saynisch. All remaining errors in the tool are our own.</p>
 			</div>
 			<div>
 				<h2>Project Overview</h2>
@@ -601,7 +609,7 @@
 					Since the IHR entered into force in 2007, national stakeholders and their international partners have struggled to define the costs of strengthening and maintaining health security systems that cross levels and agencies and rely on multi-sectoral coordination for action. Without an assessment of the costs required to implement IHR, countries are unable to develop consistent budgets and plans upon which to build a case with domestic policymakers or external partners for appropriations, grants, or loans. We began with costing templates developed by our research team after a review of IHR implementation in 14 case study countries spanning multiple regions, refined by country feedback on user needs for IHR costing collected while supporting the World Health Organization in developing and pilot-testing an earlier conceptual framework for IHR costing in 6 countries. Since the JEE contains many more indicators than the previous IHR Core Capacity Monitoring Framework, the team reviewed published guidance from WHO, OIE, and other international authorities for specific requirements for capacity building and implementation that would address the new indicators. Finally, the team reviewed all of the published JEE evaluations to identify specific activities/capabilities that the assessment process had associated with the scores assigned in each indicator (i.e., what cumulative activities/capabilities were specifically identified as constituting a score of 2, 3, 4, or 5 for each specific indicator). Based on this approach, we have developed a publicly-available web-based costing tool to support countries in estimating the costs of fully implementing IHR core capacities to fulfill the objectives of the planning process launched by the JEE.
 				</p>
 				<p>
-					The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators.  Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.  Users can input JEE scores manually, or pull data directly from the The <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, developed by the Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.
+					The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators.  Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.  Users can input JEE scores manually, or pull data directly from the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, developed by the Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.
 				</p>
 				<p>
 					Once the current JEE assessment scores are entered, users choose their target level of improvement (e.g., one step improved across all indicators; improvement to level 4 for all indicators). The user is then directed to costing pages for each JEE indicator, with options to select and modify as necessary. These costs include those for establishing the legal/policy foundation and infrastructure to support basic capacities, as well as the operating costs for personnel, training, processes, and consumables based on country-level datasets. The costs for each indicator include those required for start-up (e.g., cost of establishing legislation), capital (e.g., building construction, durable goods), and recurring costs (e.g., salaries). Once completed, the total cost requirements can be visualized by indicator; by category; by type of cost; and for the first, third, and fifth years following implementation. In addition, costs can be viewed for start up support for countries to understand the required IHR expenses and comparative cost results across core capacities and capacity levels (performance), including the option to download results in a spreadsheet format. Indicators for which costing tools have already been determined elsewhere, are linked and aligned to the degree possible to help prevent duplication or confusion.

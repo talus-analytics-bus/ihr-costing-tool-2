@@ -6,22 +6,6 @@
 		let totalCostDuration = 1;
 
 
-		/* -------------------------- Demo Mode --------------------------*/
-		if (App.demoMode) {
-			App.jeeTree.forEach((cc) => {
-				cc.capacities.forEach((cap) => {
-					cap.indicators.forEach((ind) => {
-						ind.score = Math.round(0.5 + 5 * Math.random());
-						ind.actions.forEach((a) => {
-							a.inputs.forEach(input => input.costed = true);
-						});
-					});
-				});
-			});
-			App.updateAllCosts();
-		}
-
-
 		/* ---------------------- Data Wrangling ----------------------*/
 		const allCores = [];
 		const allCapacities = [];

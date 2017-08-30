@@ -13,16 +13,15 @@
 	cursor: pointer;
 }
 .results-instructions {
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 .results-section {
+	margin-top: 25px;
 	border: $border;
 	padding: 20px 30px 30px;
 	text-align: center;
 	@include border-radius(10px);
 	@include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
-
-	&:nth-child(n+2) { margin-top: 25px; }
 }
 .results-section-title {
 	margin-bottom: 20px;
@@ -128,7 +127,7 @@
 			@include gradient(rgba($jeeGreen, 0.6), rgba($jeeGreen, 0.15));
 		}
 		&.yellow {
-			@include gradient(rgba($jeeYellow, 0.6), rgba($jeeYellow, 0.15));
+			@include gradient(rgba($jeeYellow, 0.5), rgba($jeeYellow, 0.15));
 		}
 		&.red {
 			@include gradient(rgba($jeeRed, 0.6), rgba($jeeRed, 0.15));
@@ -165,7 +164,7 @@
 .cost-chart-instructions {
 	text-align: left;
 	margin-bottom: 30px;
-	max-width: 700px;
+	// max-width: 700px;
 }
 .cost-chart-filter-box {
 	padding: 20px;
