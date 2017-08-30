@@ -74,6 +74,7 @@
 				.data(d3.range(1, 6))
 				.enter().append('tr')
 					.attr('class', 'score-row')
+					.classed('active', d => d === indicator.score)
 					.on('click', function(d) {
 						const currRow = d3.select(this);
 						const wasChecked = currRow.select('input').property('checked');
