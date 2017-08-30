@@ -12,6 +12,7 @@
 		const allCapacities = [];
 		const allIndicators = [];
 		const allActions = [];
+		let allFunctions = [];
 
 		const indicatorsByTag = [];
 		const tagCostDict = {};
@@ -110,6 +111,7 @@
 			if (ccHasOneComplete) allCores.push(cc);
 		});
 
+		// if no cores to show, direct user to scoring page
 		if (!allCores.length) {
 			$('.results-content').hide();
 			$('.results-empty-content')
@@ -118,15 +120,31 @@
 			return;
 		}
 
+		// collect list of functions
+		allFunctions = _.unique(indicatorsByTag.map(d => d.category_tag));
+
 		function getChartData() {
-			let indData;
+			let indData = [];
+			const categories = $('.category-select').val();
 			if (costChartCategory === 'capacity') {
-				indData = allIndicators;
+				allIndicators.forEach((ind) => {
+					const indCopy = Object.assign({}, ind);
+					const indsOfRightTag = indicatorsByTag.filter((i) => {
+						return i.id === ind.id && categories.includes(i.category_tag);
+					});
+					indCopy.startupCost = d3.sum(indsOfRightTag, i => i.startupCost);
+					indCopy.capitalCost = d3.sum(indsOfRightTag, i => i.capitalCost);
+					indCopy.recurringCost = d3.sum(indsOfRightTag, i => i.recurringCost);
+					indData.push(indCopy);
+				});
 			} else if (costChartCategory === 'category') {
 				indData = indicatorsByTag;
+
+				// apply category filter to data
+				indData = indData.filter(ind => categories.includes(ind.category_tag));
 			}
 
-			// apply filters to indicators
+			// apply core and capacity filters to data
 			return indData.filter(ind => selectedCapIds.includes(ind.capId));
 		}
 
@@ -345,7 +363,7 @@
 			valKey: 'id',
 			selected: true,
 		});
-		Util.populateSelect('.category-select', [1, 2, 3], {
+		Util.populateSelect('.category-select', allFunctions, {
 			selected: true,
 		});
 
@@ -417,11 +435,9 @@
 			includeSelectAllOption: true,
 			numberDisplayed: 0,
 			buttonClass: 'btn btn-secondary',
-			onChange: (option, checked) => {
-				// TODO
-				updateDropdowns();
-				updateCostChart();
-			},
+			onChange: (option, checked) => updateCostChart(),
+			onSelectAll: () => updateCostChart(),
+			onDeselectAll: () => updateCostChart(),
 		});
 
 		function updateDropdowns() {
