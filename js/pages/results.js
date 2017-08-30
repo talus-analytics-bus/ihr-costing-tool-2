@@ -34,8 +34,6 @@
 				let capHasOneComplete = false;
 
 				cap.indicators.forEach((ind) => {
-					console.log(ind.id, App.isIndicatorComplete(ind));
-
 					if (App.isIndicatorComplete(ind)) {
 						ccHasOneComplete = true;
 						capHasOneComplete = true;
@@ -196,6 +194,16 @@
 		/* ---------------------- Instructions Section ----------------------*/
 		$('.num-costed-indicators').text(allIndicators.length);
 		$('.num-costed-capacities').text(allCapacities.length);
+
+
+		/* ---------------------- Switching to Table Section ----------------------*/
+		$('.view-table-button').on('click', function() {
+			const $this = $(this);
+			$this.toggleClass('active');
+			const isActive = $this.hasClass('active');
+			$this.text(isActive ? 'View Charts' : 'View Table');
+			$('.results-main-content, .results-table-content').slideToggle();
+		});
 
 
 		/* ---------------------- Cost Type Section ----------------------*/
@@ -399,6 +407,75 @@
 		updateDropdowns();*/
 
 		updateResults();
+
+
+		/* ---------------------- Building Table Section ----------------------*/
+		// establish table schema
+		const tableSchema = [
+			{
+				name: 'Capacity ID',
+				getValue: d => d.id.toUpperCase(),
+			}, {
+				name: 'Capacity Name',
+				getValue: d => d.name,
+			}, {
+				name: 'Startup Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost,
+			}, {
+				name: 'Capital Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.capitalCost,
+			}, {
+				name: 'Recurring Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.recurringCost,
+			}, {
+				name: 'Total Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost + d.capitalCost + d.recurringCost,
+			}
+		];
+ 
+
+		// build the table
+		const table = d3.select('.results-table');
+		table.append('thead').append('tr').selectAll('th')
+			.data(tableSchema)
+			.enter().append('th')
+				.attr('class', d => d.className || '')
+				.text(d => d.name);
+		const tbody = table.append('tbody');
+		const rows = tbody.selectAll('tr')
+			.data(allCapacities)
+			.enter().append('tr');
+		rows.selectAll('td')
+			.data(d => tableSchema.map(t => ({ rowData: d, colData: t })))
+			.enter().append('td')
+				.attr('class', d => d.colData.className || '')
+				.text((d) => {
+					const format = d.colData.format || (v => v);
+					return format(d.colData.getValue(d.rowData));
+				});
+
+		// add total row
+		const totalRow = tbody.append('tr').attr('class', 'total-row');
+		totalRow.selectAll('td')
+			.data(tableSchema)
+			.enter().append('td')
+				.text((d) => {
+					if (d.className === 'cost') {
+						return App.moneyFormatLong(d3.sum(allCapacities, d.getValue));
+					}
+					return '';
+				});
+
+
+		//$('.results-table').dataTable();
 
 
 		/* --------------------------- Export Section ---------------------------*/

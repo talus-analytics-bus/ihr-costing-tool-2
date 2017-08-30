@@ -123,8 +123,8 @@ const Charts = {};
 
 	Charts.buildCostChart = (selector, param={}) => {
 		const margin = { top: 70, right: 30, bottom: 70, left: 100 };
-		const width = 800;
-		const height = 260;
+		const width = 810;
+		const height = 320;
 		const chartContainer = d3.select(selector).append('svg')
 			.attr('class', 'cost-chart')
 			.attr('width', width + margin.left + margin.right)
