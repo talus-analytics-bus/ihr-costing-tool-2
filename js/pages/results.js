@@ -505,34 +505,7 @@
 
 		});
 		$('.export-session-button').on('click', () => {
-			// create indicator score lookup and input cost lookup
-			const indScoreDict = {};
-			const inputCostDict = {};
-			App.jeeTree.forEach((cc) => {
-				cc.capacities.forEach((cap) => {
-					cap.indicators.forEach((ind) => {
-						indScoreDict[ind.id] = ind.score || 0;
-						ind.actions.forEach((a) => {
-							a.inputs.forEach((input) => {
-								const costObj = {
-									costed: input.costed,
-									isCustomCost: input.isCustomCost,
-								};
-								if (input.isCustomCost) {
-									costObj.customStartupCost = input.customStartupCost;
-									costObj.customRecurringCost = input.customRecurringCost;
-								}
-							});
-						});
-					});
-				})
-			});
-
-			// get data to download
-			const whoAmIData = JSON.stringify(App.whoAmI);
-			const scoreData = JSON.stringify(indScoreDict);
-			const costData = JSON.stringify(inputCostDict)
-			const data = `${whoAmIData}\n\n${scoreData}\n\n${costData}`;
+			const sessionData = App.getSessionData();
 
 			// set file name
 			const today = new Date();
@@ -544,7 +517,7 @@
 			const yyyymmdd = `${year}${month}${day}`;
 			const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
 
-			App.downloadText(fileName, data);
+			App.downloadText(fileName, sessionData);
 		});
 	}
 })();

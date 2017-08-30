@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = false;
+	App.demoMode = true;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -416,6 +416,77 @@ const App = {};
 	App.isActionComplete = (action, indScore) => {
 		if (!indScore) return false;
 		return App.getNeededInputs(action.inputs, indScore).every(input => input.costed);
+	}
+
+
+	/* ------------------ Import/Export Functions ------------------- */
+	// return 3 part json in string format to be exported into a text file
+	App.getSessionData = () => {
+		// create indicator score lookup and input cost lookup
+		const indScoreDict = {};
+		const inputCostDict = {};
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					indScoreDict[ind.id] = ind.score || 0;
+					ind.actions.forEach((a) => {
+						a.inputs.forEach((input) => {
+							const costObj = {
+								costed: input.costed,
+								isCustomCost: input.isCustomCost,
+							};
+							if (input.isCustomCost) {
+								costObj.customStartupCost = input.customStartupCost;
+								costObj.customRecurringCost = input.customRecurringCost;
+							}
+							inputCostDict[input.id] = costObj;
+						});
+					});
+				});
+			})
+		});
+
+		// get data to download
+		const whoAmIData = JSON.stringify(App.whoAmI);
+		const scoreData = JSON.stringify(indScoreDict);
+		const costData = JSON.stringify(inputCostDict)
+		return `${whoAmIData}\n\n${scoreData}\n\n${costData}`;
+	}
+
+	// loads 3 part json data and ingests into application
+	App.loadSessionData = (sessionData) => {
+		const dataArr = sessionData.split('\n\n');
+		
+		let indScoreDict, inputCostDict;
+		try {
+			App.whoAmI = JSON.parse(dataArr[0]);
+			indScoreDict = JSON.parse(dataArr[1]);
+			inputCostDict = JSON.parse(dataArr[2]);
+		} catch (e) {
+			return false;
+		}
+
+		// ingest scores and costs into App.jeeTree
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					if (indScoreDict[ind.id]) {
+						ind.score = indScoreDict[ind.id];
+					}
+
+					ind.actions.forEach((a) => {
+						a.inputs.forEach((input) => {
+							if (inputCostDict[input.id]) {
+								for (let key in inputCostDict[input.id]) {
+									input[key] = inputCostDict[input.id][key];
+								}
+							}
+						});
+					});
+				});
+			})
+		});
+		return true;
 	}
 
 

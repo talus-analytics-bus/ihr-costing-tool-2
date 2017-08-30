@@ -177,8 +177,9 @@
 			<p>2. Click “Continue to Scores” to review and enter additional scores, as needed</p.>
 			</div>
 				<div class="upload-button-container">
-					<button type="button" class="btn btn-secondary">Select File from Prior Session</button>
-			</div>
+				  <input id="prior-session" class="input-prior-session" type="file" />
+				  <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
+				</div>
 			<div>
 				<h2>Upload Scores</h2>
 				<p>
@@ -650,6 +651,9 @@
 <script src="lib/jquery.noty.packaged.min.js"></script>
 <script src="lib/nprogress.min.js"></script>
 <script src="lib/datatables.min.js"></script>
+<script src="lib/cpexcel.js"></script>
+<script src="lib/jszip.js"></script>
+<script src="lib/xlsx.min.js"></script>
 <!--<script src="build/lib.min.js"></script>-->
 
 <!-- Project Specific Files -->
