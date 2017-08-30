@@ -52,7 +52,8 @@ const App = {};
 				if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170830-demo.ihr', (error, text) => {
-						App.loadSessionData(text);
+						const demoDataLoaded = App.loadSessionData(text);
+						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
 						App.updateAllCosts();
 						callback();
 					});
@@ -453,12 +454,12 @@ const App = {};
 		const whoAmIData = JSON.stringify(App.whoAmI);
 		const scoreData = JSON.stringify(indScoreDict);
 		const costData = JSON.stringify(inputCostDict)
-		return `${whoAmIData}\n\n${scoreData}\n\n${costData}`;
+		return `${whoAmIData}\n${scoreData}\n${costData}`;
 	}
 
 	// loads 3 part json data and ingests into application
 	App.loadSessionData = (sessionData) => {
-		const dataArr = sessionData.split('\n\n');
+		const dataArr = sessionData.split('\n');
 		
 		let indScoreDict, inputCostDict;
 		try {
@@ -488,6 +489,41 @@ const App = {};
 					});
 				});
 			})
+		});
+		return true;
+	}
+
+	// loads Qlick score data
+	App.loadQlickScoreData = (scoreData) => {
+		let workbook;
+		try {
+			workbook = XLSX.read(scoreData, {type: 'binary'});
+		} catch (err) {
+			return false;
+		}
+
+		const firstSheetName = workbook.SheetNames[0];
+		const worksheet = workbook.Sheets[firstSheetName];
+
+		// edit column headers
+		worksheet['A1'].w = 'country_name';
+		worksheet['B1'].w = 'capacity_name';
+		worksheet['C1'].w = 'indicator_name';
+		worksheet['D1'].w = 'score';
+
+		// get the scores from the inputScores JSON and populate the
+		// session scores with them, for all the indicators that have scores
+		const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
+
+		// update scores
+		inputScores.forEach(function(d) {
+			// get indicator id
+			const indId = d.indicator_name.split(' ')[0].toLowerCase();
+			if (indId === '') return;
+
+			// get score
+			const score = +d.score;
+			if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
 		});
 		return true;
 	}
