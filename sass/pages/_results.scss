@@ -36,6 +36,15 @@
 	right: 50px;
 
 	button { margin-left: 10px; }
+	img {
+		position: relative;
+		top: -2px;
+		width: 16px;
+		height: 16px;
+		margin-left: 5px;
+		margin-right: -5px;
+		@include opacity(0.75);
+	}
 }
 .results-table-content {
 	display: none;

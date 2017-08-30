@@ -299,12 +299,13 @@
 						const numCosted = App.getNumIndicatorsCosted(capacity);
 						d3.select('.block-link-subtitle.active')
 							.text(`${numCosted} of ${capacity.indicators.length}`);
-					} else {
-						// flash "costs saved!" text
-						const saveCostText = $(this).closest('.item-block').find('.item-save-cost-text');
-						saveCostText.show();
-						setTimeout(() => { saveCostText.fadeOut(800); }, 1000);
 					}
+
+					// flash "costs saved!" text
+					const saveCostText = $(this).closest('.item-block').find('.item-save-cost-text');
+					saveCostText.show();
+					setTimeout(() => { saveCostText.fadeOut(800); }, 1000);
+
 					App.updateAllCosts();
 				});
 			itemFooters.append('div')
