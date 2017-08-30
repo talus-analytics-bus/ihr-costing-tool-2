@@ -4,8 +4,8 @@
 
 		// populate country dropdown
 		const countryData = App.countryParams.slice(0);
-		countryData.unshift({ name: 'Choose country', abbreviation: '' });
 		Util.sortByKey(countryData, 'name');
+		countryData.unshift({ name: '--- choose a country ---', abbreviation: '' });
 		Util.populateSelect('.country-dropdown', countryData, {
 			nameKey: 'name',
 			valKey: 'abbreviation',

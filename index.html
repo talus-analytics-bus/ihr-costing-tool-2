@@ -12,6 +12,7 @@
 	<link href="css/tether.min.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-multiselect.css" rel="stylesheet">
+	<link href="css/datatables.min.css" rel="stylesheet">
 	<link href="css/nprogress.min.css" rel="stylesheet">
 	<link href="css/tooltipster.bundle.min.css" rel="stylesheet">
 	<link href="css/tooltipster-sideTip-shadow.css" rel="stylesheet">
@@ -116,10 +117,17 @@
 			<div class="home-header"><h1>Welcome to the IHR Costing Tool</h1></div>
 			<div class="home-image"></div>
 			<div class="home-body">
-			<p>The IHR Costing Tool provides cost estimates to support practical planning for sustainable capacity development to prevent, detect, and respond to public health threats, as defined by the International Health Regulations (IHR).</p>
-			<p>This tool provides a framework to calculate costs for implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost calculations developed using best practices for achieving the technical standards specified in the Joint External Evaluation Tool (JEE).</p>
+				<p>
+					The IHR Costing Tool provides cost estimates to support practical planning for sustainable capacity development to prevent, detect, and respond to public health threats, as defined by the International Health Regulations (IHR).
+				</p>
+				<p>
+					This tool provides a framework to calculate costs for implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost calculations developed using best practices for achieving the technical standards specified in the Joint External Evaluation Tool (JEE).
+				</p>
+				<p class="center margin-top-20">
+					<i>Note: This tool is designed to be used in Google Chrome or Mozilla Firefox.</i>
+				</p>
 			</div>
-			<div class="btn-col col-sm-12 center">
+			<div class="enter-button-container">
 				<button type="button" class="btn btn-primary enter-site">Enter</button>
 			</div>
 		</div>
@@ -160,29 +168,25 @@
 		<div class="overview-container container container-text">
 			<h1>Assessment Instructions</h1>
 			<div>
-				Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.
+				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
+				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.</p>
 			</div>
 			<div>
 			<h2>Upload Prior Session</h2>
 			<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
-			<p>1. Select a file from your computer using the button below. You will see “Upload Successful” once the file upload is complete.</p.>
+			<p>1. Select an IHR data file from your computer using the button below. You will see “Upload Successful” once the file upload is complete.</p.>
 			<p>2. Click “Continue to Scores” to review and enter additional scores, as needed</p.>
 			</div>
 				<div class="upload-button-container">
-				  <input id="prior-session" class="input-prior-session" type="file" onchange="App.processSessionFile()" />
+				  <input id="prior-session" class="input-prior-session" type="file" />
 				  <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
 				</div>
 			<div>
 				<h2>Upload Scores</h2>
 				<p>
-					Score upload requires the report format used by the JEE Technology Tool
+					Score upload requires the report format used by the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, an online source 
+					for completed JEE assessments.
 					<img class="jee-tool-img" src="img/question-mark.png" />
-					, an online 
-					source for completed JEE assessments.
-				</p>
-				<p>
-					The <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>
-					is a separate, open-access tool developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.
 				</p>
 				<p>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</p>
 				<p>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</p>
@@ -190,7 +194,7 @@
 				<div class="upload-button-container">
 					<a class="export-button-link" href="export/IHR Costing Tool - JEE Score Input Template.xlsx"><button type="button" class="btn btn-secondary">Download Blank Template</button></a>
 					<button type="button" class="btn btn-secondary btn-score-file">Select Score File</button>
-					<input id="score-file-upload" class="input-score-file" type="file" onchange="App.processScoreFile()" />
+					<input id="score-file-upload" class="input-score-file" type="file" />
 			</div>
 			<div>
 				<h2>Manual Score Entry</h2>
@@ -209,10 +213,12 @@
 			<div class="block-container input-block-container">
 				<div class="block">
 					<h1>Assessment</h1>
-					<div class="core-capacity-name"></div>
+					<div class="capacity-name-container">
+						<span class="capacity-name"></span>
+					</div>
 					<div class="score-instructions instructions">
 						<p>Choose a score for each indicator below based on the current JEE assessment capacity. Any previously uploaded scores are pre-populated for review.</p>
-						<p>Use arrows at the bottom of the page to move forward and backward between indicators. Use the left navigation bar to track progress entering JEE assessment scores and to quickly switch between core capacities.</p>
+						<p>Use arrows at the bottom of the page to move between indicators. Use the left navigation bar to track progress entering JEE assessment scores and to quickly switch between core capacities.</p>
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
@@ -255,37 +261,47 @@
 		<div class="costs-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
+				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.</p>
 				<p>Costs associated with implementing the International Health Regulations depend on the target score level a country wants to achieve as well as population size, geopolitical organization, and public health infrastructure. Note that no additional costs are calculated for indicators that have already achieved a score of 4 - Demonstrated Capacity.</p>
 			</div>
 			<div>
-			<h2>Process Overview</h2>
-				<p>Costing includes three major steps:</p>
-				<p>1. On this page, choose an approach below to set target scores. This determines what actions need to be costed to move from the current to target capacity level on each indicator.</p>
-				<p>2. Click “Start Costing” to advance to the next page and enter country-specific details and review and customize a list of cost assumptions used across cost calculations.</p>
-				<p>3. After entering these data, the tool provides estimated costs to reach the specified target score for each indicator. In the final step of costing, review and edit these costs before proceeding to the results.</p>
+				<h2>Process Overview</h2>
+				<p>
+					Costing includes three major steps:
+				</p>
+				<ol>
+					<li>On this page, choose an approach below to set target scores. This determines what actions need to be costed to move from the current to target capacity level on each indicator.</li>
+					<li>
+						Click “Start Costing” to advance to the next page and enter country-specific details and review and customize a list of cost assumptions used across cost calculations.
+					</li>
+					<li>
+						After entering these data, the tool provides estimated costs to reach the specif
+					ied target score for each indicator. In the final step of costing, review and edit these costs before proceeding to the results.
+					</li>
+				</ol>
+			</div>
+			<div>
 				<h2>Select Target Score</h2>
-				<p>Choose a method to set target scores.</p>
+				<p class="target-score-description">
+					Choose a method to set target scores.
+				</p>
 				<div class="target-score-section">
-					<div class="target-score-option" ind="step">
-						<input type="radio" checked />
-						<span>Set target score 1 point higher for each indicator</span>
-					</div>
 					<div class="target-score-option" ind="target">
-						<input type="radio" />
+						<input type="radio" checked />
 						<span>Set a target score of</span>
+						<div class="color-bar"></div>
 						<select class="target-score-select form-control">
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4" selected>4</option>
-							<option value="5">5</option>
 						</select>
 						<span>for each indicator</span>
 					</div>
+					<div class="target-score-option" ind="step">
+						<input type="radio" />
+						<span>Set target score 1 point higher for each indicator</span>
+					</div>
 				</div>
-			</div>
-			<div>
-			</div>
-			<div>
 			</div>
 			<div class="start-button-container">
 				<button type="button" class="btn btn-primary costs-instructions-start">Start Costing</button>
@@ -299,27 +315,7 @@
 			<!-- TODO add tabs (block links) -->
 			<div class="block-link-container block-link-costing"></div>
 			<div class="block-container input-block-container">
-				<div class="block currency-block no-reset">
-					<div class="block-title">
-						<span class="block-title-title"><h1>Select Your Country and Currency</h1></span>
-					</div>
-					<div class="country-control-box">
-						<div class="country-label country-currency-label">Default currency:</div>
-						<div class="currency">
-							<div class="currency-container dropdown">
-								<button class="btn btn-secondary dropdown-toggle" type="button" id="currencyMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									Choose currency
-								</button>
-								<div class="currency-container-dropdown scrollable-dropdown dropdown-menu" aria-labelledby="currencyMenu">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="next-button-container">
-						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
-					</div>
-				</div>
-
+			
 				<!--The population block -->
 				<div class="block population-block no-reset">
 					<div class="block-title">
@@ -365,8 +361,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Describes how the country is organized by geographic area groupings.
-							To edit the defaults, change the details below.
+							These inputs describe how the country is organized by geopolitical areas. Intermediate and local inputs are required and the second indermediate level is optional.
 						</div>
 						<table class="geo-division-table">
 							<tbody></tbody>
@@ -380,7 +375,7 @@
 						</div>
 						<div class="block-content">
 							<div class="block-description">
-								Default public health information describes the estimated number of public heathcare facilities and workers within the country.
+								Default public health information describes the estimated number of public heathcare facilities and workers within the country. These inputs are required.
 								To edit the defaults, change the details below.
 							</div>
 							<table class="ph-table">
@@ -399,7 +394,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							The assumed costs of frequently costed items are listed below. Review the default values for the costs and modify as needed.
+							Default cost values for frequently costed items are listed below. Review the default values for the costs and modify as needed.  Editing these defaults is optional.
 						</div>
 						<div class="dv-container"></div>
 					</div>
@@ -418,7 +413,10 @@
 			<div class="block-container input-block-container">
 				<div class="block">
 					<h1>Costing</h1>
-					<div class="core-capacity-name"></div>
+					<div class="capacity-name-container">
+						<span class="capacity-name"></span>
+						<img class="capacity-tooltip-img" src="img/question-mark.png" />
+					</div>
 					<div class="costing-instructions instructions">
 						For the following capacity, review the costs for each indicator. You may de-select or edit any costs. Open the description below for more details.
 					</div>
@@ -457,67 +455,140 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
-			<div class="results-button-container">
-				<button class="view-table-button btn btn-secondary">View Data Table</button>
-				<button class="export-data-button btn btn-secondary">Export Data</button>
-				<button class="export-session-button btn btn-secondary">Export Session</button>
+			<div class="results-empty-content">
+				No indicators have been completely scored and costed yet. Click <u>here</u> to go to the scoring page.
 			</div>
-			<div class="cost-type-section results-section">
-				<div class="cost-type-row">
-					<div class="btn-group">
-						<button class="btn btn-secondary active" value="total">Total Cost</button>
-						<button class="btn btn-secondary" value="startup">Startup Cost</button>
-						<button class="btn btn-secondary" value="capital">Capital Cost</button>
-						<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
-					</div>
+			<div class="results-content">
+				<div class="results-instructions">
+					<p>
+						Results below include <b><span class="num-costed-indicators"></span> of 48</b> total indicators with completed scoring and costing for <b><span class="num-costed-capacities"></span> of 19</b> capacities.
+					</p>
+					<p>
+						To view additional details for costing calculations, use the Export Detailed Report button to download a results spreadsheet. The detailed report can not  be uploaded back into the tool. To continue work at a later date, click the Download IHR Data File button to store the data file on your computer. Changes to score and cost inputs must be made by uploading the data file on the Assessment Instructions and Upload page and using the IHR Costing Tool website to edit (changes can not be made to the file before uploading). 
+					</p>
 				</div>
-				<div class="cost-duration-row">
-					<div class="btn-group">
-						<button class="btn btn-secondary active" value="1">1 yr</button>
-						<button class="btn btn-secondary" value="3">3 yr</button>
-						<button class="btn btn-secondary" value="5">5 yr</button>
-					</div>
+				<div class="results-button-container">
+					<button class="view-table-button btn btn-secondary">View Data Table</button>
+					<button class="export-data-button btn btn-secondary">
+						Export Detailed Report
+						<img src="img/question-mark.png" />
+					</button>
+					<button class="export-session-button btn btn-secondary">
+						Download IHR Data File
+						<img src="img/question-mark.png" />
+					</button>
 				</div>
-			</div>
-			<div class="score-improvement-section results-section">
-				<div class="results-section-title">Cost Summary</div>
-				<div>
-					<div class="summary-text-total">
-						<div class="total-cost-number-text">Total Cost</div>
-						<div class="total-cost-number"></div>
-					</div>
-					<div class="progress-chart-overall"></div>
-				</div>
-				<div class="summary-text-section"></div>
-			</div>
-			<div class="chart-section results-section">
-				<div class="chart-section-title results-section-title">Cost Breakdown</div>
-				<div class="cost-chart-filter-container">
-					<div class="cost-chart-filter-box">
-						<div class="cost-chart-filter-title">
-							Cost Chart Options
+				<div class="results-main-content">
+					<div class="score-improvement-section results-section">
+						<div class="results-section-title">Cost Summary</div>
+						<div class="cost-chart-instructions">
+							Total cost below summarizes costs associated with moving from the current capacity level score to the selected target score for all completed indicators, as shown on the colored bar. Total costs are broken out for core capacities grouped under Prevent, Detect, Respond, and Other IHR-related hazards and Points of Entry. Use the buttons to view by cost type or by 1, 3, or 5 year totals.
 						</div>
-						<div>
-							<div class="view-cost-by-box cost-chart-filter-section">
-								<div class="filter-label">View cost by:</div>
-								<div class="filter-row" value="capacity">
-									<input type="radio" checked />Capacity
+						<div class="cost-type-filter-container">
+							<div class="cost-type-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="total">Total Cost</button>
+									<button class="btn btn-secondary" value="startup">Startup Cost</button>
+									<button class="btn btn-secondary" value="capital">Capital Cost</button>
+									<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
 								</div>
-								<div class="filter-row" value="category">
-									<input type="radio" />Category
-								</div>
-								<!--<div class="filter-row" value="score">
-									<input type="radio" />Score
-								</div>-->
 							</div>
-							<div class="cost-chart-filter-section">
-								<div class="filter-label">Core Capacity</div>
-								<select class="cc-select form-control" multiple="multiple"></select>
+							<div class="cost-duration-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="1">1 yr</button>
+									<button class="btn btn-secondary" value="3">3 yr</button>
+									<button class="btn btn-secondary" value="5">5 yr</button>
+								</div>
 							</div>
 						</div>
+						<div class="score-improvement-content">
+							<div class="summary-text-total">
+								<div class="total-cost-number-text">Total Cost</div>
+								<div class="total-cost-number"></div>
+							</div>
+							<div class="progress-chart-overall"></div>
+						</div>
+						<div class="summary-text-section"></div>
+					</div>
+					<div class="chart-section results-section">
+						<div class="chart-section-title results-section-title">Costs by Core Capacity and Funtional Category</div>
+						<div class="cost-chart-instructions">
+							This graph shows costs either by JEE Assessment Tool indicator or function (e.g. operations/implementation). Costs are graphed by absolute cost on the vertical axis, and each circle is sized by the relative cost contribution of that indicator or function. Use the buttons to view by cost type or by 1, 3, or 5 year totals. Apply filters below the graph to a select a subset of Core Capacities, Indicators, or functions.
+						</div>
+						<div class="cost-type-filter-container">
+							<div class="cost-type-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="total">Total Cost</button>
+									<button class="btn btn-secondary" value="startup">Startup Cost</button>
+									<button class="btn btn-secondary" value="capital">Capital Cost</button>
+									<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
+								</div>
+							</div>
+							<div class="cost-duration-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="1">1 yr</button>
+									<button class="btn btn-secondary" value="3">3 yr</button>
+									<button class="btn btn-secondary" value="5">5 yr</button>
+								</div>
+							</div>
+						</div>
+						<div class="cost-chart-container"></div>
+						<div class="cost-chart-filter-container">
+							<div class="cost-chart-filter-box row">
+								<div class="view-cost-by-box col-3">
+									<div class="filter-label">View cost by:</div>
+									<div class="filter-row" value="capacity">
+										<input type="radio" checked />Capacity
+									</div>
+									<div class="filter-row" value="category">
+										<input type="radio" />Function
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">Core Element</div>
+									<select class="cc-select form-control" multiple="multiple"></select>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">Core Capacity</div>
+									<select class="capacity-select form-control" multiple="multiple"></select>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">Function</div>
+									<select class="category-select form-control" multiple="multiple"></select>
+								</div>
+							</div>
+							<div class="reset-button-container">
+								<button class="reset-button btn btn-secondary">Reset Chart</button>
+							</div>
+						</div>
+					</div>
+					<!--<div class="bubble-section results-section">
+						<div class="results-section-title">Cost Distribution</div>
+						<div class="bubble-chart"></div>
+					</div>-->
+				</div>
+				<div class="results-table-content">
+					<div class="table-tab-container">
+						<div class="btn-group">
+							<button class="btn btn-secondary" value="core">Core Elements</button>
+							<button class="btn btn-secondary active" value="capacity">Capacities</button>
+							<button class="btn btn-secondary" value="indicator">Indicators</button>
+							<button class="btn btn-secondary" value="action">Actions</button>
+						</div>
+					</div>
+					<div class="core-table-container table-container">
+						<table class="core-table table table-sm table-hover"></table>
+					</div>
+					<div class="capacity-table-container table-container">
+						<table class="capacity-table table table-sm table-hover"></table>
+					</div>
+					<div class="indicator-table-container table-container">
+						<table class="indicator-table table table-sm table-hover"></table>
+					</div>
+					<div class="action-table-container table-container">
+						<table class="action-table table table-sm table-hover"></table>
 					</div>
 				</div>
-				<div class="cost-chart-container"></div>
 			</div>
 		</div>
 	</script>
@@ -525,10 +596,31 @@
 	<!-- Background page template -->
 	<script id="background-template" type="text/x-handlebars-template">
 		<div class="background-container container container-text">
-			<h1>Background/Acknowledgements</h1>
+			<h1>Background</h1>
 			<div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dapibus nulla. Quisque eu risus commodo, efficitur eros vitae, tempor est. Curabitur eleifend luctus velit nec aliquet. Fusce sagittis quis urna eget semper. In cursus fringilla commodo. Donec facilisis sodales nunc, id interdum purus convallis vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla eget est ut metus molestie feugiat sed id nulla. Ut mollis sem vitae massa laoreet interdum.</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac dapibus nulla. Quisque eu risus commodo, efficitur eros vitae, tempor est. Curabitur eleifend luctus velit nec aliquet. Fusce sagittis quis urna eget semper. In cursus fringilla commodo. Donec facilisis sodales nunc, id interdum purus convallis vel. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla eget est ut metus molestie feugiat sed id nulla. Ut mollis sem vitae massa laoreet interdum.</p>
+				<h2>Acknowledgements</h2>
+				<p>We thank the entire research team at the Center for Global Health Science and Security for their research support in developing the IHR costing tool.  Initial research and tool development were supported by the U.S. Defense Threat Reduction Agency- Cooperative, Biological Engagement Program and the Department of State Biosecurity Engagement Program.  The conceptual framework was strengthened through collaboration with the World Health Organization and its technical partners. Current efforts were supported by Open Philanthropy Project and Georgetown University Medical Center. We are grateful to partners and colleagues for their feedback and support of this project, including:  the World Health Organization, the Centers for Disease Control and Prevention, the World Bank, McKinsey and Company, the GHSA Private Sector Roundtable, Tom Frieden, Peter Sands, Anas El Turabi, and Phil Saynisch. All remaining errors in the tool are our own.</p>
+			</div>
+			<div>
+				<h2>Project Overview</h2>
+				<p>
+					In 2016, the World Health Organization (WHO) adopted the Joint External Evaluation tool (JEE) to measure country-specific progress and help set goals in developing the capacities needed to prevent, detect, and respond to public health threats, as obligated under the International Health Regulations (IHR). This voluntary external evaluation, using standardized indicators, is intended to help countries identify and prioritize capacity-building needs. Targeting resources effectively to build and sustain capacities, however, requires stakeholders to develop plans that are actionable and contain sufficient costing information to support rational and sustainable implementation efforts.
+				</p>
+				<p>
+					Since the IHR entered into force in 2007, national stakeholders and their international partners have struggled to define the costs of strengthening and maintaining health security systems that cross levels and agencies and rely on multi-sectoral coordination for action. Without an assessment of the costs required to implement IHR, countries are unable to develop consistent budgets and plans upon which to build a case with domestic policymakers or external partners for appropriations, grants, or loans. We began with costing templates developed by our research team after a review of IHR implementation in 14 case study countries spanning multiple regions, refined by country feedback on user needs for IHR costing collected while supporting the World Health Organization in developing and pilot-testing an earlier conceptual framework for IHR costing in 6 countries. Since the JEE contains many more indicators than the previous IHR Core Capacity Monitoring Framework, the team reviewed published guidance from WHO, OIE, and other international authorities for specific requirements for capacity building and implementation that would address the new indicators. Finally, the team reviewed all of the published JEE evaluations to identify specific activities/capabilities that the assessment process had associated with the scores assigned in each indicator (i.e., what cumulative activities/capabilities were specifically identified as constituting a score of 2, 3, 4, or 5 for each specific indicator). Based on this approach, we have developed a publicly-available web-based costing tool to support countries in estimating the costs of fully implementing IHR core capacities to fulfill the objectives of the planning process launched by the JEE.
+				</p>
+				<p>
+					The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators.  Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.  Users can input JEE scores manually, or pull data directly from the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, developed by the Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.
+				</p>
+				<p>
+					Once the current JEE assessment scores are entered, users choose their target level of improvement (e.g., one step improved across all indicators; improvement to level 4 for all indicators). The user is then directed to costing pages for each JEE indicator, with options to select and modify as necessary. These costs include those for establishing the legal/policy foundation and infrastructure to support basic capacities, as well as the operating costs for personnel, training, processes, and consumables based on country-level datasets. The costs for each indicator include those required for start-up (e.g., cost of establishing legislation), capital (e.g., building construction, durable goods), and recurring costs (e.g., salaries). Once completed, the total cost requirements can be visualized by indicator; by category; by type of cost; and for the first, third, and fifth years following implementation. In addition, costs can be viewed for start up support for countries to understand the required IHR expenses and comparative cost results across core capacities and capacity levels (performance), including the option to download results in a spreadsheet format. Indicators for which costing tools have already been determined elsewhere, are linked and aligned to the degree possible to help prevent duplication or confusion.
+				</p>
+				<p>
+					The tool includes links for feedback (Contact Us).  We anticipate that once countries and other partners begin to use the tool, we will receive input regarding both indicators and usability.  We intend to make adaptations to the tool as feasible, to be responsive to country and partner needs.
+				</p>
+				<p>
+					By understanding IHR-associated costs, national leaders can better match resources to urgent priorities and plan for long-term sustainability of complex systems. This costing tool, in combination with the JEE and financing tools already available and currently in development, represent a significant step in helping national and international decision makers develop and implement practical plans to improve global health security.
+				</p>
 			</div>
 		</div>
 	</script>
@@ -538,7 +630,7 @@
 		<div class="contact-container container container-text">
 			<h1>Contact Us</h1>
 			<div class="contact-description">
-				Have questions? Feel free to email any questions or comments at
+				We welcome user questions and comments. Please submit feedback on the IHR Costing Tool by email at
 				<a href="mailto:ihrcosting@georgetown.edu" target="_blank">ihrcosting@georgetown.edu</a>.
 			</div>
 		</div>
@@ -592,6 +684,7 @@
 <script src="lib/datatables.min.js"></script>
 <script src="lib/jquery.noty.packaged.min.js"></script>
 <script src="lib/nprogress.min.js"></script>
+<script src="lib/datatables.min.js"></script>
 <script src="lib/cpexcel.js"></script>
 <script src="lib/jszip.js"></script>
 <script src="lib/xlsx.min.js"></script>

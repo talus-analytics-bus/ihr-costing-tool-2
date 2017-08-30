@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = true;
+	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -174,19 +174,23 @@ const App = {};
 				App.globalStaffMultipliers = globalStaffMultipliers;
 				App.whoAmI = {};
 
-				// default to US if in demo mode
 				if (App.demoMode) {
-					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
-					App.whoAmI = Object.assign({}, usObj);
-				}
+					// default to Kenya
+					d3.text('data/KE20170830-demo.ihr', (error, text) => {
+						const demoDataLoaded = App.loadSessionData(text);
+						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
+						App.updateAllCosts();
+						callback();
+					});
 
-				// add costs to each level of the jeeTree
-				App.updateAllCosts({
-					setInputsToSelected: true,
-				});
-				
-				// launch callback fcn in arguments
-				callback();
+					// default to Switzerland
+					/* App.whoAmI = App.countryParams.find(d => d.abbreviation === 'CH');
+					App.updateAllCosts();
+					callback(); */
+				} else {
+					App.updateAllCosts();
+					callback();
+				}
 			});
 	}
 
@@ -327,7 +331,7 @@ const App = {};
 	// get the actions that satisfy the user's target score
 	App.getNeededActions = (ind) => {
 		// if indicator is not scored, display all actions for the user to see
-		if (!ind.score) return ind.actions;
+		if (!ind.score) return [];
 
 		// find actions that match the target score
 		return ind.actions.filter((action) => {
@@ -389,7 +393,7 @@ const App = {};
 
 	/* ------------------ Cost Functions ------------------- */
 	// sets/updates the costs for all levels of the jeeTree
-	App.updateAllCosts = (param={}) => {
+	App.updateAllCosts = () => {
 		const exchangeRate = App.getExchangeRate();
 
 		// loop through each tier of the tree
@@ -408,8 +412,7 @@ const App = {};
 					ind.capitalCost = 0;
 					ind.recurringCost = 0;
 
-					const actions = App.getNeededActions(ind);
-					actions.forEach((a) => {
+					ind.actions.forEach((a) => {
 						a.startupCost = 0;
 						a.capitalCost = 0;
 						a.recurringCost = 0;
@@ -418,9 +421,6 @@ const App = {};
 							input.startupCost = 0;
 							input.capitalCost = 0;
 							input.recurringCost = 0;
-
-							// set inputs to user-selected (usually on init)
-							if (param.setInputsToSelected) input.selected = true;
 
 							input.line_items.forEach((li) => {
 								const costObj = App.globalBaseCosts.find((gbc) => {
@@ -465,7 +465,8 @@ const App = {};
 									input.recurringCost += li.cost;
 								}
 							});
-							if (input.selected) {
+
+							if (input.costed) {
 								if (input.isCustomCost) {
 									a.startupCost += input.customStartupCost;
 									a.recurringCost += input.customRecurringCost;
@@ -476,9 +477,12 @@ const App = {};
 								}
 							}
 						});
-						ind.startupCost += a.startupCost;
-						ind.capitalCost += a.capitalCost;
-						ind.recurringCost += a.recurringCost;
+
+						if (App.isActionComplete(a, ind.score)) {
+							ind.startupCost += a.startupCost;
+							ind.capitalCost += a.capitalCost;
+							ind.recurringCost += a.recurringCost;
+						}
 					});
 					cap.startupCost += ind.startupCost;
 					cap.capitalCost += ind.capitalCost;
@@ -510,11 +514,7 @@ const App = {};
 	// returns the number of indicators the user has fully costed
 	App.getNumIndicatorsCosted = (capacity) => {
 		return capacity.indicators
-			.filter((ind) => {
-				return App.getNeededActions(ind).every((action) => {
-					return App.getNeededInputs(action.inputs, ind.score).every(input => input.costed);
-				});
-			})
+			.filter(ind => App.isIndicatorComplete(ind))
 			.length;
 	}
 
@@ -529,6 +529,141 @@ const App = {};
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
 		return Util.strToFloat(input);
+	}
+
+
+	/* ------------------ Result Functions ------------------- */
+	// returns whether indicator has been both scored and costed
+	App.isIndicatorComplete = (ind) => {
+		if (!ind.score) return false;
+		return App.getNeededActions(ind).every((action) => {
+			return App.isActionComplete(action, ind.score);
+		});
+	}
+
+	// returns whether action has been costed
+	App.isActionComplete = (action, indScore) => {
+		if (!indScore) return false;
+		return App.getNeededInputs(action.inputs, indScore).every(input => input.costed);
+	}
+
+
+	/* ------------------ Import/Export Functions ------------------- */
+	// return 3 part json in string format to be exported into a text file
+	App.getSessionData = () => {
+		// create indicator score lookup and input cost lookup
+		const indScoreDict = {};
+		const inputCostDict = {};
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					indScoreDict[ind.id] = ind.score || 0;
+					ind.actions.forEach((a) => {
+						a.inputs.forEach((input) => {
+							const costObj = {
+								costed: input.costed,
+								isCustomCost: input.isCustomCost,
+							};
+							if (input.isCustomCost) {
+								costObj.customStartupCost = input.customStartupCost;
+								costObj.customRecurringCost = input.customRecurringCost;
+							}
+							inputCostDict[input.id] = costObj;
+						});
+					});
+				});
+			})
+		});
+
+		// get data to download
+		const whoAmIData = JSON.stringify(App.whoAmI);
+		const scoreData = JSON.stringify(indScoreDict);
+		const costData = JSON.stringify(inputCostDict)
+		return `${whoAmIData}\n${scoreData}\n${costData}`;
+	}
+
+	// loads 3 part json data and ingests into application
+	App.loadSessionData = (sessionData) => {
+		const dataArr = sessionData.split('\n');
+		
+		let indScoreDict, inputCostDict;
+		try {
+			App.whoAmI = JSON.parse(dataArr[0]);
+			indScoreDict = JSON.parse(dataArr[1]);
+			inputCostDict = JSON.parse(dataArr[2]);
+		} catch (e) {
+			return false;
+		}
+
+		// ingest scores and costs into App.jeeTree
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					if (indScoreDict[ind.id]) {
+						ind.score = indScoreDict[ind.id];
+					}
+
+					ind.actions.forEach((a) => {
+						a.inputs.forEach((input) => {
+							if (inputCostDict[input.id]) {
+								for (let key in inputCostDict[input.id]) {
+									input[key] = inputCostDict[input.id][key];
+								}
+							}
+						});
+					});
+				});
+			})
+		});
+		return true;
+	}
+
+	// loads Qlick score data
+	App.loadQlickScoreData = (scoreData) => {
+		let workbook;
+		try {
+			workbook = XLSX.read(scoreData, {type: 'binary'});
+		} catch (err) {
+			return false;
+		}
+
+		const firstSheetName = workbook.SheetNames[0];
+		const worksheet = workbook.Sheets[firstSheetName];
+
+		// edit column headers
+		worksheet['A1'].w = 'country_name';
+		worksheet['B1'].w = 'capacity_name';
+		worksheet['C1'].w = 'indicator_name';
+		worksheet['D1'].w = 'score';
+
+		// get the scores from the inputScores JSON and populate the
+		// session scores with them, for all the indicators that have scores
+		const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
+
+		// update scores
+		inputScores.forEach(function(d) {
+			// get indicator id
+			const indId = d.indicator_name.split(' ')[0].toLowerCase();
+			if (indId === '') return;
+
+			// get score
+			const score = +d.score;
+			if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
+		});
+		return true;
+	}
+
+
+	/* ------------------ Misc Functions ------------------- */
+	App.downloadText = (fileName, data) => {
+		const uri = `data:application/csv;charset=utf-8,${escape(data)}`;
+		const link = document.createElement('a');
+		link.href = uri;
+		link.style = 'visibility:hidden';
+		link.download = fileName + '.ihr';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	}
 
 

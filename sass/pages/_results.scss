@@ -2,18 +2,32 @@
 	position: relative;
 	font-family: 'Open Sans', sans-serif;
 }
-.results-section {
+.results-empty-content {
+	display: none;
 	border: $border;
-	padding: 20px 50px;
+	padding: 20px 30px;
+	background-color: #eee;
+	text-align: center;
+	font-weight: 600;
+	font-style: italic;
+	cursor: pointer;
+}
+.results-instructions {
+	margin-bottom: 30px;
+}
+.results-section {
+	margin-top: 25px;
+	border: $border;
+	padding: 20px 30px 30px;
 	text-align: center;
 	@include border-radius(10px);
-
-	&:nth-child(n+2) { margin-top: 20px; }
+	@include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 .results-section-title {
-	text-align: center;
-	font-size: 1.4rem;
-	margin-bottom: 25px;
+	margin-bottom: 20px;
+	font-size: 1.5em;
+	font-weight: 600;
+	text-align: left;
 }
 .results-button-container {
 	position: absolute;
@@ -21,33 +35,53 @@
 	right: 50px;
 
 	button { margin-left: 10px; }
+	img {
+		position: relative;
+		top: -2px;
+		width: 16px;
+		height: 16px;
+		margin-left: 5px;
+		margin-right: -5px;
+		@include opacity(0.75);
+	}
+}
+.results-table-content {
+	display: none;
 }
 
 
 /* --- Cost Type Section --- */
-.cost-type-section {
+.cost-type-filter-container {
+	font-size: 0.8em;
+	text-align: left;
+	button {
+		padding: 5px 15px;
+		@include noselect;
+	}
 }
 .cost-type-row {
-	button {
-		width: 180px;
-		@include noselect;
+	button:first-child {
+		width: 158px;
 	}
 }
 .cost-duration-row {
-	.btn-group {
-		position: relative;
-		left: -268px;
-	}
+	position: relative;
+	left: 1px;
+
 	button {
 		border-top: none;
-		@include noselect;
+		padding: 5px 12px;
 	}
 }
 
 
 /* --- Score Improvement Section --- */
+.score-improvement-content {
+	margin-top: 30px;
+}
 .summary-text-total {
 	float: left;
+	width: 220px;
 	margin-top: 1px;
 	margin-left: 20px;
 	text-align: center;
@@ -73,14 +107,39 @@
 
 	.summary-text-box {
 		display: inline-block;
+		position: relative;
 		vertical-align: top;
 		width: 220px;
+		margin: 0 5px;
 		padding: 5px 10px;
 		border: $light-border;
 		cursor: pointer;
-		@include gradient(#f0f0f0, #f9f9f9);
-
-		&:nth-child(n+2) { border-left: none; }
+		@include gradient(#ddd, #f0f0f0);
+	}
+	.summary-text-box-veil {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		&.green {
+			@include gradient(rgba($jeeGreen, 0.6), rgba($jeeGreen, 0.15));
+		}
+		&.yellow {
+			@include gradient(rgba($jeeYellow, 0.5), rgba($jeeYellow, 0.15));
+		}
+		&.red {
+			@include gradient(rgba($jeeRed, 0.6), rgba($jeeRed, 0.15));
+		}
+	}
+	.summary-text-box-content {
+		position: relative;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1000;
 	}
 	.big-number {
 		white-space: nowrap;
@@ -96,30 +155,21 @@
 
 /* --- Cost Chart --- */
 .chart-section-title {
-	margin-bottom: 0;
+	margin-bottom: 15px;
 }
-.cost-chart-filter-container {
-	float: left;
-	width: 300px;
+.cost-chart-container {
+	margin-top: 5px;
 	text-align: center;
 }
-.cost-chart-filter-box {
-	margin-top: 40px;
-	width: 250px;
-	border: $border;
-	padding: 10px 20px 20px;
+.cost-chart-instructions {
 	text-align: left;
-	@include gradient(#fff, #f0f0f0);
+	margin-bottom: 30px;
+	// max-width: 700px;
+}
+.cost-chart-filter-box {
+	padding: 20px;
+	text-align: left;
 
-	.cost-chart-filter-title {
-		text-align: center;
-		font-weight: 600;
-		font-size: 1.1rem;
-	}
-	.cost-chart-filter-section {
-		margin-top: 15px;
-		&:nth-child(n+2) { margin-top: 20px; }
-	}
 	.filter-label {
 		margin-bottom: 4px;
 		font-weight: 600;
@@ -136,9 +186,31 @@
 		}
 	}
 }
-.cost-chart-container {
-	margin-left: 300px;
+.reset-button-container {
+	margin-top: 10px;
 }
-.cost-chart {
-	.tick text { cursor: default; }
+
+
+/* --- Results Table --- */
+.results-table-content {
+	.table-tab-container {
+		margin-top: 30px;
+		text-align: center;
+	}
+	.table-container {
+		display: none;
+		margin-top: 30px;
+	}
+	.table {
+		width: 100%;
+
+		.cost {
+			text-align: right;
+			white-space: nowrap;
+		}
+		.total-row {
+			font-weight: 600;
+			td { border-top: 2px solid #ccc; }
+		}
+	}
 }

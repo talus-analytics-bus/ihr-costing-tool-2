@@ -8,99 +8,84 @@
 			content: 'The <b>JEE Technology Tool</b> is a separate, open-access tool developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.',
 		});
 
-		// Function to handle session file uploads
-		App.uploadSessionFile = () => {
+		/* ------------------ Uploading Session File --------------- */
+		// clicking "select file from previous session" triggers file selection
+		$('.btn-prior-session').on('click', () => { 
 			$('.input-prior-session').trigger('click');
-		};
-		$('.btn-prior-session').on('click', function() { 
-			App.uploadSessionFile();
 		});
 
-		// Function to process uploaded session files
-		App.processSessionFile = () => {
-			var x = document.getElementById("prior-session");
-			var txt = "";
-			if ('files' in x) {
-				if (x.files.length == 0) {
-					txt = "Select one or more files.";
-				} else {
-					for (var i = 0; i < x.files.length; i++) {
-						var file = x.files[i];
-						var reader = new FileReader();
-						var result = '';
-						reader.onload = function(e) {
-							var priorSession = JSON.parse(e.target.result);
-							// TODO read result and update session data accordingly
-							// TODO reject invalid files?
-							console.log(priorSession);
-						};
-						reader.readAsBinaryString(file);
+		// user selected a file to upload... read and ingest
+		$('.input-prior-session').on('change', function() {
+			if ('files' in this) {
+				if (!this.files.length) return;
+				const file = this.files[0];
+				if (file.name.slice(file.name.length - 4) !== '.ihr') {
+					noty({
+						timeout: 5000,
+						text: '<b>Please select a file with a file type extension of <i>.ihr</i>',
+					});
+					return;
+				}
+
+				// read and ingest
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					const success = App.loadSessionData(e.target.result);
+					if (success) {
+						noty({
+							timeout: 4000,
+							type: 'success',
+							text: '<b>Upload Successful!</b><br>Your previous session has been restored.',
+						});
+					} else {
+						noty({
+							timeout: 5000,
+							text: '<b>Error!</b><br>There was an error uploading your previous session.',
+						})
 					}
 				}
-			} 
-		};
-
-		// Function to handle score file uploads
-		App.uploadScoreFile = () => {
-			$('.input-score-file').trigger('click');
-		};
-		$('.btn-score-file').on('click', function() { 
-			App.uploadScoreFile();
+				reader.readAsBinaryString(file);
+			}
 		});
 
-		// Function to process uploaded score files
-		App.processScoreFile = () => {
-			var x = document.getElementById("score-file-upload");
-			var txt = "";
-			if ('files' in x) {
-				if (x.files.length == 0) {
-					txt = "Select one or more files.";
-				} else {
-		            var files = x.files;
-		            f = files[0];
-		            var reader = new FileReader();
-		            var name = f.name;
-		            reader.onload = function(e) {
-		            	var data = e.target.result;
-		            	var workbook;
-		            	try {
-		            		workbook = XLSX.read(data, {type: 'binary'});
-		            	} catch (err) {
-		            		// TODO show red error toast:
-		            		// Please select a file with a file type extension of .xlsx
-		            	}
-		            	var first_sheet_name = workbook.SheetNames[0];
+		/* ------------------ Uploading Qlick Score File --------------- */
+		// clicking "select score file" triggers file selection
+		$('.btn-score-file').on('click', () => {
+			$('.input-score-file').trigger('click');
+		});
 
-		            	var worksheet = workbook.Sheets[first_sheet_name];
+		// user selected a file to upload... read and ingest
+		$('.input-score-file').on('change', function() {
+			if ('files' in this) {
+				if (!this.files.length) return;
+				const file = this.files[0];
+				if (file.name.slice(file.name.length - 4) !== '.xlsx') {
+					noty({
+						timeout: 5000,
+						text: '<b>Please select a file with a file type extension of <i>.xlsx</i>',
+					});
+					return;
+				}
 
-		            	// edit column headers
-		            	worksheet['A1'].w = 'country_name';
-		            	worksheet['B1'].w = 'capacity_name';
-		            	worksheet['C1'].w = 'indicator_name';
-		            	worksheet['D1'].w = 'score';
-
-		            	const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
-
-						// get the scores from the inputScores JSON and populate the
-						// session scores with them, for all the indicators that have scores
-
-						// Update scores
-						inputScores.forEach(function(d) {
-							// get indicator id
-							const indId = d.indicator_name.split(' ')[0].toLowerCase();
-							if (indId === "") return;
-
-							// get score
-							const score = parseInt(d.score);
-
-							// set score
-							if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
+				// read and ingest
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					const success = App.loadQlickScoreData(e.target.result);
+					if (success) {
+						noty({
+							timeout: 4000,
+							type: 'success',
+							text: '<b>Upload Successful!</b><br>Score data has been uploaded.',
 						});
-
-						};
-						reader.readAsBinaryString(f);
+					} else {
+						noty({
+							timeout: 5000,
+							text: '<b>Error!</b><br>There was an error uploading the score data. Please check the file format.',
+						})
 					}
-				} 
-			};
-		}
-	})();
+				}
+				reader.readAsBinaryString(file);
+			}
+		});
+	}
+})();

@@ -1,38 +1,21 @@
-.home-veil {
-	background-color: rgba(255,255,255,0.9);
-	margin: 80px 0 20px;
-	padding: 30px 0 30px;
-}
-.about-text-container {
-	display: inline-block;
-	width: 700px;
-}
-.about-text {
-	font-size: 1.1em;
-	text-align: left;
-}
-.home-start-button {
-	font-size: 1.1em;
-	margin-top: 20px;
-}
-
 .home-header {
 	-webkit-box-pack: start;
 	-ms-flex-pack: start;
 	justify-content: flex-start;
-
-}
-
-.home-body {
-	margin-top: 30px;
-	margin-bottom: 5px;
 }
 .home-image {
 	margin-top: 10px;
 	height: 200px;
 	width: 100%;
 	background: url("../img/foc.d648643d.jpg");
-
+	background-attachment: fixed;
 	background-size: cover;
 	background-position: 0 48%;
+}
+.home-body {
+	margin-top: 30px;
+}
+.enter-button-container {
+	margin-top: 10px;
+	text-align: center;
 }

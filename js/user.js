@@ -2,8 +2,8 @@ const User = {};
 
 (() => {
 	// set user defaults
-	User.targetScoreType = 'step';  // either "target" or "step"
-	User.targetScore = null;
+	User.targetScoreType = 'target';  // either "target" or "step"
+	User.targetScore = 4;
 
 
 	// sets the score in the user data for the indicator specified

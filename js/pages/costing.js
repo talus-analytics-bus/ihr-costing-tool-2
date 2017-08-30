@@ -26,6 +26,14 @@
 		function buildCapacityDescription() {
 			$('.capacity-description-container').html(Routing.templates['capacity-description']());
 			App.buildCapacityDescription(capId);
+
+			// hard-code tooltip for "Immunization"
+			if (capacity.name === 'Immunization') {
+				$('.capacity-tooltip-img').show().tooltipster({
+					interactive: true,
+					content: 'An alternative method to estimate vaccination costs is available using the <a href="http://www.avenirhealth.org/software-onehealth.php" target="_blank">OneHealth Tool</a>',
+				});
+			}
 		}
 
 		// build the indicator tabs
@@ -83,6 +91,18 @@
 			// get the indicator that the user is on
 			const indSlotContainer = indSlotContainers.filter(d => d.id === indId);
 
+			// if indicator doesn't have a score, provide link for user to score
+			if (!indicator.score) {
+				indSlotContainer.append('div')
+					.attr('class', 'no-score-container')
+					.html('This indicator has not been <b>scored</b> yet. Click <u>here</u> to enter a score.')
+					.on('click', () => {
+						hasher.setHash(`scores/${capClass}/${indClass}`);
+					});
+				$('.action-description-container').hide();
+				return;
+			}
+
 			// if no actions (bc score is 4 or 5), display text saying so
 			if (!actions.length) {
 				let noActionText = 'There are no actions needed to increase the current score for this indicator';
@@ -94,6 +114,7 @@
 				indSlotContainer.append('div')
 					.attr('class', 'no-actions-container')
 					.html(noActionText);
+				$('.action-description-container').hide();
 				return;
 			}
 
@@ -213,7 +234,10 @@
 			startupContainer.append('div').text('Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
-				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
+				.attr('value', (d) => {
+					const cost = d.isCustomCost ? d.customStartupCost : d.startupCost + d.capitalCost;
+					return Util.comma(cost);
+				})
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;
@@ -233,7 +257,10 @@
 			recurringContainer.append('div').text('Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
-				.attr('value', d => Util.comma(d.recurringCost))
+				.attr('value', (d) => {
+					const cost = d.isCustomCost ? d.customRecurringCost : d.recurringCost;
+					return Util.comma(cost);
+				})
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;
@@ -272,12 +299,13 @@
 						const numCosted = App.getNumIndicatorsCosted(capacity);
 						d3.select('.block-link-subtitle.active')
 							.text(`${numCosted} of ${capacity.indicators.length}`);
-					} else {
-						// flash "costs saved!" text
-						const saveCostText = $(this).closest('.item-block').find('.item-save-cost-text');
-						saveCostText.show();
-						setTimeout(() => { saveCostText.fadeOut(800); }, 1000);
 					}
+
+					// flash "costs saved!" text
+					const saveCostText = $(this).closest('.item-block').find('.item-save-cost-text');
+					saveCostText.show();
+					setTimeout(() => { saveCostText.fadeOut(800); }, 1000);
+
 					App.updateAllCosts();
 				});
 			itemFooters.append('div')

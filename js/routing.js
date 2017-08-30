@@ -97,7 +97,7 @@ const Routing = {};
 
 	function loadPage(pageName, func, ...data) {
 		// user must have set country before proceeding to costing
-		if (pageName !== '' && !App.whoAmI.name) {
+		if (pageName !== 'home' && pageName !== 'country' && !App.whoAmI.abbreviation) {
 			hasher.setHash('country');
 			noty({ text: '<b>Select a country before proceeding!</b>' });
 			return;
