@@ -351,6 +351,7 @@
 						contentStr += `<b>${d.name}:</b> ${d.description}`;
 						contentStr += `</div>`;
 						$(this).tooltipster({
+							interactive: true,
 							trigger: 'click',
 							content: contentStr,
 						});
