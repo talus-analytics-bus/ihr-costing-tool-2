@@ -480,9 +480,8 @@
 
 		/* --------------------------- Export Section ---------------------------*/
 		$('.export-session-button').on('click', () => {
-			$.post('/export', (data) => {
-				console.log(data);
-			});
+			// get data to download
+			App.downloadText('test', 'Hi my name is Jefferson.');
 		});
 	}
 })();
