@@ -53,6 +53,14 @@ const App = {};
 				if (App.demoMode) {
 					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
 					App.whoAmI = Object.assign({}, usObj);
+					App.whoAmI.intermediate_1_area_name = 'Province';
+					App.whoAmI.intermediate_2_area_name = 'County';
+					App.whoAmI.local_area_name = 'Constituency';
+					App.whoAmI.multipliers.central_chw_count = 135000;
+					App.whoAmI.multipliers.central_hospitals_count = 600;
+					App.whoAmI.multipliers.intermediate_1_area_count = 8;
+					App.whoAmI.multipliers.intermediate_2_area_count = 49;
+					App.whoAmI.multipliers.local_area_count = 290;
 				}
 
 				// add costs to each level of the jeeTree
