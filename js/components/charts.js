@@ -160,7 +160,7 @@ const Charts = {};
 			.ticks(6)
 			.tickSizeInner(-width)
 			.tickFormat((num) => {
-				return (num === 0) ? '0' : d3.format(',.3s')(num);
+				return (num === 0) ? '0' : App.siFormat(num);
 			});
 
 		// add axes
