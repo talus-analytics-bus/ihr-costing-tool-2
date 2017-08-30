@@ -4,6 +4,7 @@
 		let costChartCategory = 'capacity';
 		let costType = 'total';
 		let totalCostDuration = 1;
+		let selectedCapIds = [];
 
 
 		/* ---------------------- Data Wrangling ----------------------*/
@@ -126,10 +127,7 @@
 			}
 
 			// apply filters to indicators
-			const ccIds = $('.cc-select').val();
-			indData = indData.filter(ind => ccIds.includes(ind.ccId));
-
-			return indData;
+			return indData.filter(ind => selectedCapIds.includes(ind.capId));
 		}
 
 		function getChartCategoryFunc() {
@@ -343,63 +341,86 @@
 			selected: true,
 		});
 		Util.populateSelect('.capacity-select', allCapacities, {
-			nameKey: 'name',
+			nameKey: d => `${d.id.toUpperCase()} - ${d.name}`,
 			valKey: 'id',
 			selected: true,
 		});
 		Util.populateSelect('.category-select', [1, 2, 3], {
 			selected: true,
 		});
-		$('.cc-select, .capacity-select, .category-select').multiselect({
+
+		// initialize multiselect and deal with onchange behavior for each dropdown
+		$('.cc-select').multiselect({
 			includeSelectAllOption: true,
 			numberDisplayed: 1,
 			buttonClass: 'btn btn-secondary',
 			onChange: (option, checked) => {
-				/*const capNamesSelected = App.jeeTree
-					.find(cc => cc.name === option.val()).capacities
-					.map(cap => cap.name);
+				const capIds = App.jeeTree
+					.find(cc => cc.id === option.val()).capacities
+					.map(cap => cap.id);
 				if (checked) {
 					// user added a core capacity:
 					// go through each capacity under the core capacity and add to list
-					capNamesSelected.forEach((capName) => {
-						if (!chosenCapNames.includes(capName)) chosenCapNames.push(capName);
+					capIds.forEach((capId) => {
+						if (!selectedCapIds.includes(capId)) selectedCapIds.push(capId);
 					});
 				} else {
 					// user removed a core capacity:
 					// go through list and remove all capacities under that core capacity
-					chosenCapNames = chosenCapNames
-						.filter(capName => !capNamesSelected.includes(capName));
+					selectedCapIds = selectedCapIds
+						.filter(capId => !capIds.includes(capId));
 				}
-				updateDropdowns();*/
+				updateDropdowns();
+				updateCostChart();
+			},
+			onSelectAll: () => {
+				selectedCapIds = allCapacities.map(cap => cap.id);
+				updateDropdowns();
+				updateCostChart();
+			},
+			onDeselectAll: () => {
+				selectedCapIds = [];
+				updateDropdowns();
 				updateCostChart();
 			},
 		});
 
-
-
-		/*$('.capacity-select').multiselect({
+		$('.capacity-select').multiselect({
 			includeSelectAllOption: true,
 			numberDisplayed: 0,
+			buttonClass: 'btn btn-secondary',
 			onChange: (option, checked) => {
-				const capName = option.val();
+				const capId = option.val();
 				if (checked) {
 					// user added a capacity:
-					if (!chosenCapNames.includes(capName)) chosenCapNames.push(capName);
+					if (!selectedCapIds.includes(capId)) selectedCapIds.push(capId);
 				} else {
 					// user removed a capacity:
-					chosenCapNames = chosenCapNames.filter(cn => cn !== capName);
+					selectedCapIds = selectedCapIds.filter(ci => ci !== capId);
 				}
 				updateDropdowns();
-				updateExplorer();
+				updateCostChart();
+			},
+			onSelectAll: () => {
+				selectedCapIds = allCapacities.map(cap => cap.id);
+				updateDropdowns();
+				updateCostChart();
+			},
+			onDeselectAll: () => {
+				selectedCapIds = [];
+				updateDropdowns();
+				updateCostChart();
 			},
 		});
+
 		$('.category-select').multiselect({
 			includeSelectAllOption: true,
-			numberDisplayed: 1,
+			numberDisplayed: 0,
+			buttonClass: 'btn btn-secondary',
 			onChange: (option, checked) => {
 				// TODO
 				updateDropdowns();
-				updateExplorer();
+				updateCostChart();
 			},
 		});
 
@@ -408,14 +429,16 @@
 			const chosenCcs = [];
 			const unchosenCcs = [];
 			App.jeeTree.forEach((cc) => {
-				const ccCapNames = cc.capacities.map(cap => cap.name);
-				for (let i = 0; i < chosenCapNames.length; i++) {
-					if (ccCapNames.includes(chosenCapNames[i])) {
-						chosenCcs.push(cc.name);
+				let hasSelectedCap = false;
+				const ccCapIds = cc.capacities.map(cap => cap.id);
+				for (let i = 0; i < selectedCapIds.length; i++) {
+					if (ccCapIds.includes(selectedCapIds[i])) {
+						hasSelectedCap = true;
+						chosenCcs.push(cc.id);
 						break;
 					}
-					if (i === chosenCapNames.length - 1) unchosenCcs.push(cc.name);
 				}
+				if (!hasSelectedCap) unchosenCcs.push(cc.id);
 			});
 			$('.cc-select')
 				.multiselect('select', chosenCcs, false)
@@ -423,15 +446,15 @@
 
 			// update capacity dropdown
 			const unchosenCapNames = allCapacities
-				.filter(cap => !chosenCapNames.includes(cap.name))
-				.map(cap => cap.name);
+				.filter(cap => !selectedCapIds.includes(cap.id))
+				.map(cap => cap.id);
 			$('.capacity-select')
-				.multiselect('select', chosenCapNames, false)
+				.multiselect('select', selectedCapIds, false)
 				.multiselect('deselect', unchosenCapNames, false);
 		}
 
-		updateDropdowns();*/
-
+		selectedCapIds = allCapacities.map(cap => cap.id);
+		updateDropdowns();
 		updateResults();
 
 
