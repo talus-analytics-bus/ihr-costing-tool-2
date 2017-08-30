@@ -26,6 +26,7 @@
 		const allCores = [];
 		const allCapacities = [];
 		const allIndicators = [];
+		const allActions = [];
 
 		const indicatorsByTag = [];
 		const tagCostDict = {};
@@ -50,6 +51,8 @@
 						indCopy.costByTag = {};
 						const actions = App.getNeededActions(indCopy);
 						actions.forEach((a) => {
+							allActions.push(Object.assign({}, a));
+
 							const inputs = App.getNeededInputs(a.inputs, indCopy.score);
 							inputs.forEach((input) => {
 								// get function tag distribution by looking at line item costs
@@ -217,7 +220,7 @@
 			const $this = $(this);
 			$this.toggleClass('active');
 			const isActive = $this.hasClass('active');
-			$this.text(isActive ? 'View Charts' : 'View Table');
+			$this.text(isActive ? 'View Charts' : 'View Data Table');
 			$('.results-main-content, .results-table-content').slideToggle();
 		});
 
@@ -432,13 +435,22 @@
 
 
 		/* ---------------------- Building Table Section ----------------------*/
+		// behavior for switching between tree levels
+		$('.table-tab-container button').on('click', function() {
+			$(this).addClass('active')
+				.siblings().removeClass('active');
+			const level = $(this).val();
+			$('.table-container').slideUp();
+			$(`.${level}-table-container`).slideDown();
+		});
+
 		// establish table schema
 		const tableSchema = [
 			{
-				name: 'Capacity ID',
+				name: '[level] ID',
 				getValue: d => d.id.toUpperCase(),
 			}, {
-				name: 'Capacity Name',
+				name: '[level] Name',
 				getValue: d => d.name,
 			}, {
 				name: 'Startup Cost',
@@ -456,48 +468,67 @@
 				format: App.moneyFormatLong,
 				getValue: d => d.recurringCost,
 			}, {
-				name: 'Total Cost',
+				name: '1-Year Cost',
 				className: 'cost',
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost + d.capitalCost + d.recurringCost,
+			}, {
+				name: '3-Year Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost + d.capitalCost + 3 * d.recurringCost,
+			}, {
+				name: '5-Year Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost + d.capitalCost + 5 * d.recurringCost,
 			}
 		];
  
 
 		// build the table
-		const table = d3.select('.results-table');
-		table.append('thead').append('tr').selectAll('th')
-			.data(tableSchema)
-			.enter().append('th')
-				.attr('class', d => d.className || '')
-				.text(d => d.name);
-		const tbody = table.append('tbody');
-		const rows = tbody.selectAll('tr')
-			.data(allCapacities)
-			.enter().append('tr');
-		rows.selectAll('td')
-			.data(d => tableSchema.map(t => ({ rowData: d, colData: t })))
-			.enter().append('td')
-				.attr('class', d => d.colData.className || '')
-				.text((d) => {
-					const format = d.colData.format || (v => v);
-					return format(d.colData.getValue(d.rowData));
-				});
+		function buildTable(selector, data, levelName) {
+			const table = d3.select(selector);
+			table.append('thead').append('tr').selectAll('th')
+				.data(tableSchema)
+				.enter().append('th')
+					.attr('class', d => d.className || '')
+					.text(d => d.name.replace('[level]', levelName));
+			const tbody = table.append('tbody');
+			const rows = tbody.selectAll('tr')
+				.data(data)
+				.enter().append('tr');
+			rows.selectAll('td')
+				.data(d => tableSchema.map(t => ({ rowData: d, colData: t })))
+				.enter().append('td')
+					.attr('class', d => d.colData.className || '')
+					.text((d) => {
+						const format = d.colData.format || (v => v);
+						return format(d.colData.getValue(d.rowData));
+					});
 
-		// add total row
-		const totalRow = tbody.append('tr').attr('class', 'total-row');
-		totalRow.selectAll('td')
-			.data(tableSchema)
-			.enter().append('td')
-				.text((d) => {
-					if (d.className === 'cost') {
-						return App.moneyFormatLong(d3.sum(allCapacities, d.getValue));
-					}
-					return '';
-				});
+			// add total row
+			const totalRow = tbody.append('tr').attr('class', 'total-row');
+			totalRow.selectAll('td')
+				.data(tableSchema)
+				.enter().append('td')
+					.attr('class', 'cost')
+					.text((d) => {
+						if (d.className === 'cost') {
+							return App.moneyFormatLong(d3.sum(data, d.getValue));
+						}
+						return '';
+					});
+		}
 
+		buildTable('.core-table', allCores, 'Core Element');
+		buildTable('.capacity-table', allCapacities, 'Capacity');
+		buildTable('.indicator-table', allIndicators, 'Indicator');
+		buildTable('.action-table', allActions, 'Action');
 
 		//$('.results-table').dataTable();
+
+		$('.capacity-table-container').show();
 
 
 		/* --------------------------- Export Section ---------------------------*/

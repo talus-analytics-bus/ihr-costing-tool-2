@@ -8,6 +8,7 @@
 	padding: 20px 30px;
 	background-color: #eee;
 	text-align: center;
+	font-weight: 600;
 	font-style: italic;
 	cursor: pointer;
 }
@@ -183,12 +184,25 @@
 
 
 /* --- Results Table --- */
-.results-table {
-	width: 100%;
-	.cost { text-align: right; }
-	.total-row {
-		font-weight: 600;
-		text-align: right;
-		td { border-top: 2px solid #ccc; }
+.results-table-content {
+	.table-tab-container {
+		margin-top: 30px;
+		text-align: center;
+	}
+	.table-container {
+		display: none;
+		margin-top: 30px;
+	}
+	.table {
+		width: 100%;
+
+		.cost {
+			text-align: right;
+			white-space: nowrap;
+		}
+		.total-row {
+			font-weight: 600;
+			td { border-top: 2px solid #ccc; }
+		}
 	}
 }
