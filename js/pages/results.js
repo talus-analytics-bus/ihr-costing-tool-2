@@ -218,8 +218,8 @@
 		/* ---------------------- Switching to Table Section ----------------------*/
 		$('.view-table-button').on('click', function() {
 			const $this = $(this);
-			$this.toggleClass('active');
-			const isActive = $this.hasClass('active');
+			$this.toggleClass('table-view');
+			const isActive = $this.hasClass('table-view');
 			$this.text(isActive ? 'View Charts' : 'View Data Table');
 			$('.results-main-content, .results-table-content').slideToggle();
 		});
@@ -273,19 +273,31 @@
 		const stb = d3.select('.summary-text-section').selectAll('.summary-text-box')
 			.data(App.jeeTree)
 			.enter().append('div')
-				.attr('class', 'summary-text-box');
+				.attr('class', 'summary-text-box')
+				.each(function(d) {
+					if (!allCores.find(core => core.name === d.name)) {
+						$(this).tooltipster({
+							interactive: true,
+							content: 'There are no scored/costed indicators for this core element.' + 
+								` Click <span onclick="hasher.setHash('scores/${d.id}-1/1')">here</span>` +
+								' to go to the scoring page for this core element.',
+						});
+					}
+				});
 		stb.append('div')
 			.attr('class', (d) => {
-				let indicators = [];
-				d.capacities.forEach((cap) => {
-					indicators = indicators.concat(cap.indicators);
-				});
-				const currScore = App.getAverageCurrentScore(indicators);
-
-				let color = 'green';
-				if (currScore < 2) color = 'red';
-				else if (currScore < 4) color = 'yellow';
-				return `summary-text-box-veil ${color}`;
+				if (allCores.find(core => core.name === d.name)) {
+					let indicators = [];
+					d.capacities.forEach((cap) => {
+						indicators = indicators.concat(cap.indicators);
+					});
+					const currScore = App.getAverageCurrentScore(indicators);
+					let color = 'green';
+					if (currScore < 2) color = 'red';
+					else if (currScore < 4) color = 'yellow';
+					return `summary-text-box-veil ${color}`;
+				}
+				return 'summary-text-box-veil';
 			});
 		const stbContent = stb.append('div')
 			.attr('class', 'summary-text-box-content');
@@ -304,8 +316,13 @@
 			animateText('.total-cost-number', totalCost);
 
 			// update core capacity costs
-			d3.selectAll('.summary-text-box .big-number').each(function animate(d) {
-				animateText(this, getCost(d));
+			d3.selectAll('.summary-text-box .big-number').each(function populate(d) {
+				// check if core capacity has a scored indicator
+				if (allCores.find(core => core.name === d.name)) {
+					animateText(this, getCost(d));
+				} else {
+					d3.select(this).text('-');
+				}
 			});
 		}
 
@@ -532,23 +549,31 @@
 
 
 		/* --------------------------- Export Section ---------------------------*/
-		$('.export-data-button').on('click', () => {
+		$('.export-data-button')
+			.tooltipster({
+				content: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
+			})
+			.on('click', () => {
 
-		});
-		$('.export-session-button').on('click', () => {
-			const sessionData = App.getSessionData();
+			});
+		$('.export-session-button')
+			.tooltipster({
+				content: 'The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.',
+			})
+			.on('click', () => {
+				const sessionData = App.getSessionData();
 
-			// set file name
-			const today = new Date();
-			const year = today.getFullYear();
-			let month = String(today.getMonth() + 1);
-			if (month.length === 1) month = `0${month}`;
-			let day = String(today.getDate());
-			if (day.length === 1) day = `0${day}`;
-			const yyyymmdd = `${year}${month}${day}`;
-			const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
+				// set file name
+				const today = new Date();
+				const year = today.getFullYear();
+				let month = String(today.getMonth() + 1);
+				if (month.length === 1) month = `0${month}`;
+				let day = String(today.getDate());
+				if (day.length === 1) day = `0${day}`;
+				const yyyymmdd = `${year}${month}${day}`;
+				const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
 
-			App.downloadText(fileName, sessionData);
-		});
+				App.downloadText(fileName, sessionData);
+			});
 	}
 })();

@@ -16,7 +16,7 @@ const Charts = {};
 		const rectHeight = param.rectHeight || height / 2;
 
 		const x = d3.scaleLinear()
-			.domain([0, 5])
+			.domain([1, 5])
 			.range([0, width]);
 
 		// add glow definitions to svg
@@ -45,9 +45,9 @@ const Charts = {};
 
 		// draw rectangles
 		const rectData = [
-			{ x0: 0, x1: 1, color: 'rgb(200, 33, 39)' },
-			{ x0: 1, x1: 3, color: 'rgb(247, 236, 19)' },
-			{ x0: 3, x1: 5, color: 'rgb(21, 108, 55)' }
+			{ x0: 1, x1: 2, color: 'rgb(200, 33, 39)' },
+			{ x0: 2, x1: 4, color: 'rgb(247, 236, 19)' },
+			{ x0: 4, x1: 5, color: 'rgb(21, 108, 55)' }
 		];
 		chart.selectAll('.color-bar')
 			.data(rectData)
@@ -68,9 +68,9 @@ const Charts = {};
 		// add bars
 		chart.append('rect')
 			.attr('class', 'bar bar-0')
-			.attr('x', x(0))
+			.attr('x', x(1))
 			.attr('y', (height - rectHeight) / 2)
-			.attr('width', x(data[0]) - x(0))
+			.attr('width', x(data[0]) - x(1))
 			.attr('height', rectHeight);
 		chart.append('rect')
 			.attr('class', 'bar bar-1')

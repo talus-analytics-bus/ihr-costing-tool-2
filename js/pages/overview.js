@@ -34,7 +34,7 @@
 						noty({
 							timeout: 4000,
 							type: 'success',
-							text: '<b>Upload Success!</b><br>Your previous session has been restored.',
+							text: '<b>Upload Successful!</b><br>Your previous session has been restored.',
 						});
 					} else {
 						noty({
