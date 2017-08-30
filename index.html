@@ -177,8 +177,9 @@
 			<p>2. Click “Continue to Scores” to review and enter additional scores, as needed</p.>
 			</div>
 				<div class="upload-button-container">
-					<button type="button" class="btn btn-secondary">Select File from Prior Session</button>
-			</div>
+				  <input id="prior-session" class="input-prior-session" type="file" />
+				  <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
+				</div>
 			<div>
 				<h2>Upload Scores</h2>
 				<p>
@@ -462,8 +463,14 @@
 				</div>
 				<div class="results-button-container">
 					<button class="view-table-button btn btn-secondary">View Data Table</button>
-					<button class="export-data-button btn btn-secondary">Export Detailed Report</button>
-					<button class="export-session-button btn btn-secondary">Download IHR Data File</button>
+					<button class="export-data-button btn btn-secondary">
+						Export Detailed Report
+						<img src="img/question-mark.png" />
+					</button>
+					<button class="export-session-button btn btn-secondary">
+						Download IHR Data File
+						<img src="img/question-mark.png" />
+					</button>
 				</div>
 				<div class="results-main-content">
 					<div class="score-improvement-section results-section">
@@ -552,7 +559,26 @@
 					</div>-->
 				</div>
 				<div class="results-table-content">
-					<table class="results-table table table-sm table-hover"></table>
+					<div class="table-tab-container">
+						<div class="btn-group">
+							<button class="btn btn-secondary" value="core">Core Elements</button>
+							<button class="btn btn-secondary active" value="capacity">Capacities</button>
+							<button class="btn btn-secondary" value="indicator">Indicators</button>
+							<button class="btn btn-secondary" value="action">Actions</button>
+						</div>
+					</div>
+					<div class="core-table-container table-container">
+						<table class="core-table table table-sm table-hover"></table>
+					</div>
+					<div class="capacity-table-container table-container">
+						<table class="capacity-table table table-sm table-hover"></table>
+					</div>
+					<div class="indicator-table-container table-container">
+						<table class="indicator-table table table-sm table-hover"></table>
+					</div>
+					<div class="action-table-container table-container">
+						<table class="action-table table table-sm table-hover"></table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -650,6 +676,9 @@
 <script src="lib/jquery.noty.packaged.min.js"></script>
 <script src="lib/nprogress.min.js"></script>
 <script src="lib/datatables.min.js"></script>
+<script src="lib/cpexcel.js"></script>
+<script src="lib/jszip.js"></script>
+<script src="lib/xlsx.min.js"></script>
 <!--<script src="build/lib.min.js"></script>-->
 
 <!-- Project Specific Files -->

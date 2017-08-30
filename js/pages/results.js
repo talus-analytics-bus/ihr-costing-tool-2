@@ -26,6 +26,7 @@
 		const allCores = [];
 		const allCapacities = [];
 		const allIndicators = [];
+		const allActions = [];
 
 		const indicatorsByTag = [];
 		const tagCostDict = {};
@@ -50,6 +51,8 @@
 						indCopy.costByTag = {};
 						const actions = App.getNeededActions(indCopy);
 						actions.forEach((a) => {
+							allActions.push(Object.assign({}, a));
+
 							const inputs = App.getNeededInputs(a.inputs, indCopy.score);
 							inputs.forEach((input) => {
 								// get function tag distribution by looking at line item costs
@@ -190,7 +193,7 @@
 			if (costChartCategory === 'capacity') {
 				xLabel = 'Capacity';
 			} else if (costChartCategory === 'category') {
-				xLabel = 'CDC Function';
+				xLabel = 'Function';
 			}
 			costChart.updateXAxisLabel(xLabel);
 		}
@@ -215,9 +218,9 @@
 		/* ---------------------- Switching to Table Section ----------------------*/
 		$('.view-table-button').on('click', function() {
 			const $this = $(this);
-			$this.toggleClass('active');
-			const isActive = $this.hasClass('active');
-			$this.text(isActive ? 'View Charts' : 'View Table');
+			$this.toggleClass('table-view');
+			const isActive = $this.hasClass('table-view');
+			$this.text(isActive ? 'View Charts' : 'View Data Table');
 			$('.results-main-content, .results-table-content').slideToggle();
 		});
 
@@ -270,19 +273,31 @@
 		const stb = d3.select('.summary-text-section').selectAll('.summary-text-box')
 			.data(App.jeeTree)
 			.enter().append('div')
-				.attr('class', 'summary-text-box');
+				.attr('class', 'summary-text-box')
+				.each(function(d) {
+					if (!allCores.find(core => core.name === d.name)) {
+						$(this).tooltipster({
+							interactive: true,
+							content: 'There are no scored/costed indicators for this core element.' + 
+								` Click <span onclick="hasher.setHash('scores/${d.id}-1/1')">here</span>` +
+								' to go to the scoring page for this core element.',
+						});
+					}
+				});
 		stb.append('div')
 			.attr('class', (d) => {
-				let indicators = [];
-				d.capacities.forEach((cap) => {
-					indicators = indicators.concat(cap.indicators);
-				});
-				const currScore = App.getAverageCurrentScore(indicators);
-
-				let color = 'green';
-				if (currScore < 2) color = 'red';
-				else if (currScore < 4) color = 'yellow';
-				return `summary-text-box-veil ${color}`;
+				if (allCores.find(core => core.name === d.name)) {
+					let indicators = [];
+					d.capacities.forEach((cap) => {
+						indicators = indicators.concat(cap.indicators);
+					});
+					const currScore = App.getAverageCurrentScore(indicators);
+					let color = 'green';
+					if (currScore < 2) color = 'red';
+					else if (currScore < 4) color = 'yellow';
+					return `summary-text-box-veil ${color}`;
+				}
+				return 'summary-text-box-veil';
 			});
 		const stbContent = stb.append('div')
 			.attr('class', 'summary-text-box-content');
@@ -301,8 +316,13 @@
 			animateText('.total-cost-number', totalCost);
 
 			// update core capacity costs
-			d3.selectAll('.summary-text-box .big-number').each(function animate(d) {
-				animateText(this, getCost(d));
+			d3.selectAll('.summary-text-box .big-number').each(function populate(d) {
+				// check if core capacity has a scored indicator
+				if (allCores.find(core => core.name === d.name)) {
+					animateText(this, getCost(d));
+				} else {
+					d3.select(this).text('-');
+				}
 			});
 		}
 
@@ -432,13 +452,22 @@
 
 
 		/* ---------------------- Building Table Section ----------------------*/
+		// behavior for switching between tree levels
+		$('.table-tab-container button').on('click', function() {
+			$(this).addClass('active')
+				.siblings().removeClass('active');
+			const level = $(this).val();
+			$('.table-container').slideUp();
+			$(`.${level}-table-container`).slideDown();
+		});
+
 		// establish table schema
 		const tableSchema = [
 			{
-				name: 'Capacity ID',
+				name: '[level] ID',
 				getValue: d => d.id.toUpperCase(),
 			}, {
-				name: 'Capacity Name',
+				name: '[level] Name',
 				getValue: d => d.name,
 			}, {
 				name: 'Startup Cost',
@@ -456,95 +485,95 @@
 				format: App.moneyFormatLong,
 				getValue: d => d.recurringCost,
 			}, {
-				name: 'Total Cost',
+				name: '1-Year Cost',
 				className: 'cost',
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost + d.capitalCost + d.recurringCost,
+			}, {
+				name: '3-Year Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost + d.capitalCost + 3 * d.recurringCost,
+			}, {
+				name: '5-Year Cost',
+				className: 'cost',
+				format: App.moneyFormatLong,
+				getValue: d => d.startupCost + d.capitalCost + 5 * d.recurringCost,
 			}
 		];
  
 
 		// build the table
-		const table = d3.select('.results-table');
-		table.append('thead').append('tr').selectAll('th')
-			.data(tableSchema)
-			.enter().append('th')
-				.attr('class', d => d.className || '')
-				.text(d => d.name);
-		const tbody = table.append('tbody');
-		const rows = tbody.selectAll('tr')
-			.data(allCapacities)
-			.enter().append('tr');
-		rows.selectAll('td')
-			.data(d => tableSchema.map(t => ({ rowData: d, colData: t })))
-			.enter().append('td')
-				.attr('class', d => d.colData.className || '')
-				.text((d) => {
-					const format = d.colData.format || (v => v);
-					return format(d.colData.getValue(d.rowData));
-				});
+		function buildTable(selector, data, levelName) {
+			const table = d3.select(selector);
+			table.append('thead').append('tr').selectAll('th')
+				.data(tableSchema)
+				.enter().append('th')
+					.attr('class', d => d.className || '')
+					.text(d => d.name.replace('[level]', levelName));
+			const tbody = table.append('tbody');
+			const rows = tbody.selectAll('tr')
+				.data(data)
+				.enter().append('tr');
+			rows.selectAll('td')
+				.data(d => tableSchema.map(t => ({ rowData: d, colData: t })))
+				.enter().append('td')
+					.attr('class', d => d.colData.className || '')
+					.text((d) => {
+						const format = d.colData.format || (v => v);
+						return format(d.colData.getValue(d.rowData));
+					});
 
-		// add total row
-		const totalRow = tbody.append('tr').attr('class', 'total-row');
-		totalRow.selectAll('td')
-			.data(tableSchema)
-			.enter().append('td')
-				.text((d) => {
-					if (d.className === 'cost') {
-						return App.moneyFormatLong(d3.sum(allCapacities, d.getValue));
-					}
-					return '';
-				});
+			// add total row
+			const totalRow = tbody.append('tr').attr('class', 'total-row');
+			totalRow.selectAll('td')
+				.data(tableSchema)
+				.enter().append('td')
+					.attr('class', 'cost')
+					.text((d) => {
+						if (d.className === 'cost') {
+							return App.moneyFormatLong(d3.sum(data, d.getValue));
+						}
+						return '';
+					});
+		}
 
+		buildTable('.core-table', allCores, 'Core Element');
+		buildTable('.capacity-table', allCapacities, 'Capacity');
+		buildTable('.indicator-table', allIndicators, 'Indicator');
+		buildTable('.action-table', allActions, 'Action');
 
 		//$('.results-table').dataTable();
 
+		$('.capacity-table-container').show();
+
 
 		/* --------------------------- Export Section ---------------------------*/
-		$('.export-data-button').on('click', () => {
+		$('.export-data-button')
+			.tooltipster({
+				content: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
+			})
+			.on('click', () => {
 
-		});
-		$('.export-session-button').on('click', () => {
-			// create indicator score lookup and input cost lookup
-			const indScoreDict = {};
-			const inputCostDict = {};
-			App.jeeTree.forEach((cc) => {
-				cc.capacities.forEach((cap) => {
-					cap.indicators.forEach((ind) => {
-						indScoreDict[ind.id] = ind.score || 0;
-						ind.actions.forEach((a) => {
-							a.inputs.forEach((input) => {
-								const costObj = {
-									costed: input.costed,
-									isCustomCost: input.isCustomCost,
-								};
-								if (input.isCustomCost) {
-									costObj.customStartupCost = input.customStartupCost;
-									costObj.customRecurringCost = input.customRecurringCost;
-								}
-							});
-						});
-					});
-				})
 			});
+		$('.export-session-button')
+			.tooltipster({
+				content: 'The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.',
+			})
+			.on('click', () => {
+				const sessionData = App.getSessionData();
 
-			// get data to download
-			const whoAmIData = JSON.stringify(App.whoAmI);
-			const scoreData = JSON.stringify(indScoreDict);
-			const costData = JSON.stringify(inputCostDict)
-			const data = `${whoAmIData}\n\n${scoreData}\n\n${costData}`;
+				// set file name
+				const today = new Date();
+				const year = today.getFullYear();
+				let month = String(today.getMonth() + 1);
+				if (month.length === 1) month = `0${month}`;
+				let day = String(today.getDate());
+				if (day.length === 1) day = `0${day}`;
+				const yyyymmdd = `${year}${month}${day}`;
+				const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
 
-			// set file name
-			const today = new Date();
-			const year = today.getFullYear();
-			let month = String(today.getMonth() + 1);
-			if (month.length === 1) month = `0${month}`;
-			let day = String(today.getDate());
-			if (day.length === 1) day = `0${day}`;
-			const yyyymmdd = `${year}${month}${day}`;
-			const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
-
-			App.downloadText(fileName, data);
-		});
+				App.downloadText(fileName, sessionData);
+			});
 	}
 })();
