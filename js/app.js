@@ -51,7 +51,7 @@ const App = {};
 
 				// default to US if in demo mode
 				if (App.demoMode) {
-					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
+					const usObj = App.countryParams.find(d => d.abbreviation === 'KE');
 					App.whoAmI = Object.assign({}, usObj);
 				}
 
