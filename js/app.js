@@ -361,7 +361,12 @@ const App = {};
 									if (multiplierObj) li.cost *= multiplierObj.count;
 								}
 								if (li.country_multiplier && App.whoAmI.name) {
-									const multiplier = App.whoAmI.multipliers[li.country_multiplier];
+									let multiplier = 1;
+									if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
+										multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+									} else {
+										multiplier = App.whoAmI.multipliers[li.country_multiplier];
+									}
 									if (multiplier) li.cost *= multiplier;
 								}
 								if (li.custom_multiplier_1) {
