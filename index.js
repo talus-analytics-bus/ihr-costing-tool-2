@@ -3,7 +3,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var path = require('path');
 var axios = require('axios');
-var xlsx = require('xlsx');
+const XlsxPopulate = require('xlsx-populate'); // read/write xlsx files
 
 // Routing
 // if no hash, send to index
@@ -12,13 +12,21 @@ app.get('/', function(req, res) {
 });
 
 // test XLSX package
-app.get('/xlsx', function(req, res) {
-	console.log("Hello SX!")
-	const test = xlsx.utils.book_new();
-	const written = xlsx.writeFile(test, 'out.xlsx');
-	console.log(test)
+app.get('/xlsxWrite', function(req, res) {
+	// Load line item export template XLS
+	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Line Item Export.xlsx")
+	    .then(workbook => {
+	        // add the user data to the template
+	        // TODO
+         	workbook.sheet("Costs").cell("Q2").value("100");
 
-	// res.sendFile(path.join(__dirname, '/', 'index.html'));
+			workbook.outputAsync()
+				.then(function (blob) {
+					res.attachment('IHR Costing Tool - Line Item Export.xlsx');
+					res.end(blob);
+				});
+	    });
+
 });
 
 // if hash, send to requested resource
