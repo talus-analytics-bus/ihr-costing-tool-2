@@ -49,27 +49,22 @@ const App = {};
 				App.globalStaffMultipliers = globalStaffMultipliers;
 				App.whoAmI = {};
 
-				// default to Switzerland if in demo mode
 				if (App.demoMode) {
-					const usObj = App.countryParams.find(d => d.abbreviation === 'CH');
-					App.whoAmI = Object.assign({}, usObj);
-					App.whoAmI.intermediate_1_area_name = 'Province';
-					App.whoAmI.intermediate_2_area_name = 'County';
-					App.whoAmI.local_area_name = 'Constituency';
-					App.whoAmI.multipliers.central_chw_count = 135000;
-					App.whoAmI.multipliers.central_hospitals_count = 600;
-					App.whoAmI.multipliers.intermediate_1_area_count = 8;
-					App.whoAmI.multipliers.intermediate_2_area_count = 49;
-					App.whoAmI.multipliers.local_area_count = 290;
-				}
+					// default to Kenya
+					d3.text('data/KE20170830-demo.ihr', (error, text) => {
+						App.loadSessionData(text);
+						App.updateAllCosts();
+						callback();
+					});
 
-				// add costs to each level of the jeeTree
-				App.updateAllCosts({
-					setInputsToSelected: true,
-				});
-				
-				// launch callback fcn in arguments
-				callback();
+					// default to Switzerland
+					/* App.whoAmI = App.countryParams.find(d => d.abbreviation === 'CH');
+					App.updateAllCosts();
+					callback(); */
+				} else {
+					App.updateAllCosts();
+					callback();
+				}
 			});
 	}
 
@@ -272,7 +267,7 @@ const App = {};
 
 	/* ------------------ Cost Functions ------------------- */
 	// sets/updates the costs for all levels of the jeeTree
-	App.updateAllCosts = (param={}) => {
+	App.updateAllCosts = () => {
 		const exchangeRate = App.getExchangeRate();
 
 		// loop through each tier of the tree
