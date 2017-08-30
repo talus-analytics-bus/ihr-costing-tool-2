@@ -83,6 +83,17 @@
 			// get the indicator that the user is on
 			const indSlotContainer = indSlotContainers.filter(d => d.id === indId);
 
+			// if indicator doesn't have a score, provide link for user to score
+			if (!indicator.score) {
+				indSlotContainer.append('div')
+					.attr('class', 'no-score-container')
+					.html('This indicator has not been <b>scored</b> yet. Click <u>here</u> to enter a score.')
+					.on('click', () => {
+						hasher.setHash(`scores/${capClass}/${indClass}`);
+					});
+				return;
+			}
+
 			// if no actions (bc score is 4 or 5), display text saying so
 			if (!actions.length) {
 				let noActionText = 'There are no actions needed to increase the current score for this indicator';
@@ -213,7 +224,10 @@
 			startupContainer.append('div').text('Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
-				.attr('value', d => Util.comma(d.startupCost + d.capitalCost))
+				.attr('value', (d) => {
+					const cost = d.isCustomCost ? d.customStartupCost : d.startupCost + d.capitalCost;
+					return Util.comma(cost);
+				})
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;
@@ -233,7 +247,10 @@
 			recurringContainer.append('div').text('Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
-				.attr('value', d => Util.comma(d.recurringCost))
+				.attr('value', (d) => {
+					const cost = d.isCustomCost ? d.customRecurringCost : d.recurringCost;
+					return Util.comma(cost);
+				})
 				.style('color', d => d.costed ? 'black' : '#999')
 				.on('change', function(d) {
 					d.isCustomCost = true;

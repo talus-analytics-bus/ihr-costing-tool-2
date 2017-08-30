@@ -20,18 +20,27 @@
 
 
 		/* ---------------------- Data Wrangling ----------------------*/
+		const allCores = App.getNonEmptyCoreCapacities();
+		if (!allCores.length) {
+			$('.results-content').hide();
+			$('.results-empty-content')
+				.on('click', () => hasher.setHash('scores/p-1/1'))
+				.show();
+			return;
+		}
+
 		const allCapacities = [];
 		const allIndicators = [];
 		const indicatorsByTag = [];
-		App.jeeTree.forEach((cc) => {
-			cc.capacities.forEach((cap) => {
+		allCores.forEach((cc) => {
+			App.getNonEmptyCapacities(cc).forEach((cap) => {
 				allCapacities.push(cap);
 				cap.indicators.forEach((ind) => {
-					const indCopy = Object.assign({}, ind);
-					indCopy.ccId = cc.id;
-					indCopy.capId = cap.id;
+					if (App.isIndicatorComplete(ind)) {
+						const indCopy = Object.assign({}, ind);
+						indCopy.ccId = cc.id;
+						indCopy.capId = cap.id;
 
-					if (indCopy.score) {
 						allIndicators.push(indCopy);
 
 						indCopy.costByTag = {};
@@ -170,6 +179,11 @@
 		}
 
 
+		/* ---------------------- Instructions Section ----------------------*/
+		$('.num-costed-indicators').text(allIndicators.length);
+		$('.num-costed-capacities').text(allCapacities.length);
+
+
 		/* ---------------------- Cost Type Section ----------------------*/
 		$('.cost-type-row button').on('click', function onClick() {
 			costType = $(this).attr('value');
@@ -179,6 +193,7 @@
 			if (costType === 'total') $('.cost-duration-row').slideDown();
 			else $('.cost-duration-row').slideUp();
 
+			updateSummaryCosts();
 			updateCostChartYAxis();
 			costChart.update(null, null, getCostFunc());
 		});
@@ -188,6 +203,7 @@
 			$(`.cost-duration-row button[value="${totalCostDuration}"]`).addClass('active')
 				.siblings().removeClass('active');
 
+			updateSummaryCosts();
 			updateCostChartYAxis();
 			costChart.update(null, null, getCostFunc());
 		});
@@ -369,5 +385,13 @@
 		updateDropdowns();*/
 
 		updateResults();
+
+
+		/* --------------------------- Export Section ---------------------------*/
+		$('.export-session-button').on('click', () => {
+			$.post('/export', (data) => {
+				console.log(data);
+			});
+		});
 	}
 })();

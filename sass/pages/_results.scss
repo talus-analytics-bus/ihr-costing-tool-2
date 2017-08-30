@@ -2,6 +2,15 @@
 	position: relative;
 	font-family: 'Open Sans', sans-serif;
 }
+.results-empty-content {
+	display: none;
+	border: $border;
+	padding: 20px 30px;
+	background-color: #eee;
+	text-align: center;
+	font-style: italic;
+	cursor: pointer;
+}
 .results-section {
 	border: $border;
 	padding: 20px 30px 30px;

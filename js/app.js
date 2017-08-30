@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = true;
+	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -202,7 +202,7 @@ const App = {};
 	// get the actions that satisfy the user's target score
 	App.getNeededActions = (ind) => {
 		// if indicator is not scored, display all actions for the user to see
-		if (!ind.score) return ind.actions;
+		if (!ind.score) return [];
 
 		// find actions that match the target score
 		return ind.actions.filter((action) => {
@@ -283,8 +283,7 @@ const App = {};
 					ind.capitalCost = 0;
 					ind.recurringCost = 0;
 
-					const actions = App.getNeededActions(ind);
-					actions.forEach((a) => {
+					ind.actions.forEach((a) => {
 						a.startupCost = 0;
 						a.capitalCost = 0;
 						a.recurringCost = 0;
@@ -293,9 +292,6 @@ const App = {};
 							input.startupCost = 0;
 							input.capitalCost = 0;
 							input.recurringCost = 0;
-
-							// set inputs to user-selected (usually on init)
-							if (param.setInputsToSelected) input.selected = true;
 
 							input.line_items.forEach((li) => {
 								const costObj = App.globalBaseCosts.find((gbc) => {
@@ -340,7 +336,8 @@ const App = {};
 									input.recurringCost += li.cost;
 								}
 							});
-							if (input.selected) {
+
+							if (input.costed) {
 								if (input.isCustomCost) {
 									a.startupCost += input.customStartupCost;
 									a.recurringCost += input.customRecurringCost;
@@ -351,9 +348,12 @@ const App = {};
 								}
 							}
 						});
-						ind.startupCost += a.startupCost;
-						ind.capitalCost += a.capitalCost;
-						ind.recurringCost += a.recurringCost;
+
+						if (App.isActionComplete(a, ind.score)) {
+							ind.startupCost += a.startupCost;
+							ind.capitalCost += a.capitalCost;
+							ind.recurringCost += a.recurringCost;
+						}
 					});
 					cap.startupCost += ind.startupCost;
 					cap.capitalCost += ind.capitalCost;
@@ -385,11 +385,7 @@ const App = {};
 	// returns the number of indicators the user has fully costed
 	App.getNumIndicatorsCosted = (capacity) => {
 		return capacity.indicators
-			.filter((ind) => {
-				return App.getNeededActions(ind).every((action) => {
-					return App.getNeededInputs(action.inputs, ind.score).every(input => input.costed);
-				});
-			})
+			.filter(ind => App.isIndicatorComplete(ind))
 			.length;
 	}
 
@@ -404,6 +400,49 @@ const App = {};
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
 		return Util.strToFloat(input);
+	}
+
+
+	/* ------------------ Result Functions ------------------- */
+	// gets core capacities that have at least one complete indicator
+	App.getNonEmptyCoreCapacities = () => {
+		const ccs = [];
+		App.jeeTree.forEach((cc) => {
+			if (cc.capacities.some((cap) => {
+				return cap.indicators.some(ind => App.isIndicatorComplete(ind));
+			})) {
+				ccs.push(cc);
+			}
+		});
+		return ccs;
+	}
+
+	// gets capacities that have at least one complete indicator
+	App.getNonEmptyCapacities = (cc) => {
+		const capacities = [];
+		cc.capacities.forEach((cap) => {
+			if (cap.indicators.some(ind => App.isIndicatorComplete(ind))) {
+				capacities.push(cap);
+			}
+		});
+		return capacities;
+	}
+
+	// returns whether indicator has been both scored and costed
+	App.isIndicatorComplete = (ind) => {
+		if (ind.score) {
+			const allCosted = App.getNeededActions(ind).every((action) => {
+				return App.getNeededInputs(action.inputs, ind.score).every(input => input.costed);
+			});
+			if (allCosted) return true;
+		}
+		return false;
+	}
+
+	// returns whether action has been costed
+	App.isActionComplete = (action, indScore) => {
+		if (!indScore) return false;
+		return App.getNeededInputs(action.inputs, indScore).every(input => input.costed);
 	}
 
 

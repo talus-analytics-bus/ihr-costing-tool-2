@@ -75,7 +75,6 @@
 				.enter().append('tr')
 					.attr('class', 'score-row')
 					.on('click', function(d) {
-						console.log('2');
 						const currRow = d3.select(this);
 						const wasChecked = currRow.select('input').property('checked');
 						const newScore = wasChecked ? undefined : d;

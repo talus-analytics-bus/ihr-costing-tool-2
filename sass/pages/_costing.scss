@@ -24,6 +24,7 @@
 	b { width: 80px; }
 	div { margin-left: 2px; }
 }
+.no-score-container,
 .no-actions-container {
 	padding: 20px 50px;
 	background-color: #ccc;
@@ -32,6 +33,9 @@
 	border-right: $border;
 	font-style: italic;
 	text-align: center;
+}
+.no-score-container {
+	cursor: pointer;
 }
 .go-to-results-button {
 	margin-top: 10px;

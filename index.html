@@ -446,91 +446,96 @@
 	<script id="results-template" type="text/x-handlebars-template">
 		<div class="results-container container">
 			<h1>Results</h1>
-			<div class="results-instructions">
-				A total of [number of costed indicators] of 48 total indicators have been scored and costed for [number of core capabilities with at leaste one costed indicator] of 19 capacities. These data are included in the results page below. To view full results, please return to [link] to complete assessment and costing for remaining indicators.
+			<div class="results-empty-content">
+				No indicators have been completely scored and costed yet. Click <u>here</u> to go to the scoring page.
 			</div>
-			<div class="results-button-container">
-				<button class="view-table-button btn btn-secondary">View Data Table</button>
-				<button class="export-data-button btn btn-secondary">Export Data</button>
-				<button class="export-session-button btn btn-secondary">Export Session</button>
-			</div>
-			<div class="score-improvement-section results-section">
-				<div class="results-section-title">Cost Overview</div>
-				<div class="cost-type-filter-container">
-					<div class="cost-type-row">
-						<div class="btn-group">
-							<button class="btn btn-secondary active" value="total">Total Cost</button>
-							<button class="btn btn-secondary" value="startup">Startup Cost</button>
-							<button class="btn btn-secondary" value="capital">Capital Cost</button>
-							<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
-						</div>
-					</div>
-					<div class="cost-duration-row">
-						<div class="btn-group">
-							<button class="btn btn-secondary active" value="1">1 yr</button>
-							<button class="btn btn-secondary" value="3">3 yr</button>
-							<button class="btn btn-secondary" value="5">5 yr</button>
-						</div>
-					</div>
+			<div class="results-content">
+				<div class="results-instructions">
+					A total of <b><span class="num-costed-indicators"></span> of 48</b> total indicators have been scored and costed for <b><span class="num-costed-capacities"></span> of 19</b> capacities. These data are included in the results page below.
 				</div>
-				<div class="score-improvement-content">
-					<div class="summary-text-total">
-						<div class="total-cost-number-text">Total Cost</div>
-						<div class="total-cost-number"></div>
-					</div>
-					<div class="progress-chart-overall"></div>
+				<div class="results-button-container">
+					<button class="view-table-button btn btn-secondary">View Data Table</button>
+					<button class="export-data-button btn btn-secondary">Export Data</button>
+					<button class="export-session-button btn btn-secondary">Export Session</button>
 				</div>
-				<div class="summary-text-section"></div>
-			</div>
-			<div class="chart-section results-section">
-				<div class="chart-section-title results-section-title">Cost Information</div>
-				<div class="cost-chart-instructions">
-					Lorem ipsum dolor sit amet, nam unum facilisis cotidieque an. Ius ne dicant pertinax, no has modus falli. Mei probo similique dissentiet ut, ad perfecto forensibus instructior vim. Eu ius sale dicat delenit. An eam quando dicant, pro in brute etiam.
-				</div>
-				<div class="cost-type-filter-container">
-					<div class="cost-type-row">
-						<div class="btn-group">
-							<button class="btn btn-secondary active" value="total">Total Cost</button>
-							<button class="btn btn-secondary" value="startup">Startup Cost</button>
-							<button class="btn btn-secondary" value="capital">Capital Cost</button>
-							<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
-						</div>
-					</div>
-					<div class="cost-duration-row">
-						<div class="btn-group">
-							<button class="btn btn-secondary active" value="1">1 yr</button>
-							<button class="btn btn-secondary" value="3">3 yr</button>
-							<button class="btn btn-secondary" value="5">5 yr</button>
-						</div>
-					</div>
-				</div>
-				<div class="cost-chart-container"></div>
-				<div class="cost-chart-filter-container">
-					<div class="cost-chart-filter-box row">
-						<div class="view-cost-by-box col-3">
-							<div class="filter-label">View cost by:</div>
-							<div class="filter-row" value="capacity">
-								<input type="radio" checked />Capacity
-							</div>
-							<div class="filter-row" value="category">
-								<input type="radio" />CDC Function
+				<div class="score-improvement-section results-section">
+					<div class="results-section-title">Cost Overview</div>
+					<div class="cost-type-filter-container">
+						<div class="cost-type-row">
+							<div class="btn-group">
+								<button class="btn btn-secondary active" value="total">Total Cost</button>
+								<button class="btn btn-secondary" value="startup">Startup Cost</button>
+								<button class="btn btn-secondary" value="capital">Capital Cost</button>
+								<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
 							</div>
 						</div>
-						<div class="col-3">
-							<div class="filter-label">Core Capacity</div>
-							<select class="cc-select form-control" multiple="multiple"></select>
-						</div>
-						<div class="col-3">
-							<div class="filter-label">Capacity</div>
-							<select class="capacity-select form-control" multiple="multiple"></select>
-						</div>
-						<div class="col-3">
-							<div class="filter-label">CDC Function</div>
-							<select class="category-select form-control" multiple="multiple"></select>
+						<div class="cost-duration-row">
+							<div class="btn-group">
+								<button class="btn btn-secondary active" value="1">1 yr</button>
+								<button class="btn btn-secondary" value="3">3 yr</button>
+								<button class="btn btn-secondary" value="5">5 yr</button>
+							</div>
 						</div>
 					</div>
-					<div class="reset-button-container">
-						<button class="reset-button btn btn-secondary">Reset Chart</button>
+					<div class="score-improvement-content">
+						<div class="summary-text-total">
+							<div class="total-cost-number-text">Total Cost</div>
+							<div class="total-cost-number"></div>
+						</div>
+						<div class="progress-chart-overall"></div>
+					</div>
+					<div class="summary-text-section"></div>
+				</div>
+				<div class="chart-section results-section">
+					<div class="chart-section-title results-section-title">Cost Information</div>
+					<div class="cost-chart-instructions">
+						Lorem ipsum dolor sit amet, nam unum facilisis cotidieque an. Ius ne dicant pertinax, no has modus falli. Mei probo similique dissentiet ut, ad perfecto forensibus instructior vim. Eu ius sale dicat delenit. An eam quando dicant, pro in brute etiam.
+					</div>
+					<div class="cost-type-filter-container">
+						<div class="cost-type-row">
+							<div class="btn-group">
+								<button class="btn btn-secondary active" value="total">Total Cost</button>
+								<button class="btn btn-secondary" value="startup">Startup Cost</button>
+								<button class="btn btn-secondary" value="capital">Capital Cost</button>
+								<button class="btn btn-secondary" value="recurring">Recurring Cost</button>
+							</div>
+						</div>
+						<div class="cost-duration-row">
+							<div class="btn-group">
+								<button class="btn btn-secondary active" value="1">1 yr</button>
+								<button class="btn btn-secondary" value="3">3 yr</button>
+								<button class="btn btn-secondary" value="5">5 yr</button>
+							</div>
+						</div>
+					</div>
+					<div class="cost-chart-container"></div>
+					<div class="cost-chart-filter-container">
+						<div class="cost-chart-filter-box row">
+							<div class="view-cost-by-box col-3">
+								<div class="filter-label">View cost by:</div>
+								<div class="filter-row" value="capacity">
+									<input type="radio" checked />Capacity
+								</div>
+								<div class="filter-row" value="category">
+									<input type="radio" />CDC Function
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="filter-label">Core Capacity</div>
+								<select class="cc-select form-control" multiple="multiple"></select>
+							</div>
+							<div class="col-3">
+								<div class="filter-label">Capacity</div>
+								<select class="capacity-select form-control" multiple="multiple"></select>
+							</div>
+							<div class="col-3">
+								<div class="filter-label">CDC Function</div>
+								<select class="category-select form-control" multiple="multiple"></select>
+							</div>
+						</div>
+						<div class="reset-button-container">
+							<button class="reset-button btn btn-secondary">Reset Chart</button>
+						</div>
 					</div>
 				</div>
 			</div>
