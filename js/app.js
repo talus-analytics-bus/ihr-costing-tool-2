@@ -67,72 +67,15 @@ const App = {};
 		    	// TODO show error
 		    }
 		};
-		// xhr.send('inputs=ipsum');
-		// console.log(inputArray)
-		xhr.send(JSON.stringify({indicators: indArray}));
-
-		// $.get('lineItemExport', data2) // PASS THE DATA AS THE SECOND PARAMETER
-		//     .success(
-		//         function(success){
-		//             console.log(success)
-		//         })
-		//     .error(
-		//         function(error){
-		//             console.log(error)
-		//         });
-
-		// $.get('lineItemExport', JSON.stringify({inputs: inputArray}), function(data) {
-		// 	console.log(data);
-		// });
-
-		// $.ajax({
-		// 	type: 'post',
-		// 	// data: params.filters,
-		// 	// data: JSON.stringify({meow: 'inputArray'}),
-		// 	data: JSON.stringify({inputs: inputArray}),
-		// 	// headers: {'Authorization-Token': '20lQLz13fgES56ngXYqnGDQTRPqY5bF7'},
-		// 	url: 'lineItemExport',
-		// 	headers: {
-		//         'Content-Type': 'application/json'
-		//         // 'Content-Length': Buffer.byteLength(data)
-		//     },
-		// 	success: function(data) {
-		// 		console.log(data);
-		// 		// // if using simulation data, ignore any calls from before the day of the sim at 8am
-		// 		// const filterSimData = true;
-		// 		// if (App.useSimData && filterSimData) {
-		// 		// 	let simEarliestTime = new Date('6/28/2017');
-		// 		// 	simEarliestTime.setHours(0);
-		// 		// 	simEarliestTime.setMinutes(0);
-		// 		// 	simEarliestTime.setSeconds(0);
-
-		// 		// 	let simLatestTime = new Date('6/28/2017');
-		// 		// 	simLatestTime.setHours(23);
-		// 		// 	simLatestTime.setMinutes(59);
-		// 		// 	simLatestTime.setSeconds(59);
-
-		// 		// 	let tempData = data;
-		// 		// 	let outputData = [];
-		// 		// 	tempData.data.forEach(d => {
-		// 		// 		const curStamp = new Date(d.Client_CreateStamp);
-		// 		// 		if ( curStamp >= simEarliestTime && curStamp <= simLatestTime) outputData.push(d);
-		// 		// 	});
-		// 		// 	// console.log(outputData)
-		// 		// 	tempData.data = outputData;
-		// 		// 	callback(tempData);
-
-		// 		// } else {
-		// 		// 	// console.log(data)
-		// 		// 	callback(data);
-		// 		// 	// callback(JSON.parse(data));
-		// 		// }
-		// 	},
-		// 	error: function(){
-		// 		console.log('error');
-		// 	}
-		// });
-
-
+		xhr.send(JSON.stringify(
+			{
+				indicators: indArray, 
+				currencyCode: App.whoAmI.currency_iso,
+				exchangeRate: App.getExchangeRate(),
+				gbc: App.globalBaseCosts,
+				gsm: App.globalStaffMultipliers
+			}
+			));
 	};
 
 	// initialize basic app behaviors

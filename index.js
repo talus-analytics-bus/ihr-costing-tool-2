@@ -24,52 +24,85 @@ app.post('/lineItemExport', function(req, res) {
 	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Line Item Export.xlsx")
 	    .then(workbook => {
 	        // add the user data to the template
-	        // TODO
-	        // const inputs = req.query.inputs; // TODO
-	        console.log('doing it')
-	        // console.log(req.body.inputs[0])
 	        const indicators = req.body.indicators;
-	        console.log(indicators[0])
-	        // console.log(res)
-         	// workbook.sheet("Costs").cell("Q2").value("100");
 
+         	// get costs sheet
+         	const costsSheet = workbook.sheet("Costs");
 
-         	// get stock row format
-         	const stockRow = workbook.sheet("Costs").range("A2:V2");
+         	// specify currency in final two col headers
+         	const currencyCode = req.body.currencyCode;
+         	costsSheet.cell("U1").value('Do not edit: Start-up/Capital costs (' + currencyCode + ')');
+         	costsSheet.cell("V1").value('Do not edit: Annual recurring costs (' + currencyCode + ')');
+
+         	// get multipliers
+         	const gbc = req.body.gbc;
+         	const gsm = req.body.gsm;
+
+         	// get exchange rate
+         	const exchangeRate = req.body.exchangeRate;
+
+         	// hash table for line item type
+         	const lineItemTypeHash = {
+			  "start-up": "Start-up",
+			  "recurring": "Recurring",
+			  "capital": "Capital"
+			}
 
          	// track sheet row
          	let n = 1;
          	for (let i = 0; i < indicators.length; i++) {
-         		// format row
-         		workbook.sheet("Costs").range("A" + n + ":V" + n) = stockRow;
-
          		const ind = indicators[i];
          		
          		// indicator name
          		n++;
-         		workbook.sheet("Costs").cell("B" + n).value(indicators[i].name);
+         		costsSheet.cell("B" + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
          		// process actions
          		ind.actions.forEach(function(action){
          			// action name
          			n++;
-         			workbook.sheet("Costs").cell("E" + n).value(action.name);
+         			costsSheet.cell("E" + n).value(action.name);
 
          			// process inputs
          			action.inputs.forEach(function(input){
          				// input name
 	         			n++;
-	         			workbook.sheet("Costs").cell("F" + n).value(input.name);
+	         			costsSheet.cell("F" + n).value(input.name);
 
 	         			// input cost: SU/C
+	         			costsSheet.cell("U" + n).value(input.startupCost);
 
 	         			// input cost: Rec
+	         			costsSheet.cell("V" + n).value(input.recurringCost);
 
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
 							// line item name
 		         			n++;
-		         			workbook.sheet("Costs").cell("G" + n).value(lineItem.name);
+		         			costsSheet.cell("G" + n).value(lineItem.name);
+
+		         			// Line item type
+		         			costsSheet.cell("H" + n).value(lineItemTypeHash[lineItem.line_item_type]);
+
+							// Description
+		         			costsSheet.cell("I" + n).value(lineItem.description);
+
+							// Base cost name
+							const curGbc = gbc.find(d => d.id === lineItem.base_cost);
+							console.log(lineItem);
+		         			costsSheet.cell("I" + n).value(curGbc.name);
+
+							// Base cost amount
+							// Base cost unit
+							// Country multiplier
+							// Country multiplier unit
+							// Custom multiplier 1
+							// Custom multiplier 1 unit
+							// Custom multiplier 2
+							// Custom multiplier 2 unit
+							// Staff multiplier
+							// Staff multiplier unit
+
 	         			});
          			});
 
