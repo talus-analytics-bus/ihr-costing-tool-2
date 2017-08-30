@@ -2,7 +2,7 @@ const User = {};
 
 (() => {
 	// set user defaults
-	User.targetScoreType = 'step';  // either "target" or "step"
+	User.targetScoreType = 'target';  // either "target" or "step"
 	User.targetScore = null;
 
 

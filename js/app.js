@@ -419,6 +419,19 @@ const App = {};
 	}
 
 
+	/* ------------------ Misc Functions ------------------- */
+	App.downloadText = (fileName, data) => {
+		const uri = `data:application/csv;charset=utf-8,${escape(data)}`;
+		const link = document.createElement('a');
+		link.href = uri;
+		link.style = 'visibility:hidden';
+		link.download = fileName + '.ihr';
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
+
+
 	/* ------------------ Vendor Defaults ------------------- */
 	// tooltipster defaults
 	$.tooltipster.setDefaults({
