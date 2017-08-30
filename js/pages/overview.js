@@ -62,7 +62,13 @@
 		            var name = f.name;
 		            reader.onload = function(e) {
 		            	var data = e.target.result;
-		            	var workbook = XLSX.read(data, {type: 'binary'});;
+		            	var workbook;
+		            	try {
+		            		workbook = XLSX.read(data, {type: 'binary'});
+		            	} catch (err) {
+		            		// TODO show red error toast:
+		            		// Please select a file with a file type extension of .xlsx
+		            	}
 		            	var first_sheet_name = workbook.SheetNames[0];
 
 		            	var worksheet = workbook.Sheets[first_sheet_name];
@@ -74,7 +80,6 @@
 		            	worksheet['D1'].w = 'score';
 
 		            	const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
-		            	console.log(inputScores);
 
 						// get the scores from the inputScores JSON and populate the
 						// session scores with them, for all the indicators that have scores
@@ -89,7 +94,7 @@
 							const score = parseInt(d.score);
 
 							// set score
-							if (!isNaN(score)) User.setIndicatorScore(indId, score);
+							if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
 						});
 
 						};
