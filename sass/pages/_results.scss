@@ -16,6 +16,7 @@
 	padding: 20px 30px 30px;
 	text-align: center;
 	@include border-radius(10px);
+	@include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
 
 	&:nth-child(n+2) { margin-top: 25px; }
 }
@@ -31,6 +32,9 @@
 	right: 50px;
 
 	button { margin-left: 10px; }
+}
+.results-instructions {
+	margin-bottom: 20px;
 }
 
 

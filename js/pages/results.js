@@ -12,6 +12,9 @@
 				cc.capacities.forEach((cap) => {
 					cap.indicators.forEach((ind) => {
 						ind.score = Math.round(0.5 + 5 * Math.random());
+						ind.actions.forEach((a) => {
+							a.inputs.forEach(input => input.costed = true);
+						});
 					});
 				});
 			});
@@ -20,23 +23,23 @@
 
 
 		/* ---------------------- Data Wrangling ----------------------*/
-		const allCores = App.getNonEmptyCoreCapacities();
-		if (!allCores.length) {
-			$('.results-content').hide();
-			$('.results-empty-content')
-				.on('click', () => hasher.setHash('scores/p-1/1'))
-				.show();
-			return;
-		}
-
+		const allCores = [];
 		const allCapacities = [];
 		const allIndicators = [];
 		const indicatorsByTag = [];
-		allCores.forEach((cc) => {
-			App.getNonEmptyCapacities(cc).forEach((cap) => {
-				allCapacities.push(cap);
+		App.jeeTree.forEach((cc) => {
+			let ccHasOneComplete = false;
+
+			cc.capacities.forEach((cap) => {
+				let capHasOneComplete = false;
+
 				cap.indicators.forEach((ind) => {
+					console.log(ind.id, App.isIndicatorComplete(ind));
+
 					if (App.isIndicatorComplete(ind)) {
+						ccHasOneComplete = true;
+						capHasOneComplete = true;
+
 						const indCopy = Object.assign({}, ind);
 						indCopy.ccId = cc.id;
 						indCopy.capId = cap.id;
@@ -98,9 +101,20 @@
 						}
 					}
 				});
+
+				if (capHasOneComplete) allCapacities.push(cap);
 			});
+
+			if (ccHasOneComplete) allCores.push(cc);
 		});
 
+		if (!allCores.length) {
+			$('.results-content').hide();
+			$('.results-empty-content')
+				.on('click', () => hasher.setHash('scores/p-1/1'))
+				.show();
+			return;
+		}
 
 		function getChartData() {
 			let indData;

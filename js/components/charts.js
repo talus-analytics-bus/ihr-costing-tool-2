@@ -2,8 +2,8 @@ const Charts = {};
 
 (() => {
 	Charts.buildProgressChart = (selector, data, param={}) => {
-		const margin = { top: 35, right: 5, bottom: 35, left: 5 };
-		const width = param.width || 700;
+		const margin = { top: 35, right: 45, bottom: 35, left: 5 };
+		const width = param.width || 660;
 		const height = param.height || 36;
 		const chartContainer = d3.selectAll(selector).append('svg')
 			.classed('progress-chart', true)
@@ -139,8 +139,6 @@ const Charts = {};
 			.attr('y', -margin.top)
 			.attr('width', width + margin.right)
 			.attr('height', height + margin.top);
-		const chartBody = chart.append('g')
-			.attr('clip-path', 'url(#chart-clip)');
 
 		// define scales
 		const x = d3.scaleBand()
@@ -151,7 +149,7 @@ const Charts = {};
 		// additional scales
 		const colorScale = d3.scaleLinear()
 			.domain([0, width])
-			.range(['rgba(255,0,0,0.7)', 'rgba(0,66,118,0.7)']);
+			.range(['rgb(255, 0, 0)', 'rgb(0, 66, 118)']);
 		const radiusScale = d3.scaleLinear()
 			.domain([height, 0])
 			.range([5, 25]);
@@ -160,6 +158,7 @@ const Charts = {};
 		const xAxis = d3.axisBottom();
 		const yAxis = d3.axisLeft()
 			.ticks(6)
+			.tickSizeInner(-width)
 			.tickFormat((num) => {
 				return (num === 0) ? '0' : d3.format(',.3s')(num);
 			});
@@ -170,6 +169,9 @@ const Charts = {};
 			.attr('transform', `translate(0, ${height})`);
 		const yAxisG = chart.append('g')
 			.attr('class', 'y axis');
+
+		const chartBody = chart.append('g')
+			.attr('clip-path', 'url(#chart-clip)');
 
 		// add axes labels
 		const xAxisLabel = chart.append('text')

@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = false;
+	App.demoMode = true;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -404,39 +404,12 @@ const App = {};
 
 
 	/* ------------------ Result Functions ------------------- */
-	// gets core capacities that have at least one complete indicator
-	App.getNonEmptyCoreCapacities = () => {
-		const ccs = [];
-		App.jeeTree.forEach((cc) => {
-			if (cc.capacities.some((cap) => {
-				return cap.indicators.some(ind => App.isIndicatorComplete(ind));
-			})) {
-				ccs.push(cc);
-			}
-		});
-		return ccs;
-	}
-
-	// gets capacities that have at least one complete indicator
-	App.getNonEmptyCapacities = (cc) => {
-		const capacities = [];
-		cc.capacities.forEach((cap) => {
-			if (cap.indicators.some(ind => App.isIndicatorComplete(ind))) {
-				capacities.push(cap);
-			}
-		});
-		return capacities;
-	}
-
 	// returns whether indicator has been both scored and costed
 	App.isIndicatorComplete = (ind) => {
-		if (ind.score) {
-			const allCosted = App.getNeededActions(ind).every((action) => {
-				return App.getNeededInputs(action.inputs, ind.score).every(input => input.costed);
-			});
-			if (allCosted) return true;
-		}
-		return false;
+		if (!ind.score) return false;
+		return App.getNeededActions(ind).every((action) => {
+			return App.isActionComplete(action, ind.score);
+		});
 	}
 
 	// returns whether action has been costed
