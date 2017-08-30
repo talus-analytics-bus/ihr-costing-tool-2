@@ -91,6 +91,7 @@
 					.on('click', () => {
 						hasher.setHash(`scores/${capClass}/${indClass}`);
 					});
+				$('.action-description-container').hide();
 				return;
 			}
 
@@ -105,6 +106,7 @@
 				indSlotContainer.append('div')
 					.attr('class', 'no-actions-container')
 					.html(noActionText);
+				$('.action-description-container').hide();
 				return;
 			}
 

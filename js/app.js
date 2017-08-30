@@ -421,7 +421,7 @@ const App = {};
 
 	/* ------------------ Misc Functions ------------------- */
 	App.downloadText = (fileName, data) => {
-		const uri = `data:application/csv;charset=utf-8,${escape(CSV)}`;
+		const uri = `data:application/csv;charset=utf-8,${escape(data)}`;
 		const link = document.createElement('a');
 		link.href = uri;
 		link.style = 'visibility:hidden';
