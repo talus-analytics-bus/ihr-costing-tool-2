@@ -67,11 +67,31 @@
 
 		            	var worksheet = workbook.Sheets[first_sheet_name];
 
+		            	// edit column headers
+		            	worksheet['A1'].w = 'country_name';
+		            	worksheet['B1'].w = 'capacity_name';
+		            	worksheet['C1'].w = 'indicator_name';
+		            	worksheet['D1'].w = 'score';
+
 		            	const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
 		            	console.log(inputScores);
 
-							// TODO get the scores from the inputScores JSON and populate the
-							// session scores with them, for all the indicators that have scores
+						// get the scores from the inputScores JSON and populate the
+						// session scores with them, for all the indicators that have scores
+
+						// Update scores
+						inputScores.forEach(function(d) {
+							// get indicator id
+							const indId = d.indicator_name.split(' ')[0].toLowerCase();
+							if (indId === "") return;
+
+							// get score
+							const score = parseInt(d.score);
+
+							// set score
+							if (!isNaN(score)) User.setIndicatorScore(indId, score);
+						});
+
 						};
 						reader.readAsBinaryString(f);
 					}
