@@ -577,7 +577,7 @@
 				content: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
 			})
 			.on('click', () => {
-
+				App.exportLineItems();
 			});
 		$('.export-session-button')
 			.tooltipster({
@@ -599,4 +599,91 @@
 				App.downloadText(fileName, sessionData);
 			});
 	}
+
+		/* 
+		* exportLineItems
+		* Exports the line items the user has costed to an XLSX file.
+		* Currently triggered when the "Export Detailed Report" button is clicked.
+		*/
+		App.exportLineItems = () => {
+
+		    App.getTargetScore = (ind) => {
+		        if (User.targetScoreType === 'step') {
+		            if (ind.score >= 4) return ind.score;
+		            else return ind.score + 1;
+		        } else if (User.targetScoreType === 'target') {
+		            if (ind.score > User.targetScore) return ind.score;
+		            else return User.targetScore;
+		        }
+		        return null;
+		    }
+		    App.getCompleteIndicatorTree = () => {
+		        const completeIndicators = [];
+		        App.jeeTree.forEach((cc) => {
+		            cc.capacities.forEach((cap) => {
+		                cap.indicators.forEach((ind) => {
+		                    if (App.isIndicatorComplete(ind)) {
+		                        const indCopy = Object.assign({}, ind);
+		                        const actions = App.getNeededActions(indCopy);
+		                        indCopy.targetScore = App.getTargetScore(indCopy);
+		                        indCopy.actions = [];
+		                        actions.forEach((action) => {
+		                            if (App.isActionComplete) {
+		                                const actionCopy = Object.assign({}, action);
+		                                const costedInputs = actionCopy.inputs.filter(input => input.costed);
+		                                const inputs = App.getNeededInputs(costedInputs, ind.score);
+		                                actionCopy.inputs = [];
+		                                inputs.forEach((input) => {
+		                                    const inputCopy = Object.assign({}, input);
+		                                    const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
+		                                    inputCopy.line_items = [];
+		                                    lineItems.forEach((li) => {
+		                                        const liCopy = Object.assign({}, li);
+		                                        inputCopy.line_items.push(liCopy);
+		                                    });
+		                                    actionCopy.inputs.push(inputCopy);
+		                                });
+		                                indCopy.actions.push(actionCopy);
+		                            }
+		                        });
+		                        completeIndicators.push(indCopy);
+		                    }
+		                });
+		            });
+		        });
+		        return completeIndicators;
+		    }
+
+		    const indArray = App.getCompleteIndicatorTree();
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/lineItemExport', true);
+			xhr.responseType = 'blob';
+			xhr.setRequestHeader('Content-type', 'application/json');
+			xhr.onload = function(e) {
+			    if (this.status == 200) {
+			        var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+			        var downloadUrl = URL.createObjectURL(blob);
+			        var a = document.createElement("a");
+			        a.href = downloadUrl;
+			        a.download = "IHR Costing Tool - Line Item Export.xlsx";
+			        document.body.appendChild(a);
+			        a.click();
+			    } else {
+			    	// TODO show error
+			    }
+			};
+			xhr.send(JSON.stringify(
+				{
+					indicators: indArray, 
+					currencyCode: App.whoAmI.currency_iso,
+					exchangeRate: App.getExchangeRate(),
+					whoAmI: App.whoAmI,
+					gbc: App.globalBaseCosts,
+					gsm: App.globalStaffMultipliers
+				}
+				));
+	};
+
+
 })();

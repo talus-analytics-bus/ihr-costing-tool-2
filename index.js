@@ -108,11 +108,10 @@ app.post('/lineItemExport', function(req, res) {
 		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 		         		// indicator starting score
-		         		console.log('cur score = ' + ind.user_current_score);
-		         		costsSheet.cell(current_score_col + n).value(ind.user_current_score);
+		         		costsSheet.cell(current_score_col + n).value(ind.score);
 
 		         		// indicator target score
-		         		costsSheet.cell(target_score_col + n).value(ind.user_target_score);
+		         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
 	         			
 	         			// action name
 	         			// n++;
@@ -139,11 +138,10 @@ app.post('/lineItemExport', function(req, res) {
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 			         		// indicator starting score
-			         		console.log(ind)
-			         		costsSheet.cell(current_score_col + n).value(ind.user_current_score); // TODO don't set a default
+			         		costsSheet.cell(current_score_col + n).value(ind.score);
 
 			         		// indicator target score
-			         		costsSheet.cell(target_score_col + n).value(ind.user_target_score); // TODO don't set a default
+			         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
 		         			
 		         			// action name
 		         			// n++;
