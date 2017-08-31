@@ -291,7 +291,7 @@
 					d.capacities.forEach((cap) => {
 						indicators = indicators.concat(cap.indicators);
 					});
-					const currScore = App.getAverageCurrentScore(indicators);
+					const newScore = App.getAverageTargetScore(indicators);
 					let color = 'green';
 					if (newScore < 2) color = 'red';
 					else if (newScore < 4) color = 'yellow';
