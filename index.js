@@ -93,38 +93,45 @@ app.post('/lineItemExport', function(req, res) {
          	for (let i = 0; i < indicators.length; i++) {
          		const ind = indicators[i];
          		
-         		// indicator name
-         		n++;
-         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
-
-         		// indicator starting score
-         		costsSheet.cell(current_score_col + n).value(ind.user_current_score || 1); // TODO don't set a default
-
-         		// indicator target score
-         		costsSheet.cell(target_score_col + n).value(ind.user_target_score || 4); // TODO don't set a default
+         		
 
          		// process actions
          		ind.actions.forEach(function(action){
-         			// action name
-         			n++;
-         			costsSheet.cell(action_col + n).value(action.name);
+
+
 
          			// process inputs
          			action.inputs.forEach(function(input){
-         				// input name
-	         			n++;
-	         			costsSheet.cell(input_col + n).value(input.name);
-
-	         			// input cost: SU/C
-	         			costsSheet.cell(startup_col + n).value(input.startupCost);
-
-	         			// input cost: Rec
-	         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
 
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
+	         				n++;
+	         				// indicator name
+			         		// n++;
+			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
+
+			         		// indicator starting score
+			         		costsSheet.cell(current_score_col + n).value(ind.user_current_score || 1); // TODO don't set a default
+
+			         		// indicator target score
+			         		costsSheet.cell(target_score_col + n).value(ind.user_target_score || 4); // TODO don't set a default
+		         			
+		         			// action name
+		         			// n++;
+		         			costsSheet.cell(action_col + n).value(action.name);
+	         			
+	         				// input name
+		         			// n++;
+		         			costsSheet.cell(input_col + n).value(input.name);
+
+		         			// input cost: SU/C
+		         			costsSheet.cell(startup_col + n).value(input.startupCost);
+
+		         			// input cost: Rec
+		         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
+
 							// line item name
-		         			n++;
+		         			// n++;
 		         			costsSheet.cell(line_item_col + n).value(lineItem.name);
 
 		         			// line item ID
