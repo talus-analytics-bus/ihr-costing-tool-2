@@ -607,53 +607,6 @@
 		*/
 		App.exportLineItems = () => {
 
-		    App.getTargetScore = (ind) => {
-		        if (User.targetScoreType === 'step') {
-		            if (ind.score >= 4) return ind.score;
-		            else return ind.score + 1;
-		        } else if (User.targetScoreType === 'target') {
-		            if (ind.score > User.targetScore) return ind.score;
-		            else return User.targetScore;
-		        }
-		        return null;
-		    }
-		    App.getCompleteIndicatorTree = () => {
-		        const completeIndicators = [];
-		        App.jeeTree.forEach((cc) => {
-		            cc.capacities.forEach((cap) => {
-		                cap.indicators.forEach((ind) => {
-		                    if (App.isIndicatorComplete(ind)) {
-		                        const indCopy = Object.assign({}, ind);
-		                        const actions = App.getNeededActions(indCopy);
-		                        indCopy.targetScore = App.getTargetScore(indCopy);
-		                        indCopy.actions = [];
-		                        actions.forEach((action) => {
-		                            if (App.isActionComplete) {
-		                                const actionCopy = Object.assign({}, action);
-		                                const costedInputs = actionCopy.inputs.filter(input => input.costed);
-		                                const inputs = App.getNeededInputs(costedInputs, ind.score);
-		                                actionCopy.inputs = [];
-		                                inputs.forEach((input) => {
-		                                    const inputCopy = Object.assign({}, input);
-		                                    const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
-		                                    inputCopy.line_items = [];
-		                                    lineItems.forEach((li) => {
-		                                        const liCopy = Object.assign({}, li);
-		                                        inputCopy.line_items.push(liCopy);
-		                                    });
-		                                    actionCopy.inputs.push(inputCopy);
-		                                });
-		                                indCopy.actions.push(actionCopy);
-		                            }
-		                        });
-		                        completeIndicators.push(indCopy);
-		                    }
-		                });
-		            });
-		        });
-		        return completeIndicators;
-		    }
-
 		    const indArray = App.getCompleteIndicatorTree();
 
 			var xhr = new XMLHttpRequest();
