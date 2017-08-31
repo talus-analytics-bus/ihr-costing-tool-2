@@ -16,20 +16,42 @@ const App = {};
 		// get needed actions with needed line items
 		// TODO update per Jeff
 		let indArray = [];
+		// App.jeeTree.forEach((cc) => {
+		//     cc.capacities.forEach((cap) => {
+		//         cap.indicators.forEach((ind) => {
+		//             indArray = indArray.concat(ind);
+		//             // const actions = App.getNeededActions(ind);
+		//             // actions.forEach((a) => {
+		//             //     const inputs = App.getNeededInputs(a.inputs, ind.score);
+		//             //     // inputs.forEach((i) => {
+		//             //     //     const lineItems = App.getNeededLineItems(i.line_items, ind.score);
+		//             //     // });
+		//             // });
+		//         });
+		//     });
+		// });
+
 		App.jeeTree.forEach((cc) => {
 		    cc.capacities.forEach((cap) => {
 		        cap.indicators.forEach((ind) => {
-		            indArray = indArray.concat(ind);
-		            // const actions = App.getNeededActions(ind);
-		            // actions.forEach((a) => {
-		            //     const inputs = App.getNeededInputs(a.inputs, ind.score);
-		            //     // inputs.forEach((i) => {
-		            //     //     const lineItems = App.getNeededLineItems(i.line_items, ind.score);
-		            //     // });
-		            // });
-		        });
-		    });
-		});
+		            if (App.isIndicatorComplete(ind)) {
+		            	indArray.push(ind);
+		                // indicators.push(ind);
+		                // ind.actions.forEach((action) => {
+		                //     if (App.isActionComplete(action)) {
+		                //         actions.push(action);
+		                //         action.inputs.forEach((input) => {
+		                //             if (input.costed) {
+		                //                 inputs.push(input);
+		                //             }
+		                //         });
+		                //     }
+		                // });
+		            }
+		        })
+		    })
+		})
+
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);

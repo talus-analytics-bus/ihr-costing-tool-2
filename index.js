@@ -111,10 +111,10 @@ app.post('/lineItemExport', function(req, res) {
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 			         		// indicator starting score
-			         		costsSheet.cell(current_score_col + n).value(ind.user_current_score || 1); // TODO don't set a default
+			         		costsSheet.cell(current_score_col + n).value(ind.user_current_score); // TODO don't set a default
 
 			         		// indicator target score
-			         		costsSheet.cell(target_score_col + n).value(ind.user_target_score || 4); // TODO don't set a default
+			         		costsSheet.cell(target_score_col + n).value(ind.user_target_score); // TODO don't set a default
 		         			
 		         			// action name
 		         			// n++;
