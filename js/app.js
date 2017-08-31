@@ -51,7 +51,7 @@ const App = {};
 		        })
 		    })
 		})
-
+		console.log(indArray);
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);

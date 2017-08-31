@@ -102,6 +102,30 @@ app.post('/lineItemExport', function(req, res) {
 
          			// process inputs
          			action.inputs.forEach(function(input){
+         				n++;
+         				// indicator name
+		         		// n++;
+		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
+
+		         		// indicator starting score
+		         		costsSheet.cell(current_score_col + n).value(ind.user_current_score); // TODO don't set a default
+
+		         		// indicator target score
+		         		costsSheet.cell(target_score_col + n).value(ind.user_target_score); // TODO don't set a default
+	         			
+	         			// action name
+	         			// n++;
+	         			costsSheet.cell(action_col + n).value(action.name);
+         			
+         				// input name
+	         			// n++;
+	         			costsSheet.cell(input_col + n).value(input.name);
+
+	         			// input cost: SU/C
+	         			costsSheet.cell(startup_col + n).value(input.startupCost);
+
+	         			// input cost: Rec
+	         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
 
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
@@ -111,6 +135,7 @@ app.post('/lineItemExport', function(req, res) {
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 			         		// indicator starting score
+			         		console.log(ind)
 			         		costsSheet.cell(current_score_col + n).value(ind.user_current_score); // TODO don't set a default
 
 			         		// indicator target score
@@ -124,11 +149,11 @@ app.post('/lineItemExport', function(req, res) {
 		         			// n++;
 		         			costsSheet.cell(input_col + n).value(input.name);
 
-		         			// input cost: SU/C
-		         			costsSheet.cell(startup_col + n).value(input.startupCost);
+		         			// // input cost: SU/C
+		         			// costsSheet.cell(startup_col + n).value(input.startupCost);
 
-		         			// input cost: Rec
-		         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
+		         			// // input cost: Rec
+		         			// costsSheet.cell(recurring_col + n).value(input.recurringCost);
 
 							// line item name
 		         			// n++;
