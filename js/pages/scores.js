@@ -111,6 +111,7 @@
 
 			scoreRows.append('td').append('input')
 				.attr('type', 'radio')
+				.property('checked', d => d === indicator.score)
 				.on('click', function() {
 					// toggle an extra checked to become a... triple toggle!
 					$(this).prop('checked', !$(this).prop('checked'));
