@@ -15,7 +15,7 @@ const App = {};
 
 		// get needed actions with needed line items
 		// TODO update per Jeff
-		let indArray = [];
+		// let indArray = [];
 		// App.jeeTree.forEach((cc) => {
 		//     cc.capacities.forEach((cap) => {
 		//         cap.indicators.forEach((ind) => {
@@ -31,26 +31,71 @@ const App = {};
 		//     });
 		// });
 
-		App.jeeTree.forEach((cc) => {
-		    cc.capacities.forEach((cap) => {
-		        cap.indicators.forEach((ind) => {
-		            if (App.isIndicatorComplete(ind)) {
-		            	indArray.push(ind);
-		                // indicators.push(ind);
-		                // ind.actions.forEach((action) => {
-		                //     if (App.isActionComplete(action)) {
-		                //         actions.push(action);
-		                //         action.inputs.forEach((input) => {
-		                //             if (input.costed) {
-		                //                 inputs.push(input);
-		                //             }
-		                //         });
-		                //     }
-		                // });
-		            }
-		        })
-		    })
-		})
+
+	    App.getCompleteIndicatorTree = () => {
+	        const completeIndicators = [];
+	        App.jeeTree.forEach((cc) => {
+	            const ccCopy = Object.assign({}, cc);
+	            const capacities = ccCopy.capacities.slice(0);
+	            ccCopy.capacities = [];
+	            capacities.forEach((cap) => {
+	                const capCopy = Object.assign({}, cap);
+	                const indicators = capCopy.indicators.slice(0);
+	                capCopy.indicators = [];
+	                indicators.forEach((ind) => {
+	                    if (App.isIndicatorComplete(ind)) {
+	                        const indCopy = Object.assign({}, ind);
+	                        const actions = App.getNeededActions(indCopy);
+	                        indCopy.actions = [];
+	                        actions.forEach((action) => {
+	                            if (App.isActionComplete) {
+	                                const actionCopy = Object.assign({}, action);
+	                                const costedInputs = actionCopy.inputs.filter(input => input.costed);
+	                                const inputs = App.getNeededInputs(costedInputs, ind.score);
+	                                actionCopy.inputs = [];
+	                                inputs.forEach((input) => {
+	                                    const inputCopy = Object.assign({}, input);
+	                                    const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
+	                                    inputCopy.line_items = [];
+	                                    lineItems.forEach((li) => {
+	                                        const liCopy = Object.assign({}, li);
+	                                        inputCopy.line_items.push(liCopy);
+	                                    });
+	                                    actionCopy.inputs.push(inputCopy);
+	                                });
+	                                indCopy.actions.push(actionCopy);
+	                            }
+	                        });
+	                        completeIndicators.push(indCopy);
+	                    }
+	                });
+	            });
+	        });
+	        return completeIndicators;
+	    }
+
+	    const indArray = App.getCompleteIndicatorTree();
+
+		// App.jeeTree.forEach((cc) => {
+		//     cc.capacities.forEach((cap) => {
+		//         cap.indicators.forEach((ind) => {
+		//             if (App.isIndicatorComplete(ind)) {
+		//             	indArray.push(ind);
+		//                 // indicators.push(ind);
+		//                 // ind.actions.forEach((action) => {
+		//                 //     if (App.isActionComplete(action)) {
+		//                 //         actions.push(action);
+		//                 //         action.inputs.forEach((input) => {
+		//                 //             if (input.costed) {
+		//                 //                 inputs.push(input);
+		//                 //             }
+		//                 //         });
+		//                 //     }
+		//                 // });
+		//             }
+		//         })
+		//     })
+		// })
 		console.log(indArray);
 
 		var xhr = new XMLHttpRequest();

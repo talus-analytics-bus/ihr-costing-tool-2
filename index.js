@@ -108,10 +108,11 @@ app.post('/lineItemExport', function(req, res) {
 		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 		         		// indicator starting score
-		         		costsSheet.cell(current_score_col + n).value(ind.user_current_score); // TODO don't set a default
+		         		console.log('cur score = ' + ind.user_current_score);
+		         		costsSheet.cell(current_score_col + n).value(ind.user_current_score);
 
 		         		// indicator target score
-		         		costsSheet.cell(target_score_col + n).value(ind.user_target_score); // TODO don't set a default
+		         		costsSheet.cell(target_score_col + n).value(ind.user_target_score);
 	         			
 	         			// action name
 	         			// n++;
@@ -122,10 +123,13 @@ app.post('/lineItemExport', function(req, res) {
 	         			costsSheet.cell(input_col + n).value(input.name);
 
 	         			// input cost: SU/C
-	         			costsSheet.cell(startup_col + n).value(input.startupCost);
+	         			costsSheet.cell(startup_col + n).value(input.startupCost + input.capitalCost);
 
 	         			// input cost: Rec
 	         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
+
+	         			// format row
+	         			costsSheet.range("A" + n + ":V" + n).style({fill: "D9D9D9"})
 
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
@@ -149,11 +153,11 @@ app.post('/lineItemExport', function(req, res) {
 		         			// n++;
 		         			costsSheet.cell(input_col + n).value(input.name);
 
-		         			// // input cost: SU/C
-		         			// costsSheet.cell(startup_col + n).value(input.startupCost);
+		         			// input cost: SU/C
+		         			costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
-		         			// // input cost: Rec
-		         			// costsSheet.cell(recurring_col + n).value(input.recurringCost);
+		         			// input cost: Rec
+		         			costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
 							// line item name
 		         			// n++;
@@ -238,7 +242,8 @@ app.post('/lineItemExport', function(req, res) {
          			});
 
          		});
-
+				// format row
+	         	costsSheet.range("A" + n + ":V" + n).style({bottomBorder: "thick", bottomBorderColor: "000000"})
          	}
 
          	// // Finalize styling
