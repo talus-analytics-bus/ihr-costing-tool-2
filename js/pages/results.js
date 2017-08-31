@@ -577,7 +577,13 @@
 				content: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
 			})
 			.on('click', () => {
-				App.exportLineItems();
+				NProgress.start();
+				App.exportLineItems((error) => {
+					if (error) {
+						noty({ text: '<b>Warning!</b><br>There was an error exporting the detailed report. Please contact the administrators of the tool.' });
+					}
+					NProgress.done();
+				});
 			});
 		$('.export-session-button')
 			.tooltipster({
@@ -599,44 +605,4 @@
 				App.downloadText(fileName, sessionData);
 			});
 	}
-
-		/* 
-		* exportLineItems
-		* Exports the line items the user has costed to an XLSX file.
-		* Currently triggered when the "Export Detailed Report" button is clicked.
-		*/
-		App.exportLineItems = () => {
-
-		    const indArray = App.getCompleteIndicatorTree();
-
-			var xhr = new XMLHttpRequest();
-			xhr.open('POST', '/lineItemExport', true);
-			xhr.responseType = 'blob';
-			xhr.setRequestHeader('Content-type', 'application/json');
-			xhr.onload = function(e) {
-			    if (this.status == 200) {
-			        var blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
-			        var downloadUrl = URL.createObjectURL(blob);
-			        var a = document.createElement("a");
-			        a.href = downloadUrl;
-			        a.download = "IHR Costing Tool - Line Item Export.xlsx";
-			        document.body.appendChild(a);
-			        a.click();
-			    } else {
-			    	// TODO show error
-			    }
-			};
-			xhr.send(JSON.stringify(
-				{
-					indicators: indArray, 
-					currencyCode: App.whoAmI.currency_iso,
-					exchangeRate: App.getExchangeRate(),
-					whoAmI: App.whoAmI,
-					gbc: App.globalBaseCosts,
-					gsm: App.globalStaffMultipliers
-				}
-				));
-	};
-
-
 })();
