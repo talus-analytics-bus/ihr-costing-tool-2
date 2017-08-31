@@ -134,7 +134,6 @@ app.post('/lineItemExport', function(req, res) {
 							// Custom multiplier 1
 							if (lineItem.custom_multiplier_1 !== "") {
 								// get number
-								console.log(lineItem.custom_multiplier_1);
 								const cm1Arr = lineItem.custom_multiplier_1.toString().split(" ");
 								const cm1Num = cm1Arr[0];
 		         				costsSheet.cell("O" + n).value(cm1Num);
@@ -143,15 +142,34 @@ app.post('/lineItemExport', function(req, res) {
 								cm1Arr.splice(0,1);
 								const cm1Unit = cm1Arr.join(" ");
 
-		         				costsSheet.cell("O" + n).value(cm1Unit);
 								// Custom multiplier 1 unit
+		         				costsSheet.cell("P" + n).value(cm1Unit);
 							}
 
 							// Custom multiplier 2
-							// Custom multiplier 2 unit
-							// Staff multiplier
-							// Staff multiplier unit
+							if (lineItem.custom_multiplier_2 !== "") {
+								// get number
+								const cm2Arr = lineItem.custom_multiplier_2.toString().split(" ");
+								const cm2Num = cm2Arr[0];
+		         				costsSheet.cell("Q" + n).value(cm2Num);
 
+								// get unit
+								cm2Arr.splice(0,1);
+								const cm2Unit = cm2Arr.join(" ");
+
+								// Custom multiplier 2 unit
+		         				costsSheet.cell("R" + n).value(cm2Unit);
+							}
+
+							// Staff multiplier
+							if (lineItem.staff_multiplier !== "" && lineItem.staff_multiplier !== null) {
+								console.log(lineItem.staff_multiplier)
+								const curGsm = gsm.find(d => d.id === lineItem.staff_multiplier);
+			         			costsSheet.cell("S" + n).value(curGsm.count);
+
+								// Staff multiplier unit
+			         			costsSheet.cell("T" + n).value(curGsm.name);
+							}
 	         			});
          			});
 
