@@ -64,6 +64,30 @@ app.post('/lineItemExport', function(req, res) {
 			  "null": ""
 			}
 
+			// define column names
+			const indicator_col = 'A';
+			const current_score_col = 'B';
+			const target_score_col = 'C';
+			const action_col = 'D';
+			const input_col = 'E';
+			const line_item_col = 'F';
+			const line_item_type_col = 'G';
+			const description_col = 'H';
+			const id_col = 'I';
+			const base_cost_col = 'J';
+			const cost_amount_col = 'K';
+			const cost_unit_col = 'L';
+			const country_multiplier_col = 'M';
+			const country_multiplier_unit_col = 'N';
+			const custom_mult1_col = 'O';
+			const custom_mult1_unit_col = 'P';
+			const custom_mult2_col = 'Q';
+			const custom_mult2_unit_col = 'R';
+			const staff_mult_col = 'S';
+			const staff_mult_unit_col = 'T';
+			const startup_col = 'U';
+			const recurring_col = 'V';
+
          	// track sheet row
          	let n = 1;
          	for (let i = 0; i < indicators.length; i++) {
@@ -71,47 +95,56 @@ app.post('/lineItemExport', function(req, res) {
          		
          		// indicator name
          		n++;
-         		costsSheet.cell("B" + n).value(ind.id.toUpperCase() + ' ' + ind.name);
+         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
+
+         		// indicator starting score
+         		costsSheet.cell(current_score_col + n).value(ind.user_current_score || 1); // TODO don't set a default
+
+         		// indicator target score
+         		costsSheet.cell(target_score_col + n).value(ind.user_target_score || 4); // TODO don't set a default
 
          		// process actions
          		ind.actions.forEach(function(action){
          			// action name
          			n++;
-         			costsSheet.cell("E" + n).value(action.name);
+         			costsSheet.cell(action_col + n).value(action.name);
 
          			// process inputs
          			action.inputs.forEach(function(input){
          				// input name
 	         			n++;
-	         			costsSheet.cell("F" + n).value(input.name);
+	         			costsSheet.cell(input_col + n).value(input.name);
 
 	         			// input cost: SU/C
-	         			costsSheet.cell("U" + n).value(input.startupCost);
+	         			costsSheet.cell(startup_col + n).value(input.startupCost);
 
 	         			// input cost: Rec
-	         			costsSheet.cell("V" + n).value(input.recurringCost);
+	         			costsSheet.cell(recurring_col + n).value(input.recurringCost);
 
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
 							// line item name
 		         			n++;
-		         			costsSheet.cell("G" + n).value(lineItem.name);
+		         			costsSheet.cell(line_item_col + n).value(lineItem.name);
+
+		         			// line item ID
+		         			costsSheet.cell(id_col + n).value(lineItem.id.toUpperCase());
 
 		         			// Line item type
-		         			costsSheet.cell("H" + n).value(lineItemTypeHash[lineItem.line_item_type]);
+		         			costsSheet.cell(line_item_type_col + n).value(lineItemTypeHash[lineItem.line_item_type]);
 
 							// Description
-		         			costsSheet.cell("I" + n).value(lineItem.description);
+		         			costsSheet.cell(description_col + n).value(lineItem.description);
 
 							// Base cost name
 							const curGbc = gbc.find(d => d.id === lineItem.base_cost);
-		         			costsSheet.cell("J" + n).value(curGbc.name);
+		         			costsSheet.cell(base_cost_col + n).value(curGbc.name);
 
 							// Base cost amount
-		         			costsSheet.cell("K" + n).value(curGbc.cost * exchangeRate);
+		         			costsSheet.cell(cost_amount_col + n).value(curGbc.cost * exchangeRate);
 		         			
 							// Base cost unit
-		         			costsSheet.cell("L" + n).value(curGbc.cost_unit);
+		         			costsSheet.cell(cost_unit_col + n).value(curGbc.cost_unit);
 
 							// Country multiplier
 							const country_multiplier_key = lineItem.country_multiplier;
@@ -124,10 +157,10 @@ app.post('/lineItemExport', function(req, res) {
 									country_multiplier = whoAmI.multipliers[country_multiplier_key];
 								}
 		         				
-		         				costsSheet.cell("M" + n).value(country_multiplier);
+		         				costsSheet.cell(country_multiplier_col + n).value(country_multiplier);
 
 								// Country multiplier unit
-		         				costsSheet.cell("N" + n).value(countryParamHash[country_multiplier_key]);
+		         				costsSheet.cell(country_multiplier_unit_col + n).value(countryParamHash[country_multiplier_key]);
 
 							}
 
@@ -136,14 +169,14 @@ app.post('/lineItemExport', function(req, res) {
 								// get number
 								const cm1Arr = lineItem.custom_multiplier_1.toString().split(" ");
 								const cm1Num = cm1Arr[0];
-		         				costsSheet.cell("O" + n).value(cm1Num);
+		         				costsSheet.cell(custom_mult1_col + n).value(cm1Num);
 
 								// get unit
 								cm1Arr.splice(0,1);
 								const cm1Unit = cm1Arr.join(" ");
 
 								// Custom multiplier 1 unit
-		         				costsSheet.cell("P" + n).value(cm1Unit);
+		         				costsSheet.cell(custom_mult1_unit_col + n).value(cm1Unit);
 							}
 
 							// Custom multiplier 2
@@ -151,24 +184,23 @@ app.post('/lineItemExport', function(req, res) {
 								// get number
 								const cm2Arr = lineItem.custom_multiplier_2.toString().split(" ");
 								const cm2Num = cm2Arr[0];
-		         				costsSheet.cell("Q" + n).value(cm2Num);
+		         				costsSheet.cell(custom_mult2_col + n).value(cm2Num);
 
 								// get unit
 								cm2Arr.splice(0,1);
 								const cm2Unit = cm2Arr.join(" ");
 
 								// Custom multiplier 2 unit
-		         				costsSheet.cell("R" + n).value(cm2Unit);
+		         				costsSheet.cell(custom_mult2_unit_col + n).value(cm2Unit);
 							}
 
 							// Staff multiplier
 							if (lineItem.staff_multiplier !== "" && lineItem.staff_multiplier !== null) {
-								console.log(lineItem.staff_multiplier)
 								const curGsm = gsm.find(d => d.id === lineItem.staff_multiplier);
-			         			costsSheet.cell("S" + n).value(curGsm.count);
+			         			costsSheet.cell(staff_mult_col + n).value(curGsm.count);
 
 								// Staff multiplier unit
-			         			costsSheet.cell("T" + n).value(curGsm.name);
+			         			costsSheet.cell(staff_mult_unit_col + n).value(curGsm.name);
 							}
 	         			});
          			});
@@ -176,6 +208,10 @@ app.post('/lineItemExport', function(req, res) {
          		});
 
          	}
+
+         	// // Finalize styling
+         	// // Wrap text in all cells
+         	// costsSheet.usedRange().style({wrapText: true});
 
 
 			workbook.outputAsync()
