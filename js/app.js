@@ -252,17 +252,23 @@ const App = {};
 	App.getAverageTargetScore = (inds) => {
 		const newIndScores = [];
 		inds.forEach((ind) => {
-			if (ind.score) {
-				if (User.targetScoreType === 'step') {
-					if (ind.score === 5) newIndScores.push(5);
-					else newIndScores.push(ind.score + 1);
-				} else if (User.targetScoreType === 'target') {
-					if (ind.score > User.targetScore) newIndScores.push(ind.score);
-					else newIndScores.push(User.targetScore);
-				}
-			}
+			if (ind.score) newIndScores.push(App.getTargetScore(ind));
 		});
 		return d3.mean(newIndScores);
+	}
+
+	// gets the target score of an indicator
+	App.getTargetScore = (ind) => {
+		if (User.targetScoreType === 'step') {
+			if (ind.score) {
+				if (ind.score >= 4) return ind.score;
+				else return ind.score + 1;
+			}
+		} else if (User.targetScoreType === 'target') {
+			if (ind.score && ind.score > User.targetScore) return ind.score;
+			else return User.targetScore;
+		}
+		return null;
 	}
 
 
@@ -531,6 +537,47 @@ const App = {};
 			if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
 		});
 		return true;
+	}
+
+	// retrieves a tree to export of all complete indicators and all levels below
+	App.getCompleteIndicatorTree = () => {
+		const completeIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					if (App.isIndicatorComplete(ind)) {
+						const indCopy = Object.assign({}, ind);
+						const actions = App.getNeededActions(indCopy);
+						indCopy.targetScore = App.getTargetScore(indCopy);
+						indCopy.actions = [];
+
+						actions.forEach((action) => {
+							if (App.isActionComplete) {
+								const actionCopy = Object.assign({}, action);
+								const costedInputs = actionCopy.inputs.filter(input => input.costed);
+								const inputs = App.getNeededInputs(costedInputs, ind.score);
+								actionCopy.inputs = [];
+
+								inputs.forEach((input) => {
+									const inputCopy = Object.assign({}, input);
+									const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
+									inputCopy.line_items = [];
+
+									lineItems.forEach((li) => {
+										const liCopy = Object.assign({}, li);
+										inputCopy.line_items.push(liCopy);
+									});
+									actionCopy.inputs.push(inputCopy);
+								});
+								indCopy.actions.push(actionCopy);
+							}
+						});
+						completeIndicators.push(indCopy);
+					}
+				});
+			});
+		});
+		return completeIndicators;
 	}
 
 
