@@ -291,10 +291,10 @@
 					d.capacities.forEach((cap) => {
 						indicators = indicators.concat(cap.indicators);
 					});
-					const currScore = App.getAverageCurrentScore(indicators);
+					const newScore = App.getAverageTargetScore(indicators);
 					let color = 'green';
-					if (currScore < 2) color = 'red';
-					else if (currScore < 4) color = 'yellow';
+					if (newScore < 2) color = 'red';
+					else if (newScore < 4) color = 'yellow';
 					return `summary-text-box-veil ${color}`;
 				}
 				return 'summary-text-box-veil';
