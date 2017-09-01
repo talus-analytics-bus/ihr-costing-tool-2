@@ -414,7 +414,11 @@ const App = {};
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
-		return Util.strToFloat(input);
+		else {
+			const outputTmp = input.split(' ');
+			return parseFloat(outputTmp[0]);
+		}
+		// return Util.strToFloat(input);
 	}
 
 
@@ -490,12 +494,22 @@ const App = {};
 	/* ------------------ Data Manipulation ------------------- */
 
 	/*
-	* toggleBuyRent
-	* Converts all line items in jeeTree that have a 'buy' / 'rent' choice
+	* toggleBuyLease
+	* Converts all line items in jeeTree that have a 'buy' / 'lease' choice
 	* to the option specified in the argument.
-	* choice	String 	'buy' or 'rent'
+	* choice	String 	'buy' or 'lease'
 	*/
-	App.toggleBuyRent = (choice) => {
+	App.toggleBuyLease = (choice) => {
+
+		// TODO Jeff, can you make the toggle button you add to the
+		// "Technology and Infrastructure" section trigger this function
+		// using the argument 'choice' to define whether the user chose
+		// 'rent' or 'lease'? Thanks! - Mike
+
+		// Also, Global Base Costs with the ids "gbc.buy_office" and "gbc.lease_office"
+		// (rows 31 and 32 in the GBC tab of the data structure sheet) should be
+		// customizable from the "Technology and Infrastructure" tab as well. Can you
+		// add them? I'm not sure how now that the tab structure is being used
 
 		// appends scores above the current score up to and including 4
 		appendHigherScores = (scoreArr) => {
@@ -518,6 +532,7 @@ const App = {};
 		        	ind.actions.forEach((act) => {
 		        		act.inputs.forEach((inp) => {
 		        			inp.line_items.forEach((li) => {
+
 		        				// get GBC
 		        				const curGbc = App.globalBaseCosts.find((d) => d.id === li.base_cost);
 
