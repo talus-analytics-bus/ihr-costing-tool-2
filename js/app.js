@@ -497,7 +497,60 @@ const App = {};
 	*/
 	App.toggleBuyRent = (choice) => {
 
-		return choice;
+		// appends scores above the current score up to and including 4
+		appendHigherScores = (scoreArr) => {
+			const lowestScore = parseInt(d3.min(scoreArr));
+			for (let i = lowestScore + 1; i < 5; i++) {
+				scoreArr.push(i.toString());
+			}
+			return scoreArr;
+		};
+
+		// keeps only the lowest score in the array
+		keepLowestScore = (scoreArr) => {
+			return [d3.min(scoreArr)];
+		};
+
+		// Get all line items
+		App.jeeTree.forEach((cc) => {
+		    cc.capacities.forEach((cap) => {
+		        cap.indicators.forEach((ind) => {
+		        	ind.actions.forEach((act) => {
+		        		act.inputs.forEach((inp) => {
+		        			inp.line_items.forEach((li) => {
+		        				// get GBC
+		        				const curGbc = App.globalBaseCosts.find((d) => d.id === li.base_cost);
+
+		        				// skip if no buy_lease value or if it matches
+		        				if (curGbc.buy_lease === "" || curGbc.buy_lease === choice) return;
+		        				else {
+		        					// change GBC to correct value
+		        					li.base_cost = curGbc.buy_lease_id;
+
+		        					if (choice === 'buy') {
+		        						// keep lowest score only
+		        						li.score_step_to = keepLowestScore(li.score_step_to);
+
+		        						// change line item type to "start-up"
+		        						li.line_item_type = 'start-up';
+
+		        					} else if (choice === 'lease') {
+		        						// append other scores above this one up to and including 4
+		        						li.score_step_to = appendHigherScores(li.score_step_to);
+
+		        						// change line item type to "recurring"
+		        						li.line_item_type = 'recurring';
+		        					}
+		        				}
+		        			})
+		        		})
+		        	})
+		        })
+		    })
+		})
+
+		// update all costs
+		App.updateAllCosts();
 	};
 
 
