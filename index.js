@@ -258,7 +258,7 @@ app.post('/lineItemExport', function(req, res) {
 
 					// const today = new Date();
 					// const dateStr = 
-					const filenameStr = yyyymmdd;
+					const filenameStr = yyyymmdd + ' ' + whoAmI.abbreviation;
 					res.attachment('IHR Costing Tool - Detailed Report - ' + filenameStr + '.xlsx');
 					res.end(blob);
 				});
