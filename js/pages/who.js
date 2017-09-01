@@ -481,8 +481,8 @@
 				} else {
 					const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
 					input.node().value = (Util.comma(gsm.count));
-					$('.dv-currency').text(App.whoAmI.currency_iso);
 				}
+				$('.dv-currency').text(App.whoAmI.currency_iso);
 				
 				checkIfDefault(gbcId, this);
 			});
