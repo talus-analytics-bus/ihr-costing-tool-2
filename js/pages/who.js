@@ -18,7 +18,7 @@
 			level: 1,
 		}, {
 			abbr: 'technology',
-			name: 'Technology',
+			name: 'Technology and Infrastructure',
 			level: 1,
 		}, {
 			abbr: 'printing',
