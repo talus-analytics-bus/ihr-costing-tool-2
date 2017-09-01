@@ -493,6 +493,11 @@ const App = {};
 
 	/* ------------------ Data Manipulation ------------------- */
 
+	// TODO Jeff, can you make the toggle button you add to the
+	// "Technology and Infrastructure" section (under infrastructure) trigger this function
+	// using the argument 'choice' to define whether the user chose
+	// 'rent' or 'lease'? Thanks! - Mike
+
 	/*
 	* toggleBuyLease
 	* Converts all line items in jeeTree that have a 'buy' / 'lease' choice
@@ -500,16 +505,6 @@ const App = {};
 	* choice	String 	'buy' or 'lease'
 	*/
 	App.toggleBuyLease = (choice) => {
-
-		// TODO Jeff, can you make the toggle button you add to the
-		// "Technology and Infrastructure" section trigger this function
-		// using the argument 'choice' to define whether the user chose
-		// 'rent' or 'lease'? Thanks! - Mike
-
-		// Also, Global Base Costs with the ids "gbc.buy_office" and "gbc.lease_office"
-		// (rows 31 and 32 in the GBC tab of the data structure sheet) should be
-		// customizable from the "Technology and Infrastructure" tab as well. Can you
-		// add them? I'm not sure how now that the tab structure is being used
 
 		// appends scores above the current score up to and including 4
 		appendHigherScores = (scoreArr) => {
