@@ -487,6 +487,19 @@ const App = {};
 		document.body.removeChild(link);
 	}
 
+	/* ------------------ Data Manipulation ------------------- */
+
+	/*
+	* toggleBuyRent
+	* Converts all line items in jeeTree that have a 'buy' / 'rent' choice
+	* to the option specified in the argument.
+	* choice	String 	'buy' or 'rent'
+	*/
+	App.toggleBuyRent = (choice) => {
+
+		return choice;
+	};
+
 
 	/* ------------------ Vendor Defaults ------------------- */
 	// tooltipster defaults
