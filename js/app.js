@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = false;
+	App.demoMode = true;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -304,44 +304,7 @@ const App = {};
 							input.recurringCost = 0;
 
 							input.line_items.forEach((li) => {
-								const costObj = App.globalBaseCosts.find((gbc) => {
-									return gbc.id === li.base_cost;
-								});
-								li.cost = costObj ? costObj.cost : 0;
-
-								// include multipliers
-								if (li.staff_multiplier) {
-									const multiplierObj = App.globalStaffMultipliers.find((sm) => {
-										return sm.id === li.staff_multiplier;
-									});
-									if (multiplierObj) li.cost *= multiplierObj.count;
-								}
-								if (li.country_multiplier && App.whoAmI.name) {
-									let multiplier = 1;
-									if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
-										multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
-									} else {
-										multiplier = App.whoAmI.multipliers[li.country_multiplier];
-									}
-									if (multiplier) li.cost *= multiplier;
-								}
-								if (li.custom_multiplier_1) {
-									li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
-								}
-								if (li.custom_multiplier_2) {
-									li.cost *= App.getMultiplierValue(li.custom_multiplier_2);
-								}
-
-								// add overhead if a salary
-								if (costObj && costObj.subheading_name === 'Salaries') {
-									li.cost *= 1 + App.whoAmI.staff_overhead_perc;
-								}
-
-								// convert to correct currency
-								li.cost *= exchangeRate;
-
-								// round to nearest one
-								li.cost = Math.round(li.cost);
+								li.cost = App.getLineItemCost(li);
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -380,6 +343,78 @@ const App = {};
 			});
 		});
 	}
+
+	// gets the cost of a line item
+	App.getLineItemCost = (li, exchangeRate) => {
+		// get exchange rate if not included
+		const exRate = exchangeRate || App.getExchangeRate();
+
+		// find cost information in globalBaseCosts dictionary
+		let costObj = App.globalBaseCosts.find((gbc) => {
+			return gbc.id === li.base_cost;
+		});
+
+		// if cost information wasn't found, it must be buy/lease (append to id)
+		if (!costObj) {
+			costObj = App.globalBaseCosts.find((gbc) => {
+				return gbc.id === `${li.base_cost}.${User.buyOrLease}`;
+			});
+
+			// TODO the startup/capital/recurring flag should prob be tagged in GBC not LI
+			// change line item type and target score according to user's choice of buy/lease
+			if (User.buyOrLease === 'buy') {
+				li.line_item_type = 'start-up';
+				li.score_step_to = [d3.min(li.score_step_to)];  // keep lowest score
+			} else {
+				li.line_item_type = 'recurring';
+				li.score_step_to = d3.range(d3.min(li.score_step_to), 5);  // lowest score to 4 (including)
+			}
+		}
+
+		// something went wrong; cost object not found
+		if (!costObj) {
+			console.log(`Warning! Cost object not found for id: ${li.base_cost}`);
+			return 0;
+		}
+
+		// initialize cost
+		let cost = costObj ? costObj.cost : 0;
+
+		// include multipliers
+		if (li.staff_multiplier) {
+			const multiplierObj = App.globalStaffMultipliers.find((sm) => {
+				return sm.id === li.staff_multiplier;
+			});
+			if (multiplierObj) cost *= multiplierObj.count;
+		}
+		if (li.country_multiplier && App.whoAmI.name) {
+			let multiplier = 1;
+			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
+				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+			} else {
+				multiplier = App.whoAmI.multipliers[li.country_multiplier];
+			}
+			if (multiplier) cost *= multiplier;
+		}
+		if (li.custom_multiplier_1) {
+			cost *= App.getMultiplierValue(li.custom_multiplier_1);
+		}
+		if (li.custom_multiplier_2) {
+			cost *= App.getMultiplierValue(li.custom_multiplier_2);
+		}
+
+		// add overhead if a salary
+		if (costObj && costObj.subheading_name === 'Salaries') {
+			cost *= 1 + App.whoAmI.staff_overhead_perc;
+		}
+
+		// convert to correct currency
+		cost *= exchangeRate;
+
+		// round to nearest one
+		return Math.round(cost);
+	}
+
 
 	// builds the cost text for any level of the jeeTree above line item (e.g. indicator)
 	App.getCostText = (branch) => {
@@ -490,78 +525,6 @@ const App = {};
 		link.click();
 		document.body.removeChild(link);
 	}
-
-	/* ------------------ Data Manipulation ------------------- */
-
-	// TODO Jeff, can you make the toggle button you add to the
-	// "Technology and Infrastructure" section (under infrastructure) trigger this function
-	// using the argument 'choice' to define whether the user chose
-	// 'rent' or 'lease'? Thanks! - Mike
-
-	/*
-	* toggleBuyLease
-	* Converts all line items in jeeTree that have a 'buy' / 'lease' choice
-	* to the option specified in the argument.
-	* choice	String 	'buy' or 'lease'
-	*/
-	App.toggleBuyLease = (choice) => {
-
-		// appends scores above the current score up to and including 4
-		appendHigherScores = (scoreArr) => {
-			const lowestScore = parseInt(d3.min(scoreArr));
-			for (let i = lowestScore + 1; i < 5; i++) {
-				scoreArr.push(i.toString());
-			}
-			return scoreArr;
-		};
-
-		// keeps only the lowest score in the array
-		keepLowestScore = (scoreArr) => {
-			return [d3.min(scoreArr)];
-		};
-
-		// Get all line items
-		App.jeeTree.forEach((cc) => {
-		    cc.capacities.forEach((cap) => {
-		        cap.indicators.forEach((ind) => {
-		        	ind.actions.forEach((act) => {
-		        		act.inputs.forEach((inp) => {
-		        			inp.line_items.forEach((li) => {
-
-		        				// get GBC
-		        				const curGbc = App.globalBaseCosts.find((d) => d.id === li.base_cost);
-
-		        				// skip if no buy_lease value or if it matches
-		        				if (curGbc.buy_lease === "" || curGbc.buy_lease === choice) return;
-		        				else {
-		        					// change GBC to correct value
-		        					li.base_cost = curGbc.buy_lease_id;
-
-		        					if (choice === 'buy') {
-		        						// keep lowest score only
-		        						li.score_step_to = keepLowestScore(li.score_step_to);
-
-		        						// change line item type to "start-up"
-		        						li.line_item_type = 'start-up';
-
-		        					} else if (choice === 'lease') {
-		        						// append other scores above this one up to and including 4
-		        						li.score_step_to = appendHigherScores(li.score_step_to);
-
-		        						// change line item type to "recurring"
-		        						li.line_item_type = 'recurring';
-		        					}
-		        				}
-		        			})
-		        		})
-		        	})
-		        })
-		    })
-		})
-
-		// update all costs
-		App.updateAllCosts();
-	};
 
 
 	/* ------------------ Vendor Defaults ------------------- */

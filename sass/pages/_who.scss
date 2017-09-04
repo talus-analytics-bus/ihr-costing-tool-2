@@ -85,20 +85,6 @@
 	}	
 }
 .default-costs-block {
-	.dv-input-container { margin-top: 20px; }
-	.dv-input {
-		width: 140px;
-		margin-right: 8px;
-		text-align: right;
-		vertical-align: top;
-	}
-	.dv-description {
-		display: inline-block;
-		float: left;
-		width: 380px;
-		vertical-align: top;
-		padding-bottom: 10px;
-	}
 	.dv-item-row {
 		margin-left: 0;
 		padding: 10px;
@@ -111,23 +97,30 @@
 		font-weight: 400;
 		font-size: 1.3em;
 	}
+	.dv-item-name-container {
+		display: inline-block;
+		width: 380px;
+		padding-bottom: 10px;
+		vertical-align: top;
+	}
+	.dv-item-name {
+		font-weight: 600;
+	}
+	.dv-input-group {
+		display: inline-block;
+		margin-left: 20px;
+		vertical-align: top;
+	}
+	.dv-input {
+		width: 140px;
+		margin-right: 8px;
+		text-align: right;
+		vertical-align: top;
+	}
 	.dv-currency,
 	.dv-cost-unit {
 		position: relative;
 		top: 5px;
-	}
-	.dv-item-name {
-		font-weight: 600;
-		// margin-bottom: 7px;
-	}
-	.dv-input-group {
-		display: inline-block;
-	}
-	.dv-item-name {
-		float: left;
-	}
-	.dv-input-group {
-		margin-left: 30px;
 	}
 	.dv-divider {
 		border-top: $light-border;
