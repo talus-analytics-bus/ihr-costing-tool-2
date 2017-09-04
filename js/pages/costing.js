@@ -231,7 +231,9 @@
 
 			const startupContainer = itemFront.append('div')
 				.attr('class', 'item-startup-cost-container');
-			startupContainer.append('div').text('Startup Cost: ');
+			startupContainer.append('div')
+				.attr('class', 'item-cost-name')
+				.text('Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
 				.attr('value', (d) => {
@@ -250,11 +252,21 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
-			startupContainer.append('div').text(App.whoAmI.currency_iso);
+			startupContainer.append('div')
+				.attr('class', 'item-cost-currency')
+				.text(App.whoAmI.currency_iso);
+			startupContainer.append('img')
+				.attr('class', 'item-cost-tooltip-img')
+				.attr('src', 'img/question-mark.png')
+				.each(function addTooltip(d) {
+					$(this).tooltipster({ content: Definitions.startupCost });
+				});
 			
 			const recurringContainer = itemFront.append('div')
 				.attr('class', 'item-recurring-cost-container');
-			recurringContainer.append('div').text('Recurring Cost: ');
+			recurringContainer.append('div')
+				.attr('class', 'item-cost-name')
+				.text('Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
 				.attr('value', (d) => {
@@ -273,7 +285,15 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
-			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
+			recurringContainer.append('div')
+				.attr('class', 'item-cost-currency')
+				.text(`${App.whoAmI.currency_iso}/yr`);
+			recurringContainer.append('img')
+				.attr('class', 'item-cost-tooltip-img')
+				.attr('src', 'img/question-mark.png')
+				.each(function addTooltip(d) {
+					$(this).tooltipster({ content: Definitions.recurringCost });
+				});
 
 			itemFront.append('div')
 				.attr('class', 'item-save-cost-text')
