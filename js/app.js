@@ -12,6 +12,15 @@ const App = {};
 
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
+		// give a warning if user is not using Chrome or Firefox
+		const browser = navigator.userAgent;
+		if (browser.search('Chrome') === -1 && browser.search('Firefox') === -1) {
+			noty({
+				timeout: false,
+				maxWidth: 400,
+				text: '<b>Warning!</b><br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.',
+			});
+		}
 
 		// initiate behavior for navigation links
 		$('.tool-name').click(() => hasher.setHash(''));
