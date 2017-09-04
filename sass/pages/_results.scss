@@ -12,9 +12,6 @@
 	font-style: italic;
 	cursor: pointer;
 }
-.results-instructions {
-	margin-bottom: 30px;
-}
 .results-section {
 	margin-top: 25px;
 	border: $border;
@@ -24,7 +21,7 @@
 	@include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 .results-section-title {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	font-size: 1.5em;
 	font-weight: 600;
 	text-align: left;
@@ -44,6 +41,11 @@
 		margin-right: -5px;
 		@include opacity(0.75);
 	}
+}
+.results-instructions.results-section {
+	margin-top: 20px;
+	padding-bottom: 10px;
+	text-align: left;
 }
 .results-table-content {
 	display: none;
