@@ -9,7 +9,7 @@
 			name: 'Country Details',
 		}, {
 			abbr: 'default-costs',
-			name: 'Cost Assumptions',
+			name: 'Cost Assumptions (optional)',
 			children: ['personnel', 'technology', 'printing', 'meetings'],
 		}, {
 			abbr: 'personnel',
