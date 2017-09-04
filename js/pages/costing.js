@@ -49,7 +49,7 @@
 			const indSlots = indSlotContainers.append('div')
 				.attr('class', 'indicator-slot')
 				.classed('active', d => d.id === indId)
-				.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+				.classed('empty', d => typeof App.getIndicatorScore(d.id) === 'undefined')
 				.on('click', (d, i) => {
 					hasher.setHash(`costs/${capClass}/${i+1}`);
 				});
@@ -73,7 +73,7 @@
 			const scoreContainer = indSlots.append('div')
 				.attr('class', 'indicator-score')
 				.html((d) => {
-					const score = User.getIndicatorScore(d.id);
+					const score = App.getIndicatorScore(d.id);
 					if (!score) return '<i>No Score</i>';
 
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;

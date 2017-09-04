@@ -27,24 +27,34 @@
 		});
 
 		// get data to download
+		return JSON.stringify({
+			whoAmI: App.whoAmI,
+			scoreData: indScoreDict,
+			costData: inputCostDict,
+			user: User,
+		});
+
 		const whoAmIData = JSON.stringify(App.whoAmI);
 		const scoreData = JSON.stringify(indScoreDict);
 		const costData = JSON.stringify(inputCostDict)
 		return `${whoAmIData}\n${scoreData}\n${costData}`;
 	}
 
-	// loads 3 part json data and ingests into application
-	App.loadSessionData = (sessionData) => {
-		const dataArr = sessionData.split('\n');
-		
-		let indScoreDict, inputCostDict;
+	// loads json data and ingests into application
+	App.loadSessionData = (sessionDataStr) => {
+		let sessionData;
 		try {
-			App.whoAmI = JSON.parse(dataArr[0]);
-			indScoreDict = JSON.parse(dataArr[1]);
-			inputCostDict = JSON.parse(dataArr[2]);
-		} catch (e) {
+			sessionData = JSON.parse(sessionDataStr);
+		} catch(e) {
 			return false;
 		}
+
+		for (let ind in sessionData.user) {
+			User[ind] = sessionData.user[ind];
+		}
+		App.whoAmI = sessionData.whoAmI;
+		indScoreDict = sessionData.scoreData;
+		inputCostDict = sessionData.costData;
 
 		// ingest scores and costs into App.jeeTree
 		App.jeeTree.forEach((cc) => {
@@ -99,7 +109,7 @@
 
 			// get score
 			const score = +d.score;
-			if (!isNaN(score) && score >= 1 && score <= 5) User.setIndicatorScore(indId, score);
+			if (!isNaN(score) && score >= 1 && score <= 5) App.setIndicatorScore(indId, score);
 		});
 		return true;
 	}

@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = true;
+	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
@@ -51,7 +51,7 @@ const App = {};
 
 				if (App.demoMode) {
 					// default to Kenya
-					d3.text('data/KE20170830-demo.ihr', (error, text) => {
+					d3.text('data/KE20170904-demo.ihr', (error, text) => {
 						const demoDataLoaded = App.loadSessionData(text);
 						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
 						App.updateAllCosts();
@@ -239,6 +239,12 @@ const App = {};
 		return [];
 	}
 
+	// gets the score in the user data for the indicator specified
+	App.getIndicatorScore = (indId) => {
+		const ind = App.getIndicator(indId);
+		return ind.score;
+	};
+
 	// returns average score for a set of given indicators
 	App.getAverageCurrentScore = (inds) => {
 		const indScores = [];
@@ -270,6 +276,13 @@ const App = {};
 		}
 		return null;
 	}
+
+	// sets the score in the user data for the indicator specified
+	App.setIndicatorScore = (indId, newScore) => {
+		const ind = App.getIndicator(indId);
+		ind.score = newScore;
+	};
+
 
 
 	/* ------------------ Cost Functions ------------------- */
@@ -304,7 +317,7 @@ const App = {};
 							input.recurringCost = 0;
 
 							input.line_items.forEach((li) => {
-								li.cost = App.getLineItemCost(li);
+								li.cost = App.getLineItemCost(li, exchangeRate);
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -346,9 +359,6 @@ const App = {};
 
 	// gets the cost of a line item
 	App.getLineItemCost = (li, exchangeRate) => {
-		// get exchange rate if not included
-		const exRate = exchangeRate || App.getExchangeRate();
-
 		// find cost information in globalBaseCosts dictionary
 		let costObj = App.globalBaseCosts.find((gbc) => {
 			return gbc.id === li.base_cost;
@@ -409,7 +419,7 @@ const App = {};
 		}
 
 		// convert to correct currency
-		cost *= exchangeRate;
+		cost *= exchangeRate || App.getExchangeRate();
 
 		// round to nearest one
 		return Math.round(cost);

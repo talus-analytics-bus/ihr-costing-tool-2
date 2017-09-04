@@ -36,7 +36,7 @@
 				.enter().append('div')
 					.attr('class', 'indicator-slot')
 					.classed('active', d => d.id === indId)
-					.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+					.classed('empty', d => typeof App.getIndicatorScore(d.id) === 'undefined')
 					.on('click', (d, i) => {
 						hasher.setHash(`scores/${capClass}/${i+1}`);
 					});
@@ -51,7 +51,7 @@
 				.attr('class', 'indicator-score');
 			scoreContainer.append('span')
 				.attr('class', 'score-none')
-				.style('display', d => User.getIndicatorScore(d.id) ? 'none' : 'inline')
+				.style('display', d => App.getIndicatorScore(d.id) ? 'none' : 'inline')
 				.html('<i>No Score</i>');
 			for (let i = 1; i <= 5; i++) {
 				scoreContainer.append('img')
@@ -60,7 +60,7 @@
 					.attr('alt', i)
 					.attr('score', i)
 					.style('display', (d) => {
-						return +User.getIndicatorScore(d.id) === i ? 'inline' : 'none';
+						return +App.getIndicatorScore(d.id) === i ? 'inline' : 'none';
 					});
 			}
 
@@ -92,7 +92,7 @@
 								.property('checked', !wasChecked);
 
 						// save user score
-						User.setIndicatorScore(indId, newScore);
+						App.setIndicatorScore(indId, newScore);
 
 						// update score for active indicator
 						const scoreContainer = d3.select('.indicator-slot.active .indicator-score');
