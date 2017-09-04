@@ -189,6 +189,14 @@
 .reset-button-container {
 	margin-top: 10px;
 }
+.cost-tooltip-img {
+	position: relative;
+	top: -2px;
+	width: 14px;
+	height: 14px;
+	margin-left: 3px;
+	@include opacity(0.8);
+}
 
 
 /* --- Results Table --- */
