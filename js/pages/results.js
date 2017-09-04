@@ -209,6 +209,16 @@
 			costChart.updateYAxisLabel(`${prefix} Cost`);
 		}
 
+		function setToCcAndUpdate(cc) {
+			selectedCapIds = cc.capacities.map(cap => cap.id);
+			updateDropdowns();
+			updateCostChart();
+
+			// scroll down to chart section
+			const scrollTop = $('.chart-section').position().top + 110;
+			$('html, body').animate({ scrollTop }, 600);
+		}
+
 
 		/* ---------------------- Instructions Section ----------------------*/
 		$('.num-costed-indicators').text(allIndicators.length);
@@ -280,18 +290,24 @@
 			.enter().append('div')
 				.attr('class', 'summary-text-box')
 				.each(function(d) {
-					if (!allCores.find(core => core.name === d.name)) {
+					d.isEmpty = !allCores.find(core => core.name === d.name);
+					if (d.isEmpty) {
 						$(this).tooltipster({
 							interactive: true,
-							content: 'There are no scored/costed indicators for this core element.' + 
+							content: 'There are <b>no scored/costed indicators</b> for this core element.' + 
 								` Click <span onclick="hasher.setHash('scores/${d.id}-1/1')">here</span>` +
 								' to go to the scoring page for this core element.',
 						});
 					}
+				})
+				.on('click', (d) => {
+					if (!d.isEmpty) {
+						setToCcAndUpdate(d);
+					}
 				});
 		stb.append('div')
 			.attr('class', (d) => {
-				if (allCores.find(core => core.name === d.name)) {
+				if (!d.isEmpty) {
 					let indicators = [];
 					d.capacities.forEach((cap) => {
 						indicators = indicators.concat(cap.indicators);
