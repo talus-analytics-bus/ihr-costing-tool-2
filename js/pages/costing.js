@@ -259,7 +259,7 @@
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: Definitions.startupCost });
+					$(this).tooltipster({ content: App.definitions.startupCost });
 				});
 			
 			const recurringContainer = itemFront.append('div')
@@ -292,7 +292,7 @@
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: Definitions.recurringCost });
+					$(this).tooltipster({ content: App.definitions.recurringCost });
 				});
 
 			itemFront.append('div')

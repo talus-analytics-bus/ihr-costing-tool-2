@@ -53,8 +53,8 @@
 			User[ind] = sessionData.user[ind];
 		}
 		App.whoAmI = sessionData.whoAmI;
-		indScoreDict = sessionData.scoreData;
-		inputCostDict = sessionData.costData;
+		const indScoreDict = sessionData.scoreData;
+		const inputCostDict = sessionData.costData;
 
 		// ingest scores and costs into App.jeeTree
 		App.jeeTree.forEach((cc) => {
