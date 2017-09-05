@@ -22,7 +22,9 @@ app.get('/', function(req, res) {
 app.post('/lineItemExport', function(req, res) {
 	// Load line item export template XLS
 	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Detailed Report Template.xlsx")
+	// XlsxPopulate.fromFileAsync("")
 	    .then(workbook => {
+	    	console.log('doing it!')
 	        // add the user data to the template
 	        const indicators = req.body.indicators;
 
@@ -282,7 +284,7 @@ app.post('/lineItemExport', function(req, res) {
 					const filenameStr = yyyymmdd + ' ' + whoAmI.abbreviation;*/
 
 					// res.attachment('test.xlsx');
-					res.setHeader('Content-disposition', 'attachment; filename=IHR Costing Tool - Detailed Report.XLSX');
+					// res.setHeader('Content-disposition', 'attachment; filename=IHR Costing Tool - Detailed Report.XLSX');
 					// res.attachment('IHR Costing Tool - Detailed Report - ' + filenameStr + '.xlsx');
 					res.end(blob);
 				});
