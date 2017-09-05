@@ -135,8 +135,6 @@
 				const yyyymmdd = `${year}${month}${day}`;
 				const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
 
-
-
 				a.download = "IHR Costing Tool - Detailed Report - " + filenameStr + ".xlsx";
 				document.body.appendChild(a);
 				a.click();

@@ -24,7 +24,6 @@ app.post('/lineItemExport', function(req, res) {
 	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Detailed Report Template.xlsx")
 	// XlsxPopulate.fromFileAsync("")
 	    .then(workbook => {
-	    	console.log('doing it!')
 	        // add the user data to the template
 	        const indicators = req.body.indicators;
 
@@ -268,24 +267,6 @@ app.post('/lineItemExport', function(req, res) {
 
 			workbook.outputAsync()
 				.then(function (blob) {
-					/*// set file name
-					const today = new Date();
-					const year = today.getFullYear();
-					let month = String(today.getMonth() + 1);
-					if (month.length === 1) month = `0${month}`;
-					let day = String(today.getDate());
-					if (day.length === 1) day = `0${day}`;
-					const yyyymmdd = `${year}${month}${day}`;
-					// const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
-
-					// const today = new Date();
-					// const dateStr = 
-					console.log(blob)
-					const filenameStr = yyyymmdd + ' ' + whoAmI.abbreviation;*/
-
-					// res.attachment('test.xlsx');
-					// res.setHeader('Content-disposition', 'attachment; filename=IHR Costing Tool - Detailed Report.XLSX');
-					// res.attachment('IHR Costing Tool - Detailed Report - ' + filenameStr + '.xlsx');
 					res.end(blob);
 				});
 	    });
