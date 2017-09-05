@@ -138,7 +138,8 @@
 			exchangeRate: App.getExchangeRate(),
 			whoAmI: App.whoAmI,
 			gbc: App.globalBaseCosts,
-			gsm: App.globalStaffMultipliers
+			gsm: App.globalStaffMultipliers,
+			User: User
 		}));
 	};
 })();
