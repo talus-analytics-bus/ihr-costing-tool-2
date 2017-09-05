@@ -23,6 +23,14 @@
 		function buildCapacityDescription() {
 			$('.capacity-description-container').html(Routing.templates['capacity-description']());
 			App.buildCapacityDescription(capId);
+
+			// hard-code tooltip for "Immunization"
+			if (capacity.name === 'Immunization') {
+				$('.capacity-tooltip-img').show().tooltipster({
+					interactive: true,
+					content: 'An alternative method to estimate vaccination costs is available using the <a href="http://www.avenirhealth.org/software-onehealth.php" target="_blank">OneHealth Tool</a>',
+				});
+			}
 		}
 
 		// build the indicator tabs
