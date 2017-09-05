@@ -314,12 +314,14 @@ app.post('/lineItemExport', function(req, res) {
 		         		}
 		         		costsSheet.cell(target_score_col + thisInputRow).value(inputTargetScoreVal);
 
-		         		// add auto subtotals for the input
-		         		// input cost: SU/C
-	         			costsSheet.cell(startup_col + thisInputRow).formula(`=SUM($${startup_col}${thisInputRow + 1}:$${startup_col}${thisInputRow + liCount})`);
+		         		// add auto subtotals for the input, if it's the costing worksheet
+		         		if (exportType === "costingWorksheet") {
+			         		// input cost: SU/C
+		         			costsSheet.cell(startup_col + thisInputRow).formula(`=SUM($${startup_col}${thisInputRow + 1}:$${startup_col}${thisInputRow + liCount})`);
 
-	         			// input cost: Rec
-	         			costsSheet.cell(recurring_col + thisInputRow).formula(`=SUM($${recurring_col}${thisInputRow + 1}:$${recurring_col}${thisInputRow + liCount})`);
+		         			// input cost: Rec
+		         			costsSheet.cell(recurring_col + thisInputRow).formula(`=SUM($${recurring_col}${thisInputRow + 1}:$${recurring_col}${thisInputRow + liCount})`);
+		         		}
 
          			});
 
