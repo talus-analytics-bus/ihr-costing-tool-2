@@ -156,7 +156,7 @@
 		}));
 	};
 
-	// TODO
+	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
 		NProgress.start();
 		const indArray = App.getAllIndicatorTree();
@@ -204,5 +204,4 @@
 			User: User
 		}));
 	};
-
 })();

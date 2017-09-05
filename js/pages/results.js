@@ -637,5 +637,10 @@
 
 			App.downloadText(fileName, sessionData);
 		});
+
+		// Downloading Costing Worksheet (contains all possible line items)
+		$('.export-empty-template-button').on('click', () => {
+			App.exportCostingWorksheet();
+		});
 	}
 })();

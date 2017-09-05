@@ -33,6 +33,11 @@
 			}
 		});
 
+		// Downloading Costing Worksheet (contains all possible line items)
+		$('.btn-blank-template').on('click', () => {
+			App.exportCostingWorksheet();
+		});
+
 		// clicking "next" button takes user to "who am i" page
 		$('.costs-instructions-start').click(() => { hasher.setHash('costs'); });
 	}

@@ -49,6 +49,11 @@
 			}
 		});
 
+		/* ------------------ Downloading Costing Worksheet (contains all possible line items) --------------- */
+		$('.btn-blank-template').on('click', () => {
+			App.exportCostingWorksheet();
+		});
+
 		/* ------------------ Uploading Qlick Score File --------------- */
 		// clicking "select score file" triggers file selection
 		$('.btn-score-file').on('click', () => {
