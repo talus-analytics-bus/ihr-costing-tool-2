@@ -22,11 +22,8 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "http": "0.0.0",
-    "node-sass": "^4.5.3",
-    "node-sassy": "0.0.1",
     "nodecli": "0.0.1",
     "path": "^0.12.7",
-    "scss-compile": "^0.1.7",
     "xlsx-populate": "^1.10.0"
   }
 }

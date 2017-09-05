@@ -7,12 +7,12 @@
 
 			// save the new target score type
 			const targetScoreType = d3.select(this).attr('ind');
-			User.setTargetScoreType(targetScoreType);
+			User.targetScoreType = targetScoreType;
 
 			if (targetScoreType === 'target') {
 				// save target score
 				const targetScore = $(this).find('select').val();
-				User.setTargetScore(targetScore);
+				User.targetScore = targetScore;
 			}
 
 			App.updateAllCosts();
@@ -22,7 +22,7 @@
 			const score = $(this).val();
 
 			// save target score
-			User.setTargetScore(score);
+			User.targetScore = score;
 			App.updateAllCosts();
 
 			// change color bar

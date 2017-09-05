@@ -12,6 +12,15 @@ const App = {};
 
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
+		// give a warning if user is not using Chrome or Firefox
+		const browser = navigator.userAgent;
+		if (browser.search('Chrome') === -1 && browser.search('Firefox') === -1) {
+			noty({
+				timeout: false,
+				maxWidth: 400,
+				text: '<b>Warning!</b><br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.',
+			});
+		}
 
 		// initiate behavior for navigation links
 		$('.tool-name').click(() => hasher.setHash(''));
@@ -51,7 +60,7 @@ const App = {};
 
 				if (App.demoMode) {
 					// default to Kenya
-					d3.text('data/KE20170830-demo.ihr', (error, text) => {
+					d3.text('data/KE20170904-demo.ihr', (error, text) => {
 						const demoDataLoaded = App.loadSessionData(text);
 						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
 						App.updateAllCosts();
@@ -239,6 +248,12 @@ const App = {};
 		return [];
 	}
 
+	// gets the score in the user data for the indicator specified
+	App.getIndicatorScore = (indId) => {
+		const ind = App.getIndicator(indId);
+		return ind.score;
+	};
+
 	// returns average score for a set of given indicators
 	App.getAverageCurrentScore = (inds) => {
 		const indScores = [];
@@ -270,6 +285,13 @@ const App = {};
 		}
 		return null;
 	}
+
+	// sets the score in the user data for the indicator specified
+	App.setIndicatorScore = (indId, newScore) => {
+		const ind = App.getIndicator(indId);
+		ind.score = newScore;
+	};
+
 
 
 	/* ------------------ Cost Functions ------------------- */
@@ -304,44 +326,7 @@ const App = {};
 							input.recurringCost = 0;
 
 							input.line_items.forEach((li) => {
-								const costObj = App.globalBaseCosts.find((gbc) => {
-									return gbc.id === li.base_cost;
-								});
-								li.cost = costObj ? costObj.cost : 0;
-
-								// include multipliers
-								if (li.staff_multiplier) {
-									const multiplierObj = App.globalStaffMultipliers.find((sm) => {
-										return sm.id === li.staff_multiplier;
-									});
-									if (multiplierObj) li.cost *= multiplierObj.count;
-								}
-								if (li.country_multiplier && App.whoAmI.name) {
-									let multiplier = 1;
-									if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
-										multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
-									} else {
-										multiplier = App.whoAmI.multipliers[li.country_multiplier];
-									}
-									if (multiplier) li.cost *= multiplier;
-								}
-								if (li.custom_multiplier_1) {
-									li.cost *= App.getMultiplierValue(li.custom_multiplier_1);
-								}
-								if (li.custom_multiplier_2) {
-									li.cost *= App.getMultiplierValue(li.custom_multiplier_2);
-								}
-
-								// add overhead if a salary
-								if (costObj && costObj.subheading_name === 'Salaries') {
-									li.cost *= 1 + App.whoAmI.staff_overhead_perc;
-								}
-
-								// convert to correct currency
-								li.cost *= exchangeRate;
-
-								// round to nearest one
-								li.cost = Math.round(li.cost);
+								li.cost = App.getLineItemCost(li, exchangeRate);
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -381,6 +366,75 @@ const App = {};
 		});
 	}
 
+	// gets the cost of a line item
+	App.getLineItemCost = (li, exchangeRate) => {
+		// find cost information in globalBaseCosts dictionary
+		let costObj = App.globalBaseCosts.find((gbc) => {
+			return gbc.id === li.base_cost;
+		});
+
+		// if cost information wasn't found, it must be buy/lease (append to id)
+		if (!costObj) {
+			costObj = App.globalBaseCosts.find((gbc) => {
+				return gbc.id === `${li.base_cost}.${User.buyOrLease}`;
+			});
+
+			// TODO the startup/capital/recurring flag should prob be tagged in GBC not LI
+			// change line item type and target score according to user's choice of buy/lease
+			if (User.buyOrLease === 'buy') {
+				li.line_item_type = 'start-up';
+				li.score_step_to = [d3.min(li.score_step_to)];  // keep lowest score
+			} else {
+				li.line_item_type = 'recurring';
+				li.score_step_to = d3.range(d3.min(li.score_step_to), 5);  // lowest score to 4 (including)
+			}
+		}
+
+		// something went wrong; cost object not found
+		if (!costObj) {
+			console.log(`Warning! Cost object not found for id: ${li.base_cost}`);
+			return 0;
+		}
+
+		// initialize cost
+		let cost = costObj ? costObj.cost : 0;
+
+		// include multipliers
+		if (li.staff_multiplier) {
+			const multiplierObj = App.globalStaffMultipliers.find((sm) => {
+				return sm.id === li.staff_multiplier;
+			});
+			if (multiplierObj) cost *= multiplierObj.count;
+		}
+		if (li.country_multiplier && App.whoAmI.name) {
+			let multiplier = 1;
+			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
+				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+			} else {
+				multiplier = App.whoAmI.multipliers[li.country_multiplier];
+			}
+			if (multiplier) cost *= multiplier;
+		}
+		if (li.custom_multiplier_1) {
+			cost *= App.getMultiplierValue(li.custom_multiplier_1);
+		}
+		if (li.custom_multiplier_2) {
+			cost *= App.getMultiplierValue(li.custom_multiplier_2);
+		}
+
+		// add overhead if a salary
+		if (costObj && costObj.subheading_name === 'Salaries') {
+			cost *= 1 + App.whoAmI.staff_overhead_perc;
+		}
+
+		// convert to correct currency
+		cost *= exchangeRate || App.getExchangeRate();
+
+		// round to nearest one
+		return Math.round(cost);
+	}
+
+
 	// builds the cost text for any level of the jeeTree above line item (e.g. indicator)
 	App.getCostText = (branch) => {
 		const startupCost = branch.startupCost + branch.capitalCost;
@@ -414,7 +468,11 @@ const App = {};
 	// parses multiplier string or integer and returns an integer
 	App.getMultiplierValue = (input) => {
 		if (typeof input === 'number') return input;
-		return Util.strToFloat(input);
+		else {
+			const outputTmp = input.split(' ');
+			return parseFloat(outputTmp[0]);
+		}
+		// return Util.strToFloat(input);
 	}
 
 

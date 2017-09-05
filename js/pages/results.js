@@ -209,6 +209,16 @@
 			costChart.updateYAxisLabel(`${prefix} Cost`);
 		}
 
+		function setToCcAndUpdate(cc) {
+			selectedCapIds = cc.capacities.map(cap => cap.id);
+			updateDropdowns();
+			updateCostChart();
+
+			// scroll down to chart section
+			const scrollTop = $('.chart-section').position().top + 110;
+			$('html, body').animate({ scrollTop }, 600);
+		}
+
 
 		/* ---------------------- Instructions Section ----------------------*/
 		$('.num-costed-indicators').text(allIndicators.length);
@@ -226,18 +236,23 @@
 
 
 		/* ---------------------- Cost Type Section ----------------------*/
-		$('.cost-type-row button').on('click', function onClick() {
-			costType = $(this).attr('value');
+		$('.cost-type-row button')
+			.each(function addTooltip() {
+				const type = $(this).attr('value');
+				$(this).tooltipster({ content: Definitions[`${type}Cost`] });
+			})
+			.on('click', function onClick() {
+				costType = $(this).attr('value');
 
-			$(`.cost-type-row button[value="${costType}"]`).addClass('active')
-				.siblings().removeClass('active');
-			if (costType === 'total') $('.cost-duration-row').slideDown();
-			else $('.cost-duration-row').slideUp();
+				$(`.cost-type-row button[value="${costType}"]`).addClass('active')
+					.siblings().removeClass('active');
+				if (costType === 'total') $('.cost-duration-row').slideDown();
+				else $('.cost-duration-row').slideUp();
 
-			updateSummaryCosts();
-			updateCostChartYAxis();
-			costChart.update(null, null, getCostFunc());
-		});
+				updateSummaryCosts();
+				updateCostChartYAxis();
+				costChart.update(null, null, getCostFunc());
+			});
 		$('.cost-duration-row button').on('click', function onClick() {
 			totalCostDuration = +$(this).attr('value');
 
@@ -275,18 +290,24 @@
 			.enter().append('div')
 				.attr('class', 'summary-text-box')
 				.each(function(d) {
-					if (!allCores.find(core => core.name === d.name)) {
+					d.isEmpty = !allCores.find(core => core.name === d.name);
+					if (d.isEmpty) {
 						$(this).tooltipster({
 							interactive: true,
-							content: 'There are no scored/costed indicators for this core element.' + 
+							content: 'There are <b>no scored/costed indicators</b> for this core element.' + 
 								` Click <span onclick="hasher.setHash('scores/${d.id}-1/1')">here</span>` +
 								' to go to the scoring page for this core element.',
 						});
 					}
+				})
+				.on('click', (d) => {
+					if (!d.isEmpty) {
+						setToCcAndUpdate(d);
+					}
 				});
 		stb.append('div')
 			.attr('class', (d) => {
-				if (allCores.find(core => core.name === d.name)) {
+				if (!d.isEmpty) {
 					let indicators = [];
 					d.capacities.forEach((cap) => {
 						indicators = indicators.concat(cap.indicators);
@@ -573,9 +594,7 @@
 
 		/* --------------------------- Export Section ---------------------------*/
 		$('.export-data-button')
-			.tooltipster({
-				content: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
-			})
+			.tooltipster({ content: Definitions.exportReport })
 			.on('click', () => {
 				NProgress.start();
 				App.exportLineItems((error) => {
@@ -586,9 +605,7 @@
 				});
 			});
 		$('.export-session-button')
-			.tooltipster({
-				content: 'The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.',
-			})
+			.tooltipster({ content: Definitions.exportSession })
 			.on('click', () => {
 				const sessionData = App.getSessionData();
 

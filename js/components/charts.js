@@ -238,7 +238,11 @@ const Charts = {};
 			indBlobs.enter().append('circle')
 				.attr('class', 'indicator-blob')
 				.each(function() {
-					$(this).tooltipster({ maxWidth: 400, content: '' });
+					$(this).tooltipster({
+						maxWidth: 400,
+						interactive: true,
+						content: '',
+					});
 				})
 				.merge(indBlobs)
 					.on('click', function(d) {
@@ -268,24 +272,59 @@ const Charts = {};
 						})
 						.attr('cy', d => y(yValFunc(d)))
 						.style('fill', d => colorScale(x(xValFunc(d))))
-						.each(function(d, i) {
-							$(this).tooltipster('content',
-								'<div class="cc-tooltip">' +
-									`<div class="cc-tooltip-title">${Util.capitalize(d.type)} (${d.id.toUpperCase()})</div>` +
-									`<div class="cc-tooltip-subtitle">${d.name}</div>` +
-									'<div class="cc-tooltip-block">' +
-										`<div>${App.moneyFormat(d.startupCost)}</div>` +
-										`<div>Startup Cost</div>` +
-									'</div>' +
-									'<div class="cc-tooltip-block">' +
-										`<div>${App.moneyFormat(d.capitalCost)}</div>` +
-										`<div>Capital Cost</div>` +
-									'</div>' +
-									'<div class="cc-tooltip-block">' +
-										`<div>${App.moneyFormat(d.recurringCost)}/yr</div>` +
-										`<div>Recurring Cost</div>` +
-									'</div>' +
-								'</div>');
+						.each(function addTooltip(d, i) {
+							const costData = [
+								{ name: 'Startup Cost', value: d.startupCost },
+								{ name: 'Capital Cost', value: d.capitalCost },
+								{ name: 'Recurring Cost', value: d.recurringCost, unit: '/yr' }
+							];
+
+							const contentContainer = d3.select(document.createElement('div'));
+							const content = contentContainer.append('div')
+								.attr('class', 'cc-tooltip');
+							content.append('div')
+								.attr('class', 'cc-tooltip-title')
+								.text(`${Util.capitalize(d.type)} (${d.id.toUpperCase()})`);
+							content.append('div')
+								.attr('class', 'cc-tooltip-subtitle')
+								.text(d.name);
+
+							const costBlocks = content.selectAll('.cc-tooltip-block')
+								.data(costData)
+								.enter().append('div')
+									.attr('class', 'cc-tooltip-block');
+							costBlocks.append('div')
+								.text((dd) => {
+									const costText = App.moneyFormat(dd.value);
+									if (dd.unit) return costText + dd.unit;
+									return costText;
+								});
+							costBlocks.append('div')
+								.text(dd => dd.name);
+
+							const goToCostingButton = content.append('div')
+								.attr('class', 'cc-tooltip-button-container')
+								.append('button')
+									.attr('class', 'cc-tooltip-button btn btn-secondary')
+										.text('Go to Costing');
+
+							// attach url redirect when clicking tooltip "go to costing" button
+							if (d.type === 'indicator') {
+								const idArr = d.id.split('.');
+								const capIdLink = idArr.slice(0, idArr.length - 1).join('-');
+								const indIdLink = idArr[idArr.length - 1];
+								const onClickStr = `hasher.setHash('costs/${capIdLink}/${indIdLink}')`;
+								goToCostingButton.attr('onClick', onClickStr);
+							} else if (d.type === 'action') {
+								console.log(d);
+								const idArr = d.id.split('.');
+								const capIdLink = idArr.slice(0, idArr.length - 2).join('-');
+								const indIdLink = idArr[idArr.length - 2];
+								const onClickStr = `hasher.setHash('costs/${capIdLink}/${indIdLink}')`;
+								goToCostingButton.attr('onClick', onClickStr);
+							}
+
+							$(this).tooltipster('content', contentContainer.html());
 						});
 		};
 

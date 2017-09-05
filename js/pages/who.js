@@ -9,7 +9,7 @@
 			name: 'Country Details',
 		}, {
 			abbr: 'default-costs',
-			name: 'Cost Assumptions',
+			name: 'Cost Assumptions (optional)',
 			children: ['personnel', 'technology', 'printing', 'meetings'],
 		}, {
 			abbr: 'personnel',
@@ -18,7 +18,7 @@
 			level: 1,
 		}, {
 			abbr: 'technology',
-			name: 'Technology',
+			name: 'Technology and Infrastructure',
 			level: 1,
 		}, {
 			abbr: 'printing',
@@ -221,7 +221,7 @@
 			{
 				name: 'central_hospitals_count',
 				description: 'Number of health care facilities in the country',
-				unit: 'facilities / country',
+				unit: 'health care facilities / country',
 			},/* {
 				name: 'central_epi_count',
 				description: 'Estimated total number of epidemiologists in the country',
@@ -229,7 +229,7 @@
 			}, */{
 				name: 'central_chw_count',
 				description: 'Number of community health workers in the country',
-				unit: 'people / country',
+				unit: 'community health workers / country',
 			}
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
@@ -268,17 +268,28 @@
 			return gbc.tab_name === blockInfo.name;
 		});
 
-		// add overhead percentage to the default costs so it is included in the
-		// page for user review
+		// add overhead percentage if personnel page
 		if (whoTab === 'personnel') {
 			defaultCosts.push({
-			  "cost": 0.6,
-			  "cost_unit": "% per year",
-			  "description": "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
-			  "id": "gbc.overhead",
-			  "name": "Overhead percentage",
-			  "tab_name": "Personnel compensation",
-			  "subheading_name": "Salaries",
+				cost: 0.6,
+				cost_unit: "% per year",
+				description: "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
+				id: "gbc.overhead",
+				name: "Overhead percentage",
+				tab_name: "Personnel compensation",
+				subheading_name: "Salaries",
+			});
+		}
+
+		// add buy/lease option if technology and infrastructure
+		if (whoTab === 'technology') {
+			defaultCosts.push({
+				type: "radio",
+				values: ["Buy", "Lease"],
+				description: "Choice of either buying or leasing facility space",
+				name: "Buy or lease facility space",
+				tab_name: "Technology and Infrastructure",
+				subheading_name: "Infrastructure",
 			});
 		}
 
@@ -391,17 +402,17 @@
 						.append('div')
 							.attr('class','dv-item-col col-sm-12');
 
+					const itemNameContainer = itemGroup.append('div')
+						.attr('class', 'dv-item-name-container');
+
 					// add header for item name
-					itemGroup.append('div')
+					itemNameContainer.append('div')
 						.attr('class','dv-item-name')
 						.append('b')
 						.text(itemName);
-
-					// add break
-					itemGroup.append('br');
 					
 					// add text for item description
-					itemGroup.append('span')
+					itemNameContainer.append('div')
 						.attr('class','dv-description')
 						.text(itemNode.description);
 
@@ -410,33 +421,50 @@
 						.attr('class','dv-input-group');
 
 					// add input for item cost
-					inputGroup.append('input')
-						.attr('class','dv-input form-control')
-						.attr('gbcid', itemNode.id);
+					if (itemNode.id) {
+						inputGroup.append('input')
+							.attr('class','dv-input form-control')
+							.attr('gbcid', itemNode.id);
 
-					// if it's a BGC:
-					if (itemNode.id.indexOf('gbc') > -1) {
-						// add label for input currency, if item is not
-						// "overhead percentage"
-						if (itemName !== "Overhead percentage") {
+						// if it's a BGC:
+						if (itemNode.id.indexOf('gbc') > -1) {
+							// add label for input currency, if item is not
+							// "overhead percentage"
+							if (itemName !== "Overhead percentage") {
+								inputGroup.append('span')
+									.attr('class','dv-currency');
+							}
+							// add label for input unit
 							inputGroup.append('span')
-								.attr('class','dv-currency');
+								.attr('class','dv-cost-unit')
+								.text(" " + itemNode.cost_unit);
+
+						} else {
+							// add label for input unit
+							inputGroup.append('span')
+								.attr('class','dv-cost-unit')
+								.text(" attendees");
 						}
-						// add label for input unit
-						inputGroup.append('span')
-							.attr('class','dv-cost-unit')
-							.text(" " + itemNode.cost_unit);
 
+						// add default text warning
+						inputGroup.append('div')
+							.attr('class','dv-default-text default-text');
 					} else {
-						// add label for input unit
-						inputGroup.append('span')
-							.attr('class','dv-cost-unit')
-							.text(" attendees");
+						// special case where user picks buy/lease
+						const btnContainer = inputGroup.append('div').attr('class', 'btn-group');
+						btnContainer.selectAll('div')
+							.data(itemNode.values)
+							.enter().append('div')
+								.attr('class', 'btn btn-secondary')
+								.classed('active', d => d.toLowerCase() === User.buyOrLease)
+								.text(d => d)
+								.on('click', function(d) {
+									$(this).addClass('active')
+										.siblings().removeClass('active');
+									User.buyOrLease = d.toLowerCase();
+									App.updateAllCosts();
+								});
 					}
-
-					// add default text warning
-					inputGroup.append('div')
-						.attr('class','dv-default-text default-text');
 				}
 			}			
 		}
@@ -481,8 +509,8 @@
 				} else {
 					const gsm = App.globalStaffMultipliers.find(d => d.id === gbcId);
 					input.node().value = (Util.comma(gsm.count));
-					$('.dv-currency').text(App.whoAmI.currency_iso);
 				}
+				$('.dv-currency').text(App.whoAmI.currency_iso);
 				
 				checkIfDefault(gbcId, this);
 			});

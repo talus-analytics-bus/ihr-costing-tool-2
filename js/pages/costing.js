@@ -49,7 +49,7 @@
 			const indSlots = indSlotContainers.append('div')
 				.attr('class', 'indicator-slot')
 				.classed('active', d => d.id === indId)
-				.classed('empty', d => typeof User.getIndicatorScore(d.id) === 'undefined')
+				.classed('empty', d => typeof App.getIndicatorScore(d.id) === 'undefined')
 				.on('click', (d, i) => {
 					hasher.setHash(`costs/${capClass}/${i+1}`);
 				});
@@ -73,7 +73,7 @@
 			const scoreContainer = indSlots.append('div')
 				.attr('class', 'indicator-score')
 				.html((d) => {
-					const score = User.getIndicatorScore(d.id);
+					const score = App.getIndicatorScore(d.id);
 					if (!score) return '<i>No Score</i>';
 
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
@@ -231,7 +231,9 @@
 
 			const startupContainer = itemFront.append('div')
 				.attr('class', 'item-startup-cost-container');
-			startupContainer.append('div').text('Startup Cost: ');
+			startupContainer.append('div')
+				.attr('class', 'item-cost-name')
+				.text('Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
 				.attr('value', (d) => {
@@ -250,11 +252,21 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
-			startupContainer.append('div').text(App.whoAmI.currency_iso);
+			startupContainer.append('div')
+				.attr('class', 'item-cost-currency')
+				.text(App.whoAmI.currency_iso);
+			startupContainer.append('img')
+				.attr('class', 'item-cost-tooltip-img')
+				.attr('src', 'img/question-mark.png')
+				.each(function addTooltip(d) {
+					$(this).tooltipster({ content: Definitions.startupCost });
+				});
 			
 			const recurringContainer = itemFront.append('div')
 				.attr('class', 'item-recurring-cost-container');
-			recurringContainer.append('div').text('Recurring Cost: ');
+			recurringContainer.append('div')
+				.attr('class', 'item-cost-name')
+				.text('Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
 				.attr('value', (d) => {
@@ -273,7 +285,15 @@
 					$container.find('.item-save-button').removeClass('primary');
 					App.updateAllCosts();
 				});
-			recurringContainer.append('div').text(`${App.whoAmI.currency_iso}/yr`);
+			recurringContainer.append('div')
+				.attr('class', 'item-cost-currency')
+				.text(`${App.whoAmI.currency_iso}/yr`);
+			recurringContainer.append('img')
+				.attr('class', 'item-cost-tooltip-img')
+				.attr('src', 'img/question-mark.png')
+				.each(function addTooltip(d) {
+					$(this).tooltipster({ content: Definitions.recurringCost });
+				});
 
 			itemFront.append('div')
 				.attr('class', 'item-save-cost-text')
@@ -321,16 +341,16 @@
 				.attr('class', 'item-details-container');
 
 			function buildTableInContent(title, dataFilterFunc) {
-				const startupBox = backContent.append('div')
+				const sBox = backContent.append('div')
 					.style('display', (d) => {
 						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
 						const lineItems = allLineItems.filter(dataFilterFunc);
 						return lineItems.length ? 'block' : 'none';
 					});
-				startupBox.append('div')
+				sBox.append('div')
 					.attr('class', 'item-details-title')
 					.text(title);
-				const sTableContainer = startupBox.append('div')
+				const sTableContainer = sBox.append('div')
 					.attr('class', 'line-item-table-container');
 				const sTable = sTableContainer.append('table')
 					.attr('class', 'line-item-table table table-condensed table-striped')
@@ -346,7 +366,7 @@
 				sNameCell.append('img')
 					.attr('class', 'line-item-description-button')
 					.attr('src', 'img/question-mark.png')
-					.each(function(d) {
+					.each(function addTooltipster(d) {
 						let contentStr = `<div class="li-tooltip-content">`;
 						contentStr += `<b>${d.name}:</b> ${d.description}`;
 						contentStr += `</div>`;
@@ -362,18 +382,30 @@
 				const sTotalRow = sTable.append('tr');
 				sTotalRow.append('td').text('Total');
 				sTotalRow.append('td').text((d) => {
-						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
-						const lineItems = allLineItems.filter(dataFilterFunc);
+					const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+					const lineItems = allLineItems.filter(dataFilterFunc);
 					return App.moneyFormatLong(d3.sum(lineItems, li => li.cost))
 				});
+
+				return sBox;
 			}
 
 			// add startup and recurring cost tables
-			buildTableInContent('Default Startup/Capital Costs', (li) => {
+			const sContent = buildTableInContent('Default Startup/Capital Costs', (li) => {
 				return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 			});
-			buildTableInContent('Default Recurring Costs', (li) => {
+			const rContent = buildTableInContent('Default Recurring Costs', (li) => {
 				return li.line_item_type === 'recurring';
+			});
+
+			// adjust height of tables if both tables are showing
+			d3.selectAll('.item-details-container').each(function adjustTableHeight(d) {
+				const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+				const recurringLi = allLineItems.filter(li => li.line_item_type === 'recurring');
+				if (recurringLi.length && recurringLi.length < allLineItems.length) {
+					d3.select(this).selectAll('.line-item-table-container')
+						.style('height', '57px');
+				}
 			});
 
 			// add button to return to view of front of card

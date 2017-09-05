@@ -87,18 +87,10 @@
 	.item-startup-cost-container {
 		margin-top: 20px;
 	}
-	.item-startup-cost-container,
-	.item-recurring-cost-container {
-		div:first-child {
-			display: inline-block;
-			width: 111px;
-			text-align: right;
-		}
-		div:last-child {
-			display: inline-block;
-			width: 60px;
-			text-align: left;
-		}
+	.item-cost-name {
+		display: inline-block;
+		width: 111px;
+		text-align: right;
 	}
 	.startup-cost-input,
 	.recurring-cost-input {
@@ -107,6 +99,18 @@
 		margin: 5px 7px 0;
 		padding: 6px 12px;
 		text-align: right;
+	}
+	.item-cost-currency {
+		display: inline-block;
+		width: 60px;
+		text-align: left;
+	}
+	.item-cost-tooltip-img {
+		position: relative;
+		top: -1px;
+		width: 16px;
+		height: 16px;
+		@include opacity(0.8);
 	}
 	.item-save-cost-text {
 		display: none;
