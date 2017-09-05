@@ -30,6 +30,7 @@
 				// read and ingest
 				const reader = new FileReader();
 				reader.onload = (e) => {
+					NProgress.start();
 					const success = App.loadSessionData(e.target.result);
 					if (success) {
 						App.updateAllCosts();
@@ -44,6 +45,7 @@
 							text: '<b>Error!</b><br>There was an error uploading your previous session.',
 						})
 					}
+					NProgress.done();
 				}
 				reader.readAsBinaryString(file);
 			}
@@ -51,7 +53,10 @@
 
 		/* ------------------ Downloading Costing Worksheet (contains all possible line items) --------------- */
 		$('.btn-blank-template').on('click', () => {
-			App.exportCostingWorksheet();
+			NProgress.start();
+			App.exportCostingWorksheet(() => {
+				NProgress.done();
+			});
 		});
 
 		/* ------------------ Uploading Qlick Score File --------------- */
@@ -76,6 +81,7 @@
 				// read and ingest
 				const reader = new FileReader();
 				reader.onload = (e) => {
+					NProgress.start();
 					const success = App.loadQlickScoreData(e.target.result);
 					if (success) {
 						App.updateAllCosts();
@@ -90,6 +96,7 @@
 							text: '<b>Error!</b><br>There was an error uploading the score data. Please check the file format.',
 						})
 					}
+					NProgress.done();
 				}
 				reader.readAsBinaryString(file);
 			}

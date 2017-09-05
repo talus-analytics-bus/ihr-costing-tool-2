@@ -111,7 +111,6 @@
 
 	// exports the line items the user has costed to an XLSX file.
 	App.exportLineItems = (callback) => {
-		NProgress.start();
 		const indArray = App.getCompleteIndicatorTree();
 
 		const xhr = new XMLHttpRequest();
@@ -158,7 +157,6 @@
 
 	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
-		NProgress.start();
 		const indArray = App.getAllIndicatorTree();
 
 		const xhr = new XMLHttpRequest();
