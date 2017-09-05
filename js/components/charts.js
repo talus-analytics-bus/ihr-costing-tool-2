@@ -71,14 +71,15 @@ const Charts = {};
 			.attr('x', x(1))
 			.attr('y', (height - rectHeight) / 2)
 			.attr('width', x(data[0]) - x(1))
-			.attr('height', rectHeight);
+			.attr('height', rectHeight)
+			.attr('fill', '#777');
 		chart.append('rect')
 			.attr('class', 'bar bar-1')
 			.attr('x', x(data[0]))
 			.attr('y', (height - rectHeight) / 2)
 			.attr('width', x(data[1]) - x(data[0]))
 			.attr('height', rectHeight)
-			.style('fill', 'url(#diagonalHatch)');
+			.attr('fill', 'url(#diagonalHatch)');
 
 		// add markers
 		chart.append('circle')

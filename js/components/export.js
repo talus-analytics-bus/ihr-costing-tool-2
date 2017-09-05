@@ -33,11 +33,6 @@
 			costData: inputCostDict,
 			user: User,
 		});
-
-		const whoAmIData = JSON.stringify(App.whoAmI);
-		const scoreData = JSON.stringify(indScoreDict);
-		const costData = JSON.stringify(inputCostDict)
-		return `${whoAmIData}\n${scoreData}\n${costData}`;
 	}
 
 	// loads json data and ingests into application
