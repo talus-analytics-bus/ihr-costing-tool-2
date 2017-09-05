@@ -387,9 +387,8 @@ const App = {};
 			} else {
 				li.line_item_type = 'recurring';
 				const score_step_to = [];  // lowest score to 4 (including)
-				for (let i = d3.min(li.score_step_to); i < 5; i++) {
-					li.score_step_to.push(String(i));
-				}
+				const minScore = +d3.min(li.score_step_to);
+				for (let i = minScore; i < 5; i++) score_step_to.push(String(i));
 				li.score_step_to = score_step_to.slice(0);
 			}
 		}
