@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.demoMode = false;
+	App.demoMode = true;
 	App.scoreLabels = {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
