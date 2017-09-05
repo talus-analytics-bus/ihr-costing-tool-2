@@ -40,8 +40,8 @@ app.post('/lineItemExport', function(req, res) {
          	// specify currency in final two col headers
          	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
          	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
-         	costsSheet.cell("U1").value('Do not edit: Start-up/Capital costs (' + currencyCode + ')');
-         	costsSheet.cell("V1").value('Do not edit: Annual recurring costs (' + currencyCode + ')');
+         	costsSheet.cell("U1").value('Start-up/Capital costs (' + currencyCode + ')');
+         	costsSheet.cell("V1").value('Annual recurring costs (' + currencyCode + ')');
 
          	// get multipliers
          	const gbc = req.body.gbc;
