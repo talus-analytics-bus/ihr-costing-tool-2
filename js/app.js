@@ -18,7 +18,7 @@ const App = {};
 			noty({
 				timeout: false,
 				maxWidth: 400,
-				text: '<b>Warning!</b><br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.',
+				text: '<b>Warning!<br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.</b>',
 			});
 		}
 
