@@ -38,6 +38,9 @@ app.post('/lineItemExport', function(req, res) {
          	const gbc = req.body.gbc;
          	const gsm = req.body.gsm;
 
+         	// get user data
+         	const User = req.body.User;
+
          	// get country params
          	const whoAmI = req.body.whoAmI;
 
@@ -172,7 +175,13 @@ app.post('/lineItemExport', function(req, res) {
 		         			costsSheet.cell(description_col + n).value(lineItem.description);
 
 							// Base cost name
-							const curGbc = gbc.find(d => d.id === lineItem.base_cost);
+							let curGbc = gbc.find(d => d.id === lineItem.base_cost);
+							if (!curGbc) {
+								curGbc = App.globalBaseCosts.find((d) => {
+									return d.id === lineItem.base_cost + '.' + User.buyOrLease;
+								});
+								console.log(curGbc);
+							}
 		         			costsSheet.cell(base_cost_col + n).value(curGbc.name);
 
 							// Base cost amount
