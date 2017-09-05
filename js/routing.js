@@ -93,14 +93,14 @@ const Routing = {};
 		hasher.init();		
 	};
 
-	const okayPages = ['home', 'country', 'background', 'contact'];
+	const blockedPages = ['who', 'costs', 'results'];
 
 	function loadPage(pageName, func, ...data) {
 		// kill any noty notifications
 		// $.noty.closeAll();
 
 		// user must have set country before proceeding to costing
-		if (!App.whoAmI.abbreviation && !okayPages.includes(pageName)) {
+		if (!App.whoAmI.abbreviation && blockedPages.includes(pageName)) {
 			hasher.setHash('country');
 			noty({ text: '<b>Select a country before proceeding!</b>' });
 			return;

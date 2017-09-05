@@ -383,10 +383,13 @@ const App = {};
 			// change line item type and target score according to user's choice of buy/lease
 			if (User.buyOrLease === 'buy') {
 				li.line_item_type = 'start-up';
-				li.score_step_to = [d3.min(li.score_step_to)];  // keep lowest score
+				li.score_step_to = [String(d3.min(li.score_step_to))];  // keep lowest score
 			} else {
 				li.line_item_type = 'recurring';
-				li.score_step_to = d3.range(d3.min(li.score_step_to), 5);  // lowest score to 4 (including)
+				li.score_step_to = [];  // lowest score to 4 (including)
+				for (let i = li.score_step_to; i < 5; i++) {
+					li.score_step_to.push(String(i));
+				}
 			}
 		}
 
