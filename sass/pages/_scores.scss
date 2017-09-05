@@ -31,7 +31,7 @@
 	cursor: pointer;
 	vertical-align: top;
 
-	&.active { font-weight: 600; }
+	&.active .score-label { font-weight: 600; }
 	&:first-child.active,
 	&:first-child:hover {
 		@include gradient(rgba($jeeRed, 0.1), rgba($jeeRed, 0.4));
