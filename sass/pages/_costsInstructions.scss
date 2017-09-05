@@ -1,6 +1,9 @@
 .costs-instructions-container {
-	& > div:nth-child(n+2) {
+	.instructions-section {
 		margin-top: 15px;
+	}
+	.upload-button-container {
+		margin-bottom: 30px;
 	}
   div.start-button-container {
   	text-align: center;
@@ -16,6 +19,7 @@
 }
 .target-score-section {
 	margin-left: 15px;
+	margin-bottom: 20px;
 
 	.target-score-option {
 		margin-bottom: 10px;

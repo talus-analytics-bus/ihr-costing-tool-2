@@ -163,7 +163,7 @@
 			}
 		}
 
-		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
+		$('.next-button').click(() => hasher.setHash('costs/country-details'));
 	}
 
 	const initCountryDetailsTab = () => {
@@ -250,6 +250,7 @@
 		phInputCell.append('span').text(d => d.unit);
 
 		// previous and next buttons
+		$('.next-button').click(() => hasher.setHash('costs/personnel'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 

@@ -18,7 +18,7 @@ const App = {};
 			noty({
 				timeout: false,
 				maxWidth: 400,
-				text: '<b>Warning!</b><br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.',
+				text: '<b>Warning!<br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.</b>',
 			});
 		}
 
@@ -383,10 +383,13 @@ const App = {};
 			// change line item type and target score according to user's choice of buy/lease
 			if (User.buyOrLease === 'buy') {
 				li.line_item_type = 'start-up';
-				li.score_step_to = [d3.min(li.score_step_to)];  // keep lowest score
+				li.score_step_to = [String(d3.min(li.score_step_to))];  // keep lowest score
 			} else {
 				li.line_item_type = 'recurring';
-				li.score_step_to = d3.range(d3.min(li.score_step_to), 5);  // lowest score to 4 (including)
+				const score_step_to = [];  // lowest score to 4 (including)
+				const minScore = +d3.min(li.score_step_to);
+				for (let i = minScore; i < 5; i++) score_step_to.push(String(i));
+				li.score_step_to = score_step_to.slice(0);
 			}
 		}
 

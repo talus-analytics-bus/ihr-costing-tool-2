@@ -23,6 +23,14 @@
 		function buildCapacityDescription() {
 			$('.capacity-description-container').html(Routing.templates['capacity-description']());
 			App.buildCapacityDescription(capId);
+
+			// hard-code tooltip for "Immunization"
+			if (capacity.name === 'Immunization') {
+				$('.capacity-tooltip-img').show().tooltipster({
+					interactive: true,
+					content: 'An alternative method to estimate vaccination costs is available using the <a href="http://www.avenirhealth.org/software-onehealth.php" target="_blank">OneHealth Tool</a>',
+				});
+			}
 		}
 
 		// build the indicator tabs
@@ -81,15 +89,24 @@
 						const newScore = wasChecked ? undefined : d;
 
 						// deactivate all rows and unselect radio buttons
-						d3.selectAll('.score-row')
-							.classed('active', false)
-							.selectAll('input')
-								.property('checked', false);
+						const allRows = d3.selectAll('.score-row')
+							.classed('active', false);
+						allRows.select('input')
+							.property('checked', false);
+						allRows.select('.score-description-cell')
+							.text((d) => {
+								const desc = indicator.score_descriptions[d];
+								return desc.length > 300 ? `${desc.slice(0, 300)}...` : desc;
+							});
 
 						// toggle row clicked
 						currRow.classed('active', !wasChecked)
-							.select('input')
-								.property('checked', !wasChecked);
+						currRow.select('input')
+							.property('checked', !wasChecked);
+
+						// show full descriptions for active scores
+						d3.select('.score-row.active .score-description-cell')
+							.text(d => indicator.score_descriptions[d]);
 
 						// save user score
 						App.setIndicatorScore(indId, newScore);
@@ -122,11 +139,15 @@
 				.attr('class', 'rp-score-table-img rp-score')
 				.attr('src', d => `img/rp-${d}.png`);
 			scoreLabels.append('span')
+				.attr('class', 'score-label')
 				.text(d => App.scoreLabels[d]);
 
 			scoreRows.append('td')
 				.attr('class', 'score-description-cell')
-				.text(d => indicator.score_descriptions[d]);
+				.text((d) => {
+					const desc = indicator.score_descriptions[d];
+					return desc.length > 300 ? `${desc.slice(0, 300)}...` : desc;
+				});
 			scoreRows.append('td');
 		};
 		

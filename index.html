@@ -171,32 +171,44 @@
 				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
 				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.</p>
 			</div>
-			<div>
-			<h2>Upload Prior Session</h2>
-			<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
-			<p>1. Select an IHR data file from your computer using the button below. You will see “Upload Successful” once the file upload is complete.</p.>
-			<p>2. Click “Continue to Scores” to review and enter additional scores, as needed</p.>
-			</div>
+			<div class="overview-section">
+				<h2>Upload Prior Session</h2>
+				<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
+				<ul>
+					<li>Select an IHR data file from your computer using the button below. You will see “Upload Successful” once the file upload is complete.</li>
+					<li>Click “Continue to Scores” to review and enter additional scores, as needed
+				</ul>
 				<div class="upload-button-container">
 				  <input id="prior-session" class="input-prior-session" type="file" />
 				  <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
 				</div>
-			<div>
+			</div>
+			<div class="overview-section">
 				<h2>Upload Scores</h2>
 				<p>
 					Score upload requires the report format used by the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, an online source 
 					for completed JEE assessments.
 					<img class="jee-tool-img" src="img/question-mark.png" />
 				</p>
-				<p>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</p>
-				<p>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</p>
-				<p>3. Click “Continue to Scores” to review uploaded scores.</p>
+				<ul>
+					<li>1. Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</li>
+					<li>2. Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</li>
+					<li>3. Click “Continue to Scores” to review uploaded scores.</li>
+				</ul>
 				<div class="upload-button-container">
 					<a class="export-button-link" href="export/IHR Costing Tool - JEE Score Input Template.xlsx"><button type="button" class="btn btn-secondary">Download Blank Template</button></a>
 					<button type="button" class="btn btn-secondary btn-score-file">Select Score File</button>
 					<input id="score-file-upload" class="input-score-file" type="file" />
+				</div>
 			</div>
-			<div>
+			<div class="overview-section">
+				<h2>Download Blank Template</h2>
+				<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
+				<div class="upload-button-container">
+				  <button type="button" class="btn btn-secondary btn-blank-template">Download Blank Template</button>
+				</div>
+			</div>
+			<div class="overview-section">
 				<h2>Manual Score Entry</h2>
 				<p>If no electronic report is available in the required upload format, scores can be entered manually. Click “Continue to Scores” to begin score entry.</p>
 				<div class="next-button-container">
@@ -215,6 +227,7 @@
 					<h1>Assessment</h1>
 					<div class="capacity-name-container">
 						<span class="capacity-name"></span>
+						<img class="capacity-tooltip-img" src="img/question-mark.png" />
 					</div>
 					<div class="score-instructions instructions">
 						<p>Choose a score for each indicator below based on the current JEE assessment capacity. Any previously uploaded scores are pre-populated for review.</p>
@@ -264,7 +277,7 @@
 				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.</p>
 				<p>Costs associated with implementing the International Health Regulations depend on the target score level a country wants to achieve as well as population size, geopolitical organization, and public health infrastructure. Note that no additional costs are calculated for indicators that have already achieved a score of 4 - Demonstrated Capacity.</p>
 			</div>
-			<div>
+			<div class="instructions-section">
 				<h2>Process Overview</h2>
 				<p>
 					Costing includes three major steps:
@@ -280,7 +293,7 @@
 					</li>
 				</ol>
 			</div>
-			<div>
+			<div class="instructions-section">
 				<h2>Select Target Score</h2>
 				<p class="target-score-description">
 					Choose a method to set target scores.
@@ -301,6 +314,13 @@
 						<input type="radio" />
 						<span>Set target score 1 point higher for each indicator</span>
 					</div>
+				</div>
+			</div>
+			<div class="instructions-section">
+				<h2>Download Blank Template</h2>
+				<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
+				<div class="upload-button-container">
+				  <button type="button" class="btn btn-secondary btn-blank-template">Download Blank Template</button>
 				</div>
 			</div>
 			<div class="start-button-container">
@@ -350,7 +370,7 @@
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
+						<button type="button" class="btn btn-primary next-button">Next</button>
 					</div>
 				</div>
 
@@ -384,7 +404,7 @@
 						</div>
 					</div>
 					<div class="next-button-container">
-						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
+						<button type="button" class="btn btn-secondary next-button">Next</button>
 					</div>
 				</div>
 
@@ -399,7 +419,7 @@
 						<div class="dv-container"></div>
 					</div>
 					<div class="next-button-container">
-						<button type="button" class="btn btn-primary proceed-button">Proceed to Costing</button>
+						<button type="button" class="btn btn-primary proceed-button">Go to Costing</button>
 					</div>
 				</div>
 			</div>
@@ -461,14 +481,7 @@
 			<div class="results-content">
 				<div class="results-button-container">
 					<button class="view-table-button btn btn-secondary">View Data Table</button>
-					<button class="export-data-button btn btn-secondary">
-						Export Detailed Report
-						<img src="img/question-mark.png" />
-					</button>
-					<button class="export-session-button btn btn-secondary">
-						Download IHR Data File
-						<img src="img/question-mark.png" />
-					</button>
+					<button class="view-export-button btn btn-secondary">Export Data</button>
 				</div>
 				<div class="results-instructions results-section">
 					<div class="results-section-title">Instructions</div>
@@ -614,6 +627,38 @@
 						<table class="action-table table table-sm table-hover"></table>
 					</div>
 				</div>
+				<div class="results-export-content">
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-data-button btn btn-primary">
+								Export Detailed Report
+							</button>
+						</div>
+						<div class="export-button-text">
+							The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.
+						</div>
+					</div>
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-empty-template-button btn btn-primary">
+								Export Blank Template
+							</button>
+						</div>
+						<div class="export-button-text">
+							The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.
+						</div>
+					</div>
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-session-button btn btn-primary">
+								Download IHR Data File
+							</button>
+						</div>
+						<div class="export-button-text">
+							The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</script>
@@ -670,9 +715,15 @@
 			<h4>Capacity Description</h4>
 		</div>
 		<div class="capacity-description-details">
-			<p> <b>Target: </b><span class="capacity-target"></span></p>
-			<p> <b>Desired Impact: </b><span class="capacity-desired-impact"></span></p>
-			<p> <b>Additional Notes: </b> <span class="capacity-additional-notes"></span> </p>
+			<p class="capacity-target-container">
+				<b>Target: </b><span class="capacity-target"></span>
+			</p>
+			<p class="capacity-desired-impact-container">
+				<b>Desired Impact: </b><span class="capacity-desired-impact"></span>
+			</p>
+			<p class="capacity-additional-notes-container">
+				<b>Additional Notes: </b> <span class="capacity-additional-notes"></span>
+			</p>
 		</div>
 	</script>
 
