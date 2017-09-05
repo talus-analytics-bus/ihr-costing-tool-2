@@ -181,9 +181,10 @@
 				if (day.length === 1) day = `0${day}`;
 				const yyyymmdd = `${year}${month}${day}`;
 				const countryCodeFn = App.whoAmI.abbreviation || '';
-				const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
+				const filenameStr = yyyymmdd;
+				// const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
 
-				a.download = "IHR Costing Tool - Costing Worksheet Template - " + filenameStr + ".xlsx";
+				a.download = "IHR Costing Tool - Costing Worksheet - " + filenameStr + ".xlsx";
 				document.body.appendChild(a);
 				a.click();
 				if (callback) callback(null);

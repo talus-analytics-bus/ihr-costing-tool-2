@@ -37,9 +37,34 @@ app.post('/lineItemExport', function(req, res) {
          	// get costs sheet
          	const costsSheet = workbook.sheet("Costs");
 
+         	// define column names
+			const indicator_col = 'A';
+			const current_score_col = 'B';
+			const target_score_col = 'C';
+			const action_col = 'D';
+			const input_col = 'E';
+			const line_item_col = 'F';
+			const line_item_type_col = 'G';
+			const description_col = 'H';
+			const id_col = 'I';
+			const base_cost_col = 'J';
+			const cost_amount_col = 'K';
+			const cost_unit_col = 'L';
+			const country_multiplier_col = 'M';
+			const country_multiplier_unit_col = 'N';
+			const custom_mult1_col = 'O';
+			const custom_mult1_unit_col = 'P';
+			const custom_mult2_col = 'Q';
+			const custom_mult2_unit_col = 'R';
+			const staff_mult_col = 'S';
+			const staff_mult_unit_col = 'T';
+			const startup_col = 'U';
+			const recurring_col = 'V';
+
          	// specify currency in final two col headers
          	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
          	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
+         	costsSheet.cell(`${cost_amount_col}1`).value('Base cost amount (' + currencyCode + ')');
          	costsSheet.cell("U1").value('Start-up/Capital costs (' + currencyCode + ')');
          	costsSheet.cell("V1").value('Annual recurring costs (' + currencyCode + ')');
 
@@ -80,29 +105,7 @@ app.post('/lineItemExport', function(req, res) {
 			  "null": ""
 			}
 
-			// define column names
-			const indicator_col = 'A';
-			const current_score_col = 'B';
-			const target_score_col = 'C';
-			const action_col = 'D';
-			const input_col = 'E';
-			const line_item_col = 'F';
-			const line_item_type_col = 'G';
-			const description_col = 'H';
-			const id_col = 'I';
-			const base_cost_col = 'J';
-			const cost_amount_col = 'K';
-			const cost_unit_col = 'L';
-			const country_multiplier_col = 'M';
-			const country_multiplier_unit_col = 'N';
-			const custom_mult1_col = 'O';
-			const custom_mult1_unit_col = 'P';
-			const custom_mult2_col = 'Q';
-			const custom_mult2_unit_col = 'R';
-			const staff_mult_col = 'S';
-			const staff_mult_unit_col = 'T';
-			const startup_col = 'U';
-			const recurring_col = 'V';
+			
 
          	// track sheet row
          	let n = 1;
@@ -154,9 +157,17 @@ app.post('/lineItemExport', function(req, res) {
 	         			// track what scores the line items had
 	         			let liScores = [];
 
+	         			// cost worksheet only: track how many line items belong to this input so we can
+	         			// total them up at the end
+	         			let liCount = 0;
+
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
 	         				n++;
+	         				
+	         				// increment line item count for this input
+	         				liCount++;
+
 	         				// indicator name
 			         		// n++;
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
@@ -186,10 +197,10 @@ app.post('/lineItemExport', function(req, res) {
 		         			costsSheet.cell(input_col + n).value(input.name);
 
 		         			// input cost: SU/C
-		         			costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+		         			costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
 		         			// input cost: Rec
-		         			costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+		         			costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
 							// line item name
 		         			// n++;
@@ -302,6 +313,14 @@ app.post('/lineItemExport', function(req, res) {
 		         			inputTargetScoreVal = liScores.join(', ');
 		         		}
 		         		costsSheet.cell(target_score_col + thisInputRow).value(inputTargetScoreVal);
+
+		         		// add auto subtotals for the input
+		         		// input cost: SU/C
+	         			costsSheet.cell(startup_col + thisInputRow).formula(`=SUM($${startup_col}${thisInputRow + 1}:$${startup_col}${thisInputRow + liCount})`);
+
+	         			// input cost: Rec
+	         			costsSheet.cell(recurring_col + thisInputRow).formula(`=SUM($${recurring_col}${thisInputRow + 1}:$${recurring_col}${thisInputRow + liCount})`);
+
          			});
 
          		});
