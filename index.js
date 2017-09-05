@@ -53,6 +53,7 @@ app.post('/lineItemExport', function(req, res) {
 
 			// hash table for country parameters
 			const countryParamHash = {
+			  "population": "Population",
 			  "central_area_count": "Central area count",
 			  "intermediate_1_area_count": "Intermediate 1 area count",
 			  "intermediate_2_area_count": "Intermediate 2 area count",
