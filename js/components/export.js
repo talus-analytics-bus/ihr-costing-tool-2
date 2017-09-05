@@ -137,6 +137,7 @@
 			}
 			if (callback) callback(this.status);
 		};
+		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
 		xhr.send(JSON.stringify({
 			indicators: indArray, 
 			currencyCode: App.whoAmI.currency_iso,

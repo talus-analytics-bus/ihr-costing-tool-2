@@ -177,15 +177,25 @@ app.post('/lineItemExport', function(req, res) {
 							// Base cost name
 							let curGbc = gbc.find(d => d.id === lineItem.base_cost);
 							if (!curGbc) {
-								curGbc = App.globalBaseCosts.find((d) => {
+								curGbc = gbc.find((d) => {
 									return d.id === lineItem.base_cost + '.' + User.buyOrLease;
 								});
-								console.log(curGbc);
 							}
-		         			costsSheet.cell(base_cost_col + n).value(curGbc.name);
+
+							// add overhead if salary
+							const isSalary = curGbc.name.indexOf('salary') > -1;
+							let base_cost_name = curGbc.name;
+							if (isSalary) {
+								base_cost_name = base_cost_name + ' plus overhead (' + whoAmI.staff_overhead_perc_str + ')'; 
+							} 
+		         			costsSheet.cell(base_cost_col + n).value(base_cost_name);
 
 							// Base cost amount
-		         			costsSheet.cell(cost_amount_col + n).value(curGbc.cost * exchangeRate);
+							if (isSalary) {
+			         			costsSheet.cell(cost_amount_col + n).value(curGbc.cost * exchangeRate * (1.0 + whoAmI.staff_overhead_perc));
+							} else {
+			         			costsSheet.cell(cost_amount_col + n).value(curGbc.cost * exchangeRate);
+							}
 		         			
 							// Base cost unit
 		         			costsSheet.cell(cost_unit_col + n).value(curGbc.cost_unit);
