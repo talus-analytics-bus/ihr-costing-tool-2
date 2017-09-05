@@ -145,6 +145,7 @@
 		};
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
 		xhr.send(JSON.stringify({
+			exportType: 'userData',
 			indicators: indArray, 
 			currencyCode: App.whoAmI.currency_iso,
 			exchangeRate: App.getExchangeRate(),
@@ -154,4 +155,52 @@
 			User: User
 		}));
 	};
+
+	// TODO
+	App.exportCostingWorksheet = (callback) => {
+		NProgress.start();
+		const indArray = App.getAllIndicatorTree();
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/lineItemExport', true);
+		xhr.responseType = 'blob';
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.onload = function(e) {
+			if (this.status == 200) {
+				const blob = new Blob([this.response], {type: 'application/vnd.ms-excel'});
+				const downloadUrl = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = downloadUrl;
+
+				// set file name
+				const today = new Date();
+				const year = today.getFullYear();
+				let month = String(today.getMonth() + 1);
+				if (month.length === 1) month = `0${month}`;
+				let day = String(today.getDate());
+				if (day.length === 1) day = `0${day}`;
+				const yyyymmdd = `${year}${month}${day}`;
+				const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
+
+				a.download = "IHR Costing Tool - Costing Worksheet Template - " + filenameStr + ".xlsx";
+				document.body.appendChild(a);
+				a.click();
+				if (callback) callback(null);
+				return;
+			}
+			if (callback) callback(this.status);
+		};
+		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
+		xhr.send(JSON.stringify({
+			exportType: 'userData',
+			indicators: indArray, 
+			currencyCode: App.whoAmI.currency_iso,
+			exchangeRate: App.getExchangeRate(),
+			whoAmI: App.whoAmI,
+			gbc: App.globalBaseCosts,
+			gsm: App.globalStaffMultipliers,
+			User: User
+		}));
+	};
+
 })();

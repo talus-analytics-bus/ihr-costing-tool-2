@@ -20,8 +20,14 @@ app.get('/', function(req, res) {
 // Routine to read line item export template XLS, write user line items,
 // and download result to browser
 app.post('/lineItemExport', function(req, res) {
+
+	// if exporting user session data, use detailed report template
+	// if exporting entire blank worksheet template, use costing worksheet template
+	const exportType = req.body.exportType;
+	const fromFileAsyncFn = (exportType === 'userData') ? "./export/IHR Costing Tool - Detailed Report Template.xlsx" : "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
+
 	// Load line item export template XLS
-	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Detailed Report Template.xlsx")
+	XlsxPopulate.fromFileAsync(fromFileAsyncFn)
 	// XlsxPopulate.fromFileAsync("")
 	    .then(workbook => {
 	        // add the user data to the template

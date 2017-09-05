@@ -537,6 +537,20 @@ const App = {};
 		return completeIndicators;
 	}
 
+	// retrieves a copy of all indicators and all levels below, regardless of whether
+	// completed or not
+	App.getAllIndicatorTree = () => {
+		const allIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					allIndicators.push(ind);
+				});
+			});
+		});
+		return allIndicators;
+	}
+
 	App.downloadText = (fileName, data) => {
 		const uri = `data:application/csv;charset=utf-8,${escape(data)}`;
 		const link = document.createElement('a');
