@@ -180,6 +180,7 @@
 				let day = String(today.getDate());
 				if (day.length === 1) day = `0${day}`;
 				const yyyymmdd = `${year}${month}${day}`;
+				const countryCodeFn = App.whoAmI.abbreviation || '';
 				const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
 
 				a.download = "IHR Costing Tool - Costing Worksheet Template - " + filenameStr + ".xlsx";
@@ -192,7 +193,7 @@
 		};
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
 		xhr.send(JSON.stringify({
-			exportType: 'userData',
+			exportType: 'costingWorksheet',
 			indicators: indArray, 
 			currencyCode: App.whoAmI.currency_iso,
 			exchangeRate: App.getExchangeRate(),

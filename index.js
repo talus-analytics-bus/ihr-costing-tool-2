@@ -24,7 +24,8 @@ app.post('/lineItemExport', function(req, res) {
 	// if exporting user session data, use detailed report template
 	// if exporting entire blank worksheet template, use costing worksheet template
 	const exportType = req.body.exportType;
-	const fromFileAsyncFn = (exportType === 'userData') ? "./export/IHR Costing Tool - Detailed Report Template.xlsx" : "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
+	const exportOnlyCostedData = exportType === 'userData';
+	const fromFileAsyncFn = (exportOnlyCostedData) ? "./export/IHR Costing Tool - Detailed Report Template.xlsx" : "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
 
 	// Load line item export template XLS
 	XlsxPopulate.fromFileAsync(fromFileAsyncFn)
@@ -37,7 +38,8 @@ app.post('/lineItemExport', function(req, res) {
          	const costsSheet = workbook.sheet("Costs");
 
          	// specify currency in final two col headers
-         	const currencyCode = req.body.currencyCode;
+         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
+         	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
          	costsSheet.cell("U1").value('Do not edit: Start-up/Capital costs (' + currencyCode + ')');
          	costsSheet.cell("V1").value('Do not edit: Annual recurring costs (' + currencyCode + ')');
 
@@ -49,9 +51,12 @@ app.post('/lineItemExport', function(req, res) {
          	const User = req.body.User;
 
          	// get country params
-         	const whoAmI = req.body.whoAmI;
+         	const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":"Country","intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
+         	const whoAmIWasSpecified = req.body.whoAmI.abbreviation !== undefined;
+         	const whoAmI = (whoAmIWasSpecified) ? req.body.whoAmI : unspecWhoAmI;
 
          	// get exchange rate
+
          	const exchangeRate = req.body.exchangeRate;
 
          	// hash table for line item type
@@ -114,6 +119,10 @@ app.post('/lineItemExport', function(req, res) {
          			// process inputs
          			action.inputs.forEach(function(input){
          				n++;
+
+         				// store this input's row so we can come back to it after adding the line items
+         				const thisInputRow = n;
+
          				// indicator name
 		         		// n++;
 		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
@@ -121,9 +130,6 @@ app.post('/lineItemExport', function(req, res) {
 		         		// indicator starting score
 		         		costsSheet.cell(current_score_col + n).value(ind.score);
 
-		         		// indicator target score
-		         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
-	         			
 	         			// action name
 	         			// n++;
 	         			costsSheet.cell(action_col + n).value(action.name);
@@ -141,6 +147,9 @@ app.post('/lineItemExport', function(req, res) {
 	         			// format row
 	         			costsSheet.range("A" + n + ":V" + n).style({fill: "D9D9D9"})
 
+	         			// track what scores the line items had
+	         			let liScores = [];
+
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
 	         				n++;
@@ -151,8 +160,14 @@ app.post('/lineItemExport', function(req, res) {
 			         		// indicator starting score
 			         		costsSheet.cell(current_score_col + n).value(ind.score);
 
-			         		// indicator target score
-			         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
+			         		// input or line item target score
+			         		let lineItemTargetScoreVal = "";
+			         		if (exportOnlyCostedData) {
+			         			lineItemTargetScoreVal = ind.targetScore;
+			         		} else {
+			         			lineItemTargetScoreVal = lineItem.score_step_to.join(', ');
+			         		}
+			         		costsSheet.cell(target_score_col + n).value(lineItemTargetScoreVal);
 		         			
 		         			// action name
 		         			// n++;
@@ -263,7 +278,23 @@ app.post('/lineItemExport', function(req, res) {
 								// Staff multiplier unit
 			         			costsSheet.cell(staff_mult_unit_col + n).value(curGsm.name);
 							}
+
+							// Track line item scores so far
+							for (let curLiScoreIdx = 0; curLiScoreIdx < lineItem.score_step_to.length; curLiScoreIdx++) {
+								const curLiScore = lineItem.score_step_to[curLiScoreIdx].toString();
+								if (liScores.indexOf(curLiScore) === -1) liScores.push(curLiScore);								
+							}
 	         			});
+
+						// indicator target score (populate AFTER line items are populated)
+		         		let inputTargetScoreVal = "";
+		         		if (exportOnlyCostedData) {
+		         			inputTargetScoreVal = ind.targetScore;
+		         		} else {
+		         			console.log(liScores)
+		         			inputTargetScoreVal = liScores.join(', ');
+		         		}
+		         		costsSheet.cell(target_score_col + thisInputRow).value(inputTargetScoreVal);
          			});
 
          		});
