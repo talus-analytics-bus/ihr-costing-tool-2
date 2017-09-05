@@ -90,14 +90,17 @@ const Routing = {};
 		hasher.prependHash = '';
 		hasher.initialized.add(parseHash);
 		hasher.changed.add(parseHash);
-		hasher.init();
-
-		
+		hasher.init();		
 	};
 
+	const okayPages = ['home', 'country', 'background', 'contact'];
+
 	function loadPage(pageName, func, ...data) {
+		// kill any noty notifications
+		// $.noty.closeAll();
+
 		// user must have set country before proceeding to costing
-		if (pageName !== 'home' && pageName !== 'country' && !App.whoAmI.abbreviation) {
+		if (!App.whoAmI.abbreviation && !okayPages.includes(pageName)) {
 			hasher.setHash('country');
 			noty({ text: '<b>Select a country before proceeding!</b>' });
 			return;

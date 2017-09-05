@@ -239,7 +239,7 @@
 		$('.cost-type-row button')
 			.each(function addTooltip() {
 				const type = $(this).attr('value');
-				$(this).tooltipster({ content: Definitions[`${type}Cost`] });
+				$(this).tooltipster({ content: App.definitions[`${type}Cost`] });
 			})
 			.on('click', function onClick() {
 				costType = $(this).attr('value');
@@ -594,7 +594,7 @@
 
 		/* --------------------------- Export Section ---------------------------*/
 		$('.export-data-button')
-			.tooltipster({ content: Definitions.exportReport })
+			.tooltipster({ content: App.definitions.exportReport })
 			.on('click', () => {
 				NProgress.start();
 				App.exportLineItems((error) => {
@@ -605,7 +605,7 @@
 				});
 			});
 		$('.export-session-button')
-			.tooltipster({ content: Definitions.exportSession })
+			.tooltipster({ content: App.definitions.exportSession })
 			.on('click', () => {
 				const sessionData = App.getSessionData();
 
