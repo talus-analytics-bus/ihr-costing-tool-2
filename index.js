@@ -128,7 +128,11 @@ app.post('/lineItemExport', function(req, res) {
 		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 		         		// indicator starting score
-		         		costsSheet.cell(current_score_col + n).value(ind.score);
+		         		if (exportOnlyCostedData) {
+			         		costsSheet.cell(current_score_col + n).value(ind.score);
+		         		} else {
+			         		costsSheet.cell(current_score_col + n).value('');
+		         		}
 
 	         			// action name
 	         			// n++;
@@ -158,7 +162,11 @@ app.post('/lineItemExport', function(req, res) {
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 			         		// indicator starting score
-			         		costsSheet.cell(current_score_col + n).value(ind.score);
+			         		if (exportOnlyCostedData) {
+				         		costsSheet.cell(current_score_col + n).value(ind.score);
+			         		} else {
+				         		costsSheet.cell(current_score_col + n).value('');
+			         		}
 
 			         		// input or line item target score
 			         		let lineItemTargetScoreVal = "";
@@ -291,7 +299,6 @@ app.post('/lineItemExport', function(req, res) {
 		         		if (exportOnlyCostedData) {
 		         			inputTargetScoreVal = ind.targetScore;
 		         		} else {
-		         			console.log(liScores)
 		         			inputTargetScoreVal = liScores.join(', ');
 		         		}
 		         		costsSheet.cell(target_score_col + thisInputRow).value(inputTargetScoreVal);
