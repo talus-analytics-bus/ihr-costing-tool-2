@@ -32,6 +32,7 @@
 				reader.onload = (e) => {
 					const success = App.loadSessionData(e.target.result);
 					if (success) {
+						App.updateAllCosts();
 						noty({
 							timeout: 4000,
 							type: 'success',
@@ -72,6 +73,7 @@
 				reader.onload = (e) => {
 					const success = App.loadQlickScoreData(e.target.result);
 					if (success) {
+						App.updateAllCosts();
 						noty({
 							timeout: 4000,
 							type: 'success',

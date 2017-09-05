@@ -341,16 +341,16 @@
 				.attr('class', 'item-details-container');
 
 			function buildTableInContent(title, dataFilterFunc) {
-				const startupBox = backContent.append('div')
+				const sBox = backContent.append('div')
 					.style('display', (d) => {
 						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
 						const lineItems = allLineItems.filter(dataFilterFunc);
 						return lineItems.length ? 'block' : 'none';
 					});
-				startupBox.append('div')
+				sBox.append('div')
 					.attr('class', 'item-details-title')
 					.text(title);
-				const sTableContainer = startupBox.append('div')
+				const sTableContainer = sBox.append('div')
 					.attr('class', 'line-item-table-container');
 				const sTable = sTableContainer.append('table')
 					.attr('class', 'line-item-table table table-condensed table-striped')
@@ -366,7 +366,7 @@
 				sNameCell.append('img')
 					.attr('class', 'line-item-description-button')
 					.attr('src', 'img/question-mark.png')
-					.each(function(d) {
+					.each(function addTooltipster(d) {
 						let contentStr = `<div class="li-tooltip-content">`;
 						contentStr += `<b>${d.name}:</b> ${d.description}`;
 						contentStr += `</div>`;
@@ -382,18 +382,30 @@
 				const sTotalRow = sTable.append('tr');
 				sTotalRow.append('td').text('Total');
 				sTotalRow.append('td').text((d) => {
-						const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
-						const lineItems = allLineItems.filter(dataFilterFunc);
+					const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+					const lineItems = allLineItems.filter(dataFilterFunc);
 					return App.moneyFormatLong(d3.sum(lineItems, li => li.cost))
 				});
+
+				return sBox;
 			}
 
 			// add startup and recurring cost tables
-			buildTableInContent('Default Startup/Capital Costs', (li) => {
+			const sContent = buildTableInContent('Default Startup/Capital Costs', (li) => {
 				return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 			});
-			buildTableInContent('Default Recurring Costs', (li) => {
+			const rContent = buildTableInContent('Default Recurring Costs', (li) => {
 				return li.line_item_type === 'recurring';
+			});
+
+			// adjust height of tables if both tables are showing
+			d3.selectAll('.item-details-container').each(function adjustTableHeight(d) {
+				const allLineItems = App.getNeededLineItems(d.line_items, indicator.score);
+				const recurringLi = allLineItems.filter(li => li.line_item_type === 'recurring');
+				if (recurringLi.length && recurringLi.length < allLineItems.length) {
+					d3.select(this).selectAll('.line-item-table-container')
+						.style('height', '57px');
+				}
 			});
 
 			// add button to return to view of front of card
