@@ -225,13 +225,33 @@
 		$('.num-costed-capacities').text(allCapacities.length);
 
 
-		/* ---------------------- Switching to Table Section ----------------------*/
-		$('.view-table-button').on('click', function() {
+		/* ---------------------- Switching to Table/Export Section ----------------------*/
+		$('.view-table-button').on('click', function toggleDisplay() {
 			const $this = $(this);
 			$this.toggleClass('table-view');
 			const isActive = $this.hasClass('table-view');
 			$this.text(isActive ? 'View Charts' : 'View Data Table');
 			$('.results-main-content, .results-table-content').slideToggle();
+		});
+		$('.view-export-button').on('click', function toggleDisplay() {
+			const $this = $(this);
+			$this.toggleClass('export-view');
+			const isActive = $this.hasClass('export-view');
+			if (isActive) {
+				$('.results-instructions, .results-main-content, .results-table-content').slideUp();
+				$('.view-table-button').hide();
+				$this.html('&laquo; Back to Results');
+			} else {
+				const shouldTableShow = $('.view-table-button').hasClass('table-view');
+				$('.results-instructions').slideDown();
+				if (shouldTableShow) {
+					$('.results-table-content').slideDown();
+				} else {
+					$('.results-main-content').slideDown();
+				}
+				$('.view-table-button').show();
+				$this.html('Export Data');
+			}
 		});
 
 
@@ -593,33 +613,29 @@
 
 
 		/* --------------------------- Export Section ---------------------------*/
-		$('.export-data-button')
-			.tooltipster({ content: App.definitions.exportReport })
-			.on('click', () => {
-				NProgress.start();
-				App.exportLineItems((error) => {
-					if (error) {
-						noty({ text: '<b>Warning!</b><br>There was an error exporting the detailed report. Please contact the administrators of the tool.' });
-					}
-					NProgress.done();
-				});
+		$('.export-data-button').on('click', () => {
+			NProgress.start();
+			App.exportLineItems((error) => {
+				if (error) {
+					noty({ text: '<b>Warning!</b><br>There was an error exporting the detailed report. Please contact the administrators of the tool.' });
+				}
+				NProgress.done();
 			});
-		$('.export-session-button')
-			.tooltipster({ content: App.definitions.exportSession })
-			.on('click', () => {
-				const sessionData = App.getSessionData();
+		});
+		$('.export-session-button').on('click', () => {
+			const sessionData = App.getSessionData();
 
-				// set file name
-				const today = new Date();
-				const year = today.getFullYear();
-				let month = String(today.getMonth() + 1);
-				if (month.length === 1) month = `0${month}`;
-				let day = String(today.getDate());
-				if (day.length === 1) day = `0${day}`;
-				const yyyymmdd = `${year}${month}${day}`;
-				const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
+			// set file name
+			const today = new Date();
+			const year = today.getFullYear();
+			let month = String(today.getMonth() + 1);
+			if (month.length === 1) month = `0${month}`;
+			let day = String(today.getDate());
+			if (day.length === 1) day = `0${day}`;
+			const yyyymmdd = `${year}${month}${day}`;
+			const fileName = `${App.whoAmI.abbreviation}${yyyymmdd}`;
 
-				App.downloadText(fileName, sessionData);
-			});
+			App.downloadText(fileName, sessionData);
+		});
 	}
 })();
