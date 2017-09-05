@@ -139,6 +139,7 @@
 				.attr('class', 'rp-score-table-img rp-score')
 				.attr('src', d => `img/rp-${d}.png`);
 			scoreLabels.append('span')
+				.attr('class', 'score-label')
 				.text(d => App.scoreLabels[d]);
 
 			scoreRows.append('td')
