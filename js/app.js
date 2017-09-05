@@ -386,10 +386,11 @@ const App = {};
 				li.score_step_to = [String(d3.min(li.score_step_to))];  // keep lowest score
 			} else {
 				li.line_item_type = 'recurring';
-				li.score_step_to = [];  // lowest score to 4 (including)
-				for (let i = li.score_step_to; i < 5; i++) {
+				const score_step_to = [];  // lowest score to 4 (including)
+				for (let i = d3.min(li.score_step_to); i < 5; i++) {
 					li.score_step_to.push(String(i));
 				}
+				li.score_step_to = score_step_to.slice(0);
 			}
 		}
 
