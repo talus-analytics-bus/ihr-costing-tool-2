@@ -20,8 +20,15 @@ app.get('/', function(req, res) {
 // Routine to read line item export template XLS, write user line items,
 // and download result to browser
 app.post('/lineItemExport', function(req, res) {
+
+	// if exporting user session data, use detailed report template
+	// if exporting entire blank worksheet template, use costing worksheet template
+	const exportType = req.body.exportType;
+	const exportOnlyCostedData = exportType === 'userData';
+	const fromFileAsyncFn = (exportOnlyCostedData) ? "./export/IHR Costing Tool - Detailed Report Template.xlsx" : "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
+
 	// Load line item export template XLS
-	XlsxPopulate.fromFileAsync("./export/IHR Costing Tool - Detailed Report Template.xlsx")
+	XlsxPopulate.fromFileAsync(fromFileAsyncFn)
 	// XlsxPopulate.fromFileAsync("")
 	    .then(workbook => {
 	        // add the user data to the template
@@ -30,46 +37,7 @@ app.post('/lineItemExport', function(req, res) {
          	// get costs sheet
          	const costsSheet = workbook.sheet("Costs");
 
-         	// specify currency in final two col headers
-         	const currencyCode = req.body.currencyCode;
-         	costsSheet.cell("U1").value('Do not edit: Start-up/Capital costs (' + currencyCode + ')');
-         	costsSheet.cell("V1").value('Do not edit: Annual recurring costs (' + currencyCode + ')');
-
-         	// get multipliers
-         	const gbc = req.body.gbc;
-         	const gsm = req.body.gsm;
-
-         	// get user data
-         	const User = req.body.User;
-
-         	// get country params
-         	const whoAmI = req.body.whoAmI;
-
-         	// get exchange rate
-         	const exchangeRate = req.body.exchangeRate;
-
-         	// hash table for line item type
-         	const lineItemTypeHash = {
-			  "start-up": "Start-up",
-			  "recurring": "Recurring",
-			  "capital": "Capital"
-			}
-
-			// hash table for country parameters
-			const countryParamHash = {
-			  "population": "Population",
-			  "central_area_count": "Central area count",
-			  "intermediate_1_area_count": "Intermediate 1 area count",
-			  "intermediate_2_area_count": "Intermediate 2 area count",
-			  "local_area_count": "Local area count",
-			  "intermediate_1_and_local_area_count": "Intermediate 1 area count and local area count",
-			  "central_hospitals_count": "Central hospitals count",
-			  "central_chw_count": "Central community health workers count",
-			  "central_epi_count": "Central epidemiologists count",
-			  "null": ""
-			}
-
-			// define column names
+         	// define column names
 			const indicator_col = 'A';
 			const current_score_col = 'B';
 			const target_score_col = 'C';
@@ -93,6 +61,52 @@ app.post('/lineItemExport', function(req, res) {
 			const startup_col = 'U';
 			const recurring_col = 'V';
 
+         	// specify currency in final two col headers
+         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
+         	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
+         	costsSheet.cell(`${cost_amount_col}1`).value('Base cost amount (' + currencyCode + ')');
+         	costsSheet.cell("U1").value('Start-up/Capital costs (' + currencyCode + ')');
+         	costsSheet.cell("V1").value('Annual recurring costs (' + currencyCode + ')');
+
+         	// get multipliers
+         	const gbc = req.body.gbc;
+         	const gsm = req.body.gsm;
+
+         	// get user data
+         	const User = req.body.User;
+
+         	// get country params
+         	const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":"Country","intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
+         	const whoAmIWasSpecified = req.body.whoAmI.abbreviation !== undefined;
+         	const whoAmI = (whoAmIWasSpecified) ? req.body.whoAmI : unspecWhoAmI;
+
+         	// get exchange rate
+
+         	const exchangeRate = req.body.exchangeRate;
+
+         	// hash table for line item type
+         	const lineItemTypeHash = {
+			  "start-up": "Start-up",
+			  "recurring": "Recurring",
+			  "capital": "Capital"
+			}
+
+			// hash table for country parameters
+			const countryParamHash = {
+			  "population": "Population",
+			  "central_area_count": "Central area count",
+			  "intermediate_1_area_count": "Intermediate 1 area count",
+			  "intermediate_2_area_count": "Intermediate 2 area count",
+			  "local_area_count": "Local area count",
+			  "intermediate_1_and_local_area_count": "Intermediate 1 area count and local area count",
+			  "central_hospitals_count": "Central hospitals count",
+			  "central_chw_count": "Central community health workers count",
+			  "central_epi_count": "Central epidemiologists count",
+			  "null": ""
+			}
+
+			
+
          	// track sheet row
          	let n = 1;
          	for (let i = 0; i < indicators.length; i++) {
@@ -108,16 +122,21 @@ app.post('/lineItemExport', function(req, res) {
          			// process inputs
          			action.inputs.forEach(function(input){
          				n++;
+
+         				// store this input's row so we can come back to it after adding the line items
+         				const thisInputRow = n;
+
          				// indicator name
 		         		// n++;
 		         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 		         		// indicator starting score
-		         		costsSheet.cell(current_score_col + n).value(ind.score);
+		         		if (exportOnlyCostedData) {
+			         		costsSheet.cell(current_score_col + n).value(ind.score);
+		         		} else {
+			         		costsSheet.cell(current_score_col + n).value('');
+		         		}
 
-		         		// indicator target score
-		         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
-	         			
 	         			// action name
 	         			// n++;
 	         			costsSheet.cell(action_col + n).value(action.name);
@@ -135,18 +154,39 @@ app.post('/lineItemExport', function(req, res) {
 	         			// format row
 	         			costsSheet.range("A" + n + ":V" + n).style({fill: "D9D9D9"})
 
+	         			// track what scores the line items had
+	         			let liScores = [];
+
+	         			// cost worksheet only: track how many line items belong to this input so we can
+	         			// total them up at the end
+	         			let liCount = 0;
+
 	         			// process line items
 	         			input.line_items.forEach(function(lineItem){
 	         				n++;
+	         				
+	         				// increment line item count for this input
+	         				liCount++;
+
 	         				// indicator name
 			         		// n++;
 			         		costsSheet.cell(indicator_col + n).value(ind.id.toUpperCase() + ' ' + ind.name);
 
 			         		// indicator starting score
-			         		costsSheet.cell(current_score_col + n).value(ind.score);
+			         		if (exportOnlyCostedData) {
+				         		costsSheet.cell(current_score_col + n).value(ind.score);
+			         		} else {
+				         		costsSheet.cell(current_score_col + n).value('');
+			         		}
 
-			         		// indicator target score
-			         		costsSheet.cell(target_score_col + n).value(ind.targetScore);
+			         		// input or line item target score
+			         		let lineItemTargetScoreVal = "";
+			         		if (exportOnlyCostedData) {
+			         			lineItemTargetScoreVal = ind.targetScore;
+			         		} else {
+			         			lineItemTargetScoreVal = lineItem.score_step_to.join(', ');
+			         		}
+			         		costsSheet.cell(target_score_col + n).value(lineItemTargetScoreVal);
 		         			
 		         			// action name
 		         			// n++;
@@ -157,10 +197,10 @@ app.post('/lineItemExport', function(req, res) {
 		         			costsSheet.cell(input_col + n).value(input.name);
 
 		         			// input cost: SU/C
-		         			costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+		         			costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
 		         			// input cost: Rec
-		         			costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",1,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+		         			costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
 							// line item name
 		         			// n++;
@@ -257,7 +297,32 @@ app.post('/lineItemExport', function(req, res) {
 								// Staff multiplier unit
 			         			costsSheet.cell(staff_mult_unit_col + n).value(curGsm.name);
 							}
+
+							// Track line item scores so far
+							for (let curLiScoreIdx = 0; curLiScoreIdx < lineItem.score_step_to.length; curLiScoreIdx++) {
+								const curLiScore = lineItem.score_step_to[curLiScoreIdx].toString();
+								if (liScores.indexOf(curLiScore) === -1) liScores.push(curLiScore);								
+							}
 	         			});
+
+						// indicator target score (populate AFTER line items are populated)
+		         		let inputTargetScoreVal = "";
+		         		if (exportOnlyCostedData) {
+		         			inputTargetScoreVal = ind.targetScore;
+		         		} else {
+		         			inputTargetScoreVal = liScores.join(', ');
+		         		}
+		         		costsSheet.cell(target_score_col + thisInputRow).value(inputTargetScoreVal);
+
+		         		// add auto subtotals for the input, if it's the costing worksheet
+		         		if (exportType === "costingWorksheet") {
+			         		// input cost: SU/C
+		         			costsSheet.cell(startup_col + thisInputRow).formula(`=SUM($${startup_col}${thisInputRow + 1}:$${startup_col}${thisInputRow + liCount})`);
+
+		         			// input cost: Rec
+		         			costsSheet.cell(recurring_col + thisInputRow).formula(`=SUM($${recurring_col}${thisInputRow + 1}:$${recurring_col}${thisInputRow + liCount})`);
+		         		}
+
          			});
 
          		});

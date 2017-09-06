@@ -102,7 +102,10 @@ const Routing = {};
 		// user must have set country before proceeding to costing
 		if (!App.whoAmI.abbreviation && blockedPages.includes(pageName)) {
 			hasher.setHash('country');
-			noty({ text: '<b>Select a country before proceeding!</b>' });
+			noty({
+				timeout: 5000,
+				text: '<b>No country selected!</b><br>Please select a country and complete assessment before entering costs.</b>',
+			});
 			return;
 		}
 
