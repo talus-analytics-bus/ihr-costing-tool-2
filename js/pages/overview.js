@@ -70,7 +70,9 @@
 			if ('files' in this) {
 				if (!this.files.length) return;
 				const file = this.files[0];
-				if (file.name.slice(file.name.length - 4) !== '.xlsx') {
+				const fileNameArr = file.name.split('.');
+				const fileType = fileNameArr[fileNameArr.length - 1];
+				if (fileType !== 'xlsx' && fileType !== 'xls') {
 					noty({
 						timeout: 5000,
 						text: '<b>Please select a file with a file type extension of <i>.xlsx</i>',
