@@ -66,7 +66,6 @@ app.post('/lineItemExport', function(req, res) {
          		const userSpecific = sheetName === "Costs - For user targets";
 
 	         	// specify currency in final two col headers
-	         	console.log('sheetName = ' + sheetName)
 	         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
 	         	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
 	         	costsSheet.cell(`${cost_amount_col}1`).value('Base cost amount (' + currencyCode + ')');
@@ -372,8 +371,6 @@ app.post('/lineItemExport', function(req, res) {
          	const userRelevantInd = req.body.userRelevantInd;
 			if (exportType === "costingWorksheet") {
 				if (userRelevantInd.length > 0) {
-					console.log('Exporting BOTH For user targets costs AND all possible costs')
-
 					// use the two tabs:
 					// "Costs - User-specified"
 					prepareWorksheet(userRelevantInd, "Costs - For user targets");
@@ -381,8 +378,6 @@ app.post('/lineItemExport', function(req, res) {
 					// "Costs - All possible"
 					prepareWorksheet(allIndicators, "Costs - All possible");
 				} else {
-					console.log('Exporting all possible costs ONLY')
-
 					// keep one tab and call it "Costs - All possible"
 					prepareWorksheet(allIndicators, "Costs - All possible");
 
@@ -390,7 +385,6 @@ app.post('/lineItemExport', function(req, res) {
 					workbook.deleteSheet("Costs - For user targets");
 				}
 			} else {
-				console.log('Exporting detailed cost report')
 				prepareWorksheet(allIndicators, "Costs");
 			}
 
