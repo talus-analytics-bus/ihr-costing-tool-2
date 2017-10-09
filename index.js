@@ -63,7 +63,7 @@ app.post('/lineItemExport', function(req, res) {
          		const costsSheet = workbook.sheet(sheetName);
 
          		// sheet type user specific?
-         		const userSpecific = sheetName === "Costs - User-specified";
+         		const userSpecific = sheetName === "Costs - For user targets";
 
 	         	// specify currency in final two col headers
 	         	console.log('sheetName = ' + sheetName)
@@ -73,6 +73,12 @@ app.post('/lineItemExport', function(req, res) {
 	         	costsSheet.cell("U1").value('Start-up/Capital costs (' + currencyCode + ')');
 	         	costsSheet.cell("V1").value('Annual recurring costs (' + currencyCode + ')');
 
+
+	         	const isDetailedReport = exportType === "userData";
+
+	         	// if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
+	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target Score');
+	         	else costsSheet.cell("C1").value('Target Score(s) Applicable');
 
 	         	// get multipliers
 	         	const gbc = req.body.gbc;
@@ -195,7 +201,7 @@ app.post('/lineItemExport', function(req, res) {
 
 				         		// if sheet is user-specific scores,
 				         		let lineItemTargetScoreVal = "";
-				         		if (userSpecific) {
+				         		if (userSpecific || exportOnlyCostedData) {
 				         			// put the single target score the user is going for, ind.targetScore
 				         			lineItemTargetScoreVal = ind.targetScore;
 				         			
@@ -334,7 +340,7 @@ app.post('/lineItemExport', function(req, res) {
 
 			         		let inputTargetScoreVal = "";
 			         		// if sheet is user-specific scores,
-			         		if (userSpecific) {
+			         		if (userSpecific || exportOnlyCostedData) {
 			         			// put the single target score the user is going for, ind.targetScore
 			         			inputTargetScoreVal = ind.targetScore;
 
@@ -365,21 +371,26 @@ app.post('/lineItemExport', function(req, res) {
 
          	const userRelevantInd = req.body.userRelevantInd;
 			if (exportType === "costingWorksheet") {
-				if (userRelevantInd !== undefined) {
+				if (userRelevantInd.length > 0) {
+					console.log('Exporting BOTH For user targets costs AND all possible costs')
+
 					// use the two tabs:
 					// "Costs - User-specified"
-					prepareWorksheet(userRelevantInd, "Costs - User-specified");
+					prepareWorksheet(userRelevantInd, "Costs - For user targets");
 
 					// "Costs - All possible"
 					prepareWorksheet(allIndicators, "Costs - All possible");
 				} else {
+					console.log('Exporting all possible costs ONLY')
+
 					// keep one tab and call it "Costs - All possible"
 					prepareWorksheet(allIndicators, "Costs - All possible");
 
 					// delete other tab
-					workbook.deleteSheet("Costs - User-specified");
+					workbook.deleteSheet("Costs - For user targets");
 				}
 			} else {
+				console.log('Exporting detailed cost report')
 				prepareWorksheet(allIndicators, "Costs");
 			}
 
