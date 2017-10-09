@@ -158,6 +158,7 @@
 	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
 		const indArray = App.getAllIndicatorTree();
+		const userRelevantIndArray = App.getScoredIndicatorTree(); // include user-relevant indicators if available
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);
@@ -193,7 +194,8 @@
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
 		xhr.send(JSON.stringify({
 			exportType: 'costingWorksheet',
-			indicators: indArray, 
+			indicators: indArray,
+			userRelevantInd: userRelevantIndArray, 
 			currencyCode: App.whoAmI.currency_iso,
 			exchangeRate: App.getExchangeRate(),
 			whoAmI: App.whoAmI,
