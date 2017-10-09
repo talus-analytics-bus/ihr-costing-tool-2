@@ -76,8 +76,8 @@ app.post('/lineItemExport', function(req, res) {
 	         	const isDetailedReport = exportType === "userData";
 
 	         	// if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
-	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target Score');
-	         	else costsSheet.cell("C1").value('Target Score(s) Applicable');
+	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target score');
+	         	else costsSheet.cell("C1").value('Target score(s) applicable');
 
 	         	// get multipliers
 	         	const gbc = req.body.gbc;
