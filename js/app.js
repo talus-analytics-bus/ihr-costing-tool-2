@@ -413,6 +413,10 @@ const App = {};
 			let multiplier = 1;
 			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
 				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+			} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
+				let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
+				if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
+				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
 			} else {
 				multiplier = App.whoAmI.multipliers[li.country_multiplier];
 			}
