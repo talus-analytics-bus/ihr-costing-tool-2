@@ -76,8 +76,9 @@ app.post('/lineItemExport', function(req, res) {
 	         	const isDetailedReport = exportType === "userData";
 
 	         	// if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
-	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target score (Chosen in tool)');
-	         	else costsSheet.cell("C1").value('Target score(s) applicable');
+	         	const targetScoreCell = isDetailedReport ? "C1" : "C2";
+	         	if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Target score (Chosen in tool)');
+	         	else costsSheet.cell(targetScoreCell).value('Target score(s) applicable');
 
 	         	// get multipliers
 	         	const gbc = req.body.gbc;
@@ -120,7 +121,8 @@ app.post('/lineItemExport', function(req, res) {
 				
 
 	         	// track sheet row
-	         	let n = 1;
+	         	// let n = 1;
+	         	let n = isDetailedReport ? 1 : 2;
 	         	for (let i = 0; i < indicators.length; i++) {
 	         		const ind = indicators[i];
 	         		
@@ -380,11 +382,11 @@ app.post('/lineItemExport', function(req, res) {
 					// "Costs - User-specified"
 					prepareWorksheet(userRelevantInd, "Costs - Scores Entered");
 
-					// "Costs - All possible"
-					prepareWorksheet(allIndicators, "Costs - All possible");
+					// "Costs - All Score Combinations"
+					prepareWorksheet(allIndicators, "Costs - All Score Combinations");
 				} else {
-					// keep one tab and call it "Costs - All possible"
-					prepareWorksheet(allIndicators, "Costs - All possible");
+					// keep one tab and call it "Costs - All Score Combinations"
+					prepareWorksheet(allIndicators, "Costs - All Score Combinations");
 
 					// delete other tab
 					workbook.deleteSheet("Costs - Scores Entered");
