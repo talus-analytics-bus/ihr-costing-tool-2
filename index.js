@@ -98,6 +98,7 @@ app.post('/lineItemExport', function(req, res) {
 			  "intermediate_1_area_count": "Intermediate 1 area count",
 			  "intermediate_2_area_count": "Intermediate 2 area count",
 			  "local_area_count": "Local area count",
+			  "intermediate_1_and_2_count": "Intermediate 1 area and intermediate 2 area count",
 			  "intermediate_1_and_local_area_count": "Intermediate 1 area count and local area count",
 			  "central_hospitals_count": "Central hospitals count",
 			  "central_chw_count": "Central community health workers count",
@@ -248,6 +249,10 @@ app.post('/lineItemExport', function(req, res) {
 								let country_multiplier = 1;
 								if (country_multiplier_key === 'intermediate_1_and_local_area_count') {
 									country_multiplier = whoAmI.multipliers.intermediate_1_area_count + whoAmI.multipliers.local_area_count;
+								} else if (country_multiplier_key === 'intermediate_1_and_2_count') {
+									let int2CountTmp = whoAmI.multipliers.intermediate_2_area_count;
+									if (int2CountTmp === null || int2CountTmp === undefined) int2CountTmp = 0.0;
+									country_multiplier = whoAmI.multipliers.intermediate_1_area_count + whoAmI.multipliers.intermediate_2_area_count;
 								} else {
 									country_multiplier = whoAmI.multipliers[country_multiplier_key];
 								}
