@@ -63,7 +63,7 @@ app.post('/lineItemExport', function(req, res) {
          		const costsSheet = workbook.sheet(sheetName);
 
          		// sheet type user specific?
-         		const userSpecific = sheetName === "Costs - For user targets";
+         		const userSpecific = sheetName === "Costs - Scores Entered";
 
 	         	// specify currency in final two col headers
 	         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
@@ -76,7 +76,7 @@ app.post('/lineItemExport', function(req, res) {
 	         	const isDetailedReport = exportType === "userData";
 
 	         	// if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
-	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target score');
+	         	if (userSpecific || isDetailedReport) costsSheet.cell("C1").value('Target score (Chosen in tool)');
 	         	else costsSheet.cell("C1").value('Target score(s) applicable');
 
 	         	// get multipliers
@@ -378,7 +378,7 @@ app.post('/lineItemExport', function(req, res) {
 				if (userRelevantInd.length > 0) {
 					// use the two tabs:
 					// "Costs - User-specified"
-					prepareWorksheet(userRelevantInd, "Costs - For user targets");
+					prepareWorksheet(userRelevantInd, "Costs - Scores Entered");
 
 					// "Costs - All possible"
 					prepareWorksheet(allIndicators, "Costs - All possible");
@@ -387,7 +387,7 @@ app.post('/lineItemExport', function(req, res) {
 					prepareWorksheet(allIndicators, "Costs - All possible");
 
 					// delete other tab
-					workbook.deleteSheet("Costs - For user targets");
+					workbook.deleteSheet("Costs - Scores Entered");
 				}
 			} else {
 				prepareWorksheet(allIndicators, "Costs");
