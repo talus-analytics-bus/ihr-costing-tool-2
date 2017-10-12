@@ -8,7 +8,7 @@ var path = require('path');
 const XlsxPopulate = require('xlsx-populate'); // read/write xlsx files
 
 //support parsing of application/json type post data
-app.use(bodyParser.json({limit: '5Mb'}));
+app.use(bodyParser.json({limit: '500Mb'}));
 
 // Routing
 // if no hash, send to index
@@ -69,11 +69,16 @@ app.post('/lineItemExport', function(req, res) {
 	         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
 	         	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
 	         	costsSheet.cell(`${cost_amount_col}1`).value('Base cost amount (' + currencyCode + ')');
-	         	costsSheet.cell("U1").value('Start-up/Capital costs (' + currencyCode + ')');
-	         	costsSheet.cell("V1").value('Annual recurring costs (' + currencyCode + ')');
-
-
 	         	const isDetailedReport = exportType === "userData";
+
+	         	const suCapCell = isDetailedReport ? "U1" : "U2";
+	         	const recCell = isDetailedReport ? "V1" : "V2";
+	         	
+
+	         	costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
+	         	costsSheet.cell(recCell).value('Annual recurring costs (' + currencyCode + ')');
+
+
 
 	         	// if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
 	         	const targetScoreCell = isDetailedReport ? "C1" : "C2";
