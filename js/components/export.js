@@ -192,6 +192,39 @@
 			if (callback) callback(this.status);
 		};
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
+
+		indArray.forEach(d => {
+			delete d.score_descriptions;
+			d.actions.forEach(dd => {
+				dd.inputs.forEach(input => {
+					input.line_items.forEach(li => {
+						delete li.category_tag;
+						delete li.function_tag;
+						delete li.where_find_base_cost;
+						delete li.references;
+						// delete li.id;
+						delete li.unique_id;
+					});
+				});
+			});
+		});
+		userRelevantIndArray.forEach(d => {
+			delete d.score_descriptions;
+			d.actions.forEach(dd => {
+				dd.inputs.forEach(input => {
+					input.line_items.forEach(li => {
+						delete li.category_tag;
+						delete li.function_tag;
+						delete li.where_find_base_cost;
+						delete li.references;
+						// delete li.id;
+						delete li.unique_id;
+					});
+				});
+			});
+		});
+		
+		console.log(indArray);
 		xhr.send(JSON.stringify({
 			exportType: 'costingWorksheet',
 			indicators: indArray,
