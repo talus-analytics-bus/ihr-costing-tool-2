@@ -413,6 +413,10 @@ const App = {};
 			let multiplier = 1;
 			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
 				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+			} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
+				let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
+				if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
+				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
 			} else {
 				multiplier = App.whoAmI.multipliers[li.country_multiplier];
 			}
@@ -535,6 +539,51 @@ const App = {};
 			});
 		});
 		return completeIndicators;
+	}
+
+	// retrieves a copy of all scored indicators and all levels below (i.e., the needed
+	// costing actions / inputs / line items for that indicator score and the user's goal)
+	App.getScoredIndicatorTree = () => {
+		const scoredIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					if (ind.score) {
+					// if (App.isIndicatorComplete(ind)) {
+						const indCopy = Object.assign({}, ind);
+						const actions = App.getNeededActions(indCopy);
+						indCopy.targetScore = App.getTargetScore(indCopy);
+						indCopy.actions = [];
+
+						actions.forEach((action) => {
+							if (true) {
+							// if (App.isActionComplete) {
+								const actionCopy = Object.assign({}, action);
+								const actionInputs = actionCopy.inputs
+								// const costedInputs = actionCopy.inputs.filter(input => input.costed);
+								const inputs = App.getNeededInputs(actionInputs, ind.score);
+								actionCopy.inputs = [];
+
+								inputs.forEach((input) => {
+									const inputCopy = Object.assign({}, input);
+									const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
+									inputCopy.line_items = [];
+
+									lineItems.forEach((li) => {
+										const liCopy = Object.assign({}, li);
+										inputCopy.line_items.push(liCopy);
+									});
+									actionCopy.inputs.push(inputCopy);
+								});
+								indCopy.actions.push(actionCopy);
+							}
+						});
+						scoredIndicators.push(indCopy);
+					}
+				});
+			});
+		});
+		return scoredIndicators;
 	}
 
 	// retrieves a copy of all indicators and all levels below, regardless of whether
