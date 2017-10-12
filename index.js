@@ -68,13 +68,14 @@ app.post('/lineItemExport', function(req, res) {
 	         	// specify currency in final two col headers
 	         	const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
 	         	const currencyCode = (currencyCodeWasSpecified) ? req.body.currencyCode : "USD";
-	         	costsSheet.cell(`${cost_amount_col}1`).value('Base cost amount (' + currencyCode + ')');
 	         	const isDetailedReport = exportType === "userData";
 
 	         	const suCapCell = isDetailedReport ? "U1" : "U2";
 	         	const recCell = isDetailedReport ? "V1" : "V2";
+	         	const baseCostCell = isDetailedReport ? "1" : "2";
 	         	
 
+	         	costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Base cost amount (' + currencyCode + ')');
 	         	costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
 	         	costsSheet.cell(recCell).value('Annual recurring costs (' + currencyCode + ')');
 
