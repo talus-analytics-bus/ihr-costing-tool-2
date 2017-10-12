@@ -224,7 +224,6 @@
 			});
 		});
 		
-		console.log(indArray);
 		xhr.send(JSON.stringify({
 			exportType: 'costingWorksheet',
 			indicators: indArray,
