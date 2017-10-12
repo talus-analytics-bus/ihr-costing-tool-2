@@ -8,7 +8,7 @@ var path = require('path');
 const XlsxPopulate = require('xlsx-populate'); // read/write xlsx files
 
 //support parsing of application/json type post data
-app.use(bodyParser.json({limit: '5Mb'}));
+app.use(bodyParser.json({limit: '500Mb'}));
 
 // Routing
 // if no hash, send to index
