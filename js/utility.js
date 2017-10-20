@@ -12,6 +12,13 @@ const Util = {};
 	//Util.formatTimestamp = d3.time.format('%b %d, %Y %H:%M GMT%Z'); // formats a date (e.g.: Jul 16, 2015 17:12 GMT-0400)
 	//Util.formatTimestampShort = d3.time.format('%m/%d/%Y %H:%M GMT%Z'); // formats a date (e.g.: 07/16/2015 17:12 GMT-0400)
 
+	// scrolls to the tag with the given id on the page
+	// original author: Derek Leung, 2012; http://derek-leung.com/
+	// id 	the id of the HTML tag to scroll to (must be currently rendered)
+	Util.scrollTo = (id) => {
+		document.getElementById(id).scrollIntoView();
+	};
+
 	// converts a number in string format into a float
 	Util.strToFloat = (str) => {
 		if (typeof str !== 'string') return str;
