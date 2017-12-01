@@ -158,6 +158,7 @@
 	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
 		const indArray = App.getAllIndicatorTree();
+		const userRelevantIndArray = App.getScoredIndicatorTree(); // include user-relevant indicators if available
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);
@@ -191,9 +192,42 @@
 			if (callback) callback(this.status);
 		};
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
+
+		indArray.forEach(d => {
+			delete d.score_descriptions;
+			d.actions.forEach(dd => {
+				dd.inputs.forEach(input => {
+					input.line_items.forEach(li => {
+						delete li.category_tag;
+						delete li.function_tag;
+						delete li.where_find_base_cost;
+						delete li.references;
+						// delete li.id;
+						delete li.unique_id;
+					});
+				});
+			});
+		});
+		userRelevantIndArray.forEach(d => {
+			delete d.score_descriptions;
+			d.actions.forEach(dd => {
+				dd.inputs.forEach(input => {
+					input.line_items.forEach(li => {
+						delete li.category_tag;
+						delete li.function_tag;
+						delete li.where_find_base_cost;
+						delete li.references;
+						// delete li.id;
+						delete li.unique_id;
+					});
+				});
+			});
+		});
+		
 		xhr.send(JSON.stringify({
 			exportType: 'costingWorksheet',
-			indicators: indArray, 
+			indicators: indArray,
+			userRelevantInd: userRelevantIndArray, 
 			currencyCode: App.whoAmI.currency_iso,
 			exchangeRate: App.getExchangeRate(),
 			whoAmI: App.whoAmI,

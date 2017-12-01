@@ -7,8 +7,8 @@
 	<link rel="icon" href="img/favicon.ico">
 
 	<!-- ----- CSS Files ----- -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.googleapis.com/css?family=Raleway:600,400" rel="stylesheet">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:600,400,300' rel='stylesheet' type='text/css'>
+	<link href="//fonts.googleapis.com/css?family=Raleway:600,400" rel="stylesheet">
 	<link href="css/tether.min.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-multiselect.css" rel="stylesheet">
@@ -17,8 +17,8 @@
 	<link href="css/tooltipster.bundle.min.css" rel="stylesheet">
 	<link href="css/tooltipster-sideTip-shadow.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+	<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="//unpkg.com/leaflet@1.1.0/dist/leaflet.css"
 		  integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
 		  crossorigin=""/>
 </head>
@@ -42,7 +42,7 @@
 					<a class="nav-link">Choose Country</a>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Assessment
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -169,14 +169,14 @@
 			<h1>Assessment Instructions</h1>
 			<div>
 				<p><b>The IHR Costing Tool does not store data after you leave the website.</b> To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
-				<p>Current <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">JEE Assessment Tool</a> scores are needed to use the IHR Costing Tool. Scores from a previously completed JEE assessment can be uploaded from a previous costing session, uploaded in a spreadsheet format, or entered manually.</p>
+				<p> Current assessment scores, as measured by the <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">Joint External Evaluation Tool</a> (JEE), are needed as the first step to use the IHR Costing Tool. Choose from among the options below to complete assessment score entry.</p>
 			</div>
 			<div class="overview-section">
 				<h2>Upload Prior Session</h2>
-				<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload scores and cost inputs.</p>
+				<p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload previously entered scores and cost inputs.</p>
 				<ul>
-					<li>Select an IHR data file from your computer using the button below. You will see “Upload Successful” once the file upload is complete.</li>
-					<li>Click “Continue to Scores” to review and enter additional scores, as needed
+					<li>Select an IHR data file (ends with .ihr) using the button below. You will see “Upload Successful” once the file upload is complete. To help locate this file, note that when exported from the results page, this file was stored in the downloads folder used by your web browser. </li>
+					<li>Click “Continue to Scores” to review and enter additional scores, as needed.
 				</ul>
 				<div class="upload-button-container">
 				  <input id="prior-session" class="input-prior-session" type="file" />
@@ -186,31 +186,32 @@
 			<div class="overview-section">
 				<h2>Upload Scores</h2>
 				<p>
-					Score upload requires the report format used by the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, an online source 
-					for completed JEE assessments.
+					Scores can be uploaded in the report format used by the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, an online source for completed JEE assessments. 
+
 					<img class="jee-tool-img" src="img/question-mark.png" />
 				</p>
 				<ul>
-					<li>Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format).</li>
+					<li>Visit the JEE Technology Tool <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">here</a> to check score report availability. Select your country from the Country Report box and choose “JEE” as the assessment type. If data are available, right click on the graphic and select “Export data” to download the file (Excel format). Otherwise, you can download a blank score report below and enter scores for each indicator row.</li>
 					<li>Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</li>
 					<li>Click “Continue to Scores” to review uploaded scores.</li>
 				</ul>
 				<div class="upload-button-container">
-					<a class="export-button-link" href="export/IHR Costing Tool - JEE Score Input Template.xlsx"><button type="button" class="btn btn-secondary">Download Blank Template</button></a>
+					<a class="export-button-link" href="export/IHR Costing Tool - JEE Score Input Template.xlsx"><button type="button" class="btn btn-secondary">Download Blank Score Report</button></a>
 					<button type="button" class="btn btn-secondary btn-score-file">Select Score File</button>
 					<input id="score-file-upload" class="input-score-file" type="file" />
 				</div>
 			</div>
 			<div class="overview-section">
 				<h2>Download Blank Template</h2>
-				<p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
+				<p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. You can use this spreadsheet as a list to identify and collect needed cost information before returning to work in the online tool. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
 				<div class="upload-button-container">
 				  <button type="button" class="btn btn-secondary btn-blank-template">Download Blank Template</button>
 				</div>
 			</div>
 			<div class="overview-section">
 				<h2>Manual Score Entry</h2>
-				<p>If no electronic report is available in the required upload format, scores can be entered manually. Click “Continue to Scores” to begin score entry.</p>
+				<p>To manually enter scores from a completed template, or score report in any format, click “Continue to Scores” 
+				to begin score entry.</p>
 				<div class="next-button-container">
 					<button type="button" class="next-button btn btn-primary">Continue to Scores</button>
 				</div>
@@ -274,7 +275,7 @@
 		<div class="costs-instructions-container container container-text">
 			<div>
 				<h1>Costing Instructions</h1>
-				<p>The IHR Costing Tool does not store data after you leave the website. To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.</p>
+				<p><b>The IHR Costing Tool does not store data after you leave the website.</b> To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.</p>
 				<p>Costs associated with implementing the International Health Regulations depend on the target score level a country wants to achieve as well as population size, geopolitical organization, and public health infrastructure. Note that no additional costs are calculated for indicators that have already achieved a score of 4 - Demonstrated Capacity.</p>
 			</div>
 			<div class="instructions-section">
@@ -288,8 +289,8 @@
 						Click “Start Costing” to advance to the next page and enter country-specific details and review and customize a list of cost assumptions used across cost calculations.
 					</li>
 					<li>
-						After entering these data, the tool provides estimated costs to reach the specif
-					ied target score for each indicator. In the final step of costing, review and edit these costs before proceeding to the results.
+						After entering these data, the tool provides estimated costs for specific actions needed to reach the chosen target score for each indicator. <b>Estimated costs are provided for reference only. Review and update each cost using the best available country-specific information.</b>
+
 					</li>
 				</ol>
 			</div>
@@ -318,7 +319,7 @@
 			</div>
 			<div class="instructions-section">
 				<h2>Download Blank Template</h2>
-				<p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
+				<p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. ou can use this spreadsheet as a list to identify and collect needed cost information before returning to work in the online tool. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
 				<div class="upload-button-container">
 				  <button type="button" class="btn btn-secondary btn-blank-template">Download Blank Template</button>
 				</div>
@@ -381,7 +382,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							These inputs describe how the country is organized by geopolitical areas. Intermediate and local inputs are required and the second indermediate level is optional.
+							These inputs describe how the country is organized by geopolitical areas. Intermediate and local inputs are required and the second intermediate level is optional. Definitions and references are provided on the <a href="#background/definitions">Background</a> page.
 						</div>
 						<table class="geo-division-table">
 							<tbody></tbody>
@@ -396,7 +397,7 @@
 						<div class="block-content">
 							<div class="block-description">
 								Default public health information describes the estimated number of public heathcare facilities and workers within the country. These inputs are required.
-								To edit the defaults, change the details below.
+								To edit the defaults, change the details below. Definitions and references are provided on the <a href="#background/definitions">Background</a> page.
 							</div>
 							<table class="ph-table">
 								<tbody></tbody>
@@ -414,7 +415,7 @@
 					</div>
 					<div class="block-content">
 						<div class="block-description">
-							Default cost values for frequently costed items are listed below. Review the default values for the costs and modify as needed.  Editing these defaults is optional.
+							Default cost values for frequently costed items are listed below. Review the default values for the costs and modify as needed. Editing these defaults is optional. Definitions and references are provided on the <a href="#background/definitions">Background</a> page.
 						</div>
 						<div class="dv-container"></div>
 					</div>
@@ -438,7 +439,7 @@
 						<img class="capacity-tooltip-img" src="img/question-mark.png" />
 					</div>
 					<div class="costing-instructions instructions">
-						For the following capacity, review the costs for each indicator. You may de-select or edit any costs. Open the description below for more details.
+						For the following capacity, review the costs for each indicator. Pre-populated cost estimates are provided for reference. You may de-select or edit any cost using the best available country-specific information. Open the description below for more details.  
 					</div>
 					<div class="capacity-description-container"></div>
 					<div class='indicator-progress-container'>
@@ -692,6 +693,10 @@
 					By understanding IHR-associated costs, national leaders can better match resources to urgent priorities and plan for long-term sustainability of complex systems. This costing tool, in combination with the JEE and financing tools already available and currently in development, represent a significant step in helping national and international decision makers develop and implement practical plans to improve global health security.
 				</p>
 			</div>
+			<div>
+				<h2 id="definitions">Definitions and References</h2>
+				<p>Definitions of key terms and references used in defining default cost assumptions are available for download <a target="_blank" href="./export/IHR Costing Tool - Definitions and References.pdf">here</a>.</p>
+			</div>
 		</div>
 	</script>
 
@@ -766,7 +771,7 @@
 	<script src="build/lib.min.js"></script>
 
 	<!-- Project Specific Files -->
-	<!--<script src="js/utility.js"></script>
+<!-- 	<script src="js/utility.js"></script>
 	<script src="js/user.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/components/capacityDescription.js"></script>
@@ -787,7 +792,7 @@
 	<script src="js/pages/scores.js"></script>
 	<script src="js/pages/who.js"></script>
 	<script src="js/routing.js"></script>
-	<script src="js/init.js"></script>-->
+	<script src="js/init.js"></script> -->
 	<script src="build/bundle.min.js"></script>
 </body>
 </html>

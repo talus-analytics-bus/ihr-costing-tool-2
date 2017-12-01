@@ -2,8 +2,8 @@ const Charts = {};
 
 (() => {
 	Charts.buildProgressChart = (selector, data, param={}) => {
-		const margin = { top: 35, right: 45, bottom: 35, left: 5 };
-		const width = param.width || 660;
+		const margin = { top: 35, right: 45, bottom: 35, left: 35 };
+		const width = param.width || 630;
 		const height = param.height || 36;
 		const chartContainer = d3.selectAll(selector).append('svg')
 			.classed('progress-chart', true)
@@ -45,9 +45,9 @@ const Charts = {};
 
 		// draw rectangles
 		const rectData = [
-			{ x0: 1, x1: 2, color: 'rgb(200, 33, 39)' },
-			{ x0: 2, x1: 4, color: 'rgb(247, 236, 19)' },
-			{ x0: 4, x1: 5, color: 'rgb(21, 108, 55)' }
+			{ x0: 1, x1: 1.5, color: 'rgb(200, 33, 39)' },
+			{ x0: 1.5, x1: 3.5, color: 'rgb(247, 236, 19)' },
+			{ x0: 3.5, x1: 5, color: 'rgb(21, 108, 55)' }
 		];
 		chart.selectAll('.color-bar')
 			.data(rectData)
