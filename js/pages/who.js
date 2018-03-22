@@ -220,7 +220,7 @@
 		const phMults = [
 			{
 				name: 'central_hospitals_count',
-				description: 'Number of health care facilities in the country',
+				description: 'Number of health care facilities participating in IHR activities',
 				unit: 'health care facilities / country',
 			},/* {
 				name: 'central_epi_count',
