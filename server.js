@@ -12,11 +12,12 @@ const XlsxPopulate = require('xlsx-populate'); // read/write xlsx files
 // under the Configuration section, under Software Configuration
 // USE_HTTPS_REDIRECTION = true will enable HTTPS redirection
 //
+
 //let useHTTPSRedirection = process.env.USE_HTTPS_REDIRECTION;
 const useHTTPSRedirection = true;
-//console.log('useHTTPSRedirection ' + useHTTPSRedirection);
+
 // Set the useHTTPSRedirection to false if you don't want the auto-redirection from HTTP to HTTPS
-if (useHTTPSRedirection ===true) {
+if (useHTTPSRedirection === true) {
     // Redirect HTTP to HTTPS
     app.use(function(req, res, next) {
         if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
