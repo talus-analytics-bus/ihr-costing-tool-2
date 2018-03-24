@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/talus-analytics/ihr-costing-tool-2.git"
   },
-  "author": "",
+  "author": "rfink",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/talus-analytics/ihr-costing-tool-2/issues"
