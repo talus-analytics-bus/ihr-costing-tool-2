@@ -8,10 +8,11 @@ var bodyParser = require('body-parser');
 var path = require('path');
 const XlsxPopulate = require('xlsx-populate'); // read/write xlsx files
 
-// The Amazon environment property is set in the EC2 instance under the Configuration section, under Software Configuration
+// The Amazon environment property is set in the EC2 instance
+// under the Configuration section, under Software Configuration
 // USE_HTTPS_REDIRECTION = true will enable HTTPS redirection
 //
-const useHTTPSRedirection = true;//process.env.USE_HTTPS_REDIRECTION;
+const useHTTPSRedirection = process.env.USE_HTTPS_REDIRECTION;
 
 // Set the useHTTPSRedirection to false if you don't want the auto-redirection from HTTP to HTTPS
 if (useHTTPSRedirection === true) {
