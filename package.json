@@ -2,7 +2,7 @@
   "name": "ihr-costing-tool-2",
   "version": "1.0.0",
   "description": "IHR Costing Tool v2",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "eslint-plugin-import": "^2.9.0",
     "express": "^4.15.3",
     "http": "0.0.0",
     "nodecli": "0.0.1",
