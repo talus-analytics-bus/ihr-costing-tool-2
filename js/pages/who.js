@@ -220,22 +220,23 @@
 		const phMults = [
 			{
 				name: 'central_hospitals_count',
-				description: 'Number of health care facilities in the country',
-				unit: 'health care facilities / country',
+				description: 'Number of healthcare facilities in the country: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
+				unit: 'healthcare facilities / country',
 			},/* {
 				name: 'central_epi_count',
 				description: 'Estimated total number of epidemiologists in the country',
 				unit: 'people',
 			}, */{
 				name: 'central_chw_count',
-				description: 'Number of community health workers in the country',
+				description: 'Number of community health workers in the country:',
 				unit: 'community health workers / country',
 			}
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
 			.data(phMults)
 			.enter().append('tr');
-		phRows.append('td').text(d => `${d.description}:`);
+		//phRows.append('td').text(d => `${d.description}:`);
+        phRows.append('td').html(d => `${d.description}`);
 		const phInputCell = phRows.append('td');
 		phInputCell.append('input')
 			.attr('class', 'form-control')
@@ -249,6 +250,12 @@
 			});
 		phInputCell.append('span').text(d => d.unit);
 
+        const content = `Specify the number of public healthcare facilities participating in IHR-related activities, including point-of-care diagnostics for priority diseases, and biosafety and biosecurity programs.`;
+        $('#healthcare-help').tooltipster({
+            content: content,
+            trigger: 'hover',
+            side: 'top',
+        });
 		// previous and next buttons
 		$('.next-button').click(() => hasher.setHash('costs/personnel'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
