@@ -30,6 +30,9 @@ if (useHTTPSRedirection === 'true') {
             next();
     });
 }
+
+app.use(bodyParser.json({limit: '50Mb'}));
+
 // lineItemExport
 // Routine to read line item export template XLS, write user line items,
 // and download result to browser
