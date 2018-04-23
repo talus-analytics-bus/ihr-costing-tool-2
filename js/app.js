@@ -37,7 +37,7 @@ const App = {};
 
 		// load country params data
 		d3.queue()
-			.defer(d3.json, 'data/country_specific_parameters.json')
+			.defer(d3.json, 'data/country_specific_parameters2018.json')
 			.defer(d3.json, 'data/jee_costing_data.json')
 			.defer(d3.json, 'data/currencies.json')
 			.defer(d3.json, 'data/global_base_costs.json')
