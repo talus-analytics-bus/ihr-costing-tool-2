@@ -39,6 +39,7 @@ const App = {};
 		d3.queue()
 			.defer(d3.json, 'data/country_specific_parameters.json')
 			.defer(d3.json, 'data/jee_costing_data.json')
+			.defer(d3.json, 'data/jee_score_data.json')
 			.defer(d3.json, 'data/currencies.json')
 			.defer(d3.json, 'data/global_base_costs.json')
 			.defer(d3.json, 'data/global_staff_multipliers.json')
