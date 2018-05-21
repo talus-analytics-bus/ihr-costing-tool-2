@@ -4,6 +4,6 @@
 		Routing.precompileTemplates();
 		Routing.initializeRoutes();
 		NProgress.done();
-		App.changeLanguage('en');
+		App.changeLanguage(App.lang);
 	});
 })();

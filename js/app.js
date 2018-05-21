@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.lang = 'en';
+	App.lang = 'fr';
 	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
@@ -564,6 +564,18 @@ const App = {};
 			];
 			fields.forEach(field => {
 				gbc[field] = gbc[`${field}_${App.lang}`];
+			});
+		});
+
+		App.globalStaffMultipliers.forEach(gsm => {
+			const fields = [
+				'name',
+				'description',
+				'tab_name',
+				'subheading_name',
+			];
+			fields.forEach(field => {
+				gsm[field] = gsm[`${field}_${App.lang}`];
 			});
 		});
 		

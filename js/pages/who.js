@@ -486,7 +486,7 @@
 							// add label for input unit
 							inputGroup.append('span')
 								.attr('class','dv-cost-unit')
-								.text(" attendees");
+								.text(App.lang === 'en' ? " attendees" : ' participants');
 						}
 
 						// add default text warning

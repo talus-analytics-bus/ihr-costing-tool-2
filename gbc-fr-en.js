@@ -1,5 +1,4 @@
 (() => {
-
 	// load both sets of languages
 	d3.queue(1)
 		.defer(d3.json, './data/tmp/global_base_costs-en.json')
