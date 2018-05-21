@@ -313,7 +313,7 @@
 
 		// add overhead percentage if personnel page
 		if (whoTab === 'personnel') {
-			defaultCosts.push({
+			const overhead_en = {
 				cost: 0.6,
 				cost_unit: "% per year",
 				description: "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
@@ -321,19 +321,40 @@
 				name: "Overhead percentage",
 				tab_name: "Personnel compensation",
 				subheading_name: "Salaries",
-			});
+			};
+			const overhead_fr = {
+				cost: 0.6,
+				cost_unit: "% par an",
+				description: "Montant additionnel qui sera budgété pour les frais généraux des employés, en pourcentage du salaire annuel de l'employé",
+				id: "gbc.overhead",
+				name: "Pourcentage de frais généraux",
+				tab_name: "Rémunération du personnel",
+				subheading_name: "Salaires",
+			};
+
+			defaultCosts.push(App.lang === 'en' ? overhead_en : overhead_fr);
 		}
 
 		// add buy/lease option if technology and infrastructure
 		if (whoTab === 'technology') {
-			defaultCosts.push({
+			const buyLease_en = {
 				type: "radio",
 				values: ["Buy", "Lease"],
 				description: "Choice of either buying or leasing facility space",
 				name: "Buy or lease facility space",
 				tab_name: "Technology and Infrastructure",
 				subheading_name: "Infrastructure",
-			});
+			};
+
+			const buyLease_fr = {
+				type: "radio",
+				values: ["Acheter", "Louer"],
+				description: "Choix d'achat ou de location de l'installation",
+				name: "Acheter ou louer un espace d'installation",
+				tab_name: "Technologie et infrastructure",
+				subheading_name: "Infrastructure",
+			};
+			defaultCosts.push(App.lang === 'fr' ? buyLease_fr : buyLease_en);
 		}
 
 		// add meeting attendee data
@@ -473,7 +494,7 @@
 						if (itemNode.id.indexOf('gbc') > -1) {
 							// add label for input currency, if item is not
 							// "overhead percentage"
-							if (itemName !== "Overhead percentage") {
+							if (itemName !== "Overhead percentage" && itemName !== "Pourcentage de frais généraux") {
 								inputGroup.append('span')
 									.attr('class','dv-currency');
 							}
