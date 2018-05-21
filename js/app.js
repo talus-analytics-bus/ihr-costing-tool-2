@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.lang = 'fr';
+	App.lang = 'en';
 	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
@@ -551,6 +551,19 @@ const App = {};
 						});
 					});
 				});
+			});
+		});
+
+		App.globalBaseCosts.forEach(gbc => {
+			const fields = [
+					'name',
+					'description',
+					'tab_name',
+					'subheading_name',
+					'cost_unit',
+			];
+			fields.forEach(field => {
+				gbc[field] = gbc[`${field}_${App.lang}`];
 			});
 		});
 		

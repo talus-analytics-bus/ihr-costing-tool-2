@@ -1,37 +1,72 @@
 (() => {
 	const inputNonDefaultColor = '#fff3cd';
-	const blocks = [
-		{
-			abbr: 'population',
-			name: 'Population and Currency',
-		}, {
-			abbr: 'country-details',
-			name: 'Country Details',
-		}, {
-			abbr: 'default-costs',
-			name: 'Cost Assumptions (optional)',
-			children: ['personnel', 'technology', 'printing', 'meetings'],
-		}, {
-			abbr: 'personnel',
-			tabName: 'Personnel compensation',
-			name: 'Personnel Compensation',
-			level: 1,
-		}, {
-			abbr: 'technology',
-			name: 'Technology and Infrastructure',
-			level: 1,
-		}, {
-			abbr: 'printing',
-			name: 'Printing',
-			level: 1,
-		}, {
-			abbr: 'meetings',
-			name: 'Meetings',
-			level: 1,
-		}
-	];
+	let blocks;
 
 	App.initWho = (whoTab) => {
+		const blocks_en = [
+			{
+				abbr: 'population',
+				name: 'Population and Currency',
+			}, {
+				abbr: 'country-details',
+				name: 'Country Details',
+			}, {
+				abbr: 'default-costs',
+				name: 'Cost Assumptions (optional)',
+				children: ['personnel', 'technology', 'printing', 'meetings'],
+			}, {
+				abbr: 'personnel',
+				tabName: 'Personnel compensation',
+				name: 'Personnel Compensation',
+				level: 1,
+			}, {
+				abbr: 'technology',
+				name: 'Technology and Infrastructure',
+				level: 1,
+			}, {
+				abbr: 'printing',
+				name: 'Printing',
+				level: 1,
+			}, {
+				abbr: 'meetings',
+				name: 'Meetings',
+				level: 1,
+			}
+		];
+
+		const blocks_fr = [
+			{
+				abbr: 'population',
+				name: 'Population et devise',
+			}, {
+				abbr: 'country-details',
+				name: 'Détails du pays',
+			}, {
+				abbr: 'default-costs',
+				name: 'Hypothèses de coûts (facultatif)',
+				children: ['personnel', 'technology', 'printing', 'meetings'],
+			}, {
+				abbr: 'personnel',
+				tabName: 'Rémunération du personnel',
+				name: 'Rémunération du personnel',
+				level: 1,
+			}, {
+				abbr: 'technology',
+				name: 'Technologie et infrastructure',
+				level: 1,
+			}, {
+				abbr: 'printing',
+				name: 'Travaux d\'impression',
+				level: 1,
+			}, {
+				abbr: 'meetings',
+				name: 'Réunions',
+				level: 1,
+			}
+		];
+
+		blocks = App.lang === 'en' ? blocks_en : blocks_fr;
+
 		if (whoTab === 'default-costs') {
 			hasher.setHash('costs/personnel');
 			return;
