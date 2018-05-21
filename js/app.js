@@ -1,7 +1,7 @@
 const App = {};
 
 (() => {
-	App.lang = 'en';
+	App.lang = 'fr';
 	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
@@ -22,19 +22,6 @@ const App = {};
 				text: '<b>Warning!<br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.</b>',
 			});
 		}
-
-		// initiate behavior for navigation links
-		$('.tool-name').click(() => hasher.setHash(''));
-		$('.nav-item').click(function() {
-			// dropdown lists do not have associated pages
-			const page = $(this).attr('page');
-			if (typeof page !== 'undefined') hasher.setHash(page);
-		});
-
-		// add the hrefs to the dropdown menu items
-		$('.dropdown-item').click(function() {
-				hasher.setHash($(this).attr('page'));
-		});
 
 		// load country params data
 		d3.queue()

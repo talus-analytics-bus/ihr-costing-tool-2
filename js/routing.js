@@ -133,5 +133,29 @@ const Routing = {};
 	function loadTemplate(page, data) {
 		const pageLanguage = App.lang !== 'en' ? `${page}-${App.lang}` : page;
 		$('#page-content').html(Routing.templates[pageLanguage](data));
+
+		loadNav(data);
 	}
+
+	// load the nav bar using HB
+	function loadNav(data = {}) {
+		const navLang = App.lang !== 'en' ? 'nav-fr' : 'nav';
+
+		$('#nav-content').html(Routing.templates[navLang](data));
+		$('.nav-item').click(function() {
+			// dropdown lists do not have associated pages
+			const page = $(this).attr('page');
+			if (typeof page !== 'undefined') hasher.setHash(page);
+		});
+
+		// initiate behavior for navigation links
+		$('.tool-name').click(() => hasher.setHash(''));
+		
+
+		// add the hrefs to the dropdown menu items
+		$('.dropdown-item').click(function() {
+				hasher.setHash($(this).attr('page'));
+		});
+
+	};
 })();
