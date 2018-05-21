@@ -46,7 +46,8 @@ const App = {};
 				App.globalStaffMultipliers = globalStaffMultipliers;
 				App.whoAmI = {};
 
-				if (App.demoMode) {
+				if (true) {
+				// if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170904-demo.ihr', (error, text) => {
 						const demoDataLoaded = App.loadSessionData(text);
