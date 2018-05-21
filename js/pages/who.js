@@ -192,8 +192,9 @@
 			if (isDefault) {
 				$('.default-pop-text').slideUp();
 			} else {
+				const defaultText = App.lang === 'fr' ? 'Défaut: ' : 'Default: ';
 				$('.default-pop-text')
-					.text(`Default: ${Util.comma(defaultPop)}`)
+					.text(`${defaultText} ${Util.comma(defaultPop)}`)
 					.slideDown();
 			}
 		}
@@ -584,7 +585,7 @@
 			const input = d3.select(selector);
 
 			let isDefault = true;
-			let defaultText = 'Default: ';
+			let defaultText = App.lang === 'fr' ? 'Défaut: ' : 'Default: ';
 			if (gbcId.indexOf('gbc') > -1) {
 				if (gbcId === 'gbc.overhead') {
 					isDefault = App.whoAmI.staff_overhead_perc === 0.6;

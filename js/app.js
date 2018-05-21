@@ -578,6 +578,33 @@ const App = {};
 				gsm[field] = gsm[`${field}_${App.lang}`];
 			});
 		});
+
+		// update number format defaults
+		if (App.lang === 'fr') {
+			// d3.formatDefaultLocale({
+			//   "decimal": ",",
+			//   "thousands": "\u00a0",
+			//   "grouping": [3],
+			//   "currency": ["", "\u00a0€"],
+			//   "percent": "\u202f%"
+			// });
+			d3.formatDefaultLocale({
+  "decimal": ",",
+  "thousands": "\u00a0",
+  "grouping": [3],
+  "currency": ["", "$"]
+});
+			
+		} else {
+			// rounds down and adds commas appropriately
+			d3.formatDefaultLocale({
+			  "decimal": ".",
+			  "thousands": ",",
+			  "grouping": [3],
+			  "currency": ["$", ""]
+			});
+		}
+		Util.loadNumberFormatters();
 		
 		// Once the new language is chosen, reload the page.
 		crossroads.parse(hasher.getHash());
