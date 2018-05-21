@@ -1,6 +1,7 @@
 const App = {};
 
 (() => {
+	App.lang = 'en';
 	App.demoMode = false;
 	App.scoreLabels = {
 		1: 'No Capacity',
@@ -108,8 +109,6 @@ const App = {};
 
 	// gets the capacity from the jeeTree given an id
 	App.getCapacity = (id) => {
-		console.log('id');
-		console.log(id);
 		const ccId = id.includes('.') ? id.split('.')[0].toLowerCase() : 'o';
 		const capId = id.toLowerCase();
 		const cc = App.jeeTree.find(cc => cc.id === ccId);
@@ -567,6 +566,9 @@ const App = {};
 				});
 			});
 		});
+		
+		// Once the new language is chosen, reload the page.
+		crossroads.parse(hasher.getHash());
 	};
 
 	// retrieves a copy of all complete indicators and all levels below

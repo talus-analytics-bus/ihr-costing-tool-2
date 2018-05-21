@@ -87,6 +87,9 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 
+		// crossroads settings
+		crossroads.ignoreState = true; // refresh the page even if hash is unchanged
+
 		// setup hasher for subscribing to hash changes and browser history
 		hasher.prependHash = '';
 		hasher.initialized.add(parseHash);
@@ -128,6 +131,7 @@ const Routing = {};
 	}
 
 	function loadTemplate(page, data) {
-		$('#page-content').html(Routing.templates[page](data));
+		const pageLanguage = App.lang !== 'en' ? `${page}-${App.lang}` : page;
+		$('#page-content').html(Routing.templates[pageLanguage](data));
 	}
 })();
