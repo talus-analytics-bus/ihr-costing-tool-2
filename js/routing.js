@@ -135,6 +135,7 @@ const Routing = {};
 		$('#page-content').html(Routing.templates[pageLanguage](data));
 
 		loadNav(data);
+		loadFooter(data);
 	}
 
 	// load the nav bar using HB
@@ -156,6 +157,13 @@ const Routing = {};
 		$('.dropdown-item').click(function() {
 				hasher.setHash($(this).attr('page'));
 		});
-
 	};
+
+	// load the footer using HB
+	function loadFooter(data = {}) {
+		const footerLang = App.lang !== 'en' ? 'footer-fr' : 'footer';
+
+		$('#footer-content').html(Routing.templates[footerLang](data));
+	};
+
 })();

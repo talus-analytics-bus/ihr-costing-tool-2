@@ -725,53 +725,53 @@
     </script>
     <!-- TEMPLATES -->
     <script id="nav-template-fr" type="text/x-handlebars-template">
-		<!-- App logo and name -->
-			<div class="navbar-logo-container">
-				<img class="logo" src="img/logo-app.png" alt="IHR Costing Tool">
-				<div class="tool-name">Outil d'&#233;valuation des co&#251;ts du RSI</div>
-			</div>
-			<!-- Nav bar -->
-			<nav class="navbar navbar-toggleable-md navbar-light bg-faded ihr-navbar">
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item" page="">
-							<a class="nav-link">Accueil</a>
-						</li>
-						<li class="nav-item" page="country">
-							<a class="nav-link">Choisir un pays</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#201;valuation</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" page="overview">Instructions et Upload</a>
-								<a class="dropdown-item" page="scores">Entrer l'&#233;valuation</a>
-							</div>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Co&#251;t</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" page="costsinstructions">Instructions</a>
-								<a class="dropdown-item" page="costs/population">D&#233;finir les valeurs implicites</a>
-								<a class="dropdown-item" page="costs/p-1/1">Entrer les co&#251;ts</a>
-							</div>
-						</li>
-						<li class="nav-item" page="results">
-							<a class="nav-link">R&#233;sultats</a>
-						</li>
-					</ul>
-					<ul class="navbar-nav">
-						<li class="nav-item" page="background">
-							<a class="nav-link">Contexte</a>
-						</li>
-						<li class="nav-item" page="contact">
-							<a class="nav-link">Contactez-nous</a>
-						</li>
-					</ul>
-				</div>
-			</nav>
+        <!-- App logo and name -->
+        <div class="navbar-logo-container">
+            <img class="logo" src="img/logo-app.png" alt="IHR Costing Tool">
+            <div class="tool-name">Outil d'&#233;valuation des co&#251;ts du RSI</div>
+        </div>
+        <!-- Nav bar -->
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded ihr-navbar">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" page="">
+                        <a class="nav-link">Accueil</a>
+                    </li>
+                    <li class="nav-item" page="country">
+                        <a class="nav-link">Choisir un pays</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#201;valuation</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" page="overview">Instructions et Upload</a>
+                            <a class="dropdown-item" page="scores">Entrer l'&#233;valuation</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Co&#251;t</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" page="costsinstructions">Instructions</a>
+                            <a class="dropdown-item" page="costs/population">D&#233;finir les valeurs implicites</a>
+                            <a class="dropdown-item" page="costs/p-1/1">Entrer les co&#251;ts</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" page="results">
+                        <a class="nav-link">R&#233;sultats</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" page="background">
+                        <a class="nav-link">Contexte</a>
+                    </li>
+                    <li class="nav-item" page="contact">
+                        <a class="nav-link">Contactez-nous</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </script>
     <!-- Home page tempate -->
     <script id="home-template-fr" type="text/x-handlebars-template">
@@ -1311,6 +1311,30 @@
             <p class="capacity-additional-notes-container">
                 <b>Notes compl&#233;mentaires:</b><span class="capacity-additional-notes"></span>
             </p>
+        </div>
+    </script>
+    <script id="footer-template-fr" type="text/x-handlebars-template">
+        <!-- Footer -->
+        <div class="footer">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            <a href="https://www.georgetown.edu/" target="_blank">
+							<img alt="Georgetown University" class="logo-georgetown" src="img/logo-georgetown.png">
+						</a>
+                        </th>
+                        <th>
+                            <span class="built-by">Construit par</span>
+                        </th>
+                        <th>
+                            <a href="http://www.talusanalytics.com" target="_blank">
+							<img alt="Talus Analytics" class="logo-talus" src="img/logo-talus.png">
+						</a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </script>
     <!-- General Libraries -->
