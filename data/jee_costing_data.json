@@ -313,7 +313,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.1.1 La législation, les lois, les règlements, les exigences administratives, les politiques ou autres instruments gouvernementaux en place suffisent à la mise en œuvre du RSI.",
+            "name_fr": "La législation, les lois, les règlements, les exigences administratives, les politiques ou autres instruments gouvernementaux en place suffisent à la mise en œuvre du RSI.",
             "name_en": "Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR.",
             "score_descriptions_fr": {
               "1": "Évaluation de la législation, de la réglementation, des exigences administratives et d'autres instruments gouvernementaux pertinents pour la mise en œuvre du RSI (2005) non effectuée",
@@ -634,7 +634,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.1.2 L'État peut démontrer qu'il a amendé et aligné sa législation, ses politiques et ses dispositions administratives internes pour permettre la conformité avec le RSI (2005).",
+            "name_fr": "L'État peut démontrer qu'il a amendé et aligné sa législation, ses politiques et ses dispositions administratives internes pour permettre la conformité avec le RSI (2005).",
             "name_en": "The state can demonstrate that it has adjusted and aligned its domestic legislation, policies, and administrative arrangements to enable compliance with the IHR (2005).",
             "score_descriptions_fr": {
               "1": "La législation, la réglementation, les exigences administratives et d'autres instruments gouvernementaux ne sont pas en place pour la mise en œuvre du RSI (2005)",
@@ -1241,7 +1241,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.2.1 Un mécanisme fonctionnel est établi pour la coordination et l'intégration des secteurs concernés dans la mise en œuvre du RSI",
+            "name_fr": "Un mécanisme fonctionnel est établi pour la coordination et l'intégration des secteurs concernés dans la mise en œuvre du RSI",
             "name_en": "A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR",
             "score_descriptions_fr": {
               "1": "Le mécanisme de coordination entre les ministères concernés n'est pas en place",
@@ -2062,7 +2062,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.3.1 Détection de la résistance aux antimicrobiens (RAM)",
+            "name_fr": "Détection de la résistance aux antimicrobiens (RAM)",
             "name_en": "Antimicrobial resistance (AMR) detection",
             "score_descriptions_fr": {
               "1": "Aucun plan national de détection et de notification des agents pathogènes prioritaires de la RAM n'a été approuvé",
@@ -2625,7 +2625,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.3.2 Surveillance des infections causées par des agents pathogènes de la RAM",
+            "name_fr": "Surveillance des infections causées par des agents pathogènes de la RAM",
             "name_en": "Surveillance of infections caused by AMR pathogens",
             "score_descriptions_fr": {
               "1": "Aucun plan national de surveillance des infections causées par des pathogènes prioritaires de la RAM n'a été approuvé",
@@ -3280,7 +3280,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.3.3 Programmes de contrôle de la prévention des infections nosocomiales",
+            "name_fr": "Programmes de contrôle de la prévention des infections nosocomiales",
             "name_en": "Healthcare associated infection (HCAI) prevention control programs",
             "score_descriptions_fr": {
               "1": "Aucun plan national pour les programmes de maladies nosocomiales n'a été approuvé",
@@ -3607,7 +3607,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.3.4 Activités de gérance des antimicrobiens",
+            "name_fr": "Activités de gérance des antimicrobiens",
             "name_en": "Antimicrobial stewardship activities",
             "score_descriptions_fr": {
               "1": "Aucun plan national de gestion des antimicrobiens n'a été approuvé",
@@ -4454,7 +4454,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.4.1 Systèmes de surveillance en place pour les maladies / agents pathogènes zoonotiques prioritaires",
+            "name_fr": "Systèmes de surveillance en place pour les maladies / agents pathogènes zoonotiques prioritaires",
             "name_en": "Surveillance systems in place for priority zoonotic diseases/pathogens",
             "score_descriptions_fr": {
               "1": "Aucun système de surveillance zoonotique n'existe",
@@ -4870,7 +4870,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.4.2 Personnel de santé vétérinaire ou animale",
+            "name_fr": "Personnel de santé vétérinaire ou animale",
             "name_en": "Veterinary or Animal Health Workforce",
             "score_descriptions_fr": {
               "1": "Le pays n'a aucune capacité en personnel de santé animale capable de mener une activité sanitaire",
@@ -5750,7 +5750,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.4.3 Les mécanismes d'intervention aux zoonoses infectieuses et aux zoonoses potentielles sont établis et fonctionnels",
+            "name_fr": "Les mécanismes d'intervention aux zoonoses infectieuses et aux zoonoses potentielles sont établis et fonctionnels",
             "name_en": "Mechanisms for responding to infectious zoonoses and potential zoonoses are established and functional",
             "score_descriptions_fr": {
               "1": "Aucun mécanisme en place",
@@ -6744,7 +6744,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.5.1 Des mécanismes sont établis et fonctionnent pour détecter et intervenir face aux maladies d'origine alimentaire et à la contamination des aliments.",
+            "name_fr": "Des mécanismes sont établis et fonctionnent pour détecter et intervenir face aux maladies d'origine alimentaire et à la contamination des aliments.",
             "name_en": "Mechanisms are established and functioning for detecting and responding to foodborne disease and food contamination. ",
             "score_descriptions_fr": {
               "1": "Aucun mécanisme en place",
@@ -8282,7 +8282,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.6.1 Un système de biosécurité et de biosûreté pangouvernemental est en place pour les installations humaines, animales et agricoles",
+            "name_fr": "Un système de biosécurité et de biosûreté pangouvernemental est en place pour les installations humaines, animales et agricoles",
             "name_en": "Whole-of-government biosafety and biosecurity system is in place for human, animal, and agriculture facilities",
             "score_descriptions_fr": {
               "1": "Aucun élément d'un système national exhaustif de biosécurité et de biosûreté n'est en place",
@@ -9393,7 +9393,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.6.2 Pratiques de formation en biosécurité et biosûreté",
+            "name_fr": "Pratiques de formation en biosécurité et biosûreté",
             "name_en": "Biosafety and biosecurity training practices",
             "score_descriptions_fr": {
               "1": "Aucune formation ou projet de formation en biosécurité et en biosûreté ne sont en place",
@@ -9701,7 +9701,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.7.1 Couverture vaccinale (rougeole) dans le cadre du programme national",
+            "name_fr": "Couverture vaccinale (rougeole) dans le cadre du programme national",
             "name_en": "Vaccine coverage (measles) as part of national program",
             "score_descriptions_fr": {
               "1": "Moins de 50% de la population du pays âgée de 12 mois a reçu au moins une dose de vaccin antirougeole, comme en témoignent les enquêtes de couverture ou les données administratives ; un plan est en place pour améliorer la couverture, y compris les activités de vaccination supplémentaires",
@@ -9953,7 +9953,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "P.7.2 Accès et livraison de vaccins à l'échelle nationale",
+            "name_fr": "Accès et livraison de vaccins à l'échelle nationale",
             "name_en": "National vaccine access and delivery",
             "score_descriptions_fr": {
               "1": "Aucun plan n'est en place pour la livraison de vaccins à l'échelle nationale OU des plans ont été rédigés pour fournir des vaccins dans tout le pays pour cibler les populations mais ne sont pas mis en œuvre; des achats et des prévisions de vaccins inadéquats entraînent des ruptures de stock régulières au niveau central et au niveau des districts",
@@ -11064,7 +11064,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.1.1 Essais de laboratoire pour la détection de maladies prioritaires",
+            "name_fr": "Essais de laboratoire pour la détection de maladies prioritaires",
             "name_en": "Laboratory testing for detection of priority diseases",
             "score_descriptions_fr": {
               "1": "Le système de laboratoire national n'est pas capable de réaliser des essais de base.",
@@ -11515,7 +11515,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.1.2 Système de référence pour le transfert et le transport d’échantillons",
+            "name_fr": "Système de référence pour le transfert et le transport d’échantillons",
             "name_en": "Specimen referral and transport system",
             "score_descriptions_fr": {
               "1": "Aucun système n'est en place pour le transport des échantillons des niveaux intermédiaires / districts vers les laboratoires nationaux, à part un transport ad hoc.",
@@ -12308,7 +12308,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.1.3 Point de soin moderne efficace et diagnostic en laboratoire",
+            "name_fr": "Point de soin moderne efficace et diagnostic en laboratoire",
             "name_en": "Effective modern point of care and laboratory based diagnostics",
             "score_descriptions_fr": {
               "1": "Aucune preuve de l'utilisation rapide et précise des diagnostics des points de soins et de laboratoire. Aucune stratégie de test de diagnostic spécifique à un niveau n'est documentée.",
@@ -12748,7 +12748,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.1.4 Système de contrôle-qualité de laboratoire",
+            "name_fr": "Système de contrôle-qualité de laboratoire",
             "name_en": "Laboratory Quality System",
             "score_descriptions_fr": {
               "1": "Il n'y a pas de normes nationales de qualité de laboratoire.",
@@ -14459,7 +14459,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.2.1 Systèmes de surveillance fondés sur des indicateurs et des événements",
+            "name_fr": "Systèmes de surveillance fondés sur des indicateurs et des événements",
             "name_en": "Indicator and event based surveillance systems",
             "score_descriptions_fr": {
               "1": "Aucun indicateur ou système de surveillance événementielle n'existe.",
@@ -15067,7 +15067,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.2.2 Système interopérable, interconnecté, de notification électronique en temps réel",
+            "name_fr": "Système interopérable, interconnecté, de notification électronique en temps réel",
             "name_en": "Interoperable, interconnected, electronic real-time reporting system",
             "score_descriptions_fr": {
               "1": "Il n'existe aucun système interopérable et interconnecté de rapports électroniques en temps réel.",
@@ -15458,7 +15458,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.2.3 Intégration et analyse des données de surveillance",
+            "name_fr": "Intégration et analyse des données de surveillance",
             "name_en": "Integration and analysis of surveillance data",
             "score_descriptions_fr": {
               "1": "Aucun rapport lié à la collecte de données",
@@ -15786,7 +15786,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.2.4 Systèmes de surveillance syndromique",
+            "name_fr": "Systèmes de surveillance syndromique",
             "name_en": "Syndromic surveillance systems",
             "score_descriptions_fr": {
               "1": "Aucun système de surveillance syndromique n'existe",
@@ -16222,7 +16222,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.3.1 Système de notification efficace à l'OMS, à la FAO et à l'OIE",
+            "name_fr": "Système de notification efficace à l'OMS, à la FAO et à l'OIE",
             "name_en": "System for efficient reporting to WHO, FAO and OIE",
             "score_descriptions_fr": {
               "1": "Aucun point focal national RSI, Délégué de l'OIE et / ou point focal national WAHIS n'a été identifié et / ou point focal /délégué identifié n'a accès au module d'apprentissage et aux meilleures pratiques fournies par l'OMS, l'OIE et la FAO.",
@@ -16531,7 +16531,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.3.2 Réseau de notification et de protocoles dans le pays",
+            "name_fr": "Réseau de notification et de protocoles dans le pays",
             "name_en": "Reporting network and protocols in country",
             "score_descriptions_fr": {
               "1": "Le pays ne dispose pas de protocoles ou de processus de notification à l'OMS, à l'OIE ou à la FAO; n'a pas l'intention d'établir dans l'année à venir des plans et des protocoles pour les rapports",
@@ -17144,7 +17144,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.4.1 Des ressources humaines sont disponibles pour mettre en œuvre les exigences de capacité de base du RSI",
+            "name_fr": "Des ressources humaines sont disponibles pour mettre en œuvre les exigences de capacité de base du RSI",
             "name_en": "Human resources are available to implement IHR core capacity requirements",
             "score_descriptions_fr": {
               "1": "Le pays n'a pas de capacité RH multidisciplinaire requise pour la mise en œuvre des capacités de base du RSI",
@@ -17754,7 +17754,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.4.2 Programme de formation en épidémiologie appliquée tel que le Programme de Formation en Epidémiologie de Terrain (FETP en Anglais)",
+            "name_fr": "Programme de formation en épidémiologie appliquée tel que le Programme de Formation en Epidémiologie de Terrain (FETP en Anglais)",
             "name_en": "Applied epidemiology training program in place such as FETP",
             "score_descriptions_fr": {
               "1": "Aucun programme de formation en épidémiologie de terrain (FETP) ou en épidémiologie appliquée n'a été établi",
@@ -18394,7 +18394,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "D.4.3 Stratégie de ressources humaines",
+            "name_fr": "Stratégie de ressources humaines",
             "name_en": "Workforce strategy",
             "score_descriptions_fr": {
               "1": "Aucune stratégie en personnel de santé n'existe",
@@ -19829,7 +19829,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.1.1 Un plan national de préparation et d'intervention en cas d'urgence sanitaire multirisque est élaboré et mis en œuvre",
+            "name_fr": "Un plan national de préparation et d'intervention en cas d'urgence sanitaire multirisque est élaboré et mis en œuvre",
             "name_en": "Multi-hazard national public health emergency preparedness and response plan is developed and implemented",
             "score_descriptions_fr": {
               "1": "Le plan national de préparation et d'intervention en cas d'urgence de santé publique n'est pas disponible pour répondre aux exigences de capacité de base du RSI (Annexe 1A Article 2)",
@@ -20952,7 +20952,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.1.2 Les risques et les ressources prioritaires en matière de santé publique sont cartographiés et utilisés",
+            "name_fr": "Les risques et les ressources prioritaires en matière de santé publique sont cartographiés et utilisés",
             "name_en": " Priority public health risks and resources are mapped and utilized",
             "score_descriptions_fr": {
               "1": "La cartographie des risques pour la santé publique et des ressources n'est pas faite",
@@ -21771,7 +21771,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.2.1 Capacité d'activer les interventions d'urgence",
+            "name_fr": "Capacité d'activer les interventions d'urgence",
             "name_en": "Capacity to Activate Emergency Operations",
             "score_descriptions_fr": {
               "1": "Aucune procédure identifiée n'a été élaborée pour déterminer quand activer les opérations d'urgence en santé publique",
@@ -22631,7 +22631,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.2.2 Procédures et plan opérationel du Centre des Opérations d'Urgence",
+            "name_fr": "Procédures et plan opérationel du Centre des Opérations d'Urgence",
             "name_en": "Emergency Operations Centre Operating Procedures and Plan",
             "score_descriptions_fr": {
               "1": "Aucun plan / procédure du COU pour la structure de gestion des incidents (ou l'équivalent) n'est en place",
@@ -23365,7 +23365,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.2.3 Programme d'interventions d'urgence",
+            "name_fr": "Programme d'interventions d'urgence",
             "name_en": "Emergency Operations Program",
             "score_descriptions_fr": {
               "1": "Aucun exercice n'a été complété",
@@ -24202,7 +24202,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.2.4 Des procédures de prise en charge de cas sont mises en œuvre pour les dangers relevant au RSI",
+            "name_fr": "Des procédures de prise en charge de cas sont mises en œuvre pour les dangers relevant au RSI",
             "name_en": "Case management procedures are implemented for IHR relevant hazards",
             "score_descriptions_fr": {
               "1": "Aucune directive de gestion de cas n'est disponible pour les maladies à potentiel épidémique prioritaire",
@@ -25692,7 +25692,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.3.1 Les autorités chargées de la santé publique et de la sécurité (par exemple, l'application de la loi, le contrôle des frontières, les douanes) sont en liaison lors d'un événement biologique suspect ou confirmé",
+            "name_fr": "Les autorités chargées de la santé publique et de la sécurité (par exemple, l'application de la loi, le contrôle des frontières, les douanes) sont en liaison lors d'un événement biologique suspect ou confirmé",
             "name_en": "Public Health and Security Authorities, (e.g. Law Enforcement, Border Control, Customs) are linked during a suspect or confirmed biological event",
             "score_descriptions_fr": {
               "1": "Il n'existe pas d'antécédents juridiques, de relations, de protocoles, de protocoles d'entente ou d'autres accords entre les autorités de santé publique, de santé animale et de sécurité",
@@ -26444,7 +26444,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.4.1 Le système est en place pour l'envois et la réception de moyens médicaux lors d'une urgence de santé publique",
+            "name_fr": "Le système est en place pour l'envois et la réception de moyens médicaux lors d'une urgence de santé publique",
             "name_en": "System is in place for sending and receiving medical countermeasures during a public health emergency",
             "score_descriptions_fr": {
               "1": "Aucun plan national de contre-mesures n'a été rédigé",
@@ -26999,7 +26999,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.4.2 Le système est en place pour l'envois et la réception de personnels de santé pendant une urgence de santé publique",
+            "name_fr": "Le système est en place pour l'envois et la réception de personnels de santé pendant une urgence de santé publique",
             "name_en": "System is in place for sending and receiving health personnel during a public health emergency",
             "score_descriptions_fr": {
               "1": "Aucun plan national de déploiement du personnel n'a été rédigé",
@@ -27857,7 +27857,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.5.1 Systèmes de communication des risques (plans, mécanismes, etc.)",
+            "name_fr": "Systèmes de communication des risques (plans, mécanismes, etc.)",
             "name_en": "Risk Communication Systems (plans,mechanisms, etc.)",
             "score_descriptions_fr": {
               "1": "Pas d'arrangement formel de communication sur les risques du gouvernement",
@@ -28241,7 +28241,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.5.2 Communication et coordination internes et avec les partenaires",
+            "name_fr": "Communication et coordination internes et avec les partenaires",
             "name_en": "Internal and Partner Communication and Coordination",
             "score_descriptions_fr": {
               "1": "Pas de plateforme de coordination et de mécanismes de communication interne et de partenariat pour impliquer les principales parties prenantes nationales, intermédiaires, locales et internationales (y compris les agents de santé)",
@@ -28648,7 +28648,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.5.3 Communication publique",
+            "name_fr": "Communication publique",
             "name_en": "Public Communication",
             "score_descriptions_fr": {
               "1": "Pas d'unité centrale ou de lieu pour la communication publique, réactive, pour une sensibilisation ad hoc des médias",
@@ -29158,7 +29158,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.5.4 Communication pour faire participer les communautés touchées",
+            "name_fr": "Communication pour faire participer les communautés touchées",
             "name_en": "Communication Engagement with Aﬀected Communities",
             "score_descriptions_fr": {
               "1": "Aucun arrangement n'existe pour engager systématiquement les populations au niveau communautaire en cas d'urgence. Il peut y avoir une mobilisation sociale, une promotion de la santé ou un engagement communautaire sur les risques pour la santé maternelle, la vaccination, le paludisme, la tuberculose et le VIH / SIDA, la poliomyélite, les maladies tropicales négligées et d'autres programmes de développement, mais ils ne sont pas systématiquement utilisés lors d'urgences",
@@ -29653,7 +29653,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "R.5.5 Écoute dynamique et gestion des rumeurs",
+            "name_fr": "Écoute dynamique et gestion des rumeurs",
             "name_en": "Dynamic Listening and Rumour Management",
             "score_descriptions_fr": {
               "1": "Aucun système n'existe pour identifier ou répondre aux rumeurs et à la désinformation; ni pour comprendre et analyser les préoccupations et les craintes du public",
@@ -30658,7 +30658,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "PoE.1 Les capacités de routine sont établies aux points d'entrée",
+            "name_fr": "Les capacités de routine sont établies aux points d'entrée",
             "name_en": "Routine capacities are established at PoE",
             "score_descriptions_fr": {
               "1": "Pas de capacité au Points d'Entrée pour des services médicaux appropriés",
@@ -31679,7 +31679,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "PoE.2 Intervention efficace en santé publique aux points d'entrée",
+            "name_fr": "Intervention efficace en santé publique aux points d'entrée",
             "name_en": "Effective Public Health Response at Points of Entry",
             "score_descriptions_fr": {
               "1": "Il n'existe aucun plan national d'urgence en matière de santé publique pour intervenir aux urgences sanitaires survenant aux points d'entrée.",
@@ -32999,7 +32999,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "CE.1 Mécanismes fonctionnels en place pour la détection et la riposte à des événements/urgences\nd’origine chimique",
+            "name_fr": "Mécanismes fonctionnels en place pour la détection et la riposte à des événements/urgences\nd’origine chimique",
             "name_en": "Mechanisms are established and functioning for detecting and responding to chemical events or emergencies",
             "score_descriptions_fr": {
               "1": "Aucun mécanisme en place",
@@ -33279,7 +33279,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "CE.2 Un environnement favorable est en place pour la gestion des événements chimiques",
+            "name_fr": "Un environnement favorable est en place pour la gestion des événements chimiques",
             "name_en": "Enabling environment is in place for management of chemical event",
             "score_descriptions_fr": {
               "1": "Les politiques ou plans nationaux ou la législation pour l'alerte et l'intervention à la surveillance des événements chimiques n'existent pas",
@@ -34541,7 +34541,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "RE.1 Mécanismes fonctionnels en place pour la détection et la riposte aux situations\nd’urgence radiologique et nucléaire.",
+            "name_fr": "Mécanismes fonctionnels en place pour la détection et la riposte aux situations\nd’urgence radiologique et nucléaire.",
             "name_en": "Mechanisms are established and functioning for detecting and responding to radiological and nuclear emergencies",
             "score_descriptions_fr": {
               "1": "Pas de mécanisme de coordination et de communication entre les autorités nationales responsables des événements radiologiques et nucléaires avec le ministère de la santé et / ou le PFN du RSI",
@@ -34813,7 +34813,7 @@
               }
             ],
             "type": "indicator",
-            "name_fr": "RE.2 Un environnement favorable est en place pour la gestion des urgences radiologiques",
+            "name_fr": "Un environnement favorable est en place pour la gestion des urgences radiologiques",
             "name_en": "Enabling environment is in place for management of Radiation Emergencies",
             "score_descriptions_fr": {
               "1": "Pas de mécanisme de coordination et de communication entre les autorités nationales responsables des événements radiologiques et nucléaires avec le ministère de la santé et / ou le PFN du RSI",

@@ -3,16 +3,24 @@ const App = {};
 (() => {
 	App.lang = 'fr';
 	App.demoMode = false;
-	App.scoreLabels = {
+
+	App.scoreLabels = App.lang === 'fr' ? {
+		1: 'Pas de capacité',
+		2: 'Capacité limitée',
+		3: 'Capacité développée',
+		4: 'Capacité démontrée',
+		5: 'Capacité durable',
+	} : { 
 		1: 'No Capacity',
 		2: 'Limited Capacity',
 		3: 'Developed Capacity',
 		4: 'Demonstrated Capacity',
 		5: 'Sustainable Capacity',
-	};
-
+	}; 
+	
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
+
 		// give a warning if user is not using Chrome or Firefox
 		const browser = navigator.userAgent;
 		if (browser.search('Chrome') === -1 && browser.search('Firefox') === -1) {
@@ -25,28 +33,28 @@ const App = {};
 
 		// load country params data
 		d3.queue()
-			.defer(d3.json, 'data/country_specific_parameters.json')
-			.defer(d3.json, 'data/jee_costing_data.json')
-			.defer(d3.json, 'data/currencies.json')
-			.defer(d3.json, 'data/global_base_costs.json')
-			.defer(d3.json, 'data/global_staff_multipliers.json')
-			.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
-				if (error) {
-					noty({
-						type: 'error',
-						text: 'Error loading data files. Please contact the tool administrator',
-					});
-					return;
-				}
+		.defer(d3.json, 'data/country_specific_parameters.json')
+		.defer(d3.json, 'data/jee_costing_data.json')
+		.defer(d3.json, 'data/currencies.json')
+		.defer(d3.json, 'data/global_base_costs.json')
+		.defer(d3.json, 'data/global_staff_multipliers.json')
+		.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
+			if (error) {
+				noty({
+					type: 'error',
+					text: 'Error loading data files. Please contact the tool administrator',
+				});
+				return;
+			}
 
-				App.countryParams = countryParams;
-				App.jeeTree = jeeTree;
-				App.currencies = currencies;
-				App.globalBaseCosts = globalBaseCosts;
-				App.globalStaffMultipliers = globalStaffMultipliers;
-				App.whoAmI = {};
+			App.countryParams = countryParams;
+			App.jeeTree = jeeTree;
+			App.currencies = currencies;
+			App.globalBaseCosts = globalBaseCosts;
+			App.globalStaffMultipliers = globalStaffMultipliers;
+			App.whoAmI = {};
 
-				if (App.demoMode) {
+			if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170904-demo.ihr', (error, text) => {
 						const demoDataLoaded = App.loadSessionData(text);
@@ -377,7 +385,7 @@ const App = {};
 				const score_step_to = [];  // lowest score to 4 (including)
 				const minScore = +d3.min(li.score_step_to);
 				for (let i = minScore; i < 5; i++) score_step_to.push(String(i));
-				li.score_step_to = score_step_to.slice(0);
+					li.score_step_to = score_step_to.slice(0);
 			}
 		}
 
@@ -443,14 +451,14 @@ const App = {};
 	App.getCustomCostText = (input) => {
 		if (!input.isCustomCost) return '';
 		return `${App.moneyFormat(input.customStartupCost)} + ` +
-			`${App.moneyFormat(input.customRecurringCost)}/yr`;
+		`${App.moneyFormat(input.customRecurringCost)}/yr`;
 	}
 
 	// returns the number of indicators the user has fully costed
 	App.getNumIndicatorsCosted = (capacity) => {
 		return capacity.indicators
-			.filter(ind => App.isIndicatorComplete(ind))
-			.length;
+		.filter(ind => App.isIndicatorComplete(ind))
+		.length;
 	}
 
 	// gets the exchange rate for the selected currency to USD
@@ -502,11 +510,11 @@ const App = {};
 
 			// cc fields to copy
 			const ccFields = [
-				'name',
-				'target_description',
-				'as_measured_by',
-				'desired_impact',
-				'notes',
+			'name',
+			'target_description',
+			'as_measured_by',
+			'desired_impact',
+			'notes',
 			];
 			ce.capacities.forEach(cc => {
 				// CORE CAPACITIES
@@ -515,8 +523,8 @@ const App = {};
 				});
 
 				const indFields = [
-					'name',
-					'score_descriptions',
+				'name',
+				'score_descriptions',
 				];
 
 				cc.indicators.forEach(ind => {
@@ -534,14 +542,14 @@ const App = {};
 							input.name = input[`name_${App.lang}`]
 
 							const liFields = [
-								'name',
-								'description',
-								'category_tag',
-								'function_tag',
-								'custom_multiplier_1',
-								'custom_multiplier_2',
-								'references',
-								'where_find_base_cost',
+							'name',
+							'description',
+							'category_tag',
+							'function_tag',
+							'custom_multiplier_1',
+							'custom_multiplier_2',
+							'references',
+							'where_find_base_cost',
 							];
 							input.line_items.forEach(li => {
 								liFields.forEach(field => {
@@ -556,11 +564,11 @@ const App = {};
 
 		App.globalBaseCosts.forEach(gbc => {
 			const fields = [
-					'name',
-					'description',
-					'tab_name',
-					'subheading_name',
-					'cost_unit',
+			'name',
+			'description',
+			'tab_name',
+			'subheading_name',
+			'cost_unit',
 			];
 			fields.forEach(field => {
 				gbc[field] = gbc[`${field}_${App.lang}`];
@@ -569,10 +577,10 @@ const App = {};
 
 		App.globalStaffMultipliers.forEach(gsm => {
 			const fields = [
-				'name',
-				'description',
-				'tab_name',
-				'subheading_name',
+			'name',
+			'description',
+			'tab_name',
+			'subheading_name',
 			];
 			fields.forEach(field => {
 				gsm[field] = gsm[`${field}_${App.lang}`];
@@ -589,19 +597,19 @@ const App = {};
 			//   "percent": "\u202f%"
 			// });
 			d3.formatDefaultLocale({
-  "decimal": ",",
-  "thousands": "\u00a0",
-  "grouping": [3],
-  "currency": ["", "$"]
-});
+				"decimal": ",",
+				"thousands": "\u00a0",
+				"grouping": [3],
+				"currency": ["", "$"]
+			});
 			
 		} else {
 			// rounds down and adds commas appropriately
 			d3.formatDefaultLocale({
-			  "decimal": ".",
-			  "thousands": ",",
-			  "grouping": [3],
-			  "currency": ["$", ""]
+				"decimal": ".",
+				"thousands": ",",
+				"grouping": [3],
+				"currency": ["$", ""]
 			});
 		}
 		Util.loadNumberFormatters();
