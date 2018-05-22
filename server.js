@@ -46,7 +46,6 @@ app.post('/lineItemExport', function(req, res) {
     const exportOnlyCostedData = exportType === 'userData';
 
     let worksheetFn, detailedFn;
-    console.log(User.lang);
     if (User.lang === 'fr') {
         detailedFn = "./export/IHR Costing Tool - Detailed Report Template.xlsx";
         worksheetFn = "./export/IHR Costing Tool - Costing Worksheet Template - FR.xlsx";
@@ -56,8 +55,6 @@ app.post('/lineItemExport', function(req, res) {
     }
 
     const fromFileAsyncFn = (exportOnlyCostedData) ? detailedFn : worksheetFn;
-
-    console.log('fromFileAsyncFn = ' + fromFileAsyncFn)
 
     // Load line item export template XLS
     XlsxPopulate.fromFileAsync(fromFileAsyncFn)
@@ -95,7 +92,6 @@ app.post('/lineItemExport', function(req, res) {
                 const costsSheet = workbook.sheet(sheetName);
 
                 // sheet type user specific?
-                console.log('sheetName = ' + sheetName)
                 const userSpecific = sheetName === "Costs - Scores Entered" || sheetName === "Coûts - Scores entrés";
 
                 // specify currency in final two col headers
@@ -105,15 +101,12 @@ app.post('/lineItemExport', function(req, res) {
 
                 const suCapCell = isDetailedReport ? "U1" : "U2";
                 const recCell = isDetailedReport ? "V1" : "V2";
-                console.log('isDetailedReport = ' + isDetailedReport)
                 const baseCostCell = isDetailedReport ? "1" : "2";
 
                 if (User.lang === 'fr') {
-                    console.log('made it')
-                    costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Base cost amount (' + currencyCode + ')');
-                    console.log('made it 2')
-                    costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
-                    costsSheet.cell(recCell).value('Annual recurring costs (' + currencyCode + ')');
+                    costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Montant du coût de base (' + currencyCode + ')');
+                    costsSheet.cell(suCapCell).value('Coûts de démarrage / d\'investissement (' + currencyCode + ')');
+                    costsSheet.cell(recCell).value('Coûts récurrents annuels (' + currencyCode + ')');
                 } else {
                     costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Base cost amount (' + currencyCode + ')');
                     costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
@@ -124,8 +117,8 @@ app.post('/lineItemExport', function(req, res) {
                 // if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
                 const targetScoreCell = isDetailedReport ? "C1" : "C2";
                 if (User.lang === 'fr') {
-                    if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Target score (Chosen in tool)');
-                    else costsSheet.cell(targetScoreCell).value('Target score(s) applicable');
+                    if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Score cible (Choisi dans l\'outil)');
+                    else costsSheet.cell(targetScoreCell).value('Score (s) cible (s) applicable (s)');
                 } else {
                     if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Target score (Chosen in tool)');
                     else costsSheet.cell(targetScoreCell).value('Target score(s) applicable');
@@ -136,7 +129,8 @@ app.post('/lineItemExport', function(req, res) {
                 const gsm = req.body.gsm;
 
                 // get country params
-                const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":"Country","intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
+                const countryLang = User.lang === 'fr' ? 'Pays' : 'Country';
+                const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":countryLang,"intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
                 const whoAmIWasSpecified = req.body.whoAmI.abbreviation !== undefined;
                 const whoAmI = (whoAmIWasSpecified) ? req.body.whoAmI : unspecWhoAmI;
 
