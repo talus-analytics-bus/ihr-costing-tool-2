@@ -455,7 +455,6 @@
 			}
 		}
 
-
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
 			const numInds = capacity.indicators.length;
@@ -476,13 +475,16 @@
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
 			d3.select('.next-cost').on('click', () => {
-				const nextIndId = App.getNextIndicator(capId, indId).id;
-				if (!nextIndId) hasher.setHash('results');
-
-				const lastDotIndex = nextIndId.lastIndexOf('.');
-				const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
-				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
-				hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
+				const nextInd = App.getNextIndicator(capId, indId)
+				if (nextInd === null) {
+					hasher.setHash('results');
+				} else {
+					const nextIndId = nextInd.id;
+					const lastDotIndex = nextIndId.lastIndexOf('.');
+					const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
+					const nextIndClass = nextIndId.slice(lastDotIndex + 1)
+					hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
+				}
 			});
 
 			d3.select('.previous-cost').on('click', function() {
