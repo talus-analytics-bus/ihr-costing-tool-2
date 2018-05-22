@@ -653,6 +653,9 @@ const App = {};
 		} else {
 			crossroads.parse(hasher.getHash());
 		}
+		
+		// set page title
+		$('title').text(App.lang === 'fr' ? 'Outil d\'évaluation des coûts du RSI' : 'IHR Costing Tool');
 	};
 
 	// retrieves a copy of all complete indicators and all levels below
