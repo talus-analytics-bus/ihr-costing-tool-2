@@ -31,7 +31,7 @@ if (useHTTPSRedirection === 'true') {
     });
 }
 
-app.use(bodyParser.json({limit: '50Mb'}));
+app.use(bodyParser.json({limit: '500Mb'}));
 
 // lineItemExport
 // Routine to read line item export template XLS, write user line items,
