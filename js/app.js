@@ -43,7 +43,7 @@ const App = {};
 			.defer(d3.json, 'data/currencies.json')
 			.defer(d3.json, 'data/global_base_costs.json')
 			.defer(d3.json, 'data/global_staff_multipliers.json')
-			.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
+			.await((error, countryParams, jeeTree, jeeScoreData, currencies, globalBaseCosts, globalStaffMultipliers) => {
 				if (error) {
 					noty({
 						type: 'error',
