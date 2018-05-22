@@ -102,6 +102,23 @@
 			}
 		}
 
+		App.setDefaultJeeScores = () => {
+			const jeeScores = App.jeeScoreData[App.whoAmI.abbreviation];
+			if (jeeScores === undefined) {
+				App.jeeTree.forEach(ce => { ce.capacities.forEach(cc => { cc.indicators.forEach(indicator => {
+					indicator.score = null;
+				})})});
+			} else {
+				App.jeeTree.forEach(ce => { ce.capacities.forEach(cc => { cc.indicators.forEach(indicator => {
+					const match = jeeScores.find(d => {
+						const id = d.indicator.split(' ')[0].toLowerCase();
+						return id === indicator.id;
+					});
+					indicator.score = match.score;
+				})})});
+			}
+		};
+
 		App.updateCountry = (countryCode) => {
 			// set dropdown
 			$('.country-dropdown').val(countryCode);
@@ -115,6 +132,9 @@
 
 			// update all costs
 			App.updateAllCosts();
+
+			// add pre-populated JEE scores
+			App.setDefaultJeeScores();
 		}
 
 		// next button behavior

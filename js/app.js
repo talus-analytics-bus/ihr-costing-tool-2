@@ -62,6 +62,7 @@ const App = {};
 				}
 
 			App.countryParams = countryParams;
+			App.jeeScoreData = _.groupBy(jeeScoreData, 'code');;
 
 			// add french names to country params
 			App.countryParams.forEach((country) => {
