@@ -1124,6 +1124,10 @@ div.tooltip {
 .tooltip-row-content {
   margin-top: 10px; }
 
+.info-img,
+img.tooltipstered {
+  cursor: pointer; }
+
 .background-container > div:nth-child(n+2) {
   margin-top: 20px; }
 

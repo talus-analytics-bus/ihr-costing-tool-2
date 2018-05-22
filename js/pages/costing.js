@@ -373,7 +373,7 @@
 						contentStr += `</div>`;
 						$(this).tooltipster({
 							interactive: true,
-							trigger: 'click',
+							trigger: 'hover',
 							content: contentStr,
 						});
 					});
