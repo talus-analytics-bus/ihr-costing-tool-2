@@ -96,7 +96,7 @@
 			if (!indicator.score) {
 				indSlotContainer.append('div')
 					.attr('class', 'no-score-container')
-					.html('This indicator has not been <b>scored</b> yet. Click <u>here</u> to enter a score.')
+					.html(App.lang === 'fr' ? '' : 'Cet indicateur n\'a pas encore été noté. Cliquez <u>ici</u> pour entrer un score.')
 					.on('click', () => {
 						hasher.setHash(`scores/${capClass}/${indClass}`);
 					});
@@ -106,11 +106,11 @@
 
 			// if no actions (bc score is 4 or 5), display text saying so
 			if (!actions.length) {
-				let noActionText = 'There are no actions needed to increase the current score for this indicator';
+				let noActionText = App.lang === 'fr' ? 'Aucune action n\'est requise pour augmenter le score actuel de cet indicateur' : 'There are no actions needed to increase the current score for this indicator';
 				if (indicator.score === 4) {
-					noActionText = 'Costs to increase from score <b>4</b> to <b>5</b> are highly country-specific and are not included in the IHR Costing Tool.';
+					noActionText = App.lang === 'fr' ? 'Les coûts pour passer du score 4 au score 5 sont très spécifiques au pays et ne sont pas inclus dans l\'outil d\'évaluation des coûts du RSI.' : 'Costs to increase from score <b>4</b> to <b>5</b> are highly country-specific and are not included in the IHR Costing Tool.';
 				} else if (indicator.score === 5) {
-					noActionText = 'Indicators with a score of <b>5</b> do not require costing (no new actions required).';
+					noActionText = App.lang === 'fr' ? 'Les indicateurs avec un score de 5 ne nécessitent pas de coûts (aucune nouvelle action n\'est requise).' : 'Indicators with a score of <b>5</b> do not require costing (no new actions required).';
 				}
 				indSlotContainer.append('div')
 					.attr('class', 'no-actions-container')
@@ -149,7 +149,7 @@
 			// add arrows for each item block container and progress text
 			itemContainers.append('div')
 				.attr('class', 'item-block-progress-text')
-				.text(d => `Item 1 of ${App.getNeededInputs(d.inputs, indicator.score).length}`);
+				.text(d => App.lang === 'fr' ? `Élément 1 sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item 1 of ${App.getNeededInputs(d.inputs, indicator.score).length}`);
 			itemContainers.append('div')
 				.attr('class', 'item-block-arrow-prev item-block-arrow')
 				.style('display', 'none')
@@ -167,7 +167,7 @@
 					// update progress text
 					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
 					$container.find('.item-block-progress-text')
-						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+						.text(App.lang === 'fr' ? `Élément ${d.itemShownIndex + 1} sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item ${d.itemShownIndex + 1} of ${numItems}`);
 
 					// hide previous button if at beginning
 					if (d.itemShownIndex === 0) $(this).hide();
@@ -197,7 +197,7 @@
 					// update progress text
 					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
 					$container.find('.item-block-progress-text')
-						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+						.text(App.lang === 'fr' ? `Élément ${d.itemShownIndex + 1} sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item ${d.itemShownIndex + 1} of ${numItems}`);
 
 					// hide next button if at end
 					if (d.itemShownIndex + 1 >= numItems) $(this).hide();
@@ -207,7 +207,7 @@
 				})
 				.append('img')
 					.attr('src', 'img/next-arrow.png')
-					.attr('alt', 'Next');
+					.attr('alt', App.lang === 'fr' ? 'Suivant' : 'Next');
 
 			// build the item blocks for each action
 			let items = itemContainers.selectAll('.item-block')

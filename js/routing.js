@@ -161,9 +161,13 @@ const Routing = {};
 		
 
 		// add the hrefs to the dropdown menu items
-		$('.dropdown-item').click(function() {
-				hasher.setHash($(this).attr('page'));
+		$('.evaluation-dropdown .dropdown-item, .costing-dropdown .dropdown-item').click(function() {
+			hasher.setHash($(this).attr('page'));
 		});
+
+		$('.language-dropdown .dropdown-item').click(function() {
+			App.changeLanguage(d3.select(this).attr('lang'));
+		})
 	};
 
 	// load the footer using HB
