@@ -79,7 +79,7 @@
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
 					let scoreStr = `<img class="rp-score" src="img/rp-${score}.png" alt=${score} />`;
 					if (targetScore > score && score < 4) {
-						scoreStr += '<span> to </span>' +
+						scoreStr += (App.lang === 'fr' ? '<span> à </span>' : '<span> to </span>') +
 							`<img class="rp-score" src="img/rp-${targetScore}.png" alt=${targetScore} />`;
 					}
 					return scoreStr;
@@ -233,7 +233,7 @@
 				.attr('class', 'item-startup-cost-container');
 			startupContainer.append('div')
 				.attr('class', 'item-cost-name')
-				.text('Startup Cost: ');
+				.text(App.lang === 'fr' ? 'Coût de démarrage: ' : 'Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
 				.attr('value', (d) => {
@@ -259,14 +259,14 @@
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: App.definitions.startupCost });
+					$(this).tooltipster({ content: App.definitions[App.lang].startupCost });
 				});
 			
 			const recurringContainer = itemFront.append('div')
 				.attr('class', 'item-recurring-cost-container');
 			recurringContainer.append('div')
 				.attr('class', 'item-cost-name')
-				.text('Recurring Cost: ');
+				.text(App.lang === 'fr' ? 'Coût récurrent: ' : 'Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
 				.attr('value', (d) => {
@@ -292,18 +292,18 @@
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: App.definitions.recurringCost });
+					$(this).tooltipster({ content: App.definitions[App.lang].recurringCost });
 				});
 
 			itemFront.append('div')
 				.attr('class', 'item-save-cost-text')
-				.text('Costs Saved!');
+				.text(App.lang === 'fr' ? 'Sauvegardés!' : 'Costs Saved!');
 
 			const itemFooters = itemFront.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
 				.attr('class', 'item-save-button')
 				.classed('primary', d => !d.costed)
-				.text('Save Costs')
+				.text(App.lang === 'fr' ? 'Sauvegarder les coûts' : 'Save Costs')
 				.on('click', function(d) {
 					if (!d.costed) {
 						d.costed = true;
@@ -330,7 +330,7 @@
 				});
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
-				.text('View Details')
+				.text(App.lang === 'fr' ? 'Voir les détails' : 'View Details')
 				.on('click', function() {
 					$(this).closest('.item-block').toggleClass('active');
 				});
@@ -391,10 +391,10 @@
 			}
 
 			// add startup and recurring cost tables
-			const sContent = buildTableInContent('Default Startup/Capital Costs', (li) => {
+			const sContent = buildTableInContent(App.lang === 'fr' ? 'Coûts de démarrage / d\'investissement par défaut' : 'Default Startup/Capital Costs', (li) => {
 				return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 			});
-			const rContent = buildTableInContent('Default Recurring Costs', (li) => {
+			const rContent = buildTableInContent(App.lang === 'fr' ? 'Coûts récurrents par défaut' : 'Default Recurring Costs', (li) => {
 				return li.line_item_type === 'recurring';
 			});
 
@@ -467,7 +467,7 @@
 			d3.selectAll('.action-progress').text((d) => {
 				const inputs = App.getNeededInputs(d.inputs, indicator.score);
 				const numInputsCosted = inputs.filter(input => input.costed).length;
-				return `${numInputsCosted} of ${inputs.length} items costed`;
+				return App.lang === 'fr' ? `${numInputsCosted} sur ${inputs.length} éléments évalués` : `${numInputsCosted} of ${inputs.length} items costed`;
 			});
 		}
 
