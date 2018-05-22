@@ -133,8 +133,8 @@
 
 			// update all costs
 			App.jeeTree = App.cleanJeeTree.map(d => $.extend(true, {}, d));
+			App.changeLanguage(App.lang, {reset: false});
 			App.updateAllCosts();
-
 
 			// add pre-populated JEE scores
 			App.setDefaultJeeScores();

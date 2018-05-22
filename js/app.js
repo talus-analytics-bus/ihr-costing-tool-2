@@ -3,7 +3,7 @@ const App = {};
 (() => {
 	App.lang = 'en';
 	App.choseLang = false;
-	App.demoMode = true;
+	App.demoMode = false;
 
 	App.scoreLabels = App.lang === 'fr' ? {
 		1: 'Pas de capacité',
@@ -532,7 +532,7 @@ const App = {};
 	// Updates the language used to match the choice (2-character code)
 	// @langeChoice	2-character code representing the choice of language,
 	// currently 'en' or 'fr'
-	App.changeLanguage = (langChoice = 'fr') => {
+	App.changeLanguage = (langChoice = 'fr', params ={}) => {
 		langChoice = langChoice.toLowerCase().trim();
 		App.lang = langChoice; // update global variable specifying language choice
 
@@ -648,7 +648,11 @@ const App = {};
 		Util.loadNumberFormatters();
 		
 		// Once the new language is chosen, reload the page.
-		crossroads.parse(hasher.getHash());
+		if (params.reset === false) {
+
+		} else {
+			crossroads.parse(hasher.getHash());
+		}
 	};
 
 	// retrieves a copy of all complete indicators and all levels below
