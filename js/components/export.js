@@ -112,6 +112,7 @@
 	// exports the line items the user has costed to an XLSX file.
 	App.exportLineItems = (callback) => {
 		const indArray = App.getCompleteIndicatorTree();
+		const fnLang = App.lang === 'fr' ? "Outil d'évaluation des coûts du RSI - Rapport détaillé - " : "IHR Costing Tool - Detailed Report - "; 
 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);
@@ -134,7 +135,7 @@
 				const yyyymmdd = `${year}${month}${day}`;
 				const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
 
-				a.download = "IHR Costing Tool - Detailed Report - " + filenameStr + ".xlsx";
+				a.download = fnLang + filenameStr + ".xlsx";
 				document.body.appendChild(a);
 				a.click();
 				if (callback) callback(null);
@@ -143,6 +144,7 @@
 			if (callback) callback(this.status);
 		};
 		App.whoAmI.staff_overhead_perc_str = Util.percentizeDec(App.whoAmI.staff_overhead_perc);
+		User.lang = App.lang;
 		xhr.send(JSON.stringify({
 			exportType: 'userData',
 			indicators: indArray, 

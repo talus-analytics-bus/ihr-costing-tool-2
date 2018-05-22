@@ -47,7 +47,7 @@ app.post('/lineItemExport', function(req, res) {
 
     let worksheetFn, detailedFn;
     if (User.lang === 'fr') {
-        detailedFn = "./export/IHR Costing Tool - Detailed Report Template.xlsx";
+        detailedFn = "./export/IHR Costing Tool - Detailed Report Template - FR.xlsx";
         worksheetFn = "./export/IHR Costing Tool - Costing Worksheet Template - FR.xlsx";
     } else {
         detailedFn = "./export/IHR Costing Tool - Detailed Report Template.xlsx";
@@ -56,6 +56,7 @@ app.post('/lineItemExport', function(req, res) {
 
     const fromFileAsyncFn = (exportOnlyCostedData) ? detailedFn : worksheetFn;
 
+    console.log('fromFileAsyncFn = ' + fromFileAsyncFn)
     // Load line item export template XLS
     XlsxPopulate.fromFileAsync(fromFileAsyncFn)
     // XlsxPopulate.fromFileAsync("")
@@ -104,7 +105,9 @@ app.post('/lineItemExport', function(req, res) {
                 const baseCostCell = isDetailedReport ? "1" : "2";
 
                 if (User.lang === 'fr') {
+                    console.log('made it')
                     costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Montant du coût de base (' + currencyCode + ')');
+                    console.log('made it 2')
                     costsSheet.cell(suCapCell).value('Coûts de démarrage / d\'investissement (' + currencyCode + ')');
                     costsSheet.cell(recCell).value('Coûts récurrents annuels (' + currencyCode + ')');
                 } else {

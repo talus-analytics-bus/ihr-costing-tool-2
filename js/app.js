@@ -2,7 +2,7 @@ const App = {};
 
 (() => {
 	App.lang = 'fr';
-	App.demoMode = false;
+	App.demoMode = true;
 
 	App.scoreLabels = App.lang === 'fr' ? {
 		1: 'Pas de capacité',
