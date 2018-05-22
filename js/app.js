@@ -33,19 +33,20 @@ const App = {};
 
 		// load country params data
 		d3.queue()
-		.defer(d3.json, 'data/country_specific_parameters.json')
-		.defer(d3.json, 'data/jee_costing_data.json')
-		.defer(d3.json, 'data/currencies.json')
-		.defer(d3.json, 'data/global_base_costs.json')
-		.defer(d3.json, 'data/global_staff_multipliers.json')
-		.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
-			if (error) {
-				noty({
-					type: 'error',
-					text: 'Error loading data files. Please contact the tool administrator',
-				});
-				return;
-			}
+			.defer(d3.json, 'data/country_specific_parameters.json')
+			.defer(d3.json, 'data/jee_costing_data.json')
+			.defer(d3.json, 'data/jee_score_data.json')
+			.defer(d3.json, 'data/currencies.json')
+			.defer(d3.json, 'data/global_base_costs.json')
+			.defer(d3.json, 'data/global_staff_multipliers.json')
+			.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
+				if (error) {
+					noty({
+						type: 'error',
+						text: 'Error loading data files. Please contact the tool administrator',
+					});
+					return;
+				}
 
 			App.countryParams = countryParams;
 			App.jeeTree = jeeTree;
