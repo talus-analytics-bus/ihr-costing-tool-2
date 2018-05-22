@@ -2,6 +2,7 @@ const App = {};
 
 (() => {
 	App.lang = 'fr';
+	App.choseLang = false;
 	App.demoMode = true;
 
 	App.scoreLabels = App.lang === 'fr' ? {
@@ -20,6 +21,16 @@ const App = {};
 	
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
+
+		$('.language-modal').modal('show');
+		
+		$('button.english, button.french').click(function() {
+			const lang = d3.select(this).attr('lang');
+			console.log(lang)
+			App.lang = lang;
+			App.changeLanguage(App.lang);
+			$('.language-modal').modal('hide');
+		});
 
 		// give a warning if user is not using Chrome or Firefox
 		const browser = navigator.userAgent;

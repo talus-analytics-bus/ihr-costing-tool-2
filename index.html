@@ -28,6 +28,25 @@
     <div id="page-content"></div>
     <!-- Footer -->
     <div id="footer-content"></div>
+
+    <!-- Modal for language selection -->
+    <div class="modal language-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">Choose a language / Choisissez une langue</div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body center">
+            <button type="button" lang="en" class="btn btn-primary english">English</button>
+            <button type="button" lang="fr" class="btn btn-primary french">Français</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- TEMPLATES - EN-->
     <!-- Navigation bar template -->
     <script id="nav-template" type="text/x-handlebars-template">
@@ -51,8 +70,8 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Assessment
-					</a>
+                        Assessment
+                    </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" page="overview">Instructions and Upload</a>
                             <a class="dropdown-item" page="scores">Enter Assessment</a>
@@ -60,8 +79,8 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Costing
-					</a>
+                        Costing
+                    </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" page="costsinstructions">Instructions</a>
                             <a class="dropdown-item" page="costs/population">Set Default Values</a>
@@ -91,24 +110,24 @@
                     <tr>
                         <th>
                             <a href="https://www.georgetown.edu/" target="_blank">
-								<img
-									alt="Georgetown University"
-									class="logo-georgetown"
-									src="img/logo-georgetown.png"
-								/>
-							</a>
+                                <img
+                                    alt="Georgetown University"
+                                    class="logo-georgetown"
+                                    src="img/logo-georgetown.png"
+                                />
+                            </a>
                         </th>
                         <th>
                             <span class="built-by">Built by</span>
                         </th>
                         <th>
                             <a href="http://www.talusanalytics.com" target="_blank">
-								<img
-									alt="Talus Analytics"
-									class="logo-talus"
-									src="img/logo-talus.png"
-								/>
-							</a>
+                                <img
+                                    alt="Talus Analytics"
+                                    class="logo-talus"
+                                    src="img/logo-talus.png"
+                                />
+                            </a>
                         </th>
                     </tr>
                 </tbody>
@@ -171,7 +190,7 @@
             <h1>Assessment Instructions</h1>
             <div>
                 <p><b>The IHR Costing Tool does not store data after you leave the website.</b> To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
-                <p> Current assessment scores, as measured by the <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">Joint External Evaluation Tool</a> (JEE), are needed as the first step to use the IHR Costing Tool. Choose from among the options below to complete assessment score entry.</p>
+                <p> Current assessment scores, as measured by the <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">Joint External Evaluation Tool</a> (JEE), are needed as the first step to use the IHR Costing Tool. For countries that have already completed the formal JEE process, assessment scores are automatically populated within the tool, though users may choose to modify these prepopulated scores. If you are completing an assessment for a country that has not yet completed a formal JEE evaluation, choose from among the options below to complete assessment score entry.</p>
             </div>
             <div class="overview-section">
                 <h2>Upload Prior Session</h2>
@@ -185,7 +204,7 @@
                     <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
                 </div>
             </div>
-            <div class="overview-section">
+<!--             <div class="overview-section">
                 <h2>Upload Scores</h2>
                 <p>
                     Scores can be uploaded in the report format used by the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, an online source for completed JEE assessments.
@@ -203,7 +222,7 @@
                     <button type="button" class="btn btn-secondary btn-score-file">Select Score File</button>
                     <input id="score-file-upload" class="input-score-file" type="file" />
                 </div>
-            </div>
+            </div> -->
             <div class="overview-section">
                 <h2>Download Blank Template</h2>
                 <p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. You can use this spreadsheet as a list to identify and collect needed cost information before returning to work in the online tool. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
@@ -341,7 +360,8 @@
                     <div class="block-content">
                         <div class="population-section">
                             <div class="block-description">
-                                Default estimated total population for the selected country per the <a target="_blank" href="https://esa.un.org/unpd/wpp/Download/Standard/ASCII/">United Nations World Population Prospects 2017</a> estimates. To edit the estimate, change the population below.
+                                Default estimated total population for the selected country was determined based on 2018 estimates from the <a target="_blank" href="https://esa.un.org/unpd/wpp/Download/Standard/ASCII/">United Nations World Population Prospects</a>.
+                                To edit the estimate, change the population below.
                             </div>
                             <div class="estimated-population">
                                 <div><b>Estimated total population:</b></div>
@@ -593,9 +613,9 @@
                         </div>
                     </div>
                     <!--<div class="bubble-section results-section">
-						<div class="results-section-title">Cost Distribution</div>
-						<div class="bubble-chart"></div>
-					</div>-->
+                        <div class="results-section-title">Cost Distribution</div>
+                        <div class="bubble-chart"></div>
+                    </div>-->
                 </div>
                 <div class="results-table-content">
                     <div class="table-tab-container">
@@ -671,7 +691,7 @@
                     Since the IHR entered into force in 2007, national stakeholders and their international partners have struggled to define the costs of strengthening and maintaining health security systems that cross levels and agencies and rely on multi-sectoral coordination for action. Without an assessment of the costs required to implement IHR, countries are unable to develop consistent budgets and plans upon which to build a case with domestic policymakers or external partners for appropriations, grants, or loans. We began with costing templates developed by our research team after a review of IHR implementation in 14 case study countries spanning multiple regions, refined by country feedback on user needs for IHR costing collected while supporting the World Health Organization in developing and pilot-testing an earlier conceptual framework for IHR costing in 6 countries. Since the JEE contains many more indicators than the previous IHR Core Capacity Monitoring Framework, the team reviewed published guidance from WHO, OIE, and other international authorities for specific requirements for capacity building and implementation that would address the new indicators. Finally, the team reviewed all of the published JEE evaluations to identify specific activities/capabilities that the assessment process had associated with the scores assigned in each indicator (i.e., what cumulative activities/capabilities were specifically identified as constituting a score of 2, 3, 4, or 5 for each specific indicator). Based on this approach, we have developed a publicly-available web-based costing tool to support countries in estimating the costs of fully implementing IHR core capacities to fulfill the objectives of the planning process launched by the JEE.
                 </p>
                 <p>
-                    The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators. Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level. Users can input JEE scores manually, or pull data directly from the <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank">JEE Technology Tool</a>, developed by the Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.
+                    The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators.  Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.
                 </p>
                 <p>
                     Once the current JEE assessment scores are entered, users choose their target level of improvement (e.g., one step improved across all indicators; improvement to level 4 for all indicators). The user is then directed to costing pages for each JEE indicator, with options to select and modify as necessary. These costs include those for establishing the legal/policy foundation and infrastructure to support basic capacities, as well as the operating costs for personnel, training, processes, and consumables based on country-level datasets. The costs for each indicator include those required for start-up (e.g., cost of establishing legislation), capital (e.g., building construction, durable goods), and recurring costs (e.g., salaries). Once completed, the total cost requirements can be visualized by indicator; by category; by type of cost; and for the first, third, and fifth years following implementation. In addition, costs can be viewed for start up support for countries to understand the required IHR expenses and comparative cost results across core capacities and capacity levels (performance), including the option to download results in a spreadsheet format. Indicators for which costing tools have already been determined elsewhere, are linked and aligned to the degree possible to help prevent duplication or confusion.
@@ -822,7 +842,7 @@
         <div class="overview-container container container-text">
             <h1>Instructions d'&#233;valuation</h1>
             <div>
-                <p><b>** L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas de donn&#233;es une fois que vous avez quitt&#233; le site Web. ** Pour enregistrer les entr&#233;es de score et d'&#233;tablissement des co&#251;ts et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Revenir &#224; cette page et suivre les instructions de upload de la session pr&#233;c&#233;dente pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b></p>
+                <p><b>L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas de donn&#233;es une fois que vous avez quitt&#233; le site Web.</b> Pour enregistrer les entr&#233;es de score et d'&#233;tablissement des co&#251;ts et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Revenir &#224; cette page et suivre les instructions de upload de la session pr&#233;c&#233;dente pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b></p>
                 <p>Les scores d'&#233;valuation actuels, mesur&#233;s par l'outil d'&#233;valuation externe conjointe (EEC), sont n&#233;cessaires en tant que premi&#232;re &#233;tape de l'utilisation de l'outil d'&#233;valuation des co&#251;ts du RSI. Pour les pays qui ont d&#233;j&#224; termin&#233; le processus EEC formel, les scores d'&#233;valuation sont automatiquement remplis dans l'outil, bien que les utilisateurs puissent choisir de modifier ces scores pr&#233;-remplis. Pour effectuer une &#233;valuation pour un pays qui n'a pas encore termin&#233; une &#233;valuation EEC formelle, choisir parmi les options ci-dessous pour compl&#233;ter la saisie du score d'&#233;valuation.<a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank"></a></p>
             </div>
             <div class="overview-section">
@@ -837,7 +857,7 @@
                     <button type="button" class="btn btn-secondary btn-prior-session">S&#233;lectionner le fichier de la session pr&#233;c&#233;dente</button>
                 </div>
             </div>
-            <div class="overview-section">
+<!--             <div class="overview-section">
                 <h2>Uploader les scores</h2>
                 <p>
                     <a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank"></a>
@@ -855,7 +875,7 @@
                     <button type="button" class="btn btn-secondary btn-score-file">S&#233;lectionner le fichier de scores</button>
                     <input id="score-file-upload" class="input-score-file" type="file">
                 </div>
-            </div>
+            </div> -->
             <div class="overview-section">
                 <h2>T&#233;l&#233;charger le mod&#232;le vierge</h2>
                 <p>Pour travailler hors ligne, vous pouvez t&#233;l&#233;charger un mod&#232;le vierge contenant tous les calculs de co&#251;ts et entrer les donn&#233;es d'&#233;tablissement des co&#251;ts dans un format de feuille de calcul. Vous pouvez utiliser cette feuille de calcul sous forme de liste pour identifier et collecter les informations n&#233;cessaires sur les co&#251;ts avant de retourner travailler dans l'outil en ligne. Apr&#232;s l'enregistrement des donn&#233;es dans le mod&#232;le de feuille de calcul, vous devrez retourner sur ce site Web et saisir manuellement les notes et les co&#251;ts pour utiliser le site Web de l'outil d'&#233;tablissement des co&#251;ts du RSI.</p>
@@ -1111,7 +1131,7 @@
                 </div>
                 <div class="results-instructions results-section">
                     <div class="results-section-title">Instructions</div>
-                    <p>Les r&#233;sultats ci-dessous comprennent ** des 48** indicateurs totaux avec notation et co&#251;t pour ** des 19** capacit&#233;s.<b><span class="num-costed-indicators"></span></b><b><span class="num-costed-capacities"></span></b>
+                    <p>Les r&#233;sultats ci-dessous comprennent <b><span class="num-costed-indicators"></span> des 48</b> indicateurs totaux avec notation et co&#251;t pour <b><b><span class="num-costed-capacities"></span> des 19</b> capacit&#233;s.</b>
                     </p>
                     <p>Pour afficher des d&#233;tails suppl&#233;mentaires sur les calculs de co&#251;ts, utilisez le bouton Exporter le rapport d&#233;taill&#233; pour t&#233;l&#233;charger une feuille de calcul des r&#233;sultats. Le rapport d&#233;taill&#233; ne peut pas &#234;tre re-uploader dans l'outil. Pour continuer &#224; travailler ult&#233;rieurement, cliquez sur le bouton T&#233;l&#233;charger le fichier de donn&#233;es RSI pour stocker le fichier de donn&#233;es sur votre ordinateur. Les changements apport&#233;s au pointage et au co&#251;t doivent &#234;tre effectu&#233;s en uploadant le fichier de donn&#233;es sur la page Instructions d'&#233;valuation et t&#233;l&#233;chargement et en utilisant le site Web de l'outil d'&#233;valuation des co&#251;ts du RSI pour le modifier (aucun changement ne peut &#234;tre apport&#233; au fichier avant l'uploading).</p>
                 </div>
@@ -1207,9 +1227,9 @@
                         </div>
                     </div>
                     <!--<div class="bubble-section results-section">
-						<div class="results-section-title">Cost Distribution</div>
-						<div class="bubble-chart"></div>
-					</div>-->
+                        <div class="results-section-title">Cost Distribution</div>
+                        <div class="bubble-chart"></div>
+                    </div>-->
                 </div>
                 <div class="results-table-content">
                     <div class="table-tab-container">
@@ -1321,16 +1341,16 @@
                     <tr>
                         <th>
                             <a href="https://www.georgetown.edu/" target="_blank">
-							<img alt="Georgetown University" class="logo-georgetown" src="img/logo-georgetown.png">
-						</a>
+                            <img alt="Georgetown University" class="logo-georgetown" src="img/logo-georgetown.png">
+                        </a>
                         </th>
                         <th>
                             <span class="built-by">Construit par</span>
                         </th>
                         <th>
                             <a href="http://www.talusanalytics.com" target="_blank">
-							<img alt="Talus Analytics" class="logo-talus" src="img/logo-talus.png">
-						</a>
+                            <img alt="Talus Analytics" class="logo-talus" src="img/logo-talus.png">
+                        </a>
                         </th>
                     </tr>
                 </tbody>
@@ -1339,34 +1359,34 @@
     </script>
     <!-- General Libraries -->
     <!--<script src="lib/jquery-3.1.1.min.js"></script>
-	<script src="lib/jquery.color.js"></script>
-	<script src="lib/d3.min.js"></script>
-	<script src="lib/underscore-min.js"></script>-->
+    <script src="lib/jquery.color.js"></script>
+    <script src="lib/d3.min.js"></script>
+    <script src="lib/underscore-min.js"></script>-->
     <!-- Routing Libraries -->
     <!--<script src="lib/signals.min.js"></script>
-	<script src="lib/crossroads.min.js"></script>
-	<script src="lib/hasher.min.js"></script>
-	<script src="lib/handlebars-v3.0.0.js"></script>-->
+    <script src="lib/crossroads.min.js"></script>
+    <script src="lib/hasher.min.js"></script>
+    <script src="lib/handlebars-v3.0.0.js"></script>-->
     <!-- Mapping Libraries -->
     <!--<script src="lib/topojson.v2.min.js"></script>
-	<script src="lib/albers-usa-pr.js"></script>-->
+    <script src="lib/albers-usa-pr.js"></script>-->
     <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js" integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA==" crossorigin=""></script>
     <!-- Other -->
     <!--<script src="lib/wrap.js"></script>
-	<script src="lib/bullet.js"></script>
-	<script src="lib/popper.js"></script>
-	<script src="lib/fuse.min.js"></script>
-	<script src="lib/tether.min.js"></script>
-	<script src="lib/bootstrap.min.js"></script>
-	<script src="lib/bootstrap-multiselect.js"></script>
-	<script src="lib/tooltipster.bundle.min.js"></script>
-	<script src="lib/datatables.min.js"></script>
-	<script src="lib/jquery.noty.packaged.min.js"></script>
-	<script src="lib/nprogress.min.js"></script>
-	<script src="lib/datatables.min.js"></script>
-	<script src="lib/cpexcel.js"></script>
-	<script src="lib/jszip.js"></script>
-	<script src="lib/xlsx.min.js"></script>-->
+    <script src="lib/bullet.js"></script>
+    <script src="lib/popper.js"></script>
+    <script src="lib/fuse.min.js"></script>
+    <script src="lib/tether.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/bootstrap-multiselect.js"></script>
+    <script src="lib/tooltipster.bundle.min.js"></script>
+    <script src="lib/datatables.min.js"></script>
+    <script src="lib/jquery.noty.packaged.min.js"></script>
+    <script src="lib/nprogress.min.js"></script>
+    <script src="lib/datatables.min.js"></script>
+    <script src="lib/cpexcel.js"></script>
+    <script src="lib/jszip.js"></script>
+    <script src="lib/xlsx.min.js"></script>-->
     <script src="build/lib.min.js"></script>
     <!-- Project Specific Files -->
     <script src="js/utility.js"></script>

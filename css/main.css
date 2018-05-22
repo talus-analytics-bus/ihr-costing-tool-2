@@ -1318,6 +1318,11 @@ div.tooltip {
   margin-top: 10px;
   text-align: center; }
 
+.language-modal .modal-title {
+  font-weight: bold; }
+.language-modal .modal-body button.french {
+  margin-left: 20px; }
+
 .overview-container .overview-section {
   margin-top: 15px; }
 .overview-container .upload-button-container {

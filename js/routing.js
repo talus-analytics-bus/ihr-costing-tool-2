@@ -137,6 +137,12 @@ const Routing = {};
 
 		loadNav(data);
 		loadFooter(data);
+
+		// show language chooser if needed
+		if (App.choseLang === false) {
+			$('.language-modal').modal('show');
+			App.choseLang = true;
+		}
 	}
 
 	// load the nav bar using HB
