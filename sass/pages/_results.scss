@@ -237,6 +237,9 @@
 	.export-button-container {
 		display: inline-block;
 		width: 240px;
+		&.french {
+			width: 360px;
+		}
 		vertical-align: top;
 	}
 	.export-button-text {

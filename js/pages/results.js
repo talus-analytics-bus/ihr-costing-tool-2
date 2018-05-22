@@ -248,7 +248,7 @@
 			if (isActive) {
 				$('.results-instructions, .results-main-content, .results-table-content').slideUp();
 				$('.view-table-button').hide();
-				$this.html(App.lang === 'fr' ? '&laquo; Retour aux résultats' : '&laquo; Back to Results');
+				$this.html(App.lang === 'fr' ? '&laquo; Revenir aux résultats' : '&laquo; Back to Results');
 			} else {
 				const shouldTableShow = $('.view-table-button').hasClass('table-view');
 				$('.results-instructions').slideDown();

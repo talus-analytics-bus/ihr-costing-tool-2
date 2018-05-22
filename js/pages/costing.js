@@ -24,7 +24,8 @@
 
 		// add the capacity description content
 		function buildCapacityDescription() {
-			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			const pageLang = App.lang === 'fr' ? 'capacity-description-fr' : 'capacity-description';
+			$('.capacity-description-container').html(Routing.templates[pageLang]());
 			App.buildCapacityDescription(capId);
 
 			// hard-code tooltip for "Immunization"
@@ -287,7 +288,7 @@
 				});
 			recurringContainer.append('div')
 				.attr('class', 'item-cost-currency')
-				.text(`${App.whoAmI.currency_iso}/yr`);
+				.text(App.lang === 'fr' ? `${App.whoAmI.currency_iso}/an` : `${App.whoAmI.currency_iso}/yr`);
 			recurringContainer.append('img')
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
@@ -413,7 +414,7 @@
 				.attr('class', 'item-footer')
 				.append('div')
 					.attr('class', 'item-return-to-front-button')
-					.text('Return to Edit Cost')
+					.text(App.lang === 'fr' ? 'Revenir à modifier les coûts' : 'Return to Edit Cost')
 					.on('click', function() {
 						$(this).closest('.item-block').toggleClass('active');
 					});
@@ -459,7 +460,7 @@
 			const numInds = capacity.indicators.length;
 			const numScored = App.getNumIndicatorsCosted(capacity);
 			d3.select('.indicator-progress')
-				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);
+				.text(App.lang === 'fr' ? `Vérifier les coûts pour chaque indicateur (${numScored} sur ${numInds}):` : `Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
 
 		// updates message on number of inputs scored for each action

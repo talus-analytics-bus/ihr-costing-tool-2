@@ -1578,6 +1578,8 @@ div.tooltip {
     display: inline-block;
     width: 240px;
     vertical-align: top; }
+    .results-export-content .export-button-container.french {
+      width: 360px; }
   .results-export-content .export-button-text {
     display: inline-block;
     width: 600px;
