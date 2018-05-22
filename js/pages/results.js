@@ -6,6 +6,11 @@
 		let totalCostDuration = 1;
 		let selectedCapIds = [];
 
+		const costTypeFr = {
+			"startup": "Coût de démarrage",
+			"capital": "Coût d'investissement",
+			"recurring" : "Coût récurrent",
+		}
 
 		/* ---------------------- Data Wrangling ----------------------*/
 		const allCores = [];
@@ -191,22 +196,23 @@
 			// update x axis label
 			let xLabel = '';
 			if (costChartCategory === 'capacity') {
-				xLabel = 'Capacity';
+				xLabel = App.lang === 'fr' ? `Capacité` : 'Capacity';
 			} else if (costChartCategory === 'category') {
-				xLabel = 'Function';
+				xLabel = App.lang === 'fr' ? `Fonction` : 'Function';
 			}
-			costChart.updateXAxisLabel(App.lang === 'fr' ? `xxxxxxx` : xLabel);
+			costChart.updateXAxisLabel(xLabel);
 		}
 
 		function updateCostChartYAxis() {
 			// update y axis label
 			let prefix = '';
 			if (costType === 'total') {
-				prefix = `${totalCostDuration}-Year`;
+				prefix = App.lang === 'fr' ? `Coût sur ${totalCostDuration} an${totalCostDuration === 1 ? '' : 's'}` : `${totalCostDuration}-Year Cost`;
 			} else {
-				prefix = costType.charAt(0).toUpperCase() + costType.slice(1);
+				console.log(costTypeFr)
+				prefix = App.lang === 'fr' ? costTypeFr[costType] : costType.charAt(0).toUpperCase() + costType.slice(1) + ' Cost';
 			}
-			costChart.updateYAxisLabel(App.lang === 'fr' ? `xxxxxxx` : `${prefix} Cost`);
+			costChart.updateYAxisLabel(prefix);
 		}
 
 		function setToCcAndUpdate(cc) {
@@ -230,8 +236,8 @@
 			const $this = $(this);
 			$this.toggleClass('table-view');
 			const isActive = $this.hasClass('table-view');
-			const chartsText = App.lang === 'fr' ? 'xxxxxxx' : 'View Charts';
-			const tableText = App.lang === 'fr' ? 'xxxxxxx' : 'View Data Table';
+			const chartsText = App.lang === 'fr' ? 'Voir les graphiques' : 'View Charts';
+			const tableText = App.lang === 'fr' ? 'Afficher le tableau de données' : 'View Data Table';
 			$this.text(isActive ? chartsText : tableText);
 			$('.results-main-content, .results-table-content').slideToggle();
 		});
@@ -242,7 +248,7 @@
 			if (isActive) {
 				$('.results-instructions, .results-main-content, .results-table-content').slideUp();
 				$('.view-table-button').hide();
-				$this.html(App.lang === 'fr' ? '&laquo; xxxxxxx' : '&laquo; Back to Results');
+				$this.html(App.lang === 'fr' ? '&laquo; Retour aux résultats' : '&laquo; Back to Results');
 			} else {
 				const shouldTableShow = $('.view-table-button').hasClass('table-view');
 				$('.results-instructions').slideDown();
@@ -252,7 +258,7 @@
 					$('.results-main-content').slideDown();
 				}
 				$('.view-table-button').show();
-				$this.html(App.lang === 'fr' ? 'xxxxxxx' : 'Export Data');
+				$this.html(App.lang === 'fr' ? 'Exporter des données' : 'Export Data');
 			}
 		});
 
@@ -346,7 +352,7 @@
 			.attr('class', 'summary-text-box-content');
 		stbContent.append('div')
 			.attr('class', 'big-number-text')
-			.html(d => App.lang === 'fr' ? 'xxxxxxx' : `${d.name} Cost`);
+			.html(d => App.lang === 'fr' ? `Coût ${d.name === "Autre" ? 'd\'' : 'de '}${d.name}` : `${d.name} Cost`);
 		stbContent.append('div').attr('class', 'big-number');
 
 		// initialize total cost number so transition works
@@ -545,38 +551,38 @@
 		const costText = App.lang === 'fr' ? 'coût' : 'cost';
 		const tableSchema = [
 			{
-				name: App.lang === 'fr' ? 'xxxxxxx' : '[level] ID',
+				name: 'ID',
 				getValue: d => d.id.toUpperCase(),
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : '[level] Name',
+				name: App.lang === 'fr' ? '[level]' : '[level] Name',
 				getValue: d => d.name,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : 'Startup Cost',
+				name: App.lang === 'fr' ? 'Coût de démarrage' : 'Startup Cost',
 				className: 'cost',
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : 'Capital Cost',
+				name: App.lang === 'fr' ? 'Coût d\'investissement' : 'Capital Cost',
 				className: costText,
 				format: App.moneyFormatLong,
 				getValue: d => d.capitalCost,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : 'Recurring Cost',
+				name: App.lang === 'fr' ? 'Coût récurrent' : 'Recurring Cost',
 				className: 'cost',
 				format: App.moneyFormatLong,
 				getValue: d => d.recurringCost,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : '1-Year Cost',
+				name: App.lang === 'fr' ? 'Coût sur 1 an' : '1-Year Cost',
 				className: costText,
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost + d.capitalCost + d.recurringCost,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : '3-Year Cost',
+				name: App.lang === 'fr' ? 'Coût sur 3 ans' : '3-Year Cost',
 				className: costText,
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost + d.capitalCost + 3 * d.recurringCost,
 			}, {
-				name: App.lang === 'fr' ? 'xxxxxxx' : '5-Year Cost',
+				name: App.lang === 'fr' ? 'Coût sur 5 ans' : '5-Year Cost',
 				className: costText,
 				format: App.moneyFormatLong,
 				getValue: d => d.startupCost + d.capitalCost + 5 * d.recurringCost,

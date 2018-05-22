@@ -181,14 +181,17 @@ const Charts = {};
 			.attr('clip-path', 'url(#chart-clip)');
 
 		// add axes labels
-		const xAxisLabel = chart.append('text')
+		const gAxisLabels = chart.append('g')
+			.attr('class','axis-labels')
+			.attr('transform','translate(-100,0)');
+		const xAxisLabel = gAxisLabels.append('text')
 			.attr('class', 'axis-label x-axis-label')
-			.attr('x', 5)
+			.attr('x', 85)
 			.attr('y', height + 60);
-		const yAxisLabel = chart.append('text')
+		const yAxisLabel = gAxisLabels.append('text')
 			.attr('class', 'axis-label y-axis-label-1')
 			.attr('y', -32);
-		chart.append('text')
+		gAxisLabels.append('text')
 			.attr('class', 'axis-label y-axis-label-2')
 			.attr('y', -15)
 			.text(App.lang === 'fr' ? `(en ${App.whoAmI.currency_iso})` : `(in ${App.whoAmI.currency_iso})`);

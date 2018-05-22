@@ -395,7 +395,7 @@
 .cost-chart .y-axis-label-1,
 .cost-chart .y-axis-label-2 {
   font-size: 0.9rem;
-  text-anchor: end; }
+  text-anchor: start; }
 
 .cc-tooltip {
   text-align: center;
