@@ -157,6 +157,7 @@
 
 	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
+		console.log('App.exportCostingWorksheet');
 		const indArray = App.getAllIndicatorTree();
 		const userRelevantIndArray = App.getScoredIndicatorTree(); // include user-relevant indicators if available
 

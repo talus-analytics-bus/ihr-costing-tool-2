@@ -553,7 +553,7 @@ const App = {};
 							];
 							input.line_items.forEach(li => {
 								liFields.forEach(field => {
-									li.name = li[`${field}_${App.lang}`]
+									li[field] = li[`${field}_${App.lang}`]
 								});
 							});
 						});
