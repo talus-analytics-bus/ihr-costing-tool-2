@@ -8,7 +8,7 @@ const Charts = {};
 		"core element": "élément clé",
 	};
 	Charts.buildProgressChart = (selector, data, param={}) => {
-		const margin = { top: 35, right: 45, bottom: 35, left: 35 };
+		const margin = { top: 35, right: 45, bottom: 35, left: 50 };
 		const width = param.width || 630;
 		const height = param.height || 36;
 		const chartContainer = d3.selectAll(selector).append('svg')

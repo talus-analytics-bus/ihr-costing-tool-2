@@ -306,7 +306,8 @@
 				.classed('primary', d => !d.costed)
 				.text(App.lang === 'fr' ? 'Sauvegarder les coûts' : 'Save Costs')
 				.on('click', function(d) {
-					if (!d.costed) {
+					if (true) {
+					// if (!d.costed) {
 						d.costed = true;
 						$(this)
 							.removeClass('primary')
