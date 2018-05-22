@@ -208,7 +208,24 @@
 		// show the correct block content
 		$(`.country-details-block`).slideDown();
 
-		const geoDivisions = [
+		const geoDivisions = App.lang === 'fr' ? [
+			{
+				nameAttr: 'intermediate_1_area_name',
+				valueAttr: 'intermediate_1_area_count',
+				description: 'Intermédiaire (par exemple, province, district)',
+				nameValues: ['Province', 'Municipalité', 'District', 'Etat'],
+			}, {
+				nameAttr: 'intermediate_2_area_name',
+				valueAttr: 'intermediate_2_area_count',
+				description: 'Intermédiaire 2 (facultatif)',
+				nameValues: ['Province', 'Municipalité', 'District', 'Etat', 'Commune'],
+			}, {
+				nameAttr: 'local_area_name',
+				valueAttr: 'local_area_count',
+				description: 'Local (par exemple, commune, ville)',
+				nameValues: ['Barangay', 'Ville', 'Circonscription électorale', 'Commune', 'District'],
+			}
+		] : [
 			{
 				nameAttr: 'intermediate_1_area_name',
 				valueAttr: 'intermediate_1_area_count',
@@ -226,7 +243,8 @@
 				nameValues: ['Barangay', 'City', 'Constituency', 'County', 'District'],
 			}
 		];
-		const emptyOptionText = '-- select one --';
+		const geoHashFr = {"District":"District","Country":"Pays","Province":"Province","Barangay":"Barangay","County":"Commune","Municipality":"Municipalité","State":"Etat","City":"Ville","Constituency":"Circonscription électorale"};
+		const emptyOptionText = App.lang === 'fr' ? '-- sélectionnez un --' : '-- select one --';
 
 		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
 			.data(geoDivisions)
@@ -234,12 +252,13 @@
 		geoRows.append('td').text(d => `${d.description}:`);
 		geoRows.append('td').append('select')
 			.attr('class', 'form-control')
+			.classed('french', App.lang === 'fr')
 			.each(function(d) {
 				const nameValues = [emptyOptionText].concat(d.nameValues);
 				Util.populateSelect(this, nameValues);
 
 				const currNameVal = App.whoAmI[d.nameAttr];
-				if (currNameVal) $(this).val(currNameVal);
+				if (currNameVal) $(this).val(App.lang === 'fr' ? geoHashFr[currNameVal] : currNameVal);
 			})
 			.on('change', function(d) {
 				const val = $(this).val();
@@ -255,16 +274,24 @@
 
 
 		// public health section
-		const phMults = [
+		const phMults = App.lang === 'fr' ? [
+			{
+				name: 'central_hospitals_count',
+				description: 'Nombre d\'établissements de santé dans le pays: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
+				unit: 'établissements / pays',
+			},
+			{
+				name: 'central_chw_count',
+				description: 'Nombre d\'agents de santé communautaires dans le pays:',
+				unit: 'agents / pays',
+			}
+		] : [
 			{
 				name: 'central_hospitals_count',
 				description: 'Number of healthcare facilities in the country: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
 				unit: 'healthcare facilities / country',
-			},/* {
-				name: 'central_epi_count',
-				description: 'Estimated total number of epidemiologists in the country',
-				unit: 'people',
-			}, */{
+			},
+			{
 				name: 'central_chw_count',
 				description: 'Number of community health workers in the country:',
 				unit: 'community health workers / country',
@@ -288,7 +315,7 @@
 			});
 		phInputCell.append('span').text(d => d.unit);
 
-        const content = `Specify the number of public healthcare facilities participating in IHR-related activities, including point-of-care diagnostics for priority diseases, and biosafety and biosecurity programs.`;
+        const content = App.lang === 'fr' ? `Préciser le nombre d'établissements de santé publics participant aux activités liées au RSI, y compris les diagnostics au point de service pour les maladies prioritaires, et les programmes de biosécurité et de biosécurité.` : `Specify the number of public healthcare facilities participating in IHR-related activities, including point-of-care diagnostics for priority diseases, and biosafety and biosecurity programs.`;
         $('#healthcare-help').tooltipster({
             content: content,
             trigger: 'hover',

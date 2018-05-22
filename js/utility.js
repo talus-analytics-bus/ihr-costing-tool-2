@@ -5,7 +5,10 @@ const Util = {};
 	// Called whenever the default locale of the d3 number formatter is updated
 	// so that the formatters reflect that locale
 	Util.loadNumberFormatters = () => {
-		Util.comma = d3.format(',.0f'); // rounds down and adds commas appropriately
+		Util.comma = (val) => {
+			if (isNaN(val) || val === undefined) return '';
+			else return d3.format(',.0f')(val);
+		}; // rounds down and adds commas appropriately
 		Util.decimalOne = d3.format('.1f'); // formats to a one decimal significance
 		Util.decimalTwo = d3.format('.2f'); // formats to a two decimal significance
 		Util.percentize = d3.format('%'); // divides by 100 and adds a percentage symbol

@@ -1828,6 +1828,8 @@ body {
 
 select.form-control {
   width: auto; }
+  select.form-control.french {
+    width: 206px; }
 
 .container {
   position: relative;
