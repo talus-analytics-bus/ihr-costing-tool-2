@@ -1,9 +1,9 @@
 const App = {};
 
 (() => {
-	App.lang = 'fr';
+	App.lang = 'en';
 	App.choseLang = false;
-	App.demoMode = true;
+	App.demoMode = false;
 
 	App.scoreLabels = App.lang === 'fr' ? {
 		1: 'Pas de capacité',
@@ -26,7 +26,6 @@ const App = {};
 		
 		$('button.english, button.french').click(function() {
 			const lang = d3.select(this).attr('lang');
-			console.log(lang)
 			App.lang = lang;
 			App.changeLanguage(App.lang);
 			$('.language-modal').modal('hide');
@@ -70,8 +69,6 @@ const App = {};
 				const match = country_names_en_fr.find(d => d.iso2 === iso2);
 				if (match) country.name_fr = match.fr;
 			});
-
-			
 
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
