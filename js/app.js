@@ -50,7 +50,9 @@ const App = {};
 			.defer(d3.json, 'data/currencies.json')
 			.defer(d3.json, 'data/global_base_costs.json')
 			.defer(d3.json, 'data/global_staff_multipliers.json')
-			.await((error, countryParams, jeeTree, jeeScoreData, currencies, globalBaseCosts, globalStaffMultipliers) => {
+			.defer(d3.json, 'data/country_names_en_fr.json')
+			.defer(d3.json, 'data/currency_names_en_fr.json')
+			.await((error, countryParams, jeeTree, jeeScoreData, currencies, globalBaseCosts, globalStaffMultipliers, country_names_en_fr, currency_names_en_fr) => {
 				if (error) {
 					noty({
 						type: 'error',
@@ -60,6 +62,14 @@ const App = {};
 				}
 
 			App.countryParams = countryParams;
+
+			// add french names to country params
+			App.countryParams.forEach((country) => {
+				const iso2 = country.abbreviation;
+				const match = country_names_en_fr.find(d => d.iso2 === iso2);
+				if (match) country.name_fr = match.fr;
+			});
+
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
 			App.globalBaseCosts = globalBaseCosts;

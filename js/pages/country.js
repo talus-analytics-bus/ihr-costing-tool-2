@@ -4,11 +4,13 @@
 
 		// populate country dropdown
 		const countryData = App.countryParams.slice(0);
-		Util.sortByKey(countryData, 'name');
+		const nameKey = App.lang === 'fr' ? 'name_fr' : 'name';
 		const defaultVal = App.lang === 'fr' ? '--- choisir un pays ---' : '--- choose a country ---';
+		Util.sortByKey(countryData, nameKey);
 		countryData.unshift({ name: defaultVal, abbreviation: '' });
+		console.log(countryData);
 		Util.populateSelect('.country-dropdown', countryData, {
-			nameKey: 'name',
+			nameKey: nameKey,
 			valKey: 'abbreviation',
 		});
 		$('.country-dropdown').on('change', function() {
@@ -62,7 +64,7 @@
 			const fuse = new Fuse(App.countryParams, {
 				threshold: 0.3,
 				distance: 1e5,
-				keys: ['abbreviation', 'name', 'currency_iso'],
+				keys: ['abbreviation', nameKey, 'currency_iso'],
 			});
 			const results = fuse.search(searchVal);
 			
@@ -95,7 +97,7 @@
 						// update dropdown and map
 						App.updateCountry(d.abbreviation);
 					});
-				boxes.select('.live-search-results-title').text(d => d.name);
+				boxes.select('.live-search-results-title').text(d => d[nameKey]);
 				boxes.select('.live-search-results-subtitle')
 					.text(d => `Population: ${Util.comma(d.multipliers.population)}`);
 			}
