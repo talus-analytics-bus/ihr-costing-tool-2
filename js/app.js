@@ -70,8 +70,20 @@ const App = {};
 				if (match) country.name_fr = match.fr;
 			});
 
+			
+
 			App.jeeTree = jeeTree;
 			App.currencies = currencies;
+			// add french names to currency params
+			App.currencies = _.mapObject(App.currencies, (val, key) => {
+				const iso3 = key;
+				const match = currency_names_en_fr.find(d => d.iso3 === iso3);
+				if (match) {
+					val.name_fr = match.fr;
+				} 
+				return val;
+			});
+
 			App.globalBaseCosts = globalBaseCosts;
 			App.globalStaffMultipliers = globalStaffMultipliers;
 			App.whoAmI = {};

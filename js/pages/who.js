@@ -166,13 +166,15 @@
 			});
 
 		// set currency defaults and behavior
+		const nameKey = App.lang === 'fr' ? 'name_fr' : 'name';
 		const currencyData = [];
 		for (let ind in App.currencies) {
 			currencyData.push({
-				name: App.currencies[ind].name,
+				name: App.currencies[ind][nameKey],
 				code: App.currencies[ind].iso.code,
 			});
 		}
+
 		Util.sortByKey(currencyData, 'name');
 		Util.populateSelect('.currency-select', currencyData, {
 			nameKey: 'name',

@@ -8,7 +8,6 @@
 		const defaultVal = App.lang === 'fr' ? '--- choisir un pays ---' : '--- choose a country ---';
 		Util.sortByKey(countryData, nameKey);
 		countryData.unshift({ name: defaultVal, abbreviation: '' });
-		console.log(countryData);
 		Util.populateSelect('.country-dropdown', countryData, {
 			nameKey: nameKey,
 			valKey: 'abbreviation',
