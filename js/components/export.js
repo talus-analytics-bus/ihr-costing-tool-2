@@ -96,6 +96,9 @@
 		// session scores with them, for all the indicators that have scores
 		const inputScores = XLSX.utils.sheet_to_json(worksheet, {defval: ''});
 
+		// clear existing scores
+		App.jeeTree.forEach(ce => {ce.capacities.forEach(cc => { cc.indicators.forEach(indicator => { indicator.score = null; })})})
+
 		// update scores
 		inputScores.forEach(function(d) {
 			// get indicator id
