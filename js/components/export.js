@@ -157,10 +157,9 @@
 
 	// exports all possible line items to an XLSX file for user to use as a costing worksheet
 	App.exportCostingWorksheet = (callback) => {
-		console.log('App.exportCostingWorksheet');
 		const indArray = App.getAllIndicatorTree();
 		const userRelevantIndArray = App.getScoredIndicatorTree(); // include user-relevant indicators if available
-
+		const fnLang = App.lang === 'fr' ? "Outil d'évaluation des coûts du RSI - Ligne de calcul des coûts - " : "IHR Costing Tool - Costing Worksheet - "; 
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', '/lineItemExport', true);
 		xhr.responseType = 'blob';
@@ -184,7 +183,7 @@
 				const filenameStr = yyyymmdd;
 				// const filenameStr = yyyymmdd + ' ' + App.whoAmI.abbreviation;
 
-				a.download = "IHR Costing Tool - Costing Worksheet - " + filenameStr + ".xlsx";
+				a.download = fnLang + filenameStr + ".xlsx";
 				document.body.appendChild(a);
 				a.click();
 				if (callback) callback(null);
@@ -224,7 +223,7 @@
 				});
 			});
 		});
-		
+		User.lang = App.lang;
 		xhr.send(JSON.stringify({
 			exportType: 'costingWorksheet',
 			indicators: indArray,
