@@ -132,7 +132,9 @@
 			App.whoAmI = JSON.parse(JSON.stringify(country));
 
 			// update all costs
+			App.jeeTree = App.cleanJeeTree.map(d => $.extend(true, {}, d));
 			App.updateAllCosts();
+
 
 			// add pre-populated JEE scores
 			App.setDefaultJeeScores();

@@ -71,6 +71,7 @@ const App = {};
 			});
 
 			App.jeeTree = jeeTree;
+			App.cleanJeeTree = jeeTree.map(d => $.extend(true, {}, d));
 			App.currencies = currencies;
 			// add french names to currency params
 			App.currencies = _.mapObject(App.currencies, (val, key) => {
