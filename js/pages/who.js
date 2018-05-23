@@ -194,7 +194,7 @@
 			if (isDefault) {
 				$('.default-pop-text').slideUp();
 			} else {
-				const defaultText = App.lang === 'fr' ? 'Défaut: ' : 'Default: ';
+				const defaultText = App.lang === 'fr' ? 'Défaut : ' : 'Default: ';
 				$('.default-pop-text')
 					.text(`${defaultText} ${Util.comma(defaultPop)}`)
 					.slideDown();
@@ -249,7 +249,7 @@
 		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
 			.data(geoDivisions)
 			.enter().append('tr');
-		geoRows.append('td').text(d => `${d.description}:`);
+		geoRows.append('td').text(d => `${d.description}${App.lang === 'fr' ? ' ' : ''}:`);
 		geoRows.append('td').append('select')
 			.attr('class', 'form-control')
 			.classed('french', App.lang === 'fr')
@@ -277,12 +277,12 @@
 		const phMults = App.lang === 'fr' ? [
 			{
 				name: 'central_hospitals_count',
-				description: 'Nombre d\'établissements de santé dans le pays: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
+				description: 'Nombre d\'établissements de santé dans le pays : <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
 				unit: 'établissements / pays',
 			},
 			{
 				name: 'central_chw_count',
-				description: 'Nombre d\'agents de santé communautaires dans le pays:',
+				description: 'Nombre d\'agents de santé communautaires dans le pays :',
 				unit: 'agents / pays',
 			}
 		] : [

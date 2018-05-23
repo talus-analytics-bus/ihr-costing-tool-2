@@ -169,9 +169,9 @@
 		function updateIndicatorProgress() {
 			const numInds = capacity.indicators.length;
 			const numScored = capacity.indicators.filter(ind => ind.score).length;
-			const selectText = App.lang === 'fr' ? 'Sélectionnez un score pour chaque indicateur' : 'Select a score for each indicator';
+			const selectText = App.lang === 'fr' ? `Sélectionnez un score pour chaque indicateur (${numScored} of ${numInds}) :` : `Select a score for each indicator (${numScored} of ${numInds}):`;
 			d3.select('.indicator-progress')
-				.text(`${selectText} (${numScored} of ${numInds}):`);
+				.text(selectText);
 
 			// update color bar in tab navigation
 			d3.select('.block-link-subtitle.active').text(`${numScored} of ${numInds}`);

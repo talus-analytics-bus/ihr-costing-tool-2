@@ -460,7 +460,7 @@
 			const numInds = capacity.indicators.length;
 			const numScored = App.getNumIndicatorsCosted(capacity);
 			d3.select('.indicator-progress')
-				.text(App.lang === 'fr' ? `Vérifier les coûts pour chaque indicateur (${numScored} sur ${numInds}):` : `Review costs for each indicator (${numScored} of ${numInds}):`);
+				.text(App.lang === 'fr' ? `Vérifier les coûts pour chaque indicateur (${numScored} sur ${numInds}) :` : `Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
 
 		// updates message on number of inputs scored for each action
