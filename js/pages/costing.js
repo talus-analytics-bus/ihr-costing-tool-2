@@ -75,7 +75,7 @@
 				.attr('class', 'indicator-score')
 				.html((d) => {
 					const score = App.getIndicatorScore(d.id);
-					if (!score) return '<i>No Score</i>';
+					if (!score) return App.lang === 'fr' ? '<i>Pas de score</i>' : '<i>No Score</i>';
 
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
 					let scoreStr = `<img class="rp-score" src="img/rp-${score}.png" alt=${score} />`;
@@ -96,7 +96,7 @@
 			if (!indicator.score) {
 				indSlotContainer.append('div')
 					.attr('class', 'no-score-container')
-					.html(App.lang === 'fr' ? '' : 'Cet indicateur n\'a pas encore été noté. Cliquez <u>ici</u> pour entrer un score.')
+					.html(App.lang === 'fr' ? 'Cet indicateur n\'a pas encore été noté. Cliquez <u>ici</u> pour entrer un score.' : 'This indicator has not been scored yet. Click <u>here</u> to enter a score.')
 					.on('click', () => {
 						hasher.setHash(`scores/${capClass}/${indClass}`);
 					});
