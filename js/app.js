@@ -30,13 +30,13 @@ const App = {};
 			App.lang = cookie;
 			App.choseLang = true;
 		}
-		$('button.english, button.french').click(function() {
-			const lang = d3.select(this).attr('lang');
-			Util.setCookie('lang', lang); // Set the cookie here
-			App.lang = lang;
-			App.changeLanguage(App.lang);
-			$('.language-modal').modal('hide');
-		});
+		// $('button.english, button.french').click(function() {
+		// 	const lang = d3.select(this).attr('lang');
+		// 	Util.setCookie('lang', lang); // Set the cookie here
+		// 	App.lang = lang;
+		// 	App.changeLanguage(App.lang);
+		// 	$('.language-modal').modal('hide');
+		// });
 
 		// give a warning if user is not using Chrome or Firefox
 		const browser = navigator.userAgent;
@@ -653,6 +653,9 @@ const App = {};
 			});
 		}
 		Util.loadNumberFormatters();
+
+		// update cookie to store language preference
+		Util.setCookie("lang", App.lang);
 		
 		// Once the new language is chosen, reload the page.
 		if (params.reset === false) {
@@ -663,9 +666,6 @@ const App = {};
 		
 		// set page title
 		$('title').text(App.lang === 'fr' ? 'Outil d\'évaluation des coûts du RSI' : 'IHR Costing Tool');
-
-		// update cookie to store language preference
-		Util.setCookie("lang", App.lang);
 	};
 
 	// retrieves a copy of all complete indicators and all levels below
