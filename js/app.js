@@ -4,6 +4,7 @@ const App = {};
 	App.lang = 'en';
 	App.choseLang = false;
 	App.demoMode = true;
+	App.cookieDomain = "";
 
 	App.scoreLabels = App.lang === 'fr' ? {
 		1: 'Pas de capacité',
@@ -21,11 +22,17 @@ const App = {};
 	
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
-
-		$('.language-modal').modal('show');
-		
+		console.log("checking the cookie")
+		let cookie = Util.getCookie('lang'); // you can retieve the cookie like this.
+		if (cookie === "") {
+			$('.language-modal').modal('show');
+		} else {
+			App.lang = cookie;
+			App.choseLang = true;
+		}
 		$('button.english, button.french').click(function() {
 			const lang = d3.select(this).attr('lang');
+			Util.setCookie('lang', lang); // Set the cookie here
 			App.lang = lang;
 			App.changeLanguage(App.lang);
 			$('.language-modal').modal('hide');
@@ -656,6 +663,9 @@ const App = {};
 		
 		// set page title
 		$('title').text(App.lang === 'fr' ? 'Outil d\'évaluation des coûts du RSI' : 'IHR Costing Tool');
+
+		// update cookie to store language preference
+		Util.setCookie("lang", App.lang);
 	};
 
 	// retrieves a copy of all complete indicators and all levels below
