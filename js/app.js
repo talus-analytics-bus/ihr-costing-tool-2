@@ -4,6 +4,7 @@ const App = {};
 	App.lang = 'en';
 	App.choseLang = false;
 	App.demoMode = false;
+	App.cookieDomain = "";
 
 	App.scoreLabels = App.lang === 'fr' ? {
 		1: 'Pas de capacité',
@@ -22,10 +23,14 @@ const App = {};
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
 
+		let cookie = Util.getCookie('lang'); // you can retieve the cookie like this.
+
 		$('.language-modal').modal('show');
+
 		
 		$('button.english, button.french').click(function() {
 			const lang = d3.select(this).attr('lang');
+			Util.setCookie('lang', lang); // Set the cookie here
 			App.lang = lang;
 			App.changeLanguage(App.lang);
 			$('.language-modal').modal('hide');
