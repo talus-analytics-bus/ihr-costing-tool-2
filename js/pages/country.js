@@ -3,10 +3,14 @@
 		App.createLeafletMap();
 
 		// populate country dropdown
-		const countryData = App.countryParams.slice(0);
+		let countryData = App.countryParams.slice(0);
 		const nameKey = App.lang === 'fr' ? 'name_fr' : 'name';
 		const defaultVal = App.lang === 'fr' ? '--- choisir un pays ---' : '--- choose a country ---';
 		
+		countryData = countryData.filter(country => {
+			return country.name !== "French Guiana";
+		});
+
 		Util.sortByKey(countryData, nameKey);
 		countryData.unshift({ name: defaultVal, name_fr: defaultVal, abbreviation: '' });
 		Util.populateSelect('.country-dropdown', countryData, {
@@ -61,7 +65,10 @@
 			}
 			
 			// show live search box under search bar
-			const fuse = new Fuse(App.countryParams, {
+			const searchCountries = App.countryParams.filter(country => {
+				return country.name !== "French Guiana";
+			});
+			const fuse = new Fuse(searchCountries, {
 				threshold: 0.3,
 				distance: 1e5,
 				keys: ['abbreviation', nameKey, 'currency_iso'],
