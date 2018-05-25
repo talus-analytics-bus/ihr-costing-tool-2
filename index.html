@@ -29,24 +29,6 @@
     <!-- Footer -->
     <div id="footer-content"></div>
 
-    <!-- Modal for language selection -->
-    <div class="modal language-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="modal-title">Choose a language / Choisissez une langue</div>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body center">
-            <button type="button" lang="en" class="btn btn-primary english">English</button>
-            <button type="button" lang="fr" class="btn btn-primary french">Français</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- TEMPLATES - EN-->
     <!-- Navigation bar template -->
     <script id="nav-template" type="text/x-handlebars-template">
@@ -156,12 +138,16 @@
                 <p>
                     This tool provides a framework to calculate costs for implementing and enhancing IHR core capacities. Costs are estimated by applying country-specific user input data to cost calculations developed using best practices for achieving the technical standards specified in the Joint External Evaluation Tool (JEE).
                 </p>
+{{!--                 <div class="title">Choose a language / Choisissez une langue</div>
+                <button type="button" lang="en" class="btn btn-primary english">English</button>
+                <button type="button" lang="fr" class="btn btn-primary french">Français</button> --}}
                 <p class="home-instructions">
                     Note: This tool is designed to be used in Google Chrome or Mozilla Firefox.
                 </p>
             </div>
             <div class="enter-button-container">
-                <button type="button" class="btn btn-primary enter-site">Start</button>
+                <button type="button" class="btn btn-primary enter-site en">Start in English</button>
+                <button type="button" class="btn btn-primary enter-site fr">Commencer en français</button>
             </div>
         </div>
     </script>
@@ -368,8 +354,7 @@
                     <div class="block-content">
                         <div class="population-section">
                             <div class="block-description">
-                                Default estimated total population for the selected country was determined based on 2018 estimates from the <a target="_blank" href="https://esa.un.org/unpd/wpp/Download/Standard/ASCII/">United Nations World Population Prospects</a>.
-                                To edit the estimate, change the population below.
+                                Default estimated total population for the selected country was determined based on 2018 estimates from the <a target="_blank" href="https://esa.un.org/unpd/wpp/Download/Standard/ASCII/">United Nations World Population Prospects</a>. To edit the estimate, change the population below.
                             </div>
                             <div class="estimated-population">
                                 <div><b>Estimated total population:</b></div>
@@ -699,7 +684,7 @@
                     Since the IHR entered into force in 2007, national stakeholders and their international partners have struggled to define the costs of strengthening and maintaining health security systems that cross levels and agencies and rely on multi-sectoral coordination for action. Without an assessment of the costs required to implement IHR, countries are unable to develop consistent budgets and plans upon which to build a case with domestic policymakers or external partners for appropriations, grants, or loans. We began with costing templates developed by our research team after a review of IHR implementation in 14 case study countries spanning multiple regions, refined by country feedback on user needs for IHR costing collected while supporting the World Health Organization in developing and pilot-testing an earlier conceptual framework for IHR costing in 6 countries. Since the JEE contains many more indicators than the previous IHR Core Capacity Monitoring Framework, the team reviewed published guidance from WHO, OIE, and other international authorities for specific requirements for capacity building and implementation that would address the new indicators. Finally, the team reviewed all of the published JEE evaluations to identify specific activities/capabilities that the assessment process had associated with the scores assigned in each indicator (i.e., what cumulative activities/capabilities were specifically identified as constituting a score of 2, 3, 4, or 5 for each specific indicator). Based on this approach, we have developed a publicly-available web-based costing tool to support countries in estimating the costs of fully implementing IHR core capacities to fulfill the objectives of the planning process launched by the JEE.
                 </p>
                 <p>
-                    The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators.  Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.
+                    The IHR web-based, open-access costing tool integrates user-supplied, country-specific data into a template derived from field practices and guidance for achieving the specific technical capabilities that contribute to IHR compliance. The tool provides an intuitive interface linked to a costing framework that provides users the ability to upload or assign their previously-determined JEE assessment scores and cost the necessary improvements to meet their targets for each of the 19 IHR Core Capacities, based on the JEE indicators. Because IHR requires capacities to detect, assess, and report unusual events from the local, intermediate, and national levels, the tool includes multipliers for each administrative level.
                 </p>
                 <p>
                     Once the current JEE assessment scores are entered, users choose their target level of improvement (e.g., one step improved across all indicators; improvement to level 4 for all indicators). The user is then directed to costing pages for each JEE indicator, with options to select and modify as necessary. These costs include those for establishing the legal/policy foundation and infrastructure to support basic capacities, as well as the operating costs for personnel, training, processes, and consumables based on country-level datasets. The costs for each indicator include those required for start-up (e.g., cost of establishing legislation), capital (e.g., building construction, durable goods), and recurring costs (e.g., salaries). Once completed, the total cost requirements can be visualized by indicator; by category; by type of cost; and for the first, third, and fifth years following implementation. In addition, costs can be viewed for start up support for countries to understand the required IHR expenses and comparative cost results across core capacities and capacity levels (performance), including the option to download results in a spreadsheet format. Indicators for which costing tools have already been determined elsewhere, are linked and aligned to the degree possible to help prevent duplication or confusion.
@@ -859,7 +844,8 @@
         <div class="overview-container container container-text">
             <h1>Instructions d'&#233;valuation</h1>
             <div>
-                <p><b>L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas de donn&#233;es une fois que vous avez quitt&#233; le site Web.</b> Pour enregistrer les entr&#233;es de score et d'&#233;tablissement des co&#251;ts et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Revenir &#224; cette page et suivre les instructions de upload de la session pr&#233;c&#233;dente pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b></p>
+                <p><b>L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas de donn&#233;es une fois que vous avez quitt&#233; le site Web.</b> Pour enregistrer les entr&#233;es de score et d'&#233;tablissement des co&#251;ts et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Revenir &#224; cette page et suivre les instructions de upload de la session pr&#233;c&#233;dente pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b>
+                </p>
                 <p>Les scores d'&#233;valuation actuels, mesur&#233;s par l'outil d'&#233;valuation externe conjointe (EEC), sont n&#233;cessaires en tant que premi&#232;re &#233;tape de l'utilisation de l'outil d'&#233;valuation des co&#251;ts du RSI. Pour les pays qui ont d&#233;j&#224; termin&#233; le processus EEC formel, les scores d'&#233;valuation sont automatiquement remplis dans l'outil, bien que les utilisateurs puissent choisir de modifier ces scores pr&#233;-remplis. Pour effectuer une &#233;valuation pour un pays qui n'a pas encore termin&#233; une &#233;valuation EEC formelle, choisir parmi les options ci-dessous pour compl&#233;ter la saisie du score d'&#233;valuation.<a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank"></a></p>
             </div>
             <div class="overview-section">
