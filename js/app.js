@@ -22,7 +22,6 @@ const App = {};
 	
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
-		console.log("checking the cookie")
 		let cookie = Util.getCookie('lang'); // you can retieve the cookie like this.
 		if (cookie === "") {
 			$('.language-modal').modal('show');
@@ -30,6 +29,7 @@ const App = {};
 			App.lang = cookie;
 			App.choseLang = true;
 		}
+
 		// $('button.english, button.french').click(function() {
 		// 	const lang = d3.select(this).attr('lang');
 		// 	Util.setCookie('lang', lang); // Set the cookie here
@@ -93,6 +93,10 @@ const App = {};
 			App.globalBaseCosts = globalBaseCosts;
 			App.globalStaffMultipliers = globalStaffMultipliers;
 			App.whoAmI = {};
+
+
+			// Update language of JEE tree
+			App.changeLanguage(App.lang);
 
 			if (App.demoMode) {
 					// default to Kenya
