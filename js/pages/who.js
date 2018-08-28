@@ -154,11 +154,16 @@
 		// show the correct block content
 		$(`.population-block`).slideDown();
 
+		// Get the current user-selected population of the country;
+		// if it's different from the default, then flag it as different
+		// in the user interface
 		const defaultPop = App.countryParams.find(d => d.name === App.whoAmI.name).multipliers.population;
+		const userPop = App.whoAmI.multipliers.population;
+		checkIfDefault(); // is it different?
 
 		// set population defaults and behavior
 		$('.population-input')
-			.val(Util.comma(defaultPop))
+			.val(Util.comma(userPop))
 			.on('change', function() {
 				App.whoAmI.multipliers.population = Util.getInputNumVal(this);
 				checkIfDefault();
