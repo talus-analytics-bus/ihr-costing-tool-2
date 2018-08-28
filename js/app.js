@@ -3,7 +3,7 @@ const App = {};
 (() => {
 	App.lang = 'en';
 	App.choseLang = false;
-	App.demoMode = true;
+	App.demoMode = false;
 	App.cookieDomain = "";
 
 	App.scoreLabels = App.lang === 'fr' ? {
