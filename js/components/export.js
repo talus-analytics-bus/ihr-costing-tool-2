@@ -29,6 +29,8 @@
 		// get data to download
 		return JSON.stringify({
 			whoAmI: App.whoAmI,
+			globalBaseCosts: App.globalBaseCosts,
+			globalStaffMultipliers: App.globalStaffMultipliers,
 			scoreData: indScoreDict,
 			costData: inputCostDict,
 			user: User,
@@ -48,6 +50,8 @@
 			User[ind] = sessionData.user[ind];
 		}
 		App.whoAmI = sessionData.whoAmI;
+		App.globalBaseCosts = sessionData.globalBaseCosts;
+		App.globalStaffMultipliers = sessionData.globalStaffMultipliers;
 		const indScoreDict = sessionData.scoreData;
 		const inputCostDict = sessionData.costData;
 
@@ -71,6 +75,11 @@
 				});
 			})
 		});
+
+		if (User.lang !== undefined) {
+			App.lang = User.lang;
+		}
+		App.changeLanguage(App.lang);
 		return true;
 	}
 

@@ -546,6 +546,7 @@ const App = {};
 	App.changeLanguage = (langChoice = 'fr', params ={}) => {
 		langChoice = langChoice.toLowerCase().trim();
 		App.lang = langChoice; // update global variable specifying language choice
+		User.lang = langChoice; // update session data so language reloaded w IHR file
 
 		App.jeeTree.forEach(ce => {
 			// CORE ELEMENTS

@@ -386,6 +386,12 @@
 			};
 			defaultCosts.push(App.lang === 'fr' ? buyLease_fr : buyLease_en);
 		}
+		const buyLeaseHash = {
+			"Buy": "Buy",
+			"Lease": "Lease",
+			"Acheter": "Buy",
+			"Louer": "Lease"
+		};
 
 		// add meeting attendee data
 		if (whoTab === 'meetings') {
@@ -550,12 +556,12 @@
 							.data(itemNode.values)
 							.enter().append('div')
 								.attr('class', 'btn btn-secondary')
-								.classed('active', d => d.toLowerCase() === User.buyOrLease)
+								.classed('active', d => buyLeaseHash[d].toLowerCase() === User.buyOrLease)
 								.text(d => d)
 								.on('click', function(d) {
 									$(this).addClass('active')
 										.siblings().removeClass('active');
-									User.buyOrLease = d.toLowerCase();
+									User.buyOrLease = buyLeaseHash[d].toLowerCase();
 									App.updateAllCosts();
 								});
 					}
