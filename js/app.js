@@ -100,7 +100,7 @@ const App = {};
 			if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170904-demo.ihr', (error, text) => {
-						App.loadSessionData(text, (demoDataLoaded) => {
+						App.loadSessionData(text, (demoDataLoaded, oldVersion) => {
 							if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
 							App.updateAllCosts();
 							callback();

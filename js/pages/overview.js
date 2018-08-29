@@ -25,9 +25,15 @@
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					NProgress.start();
-					App.loadSessionData(e.target.result, (success) => {
+					App.loadSessionData(e.target.result, (success, oldVersion) => {
+						console.log('oldVersion = ' + oldVersion);
 						if (success) {
-							const text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							let text;
+							if (oldVersion) {
+								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored. Please review your selections on the <a href="#costs/population">Set Default Values page</a>, as they may not have been saved by earlier versions of the tool.';
+							} else {
+								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							}
 							App.updateAllCosts();
 							noty({
 								timeout: 4000,
@@ -35,7 +41,7 @@
 								text: text,
 							});
 						} else {
-							const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement de votre session précédente.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement de votre session précédente.' : '<b>Error!</b><br>There was an error loading your previous session.';
 							noty({
 								timeout: 5000,
 								text: text,
