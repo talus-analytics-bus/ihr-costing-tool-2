@@ -29,7 +29,7 @@
 						if (success) {
 							let text;
 							if (oldVersion) {
-								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée. Veuillez confirmer vos sélections sur la page <a href="">Définir les valeurs implicites</a> car elles n\'ont peut-être pas été enregistrées par les versions antérieures de l\'outil.' : '<b>Upload Successful!</b><br>Your previous session has been restored. Please review your selections on the <a href="#costs/population">Set Default Values page</a>, as they may not have been saved by earlier versions of the tool.';
+								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée. Veuillez confirmer vos sélections sur la page <a href="#costs/population">Définir les valeurs implicites</a> car elles n\'ont peut-être pas été enregistrées par les versions antérieures de l\'outil.' : '<b>Upload Successful!</b><br>Your previous session has been restored. Please review your selections on the <a href="#costs/population">Set Default Values page</a>, as they may not have been saved by earlier versions of the tool.';
 							} else {
 								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
 							}
