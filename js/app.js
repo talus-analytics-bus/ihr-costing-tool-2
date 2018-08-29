@@ -94,17 +94,17 @@ const App = {};
 			App.globalStaffMultipliers = globalStaffMultipliers;
 			App.whoAmI = {};
 
-
 			// Update language of JEE tree
 			App.changeLanguage(App.lang);
 
 			if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170904-demo.ihr', (error, text) => {
-						const demoDataLoaded = App.loadSessionData(text);
-						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
-						App.updateAllCosts();
-						callback();
+						App.loadSessionData(text, (demoDataLoaded) => {
+							if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
+							App.updateAllCosts();
+							callback();
+						});
 					});
 
 					// default to Switzerland

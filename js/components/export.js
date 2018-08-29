@@ -38,7 +38,7 @@
 	}
 
 	// loads json data and ingests into application
-	App.loadSessionData = (sessionDataStr) => {
+	App.loadSessionData = (sessionDataStr, callback) => {
 		let sessionData;
 		try {
 			sessionData = JSON.parse(sessionDataStr);
@@ -55,32 +55,52 @@
 		const indScoreDict = sessionData.scoreData;
 		const inputCostDict = sessionData.costData;
 
-		// ingest scores and costs into App.jeeTree
-		App.jeeTree.forEach((cc) => {
-			cc.capacities.forEach((cap) => {
-				cap.indicators.forEach((ind) => {
-					if (indScoreDict[ind.id]) {
-						ind.score = indScoreDict[ind.id];
-					}
 
-					ind.actions.forEach((a) => {
-						a.inputs.forEach((input) => {
-							if (inputCostDict[input.id]) {
-								for (let key in inputCostDict[input.id]) {
-									input[key] = inputCostDict[input.id][key];
-								}
-							}
-						});
-					});
+		const needToLoadDefaults = sessionData.globalBaseCosts === undefined || sessionData.globalStaffMultipliers === undefined;
+		const loadDefaults = (fn, field, needToLoadDefaults, callback) => {
+			if (needToLoadDefaults) {
+				d3.json(fn, (res) => {
+					callback(null, res);
 				});
-			})
-		});
+			} else {
+				callback(null, sessionData[field]);
+			}
+		};
 
-		if (User.lang !== undefined) {
-			App.lang = User.lang;
-		}
-		App.changeLanguage(App.lang);
-		return true;
+		d3.queue(1)
+			.defer(loadDefaults, 'data/global_base_costs.json', 'globalBaseCosts', needToLoadDefaults)
+			.defer(loadDefaults, 'data/global_staff_multipliers.json', 'globalStaffMultipliers', needToLoadDefaults)
+			.await((error, globalBaseCosts, globalStaffMultipliers) => {
+				App.globalBaseCosts = globalBaseCosts;
+				App.globalStaffMultipliers = globalStaffMultipliers;
+
+				// ingest scores and costs into App.jeeTree
+				App.jeeTree.forEach((cc) => {
+					cc.capacities.forEach((cap) => {
+						cap.indicators.forEach((ind) => {
+							if (indScoreDict[ind.id]) {
+								ind.score = indScoreDict[ind.id];
+							}
+
+							ind.actions.forEach((a) => {
+								a.inputs.forEach((input) => {
+									if (inputCostDict[input.id]) {
+										for (let key in inputCostDict[input.id]) {
+											input[key] = inputCostDict[input.id][key];
+										}
+									}
+								});
+							});
+						});
+					})
+				});
+
+				if (User.lang !== undefined) {
+					App.lang = User.lang;
+				}
+				App.changeLanguage(App.lang);
+				callback(true);
+			});
 	}
 
 	// loads Qlick score data
