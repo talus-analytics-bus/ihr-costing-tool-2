@@ -25,23 +25,24 @@
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					NProgress.start();
-					const success = App.loadSessionData(e.target.result);
-					if (success) {
-						const text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
-						App.updateAllCosts();
-						noty({
-							timeout: 4000,
-							type: 'success',
-							text: text,
-						});
-					} else {
-						const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement de votre session précédente.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
-						noty({
-							timeout: 5000,
-							text: text,
-						})
-					}
-					NProgress.done();
+					App.loadSessionData(e.target.result, (success) => {
+						if (success) {
+							const text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							App.updateAllCosts();
+							noty({
+								timeout: 4000,
+								type: 'success',
+								text: text,
+							});
+						} else {
+							const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement de votre session précédente.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							noty({
+								timeout: 5000,
+								text: text,
+							})
+						}
+						NProgress.done();
+					});
 				}
 				reader.readAsBinaryString(file);
 			}
