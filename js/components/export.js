@@ -70,11 +70,13 @@
 		d3.queue(1)
 			.defer(loadDefaults, 'data/global_base_costs.json', 'globalBaseCosts', needToLoadDefaults)
 			.defer(loadDefaults, 'data/global_staff_multipliers.json', 'globalStaffMultipliers', needToLoadDefaults)
-			.await((error, globalBaseCosts, globalStaffMultipliers) => {
+			.defer(d3.json, 'data/jee_costing_data.json')
+			.await((error, globalBaseCosts, globalStaffMultipliers, freshJeeTree) => {
 				App.globalBaseCosts = globalBaseCosts;
 				App.globalStaffMultipliers = globalStaffMultipliers;
 
 				// ingest scores and costs into App.jeeTree
+				App.jeeTree = freshJeeTree;
 				App.jeeTree.forEach((cc) => {
 					cc.capacities.forEach((cap) => {
 						cap.indicators.forEach((ind) => {
