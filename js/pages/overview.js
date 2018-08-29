@@ -26,7 +26,6 @@
 				reader.onload = (e) => {
 					NProgress.start();
 					App.loadSessionData(e.target.result, (success, oldVersion) => {
-						console.log('oldVersion = ' + oldVersion);
 						if (success) {
 							let text;
 							if (oldVersion) {
