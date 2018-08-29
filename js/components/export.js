@@ -99,7 +99,7 @@
 					App.lang = User.lang;
 				}
 				App.changeLanguage(App.lang);
-				callback(true);
+				callback(true, needToLoadDefaults);
 			});
 	}
 
