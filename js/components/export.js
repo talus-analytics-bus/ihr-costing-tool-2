@@ -56,7 +56,7 @@
 		const inputCostDict = sessionData.costData;
 
 
-		const needToLoadDefaults = sessionData.globalBaseCosts === undefined;
+		const needToLoadDefaults = sessionData.globalBaseCosts === undefined || sessionData.globalStaffMultipliers === undefined;
 		const loadDefaults = (fn, field, needToLoadDefaults, callback) => {
 			if (needToLoadDefaults) {
 				d3.json(fn, (res) => {
