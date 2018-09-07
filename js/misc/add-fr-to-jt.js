@@ -153,6 +153,8 @@
 									// console.log('liId');
 									// console.log(liId);
 									liFields.forEach(field => {
+										console.log('field')
+										console.log(field)
 										li[field + '_fr'] = li_fr[field] || '';
 										li[field + '_en'] = li[field] || '';
 									});
