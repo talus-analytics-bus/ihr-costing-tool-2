@@ -219,16 +219,19 @@
 				valueAttr: 'intermediate_1_area_count',
 				description: 'Intermédiaire (par exemple, province, district)',
 				nameValues: ['Province', 'Municipalité', 'District', 'Etat'],
+				optional: false,
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermédiaire 2 (facultatif)',
 				nameValues: ['Province', 'Municipalité', 'District', 'Etat', 'Commune'],
+				optional: true,
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
 				description: 'Local (par exemple, commune, ville)',
 				nameValues: ['Barangay', 'Ville', 'Circonscription électorale', 'Commune', 'District'],
+				optional: false,
 			}
 		] : [
 			{
@@ -236,16 +239,19 @@
 				valueAttr: 'intermediate_1_area_count',
 				description: 'Intermediate (e.g., province, district)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
+				optional: false,
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermediate 2 (optional)',
 				nameValues: ['Province', 'Municipality', 'District', 'State', 'County'],
+				optional: true,
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
 				description: 'Local (e.g., county, city)',
 				nameValues: ['Barangay', 'City', 'Constituency', 'County', 'District'],
+				optional: false,
 			}
 		];
 		const geoHashFr = {"District":"District","Country":"Pays","Province":"Province","Barangay":"Barangay","County":"Commune","Municipality":"Municipalité","State":"Etat","City":"Ville","Constituency":"Circonscription électorale"};
