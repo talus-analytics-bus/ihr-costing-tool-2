@@ -368,7 +368,9 @@
 		});
 
 		// add overhead percentage if personnel page
+		let nextTab = 'personnel';
 		if (whoTab === 'personnel') {
+			nextTab = 'technology';
 			const overhead_en = {
 				cost: 0.6,
 				cost_unit: "% per year",
@@ -393,6 +395,7 @@
 
 		// add buy/lease option if technology and infrastructure
 		if (whoTab === 'technology') {
+			nextTab = 'printing';
 			const buyLease_en = {
 				type: "radio",
 				values: ["Buy", "Lease"],
@@ -412,6 +415,8 @@
 			};
 			defaultCosts.push(App.lang === 'fr' ? buyLease_fr : buyLease_en);
 		}
+
+		if (whoTab === 'printing') nextTab = 'meetings';
 		const buyLeaseHash = {
 			"Buy": "Buy",
 			"Lease": "Lease",
@@ -421,6 +426,8 @@
 
 		// add meeting attendee data
 		if (whoTab === 'meetings') {
+			$('.next-button').addClass('hidden');
+			$('.proceed-button').removeClass('hidden');
 			for (let i = 0; i < App.globalStaffMultipliers.length; i++) {
 				defaultCosts.push(App.globalStaffMultipliers[i]);
 			}
@@ -678,8 +685,8 @@
 
 		updateCostDisplay();
 
-
-		// behavior for next button
+		// previous and next buttons
+		$('.next-button').click(() => hasher.setHash('costs/' + nextTab));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 })();
