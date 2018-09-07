@@ -291,22 +291,22 @@
 				description: 'Nombre d\'établissements de santé dans le pays : <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
 				unit: 'établissements / pays',
 			},
-			{
-				name: 'central_chw_count',
-				description: 'Nombre d\'agents de santé communautaires dans le pays :',
-				unit: 'agents / pays',
-			}
+			// {
+			// 	name: 'central_chw_count',
+			// 	description: 'Nombre d\'agents de santé communautaires dans le pays :',
+			// 	unit: 'agents / pays',
+			// }
 		] : [
 			{
 				name: 'central_hospitals_count',
 				description: 'Number of healthcare facilities in the country: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
 				unit: 'healthcare facilities / country',
 			},
-			{
-				name: 'central_chw_count',
-				description: 'Number of community health workers in the country:',
-				unit: 'community health workers / country',
-			}
+			// {
+			// 	name: 'central_chw_count',
+			// 	description: 'Number of community health workers in the country:',
+			// 	unit: 'community health workers / country',
+			// }
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
 			.data(phMults)
