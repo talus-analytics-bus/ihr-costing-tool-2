@@ -224,6 +224,7 @@
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermédiaire 2 (facultatif)',
+				tooltipContent: "Dans les pays ayant plusieurs niveaux intermédiaires qui participent à des activités liées au RSI, les zones intermédiaires 2 sont plus petites que le premier niveau intermédiaire mais plus grand que les unités géopolitiques locales. Cette valeur est facultative. Si le nombre de zones intermédiaires 2 n'est pas fournie, cette valeur sera supposée être nulle et aucune activité ne sera chiffrée pour les zones intermédiaires 2.",
 				nameValues: ['Province', 'Municipalité', 'District', 'Etat', 'Commune'],
 				optional: true,
 			}, {
@@ -244,6 +245,7 @@
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermediate 2 (optional)',
+				tooltipContent: 'In countries with multiple intermediate levels that participate in IHR-related activities, intermediate 2 areas are smaller than the first intermediate level but larger than local areas. This value is optional. Unless a number of intermediate 2 areas is specified, this value will be assumed to be zero and no activities will be costed for intermediate 2 areas.',
 				nameValues: ['Province', 'Municipality', 'District', 'State', 'County'],
 				optional: true,
 			}, {
@@ -255,12 +257,17 @@
 			}
 		];
 		const geoHashFr = {"District":"District","Country":"Pays","Province":"Province","Barangay":"Barangay","County":"Commune","Municipality":"Municipalité","State":"Etat","City":"Ville","Constituency":"Circonscription électorale"};
+		const geoHashEn = _.invert(geoHashFr);
 		const emptyOptionText = App.lang === 'fr' ? '-- sélectionnez un --' : '-- select one --';
 
 		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
 			.data(geoDivisions)
 			.enter().append('tr');
-		geoRows.append('td').text(d => `${d.description}${App.lang === 'fr' ? ' ' : ''}:`);
+		geoRows.append('td').html(d => {
+			let content = `${d.description}${App.lang === 'fr' ? ' ' : ''}:`;
+			if (d.tooltipContent) content += ` <img class="info-img admin-help tooltipstered" title="${d.tooltipContent}" src="img/info.png">`;
+			return content;
+		});
 		geoRows.append('td').append('select')
 			.attr('class', 'form-control')
 			.classed('french', App.lang === 'fr')
@@ -273,7 +280,11 @@
 			})
 			.on('change', function(d) {
 				const val = $(this).val();
-				App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : val;
+				if (App.lang === 'fr') {
+					App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : geoHashEn[val];
+				} else {
+					App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : val;
+				}
 			});
 		geoRows.append('td').append('input')
 			.attr('class', 'form-control')
@@ -329,6 +340,10 @@
         const content = App.lang === 'fr' ? `Préciser le nombre d'établissements de santé publics participant aux activités liées au RSI, y compris les diagnostics au point de service pour les maladies prioritaires, et les programmes de biosécurité et de biosécurité.` : `Specify the number of public healthcare facilities participating in IHR-related activities, including point-of-care diagnostics for priority diseases, and biosafety and biosecurity programs.`;
         $('#healthcare-help').tooltipster({
             content: content,
+            trigger: 'hover',
+            side: 'top',
+        });
+        $('.admin-help').tooltipster({
             trigger: 'hover',
             side: 'top',
         });
