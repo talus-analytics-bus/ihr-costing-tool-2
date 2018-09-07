@@ -2573,13 +2573,18 @@ img.tooltipstered {
 }
 
 /* line 40, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+.who-container .block .next-button-container.hidden {
+  display: none;
+}
+
+/* line 44, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .who-container .block input {
   display: inline-block;
   padding: 6px 12px;
   text-align: right;
 }
 
-/* line 45, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 49, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .who-container .block .default-text {
   width: 125px;
   margin-top: 2px;
@@ -2588,37 +2593,37 @@ img.tooltipstered {
   text-align: right;
 }
 
-/* line 54, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 58, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .population-block .input-container {
   margin-top: 10px;
 }
 
-/* line 55, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 59, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .population-block .population-input {
   width: 140px;
   margin-right: 5px;
 }
 
-/* line 59, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 63, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .population-block .currency-section {
   margin-top: 30px;
   border-top: 1px solid #ccc;
   padding-top: 20px;
 }
 
-/* line 64, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 68, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .population-block .currency-select-label {
   margin-bottom: 10px;
 }
 
-/* line 69, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 73, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .country-details-block .phi-section {
   margin-top: 30px;
   border-top: 1px solid #ccc;
   padding-top: 30px;
 }
 
-/* line 75, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 79, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .country-details-block .info-img {
   position: relative;
   top: -1px;
@@ -2627,42 +2632,42 @@ img.tooltipstered {
   margin-left: 5px;
 }
 
-/* line 84, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 88, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .geo-division-table input {
   width: 140px;
   margin-left: 10px;
 }
 
-/* line 90, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 94, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .ph-table td:first-child {
   position: relative;
 }
 
-/* line 94, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 98, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .ph-table input {
   width: 140px;
   margin-right: 10px;
 }
 
-/* line 100, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 104, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-item-row {
   margin-left: 0;
   padding: 10px;
 }
 
-/* line 104, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 108, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-subheading-row {
   font-family: 'Open Sans', sans-serif;
   padding: 10px 0 20px;
 }
 
-/* line 108, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 112, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-subheading-row h3 {
   font-weight: 400;
   font-size: 1.3em;
 }
 
-/* line 112, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 116, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-item-name-container {
   display: inline-block;
   width: 380px;
@@ -2670,19 +2675,19 @@ img.tooltipstered {
   vertical-align: top;
 }
 
-/* line 118, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 122, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-item-name {
   font-weight: 600;
 }
 
-/* line 121, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 125, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-input-group {
   display: inline-block;
   margin-left: 20px;
   vertical-align: top;
 }
 
-/* line 126, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 130, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-input {
   width: 140px;
   margin-right: 8px;
@@ -2690,31 +2695,31 @@ img.tooltipstered {
   vertical-align: top;
 }
 
-/* line 132, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 136, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-currency,
 .default-costs-block .dv-cost-unit {
   position: relative;
   top: 5px;
 }
 
-/* line 137, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 141, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-divider {
   border-top: 1px solid #ccc;
   margin-bottom: 20px;
   margin-top: 20px;
 }
 
-/* line 142, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 146, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block h2.dv-h2 {
   font-size: 1.3em;
 }
 
-/* line 145, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 149, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block h3.dv-h3 {
   font-size: 1.3em;
 }
 
-/* line 148, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 152, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-tab-name-container {
   display: flex;
   padding-top: 5px;
@@ -2723,14 +2728,14 @@ img.tooltipstered {
   cursor: pointer;
 }
 
-/* line 154, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 158, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .default-costs-block .dv-tab-name-container .rotate-chevron {
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 
-/* line 161, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
+/* line 165, /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/sass/pages/_who.scss */
 .block-title-title {
   font-size: 1.3em;
 }
