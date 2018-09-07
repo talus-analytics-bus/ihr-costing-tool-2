@@ -406,6 +406,41 @@ const App = {};
 		});
 	}
 
+
+	/**
+	 * Given the data field name of a country multiplier (e.g., 'intermediate_1_area_count')
+	 * returns the value of the multiplier by which the base cost should be multiplied
+	 * @param  {string} name Data field name of country multiplier
+	 * @return {double}      Value by which the base cost should be multiplied
+	 */
+	const getCountryMultiplier = (name) => {
+
+		/**
+		 * Given the data field name of a country multiplier (e.g., 'intermediate_1_area_count')
+	 	 * returns its value if it defined and valid, and 0 otherwise		
+		 * @param  {string} name Data field name of country multiplier
+	 	 * @return {double}      Value if it defined and valid, and 0 otherwise
+		 */
+		const returnSimpleMultiplier = (name) => {
+			const rawValue = App.whoAmI.multipliers[name];
+			if (rawValue === undefined || rawValue === null || rawValue === '') return 0;
+			else {
+				return rawValue;
+			};
+		};
+		switch (name) {
+			case 'intermediate_1_and_2_count':
+				return (returnSimpleMultiplier('intermediate_1_area_count') + returnSimpleMultiplier('intermediate_2_area_count'));
+				break;
+			case 'intermediate_1_and_local_area_count':
+				return (returnSimpleMultiplier('intermediate_1_area_count') + returnSimpleMultiplier('local_area_count'));
+				break;
+			default:
+				return returnSimpleMultiplier(name);
+				break;
+		}	
+	};
+
 	// gets the cost of a line item
 	App.getLineItemCost = (li, exchangeRate) => {
 		// find cost information in globalBaseCosts dictionary
@@ -449,19 +484,26 @@ const App = {};
 			});
 			if (multiplierObj) cost *= multiplierObj.count;
 		}
+
 		if (li.country_multiplier && App.whoAmI.name) {
-			let multiplier = 1;
-			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
-				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
-			} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
-				let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
-				if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
-				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
-			} else {
-				multiplier = App.whoAmI.multipliers[li.country_multiplier];
-			}
-			if (multiplier) cost *= multiplier;
+			cost *= getCountryMultiplier(li.country_multiplier);
 		}
+		// if (li.country_multiplier && App.whoAmI.name) {
+		// 	let multiplier = 1;
+		// 	if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
+		// 		multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+
+
+
+		// 	} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
+		// 		let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
+		// 		if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
+		// 		multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
+		// 	} else {
+		// 		multiplier = App.whoAmI.multipliers[li.country_multiplier];
+		// 	}
+		// 	if (multiplier) cost *= multiplier;
+		// }
 		if (li.custom_multiplier_1) {
 			cost *= App.getMultiplierValue(li.custom_multiplier_1);
 		}
