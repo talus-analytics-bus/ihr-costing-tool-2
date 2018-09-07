@@ -78,7 +78,7 @@
 			// correctFrIds(jcd_fr);
 
 			// Iterate over jee_costing_data-en.json and add the FR language names of things
-			const ceHash = {"Prevent":"Prévenir","Detect":"Détecter","Respond":"Riposter"};
+			const ceHash = {"Prevent":"Prévenir","Detect":"Détecter","Respond":"Riposter","Other":"Autre"};
 			jcd_both.forEach(ce => {
 				// CORE ELEMENTS
 				// name
@@ -134,6 +134,7 @@
 								// console.log('inputId')
 								// console.log(inputId)
 								input.name_fr = input_fr.name;
+								input.name_en = input.name;
 
 								const liFields = [
 									'name',
@@ -150,8 +151,6 @@
 									// LINE ITEMS
 									const liId = li.id;
 									const li_fr = getLineItem(liId, jcd_fr);
-									// console.log('liId');
-									// console.log(liId);
 									liFields.forEach(field => {
 										li[field + '_fr'] = li_fr[field] || '';
 										li[field + '_en'] = li[field] || '';

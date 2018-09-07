@@ -14,7 +14,7 @@
         "indicators": [
           {
             "id": "p.1.1",
-            "name": "P.1.1 La législation, les lois, les règlements, les exigences administratives, les politiques ou autres instruments gouvernementaux en place suffisent à la mise en œuvre du RSI.",
+            "name": "La législation, les lois, les règlements, les exigences administratives, les politiques ou autres instruments gouvernementaux en place suffisent à la mise en œuvre du RSI.",
             "score_descriptions": {
               "1": "Évaluation de la législation, de la réglementation, des exigences administratives et d'autres instruments gouvernementaux pertinents pour la mise en œuvre du RSI (2005) non effectuée",
               "2": "L'évaluation de la législation, de la réglementation, des exigences administratives et d'autres instruments gouvernementaux pertinents pour la mise en œuvre du RSI (2005) a été effectuée",
@@ -180,7 +180,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "Équivalent à 3 mois (0,25 années) de travail à temps plein par avocat salarié.",
                         "where_find_base_cost": "Salaire par année: indiquer le coût moyen d'un avocat national / gouvernemental en fonction de la grille salariale nationale et ajuster le nombre d'années au besoin.",
@@ -201,7 +201,7 @@
           },
           {
             "id": "p.1.2",
-            "name": "P.1.2 L'État peut démontrer qu'il a amendé et aligné sa législation, ses politiques et ses dispositions administratives internes pour permettre la conformité avec le RSI (2005).",
+            "name": "L'État peut démontrer qu'il a amendé et aligné sa législation, ses politiques et ses dispositions administratives internes pour permettre la conformité avec le RSI (2005).",
             "score_descriptions": {
               "1": "La législation, la réglementation, les exigences administratives et d'autres instruments gouvernementaux ne sont pas en place pour la mise en œuvre du RSI (2005)",
               "2": "L'évaluation de la législation, de la réglementation, des exigences administratives et d'autres instruments gouvernementaux pertinents pour la mise en œuvre du RSI (2005) a été effectuée et les besoins d'ajustement ont été identifiés",
@@ -404,7 +404,7 @@
         "indicators": [
           {
             "id": "p.2.1",
-            "name": "P.2.1 Un mécanisme fonctionnel est établi pour la coordination et l'intégration des secteurs concernés dans la mise en œuvre du RSI",
+            "name": "Un mécanisme fonctionnel est établi pour la coordination et l'intégration des secteurs concernés dans la mise en œuvre du RSI",
             "score_descriptions": {
               "1": "Le mécanisme de coordination entre les ministères concernés n'est pas en place",
               "2": "Un mécanisme de coordination entre les ministères concernés est en place. Il existe des procédures opérationnelles normalisées (PON) nationales ou équivalent pour la coordination entre le point focal national RSI et les secteurs pertinents",
@@ -761,7 +761,7 @@
         "indicators": [
           {
             "id": "p.3.1",
-            "name": "P.3.1 Détection de la résistance aux antimicrobiens (RAM)",
+            "name": "Détection de la résistance aux antimicrobiens (RAM)",
             "score_descriptions": {
               "1": "Aucun plan national de détection et de notification des agents pathogènes prioritaires de la RAM n'a été approuvé",
               "2": "Un plan national de détection et de déclaration des agents pathogènes prioritaires de la RAM a été approuvé",
@@ -1237,7 +1237,7 @@
           },
           {
             "id": "p.3.2",
-            "name": "P.3.2 Surveillance des infections causées par des agents pathogènes de la RAM",
+            "name": "Surveillance des infections causées par des agents pathogènes de la RAM",
             "score_descriptions": {
               "1": "Aucun plan national de surveillance des infections causées par des pathogènes prioritaires de la RAM n'a été approuvé",
               "2": "Le plan national de surveillance des infections causées par des agents pathogènes prioritaires de la RAM a été approuvé",
@@ -1574,7 +1574,7 @@
           },
           {
             "id": "p.3.3",
-            "name": "P.3.3 Programmes de contrôle de la prévention des infections nosocomiales",
+            "name": "Programmes de contrôle de la prévention des infections nosocomiales",
             "score_descriptions": {
               "1": "Aucun plan national pour les programmes de maladies nosocomiales n'a été approuvé",
               "2": "Le plan national pour les programmes de maladies nosocomiales a été approuvé",
@@ -1655,7 +1655,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,17 années",
+                        "custom_multiplier_1": "0.17 années",
                         "custom_multiplier_2": "1 expert",
                         "references": "Présumer qu'un mois de travail est nécessaire pour rédiger les mises à jour initiales, puis un mois récurrent pour effectuer des mises à jour pertinentes chaque année et les distribuer aux parties prenantes concernées ; Supposer que l'information est distribuée par voie électronique",
                         "where_find_base_cost": "Salaire par année: indiquer le coût moyen d'un expert technique approprié en fonction de votre grille salariale nationale et ajuster le multiplicateur de base (fraction d'années) selon les besoins.",
@@ -1683,7 +1683,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,083 années",
+                        "custom_multiplier_1": "0.083 années",
                         "custom_multiplier_2": "1 expert",
                         "references": "Présumer qu'un mois de travail est nécessaire pour rédiger les mises à jour initiales, puis un mois récurrent pour effectuer des mises à jour pertinentes chaque année et les distribuer aux parties prenantes concernées ; Supposer que l'information est distribuée par voie électronique",
                         "where_find_base_cost": "Salaire par année: indiquer le coût moyen d'un expert technique approprié en fonction de votre grille salariale nationale et ajuster le multiplicateur de base (fraction d'années) selon les besoins.",
@@ -1722,7 +1722,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 atelier",
                         "custom_multiplier_2": "1 jour",
-                        "references": "Équivalent d'un petit atelier de niveau intermédiaire 2 (rafraîchissements, papeterie et frais accessoires) dans chaque établissement de santé à l'échelle nationale. Par défaut = 1 petite réunion à 300 $ / réunion x nombre d'établissements de santé.",
+                        "references": "Équivalent d'un petit atelier de niveau intermédiaire 2 (rafraîchissements, papeterie et frais accessoires) dans chaque établissement de santé à l'échelle nationale. Par défaut = 1 petite réunion à 500 $ / réunion x nombre d'établissements de santé.",
                         "where_find_base_cost": "Déterminer les coûts totaux d'un atelier d'une journée au niveau de l'établissement de santé (coûts par personne x nombre de personnes) et ajuster le multiplicateur de base (nombre d'établissements de santé).",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -1966,7 +1966,7 @@
           },
           {
             "id": "p.3.4",
-            "name": "P.3.4 Activités de gérance des antimicrobiens",
+            "name": "Activités de gérance des antimicrobiens",
             "score_descriptions": {
               "1": "Aucun plan national de gestion des antimicrobiens n'a été approuvé",
               "2": "Un plan national de gestion des antimicrobiens a été approuvé",
@@ -2048,7 +2048,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 expert",
-                        "custom_multiplier_2": "0,33 années",
+                        "custom_multiplier_2": "0.33 années",
                         "references": "Équivalent de 4 mois (0,33 années) de travail à plein temps par un expert technique salarié ; Présumer trois mois pour le développement des PON et un mois pour la distribution électronique dédiée des PON et la liaison avec les bureaux intermédiaires et locaux concernant les protocoles mis à jour.",
                         "where_find_base_cost": "Salaire par année: indiquer le coût moyen d'un expert technique approprié en fonction de votre grille salariale nationale et ajuster le multiplicateur de base (fraction d'années) selon les besoins.",
                         "user_included_in_costing": false,
@@ -2173,7 +2173,7 @@
         "indicators": [
           {
             "id": "p.4.1",
-            "name": "P.4.1 Systèmes de surveillance en place pour les maladies / agents pathogènes zoonotiques prioritaires",
+            "name": "Systèmes de surveillance en place pour les maladies / agents pathogènes zoonotiques prioritaires",
             "score_descriptions": {
               "1": "Aucun système de surveillance zoonotique n'existe",
               "2": "Le pays a déterminé les zoonoses les plus préoccupantes pour la santé publique nationale, mais n'a pas mis en place de système de surveillance zoonotique des animaux",
@@ -2376,7 +2376,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "4 ateliers",
-                        "custom_multiplier_2": "0,5 jours",
+                        "custom_multiplier_2": "0.5 jours",
                         "references": "Présumer que les documents d'atelier pertinents sont distribués par voie électronique",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour les réunions courtes régulières basées sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU NATIONAL. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
                         "user_included_in_costing": false,
@@ -2399,7 +2399,7 @@
                         "staff_multiplier": "gsm.0",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "4 ateliers",
-                        "custom_multiplier_2": "0,5 jours",
+                        "custom_multiplier_2": "0.5 jours",
                         "references": "",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour les réunions courtes régulières basées sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU NATIONAL. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
                         "user_included_in_costing": false,
@@ -2457,7 +2457,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 expert",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "",
                         "where_find_base_cost": "Salaire par an: saisir le salaire moyen d'un équivalent technicien compétent en fonction de la grille salariale nationale et ajuster le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -2535,7 +2535,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 professionnel",
-                        "custom_multiplier_2": "0,5 années",
+                        "custom_multiplier_2": "0.5 années",
                         "references": "Équivalent de la moitié du salaire annuel de l'assistant de santé publique pour servir de gestionnaire des données sur les zoonoses. Par défaut: salaire de l'WHO-CHOICE pour l'assistant de santé publique en USD2017.",
                         "where_find_base_cost": "Salaire par an: saisir le salaire moyen d'un équivalent technicien compétent en fonction de la grille salariale nationale et ajuster le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -2662,7 +2662,7 @@
           },
           {
             "id": "p.4.2",
-            "name": "P.4.2 Personnel de santé vétérinaire ou animale",
+            "name": "Personnel de santé vétérinaire ou animale",
             "score_descriptions": {
               "1": "Le pays n'a aucune capacité en personnel de santé animale capable de mener une activité sanitaire",
               "2": "Le pays dispose d'une capacité en personnel de santé animale au sein du système national de santé publique",
@@ -2723,7 +2723,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "population",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,000002 vétérinaires par population de pays",
+                        "custom_multiplier_1": "0.000002 vétérinaires par population de pays",
                         "custom_multiplier_2": "",
                         "references": "Un agent de santé publique vétérinaire / animale pour 500 000 personnes au niveau national.",
                         "where_find_base_cost": "Sur la base de l'estimation du salaire du vétérinaire à mi-carrière au Kenya, évalué à 120 000 KSH par mois (1 255 USD). Cette valeur est comparable au salaire médian «Autres agents de santé» (12,15 $ par heure, ce qui correspond à environ 15 000 $ par année) dans Tijdens et al (2013): doi: 10.1186 / 1478-4491-11-11",
@@ -2789,7 +2789,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,2 ateliers par an",
+                        "custom_multiplier_1": "0.2 ateliers par an",
                         "custom_multiplier_2": "1 jour",
                         "references": "Présumer 1 petit atelier national d'une journée tous les 5 ans",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU NATIONAL. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
@@ -2811,7 +2811,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier": "gsm.0",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,2 ateliers par an",
+                        "custom_multiplier_1": "0.2 ateliers par an",
                         "custom_multiplier_2": "1 jour",
                         "references": "Présumer 1 petit atelier national d'une journée tous les 5 ans",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU NATIONAL. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
@@ -2910,7 +2910,7 @@
           },
           {
             "id": "p.4.3",
-            "name": "P.4.3 Les mécanismes d'intervention aux zoonoses infectieuses et aux zoonoses potentielles sont établis et fonctionnels",
+            "name": "Les mécanismes d'intervention aux zoonoses infectieuses et aux zoonoses potentielles sont établis et fonctionnels",
             "score_descriptions": {
               "1": "Aucun mécanisme en place",
               "2": "Une politique nationale, une stratégie ou un plan pour l'intervention aux événements zoonotiques est en place",
@@ -2972,7 +2972,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 expert",
-                        "custom_multiplier_2": "0,17 années",
+                        "custom_multiplier_2": "0.17 années",
                         "references": "Présumer un mois de travail requis",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
@@ -3228,7 +3228,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 atelier",
                         "custom_multiplier_2": "1 jour",
-                        "references": "Équivalent d'un atelier d'une journée comprenant un lieu de conférence payant, des rafraîchissements et de la papeterie. Présumer une réunion PETITE DE NIVEAU INTERMEDIAIRE 1 (voir fiche de travail). Par défaut = 1 petite réunion à 525 $ / réunion.",
+                        "references": "Équivalent d'un atelier d'une journée comprenant un lieu de conférence payant, des rafraîchissements et de la papeterie. Par défaut = 1 petite réunion à 525 $ / réunion. Si aucun nombre de zone intermédiaire 2 est spécifiée, calculer les coûts pour les ateliers au niveau intermédiaire seulement.",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU INTERMÉDIAIRE 1. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -3251,7 +3251,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 atelier",
                         "custom_multiplier_2": "1 jour",
-                        "references": "Équivalent d'un atelier d'une journée comprenant un lieu de conférence payant, des rafraîchissements et de la papeterie. Présumer une réunion PETITE DE NIVEAU INTERMEDIAIRE 1 (voir fiche de travail). Par défaut = 1 petite réunion à 525 $ / réunion.",
+                        "references": "Si aucun nombre de zone intermédiaire 2 est spécifiée, calculer les coûts pour les per diems au niveau intermédiaire seulement.",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU INTERMÉDIAIRE 1. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -3338,9 +3338,9 @@
                         "country_multiplier": "intermediate_1_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
-                        "custom_multiplier_2": "0,5 jour",
+                        "custom_multiplier_2": "0.5 jour",
                         "references": "",
-                        "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU INTERMEDIAIRE 2. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers / pourcentage de zones) selon les besoins.",
+                        "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, frais accessoires et salle) au NIVEAU INTERMEDIAIRE. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers / pourcentage de zones) selon les besoins.",
                         "user_included_in_costing": false,
                         "type": "line_item",
                         "score_step_to": [
@@ -3360,7 +3360,7 @@
                         "staff_multiplier": "gsm.1",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
-                        "custom_multiplier_2": "0,5 jour",
+                        "custom_multiplier_2": "0.5 jour",
                         "references": "",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
@@ -3416,7 +3416,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 spécialiste",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Équivalent d'un travail à temps plein de trois mois (0,25 ans) effectué par un agent de relations publiques national / gouvernemental équivalent pour l'élaboration de matériel de formation officiel pouvant être utilisé à tous les niveaux par les principaux intervenants. Par défaut = salaire de l'WHO-CHOICE en USD 2017.",
                         "where_find_base_cost": "Salaire par an: entrer le coût moyen d'un expert technique approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -3449,7 +3449,7 @@
         "indicators": [
           {
             "id": "p.5.1",
-            "name": "P.5.1 Des mécanismes sont établis et fonctionnent pour détecter et intervenir face aux maladies d'origine alimentaire et à la contamination des aliments.",
+            "name": "Des mécanismes sont établis et fonctionnent pour détecter et intervenir face aux maladies d'origine alimentaire et à la contamination des aliments.",
             "score_descriptions": {
               "1": "Aucun mécanisme en place",
               "2": "Les points focaux sont identifiés dans les parties prenantes concernées (secteur de la sécurité alimentaire, secteur de la santé humaine, personnel de surveillance et d'intervention, secteur de la santé animale, laboratoires clés)",
@@ -3853,7 +3853,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 spécialiste",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Équivalent d'un travail à temps plein d'une durée de 3 mois (0,25 an) par un spécialiste de la santé publique national / gouvernemental équivalent pour l'élaboration de matériel de formation officiel pouvant être utilisé à tous les niveaux par les principales parties prenantes. Par défaut = salaire de l'WHO-CHOICE en USD 2017 ; Présumer qu'une fois développés, les matériaux pertinents sont distribués électroniquement",
                         "where_find_base_cost": "Salaire par an: entrer le coût moyen d'un expert technique approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -3888,7 +3888,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 spécialiste",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Équivalent d'un travail à temps plein de trois mois (0,25 ans) effectué par un agent de relations publiques national / gouvernemental équivalent pour l'élaboration de matériel de formation officiel pouvant être utilisé à tous les niveaux par les principaux intervenants. Par défaut = salaire de l'WHO-CHOICE en USD 2017.",
                         "where_find_base_cost": "Salaire par an: entrer le coût moyen d'un expert technique approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -4047,7 +4047,7 @@
         "indicators": [
           {
             "id": "p.6.1",
-            "name": "P.6.1 Un système de biosécurité et de biosûreté pangouvernemental est en place pour les installations humaines, animales et agricoles",
+            "name": "Un système de biosécurité et de biosûreté pangouvernemental est en place pour les installations humaines, animales et agricoles",
             "score_descriptions": {
               "1": "Aucun élément d'un système national exhaustif de biosécurité et de biosûreté n'est en place",
               "2": "Certains des éléments, mais pas tous, d'un système exhaustif de biosécurité et de biosûreté sont en place: le pays commence à suivre et à mettre à jour un registre et un inventaire des agents pathogènes dans les installations qui stockent ou traitent les pathogènes et les toxines dangereux. Développe, mais sans l'avoir finalisée, une législation nationale complète sur la biosécurité et la biosûreté. Développe des licences de laboratoire. Développe des mesures de contrôle des pathogènes, y compris des normes de confinement physique et de manipulation opérationnelle et des systèmes de signalement des défaillances. Ne consolide pas les agents pathogènes dangereux et les toxines dans un nombre minimum d'installations. N'utilise pas de diagnostics qui empêchent la culture de pathogènes dangereux. Ne met pas en place des mécanismes de surveillance et d'application de la surveillance.",
@@ -4788,7 +4788,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "3 jours/personne",
                         "custom_multiplier_2": "1 laboratoire par zone intermédiaire 2",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou si le nombre de zones intermédiaires 2 n'est pas spécifié, présumer que les coûts sont nuls. Ce coût est calculé séparément pour les laboratoires de la zone intermédiaire 1 (en présumant des visites de 5 jours au lieu de 3 jours au niveau de la zone intermédiaire 2).",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -4873,7 +4873,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 jour/personne",
                         "custom_multiplier_2": "1 laboratoire par zone intermédiaire et intermédiaire 2",
-                        "references": "Présumer 1 laboratoire par zone intermédiaire et intermédiaire 2",
+                        "references": "Présumer 1 laboratoire par zone intermédiaire et intermédiaire 2. Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant un laboratoire par zone intermédiaire 1.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -4942,7 +4942,7 @@
           },
           {
             "id": "p.6.2",
-            "name": "P.6.2 Pratiques de formation en biosécurité et biosûreté",
+            "name": "Pratiques de formation en biosécurité et biosûreté",
             "score_descriptions": {
               "1": "Aucune formation ou projet de formation en biosécurité et en biosûreté ne sont en place",
               "2": "Le pays a mené une évaluation des besoins de formation et identifié des lacunes dans la formation à la biosécurité et à la biosûreté, mais n'a pas encore mis en œuvre une formation complète ou un programme de formation commun. Il y a un manque général de sensibilisation des personnels de laboratoire aux meilleures pratiques internationales en matière de biosécurité et de biosûreté pour une conduite sûre, sécurisée et responsable. Le pays n'a pas encore de formation académique soutenue dans des institutions qui forment ceux qui entretiennent ou travaillent avec des agents pathogènes dangereux et des toxines.",
@@ -5604,7 +5604,7 @@
         "indicators": [
           {
             "id": "p.7.1",
-            "name": "P.7.1 Couverture vaccinale (rougeole) dans le cadre du programme national",
+            "name": "Couverture vaccinale (rougeole) dans le cadre du programme national",
             "score_descriptions": {
               "1": "Moins de 50% de la population du pays âgée de 12 mois a reçu au moins une dose de vaccin antirougeole, comme en témoignent les enquêtes de couverture ou les données administratives ; un plan est en place pour améliorer la couverture, y compris les activités de vaccination supplémentaires",
               "2": "50 à 69% de la population du pays âgée de 12 mois a reçu au moins une dose de vaccin antirougeole, comme en témoignent les enquêtes de couverture ou les données administratives ; un plan est en place pour atteindre 90% dans les cinq prochaines années pour inclure des activités de vaccination supplémentaires",
@@ -5692,7 +5692,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,2 enquêtes par an",
+                        "custom_multiplier_1": "0.2 enquêtes par an",
                         "custom_multiplier_2": "",
                         "references": "Présumer une enquête de couverture tous les 5 ans",
                         "where_find_base_cost": "Le développement d'un système de surveillance des maladies pouvant être prévenu par un vaccin au Costa Rica a coûté environ 422 000 USD en 2013 sur une période d'un an, comprenant les frais de personnel, les coûts d'équipement, les frais de bureau et de voyage",
@@ -5729,7 +5729,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "population",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,03 fraction de la population âgée de 12 mois ou moins",
+                        "custom_multiplier_1": "0.03 fraction de la population âgée de 12 mois ou moins",
                         "custom_multiplier_2": "0.9 fraction de couverture pour atteindre la capacité démontrée",
                         "references": "<http://www.who.int/immunization/global_vaccine_action_plan/GVAP_Annex3.pdf?ua=3>",
                         "where_find_base_cost": "Unicef paie moins de 1 dollar par dose de vaccin (<https://www.unicef.org/supply/files/Measles.pdf>), il n'est pas clair si les pays bénéficieraient de ce prix. Sur la base des travaux antérieurs sur les coûts du PMSS, les aiguilles coûtent de 1 $ par 400 et les seringues coûtent 2 $ par 10. <https://www.unicef.org/supply/files/Measles.pdf>",
@@ -5752,7 +5752,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "population",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,3 taux de natalité pour 1 000 habitants",
+                        "custom_multiplier_1": "0.03 taux de natalité pour 1 000 habitants",
                         "custom_multiplier_2": "0.9 fraction de couverture pour atteindre la capacité démontrée",
                         "references": "",
                         "where_find_base_cost": "Unicef paie moins de 1 dollar par dose de vaccin (<https://www.unicef.org/supply/files/Measles.pdf>), il n'est pas clair si les pays bénéficieraient de ce prix. Sur la base des travaux antérieurs sur les coûts du PMSS, les aiguilles coûtent de 1 $ par 400 et les seringues coûtent 2 $ par 10. <https://www.unicef.org/supply/files/Measles.pdf>",
@@ -5775,7 +5775,7 @@
           },
           {
             "id": "p.7.2",
-            "name": "P.7.2 Accès et livraison de vaccins à l'échelle nationale",
+            "name": "Accès et livraison de vaccins à l'échelle nationale",
             "score_descriptions": {
               "1": "Aucun plan n'est en place pour la livraison de vaccins à l'échelle nationale OU des plans ont été rédigés pour fournir des vaccins dans tout le pays pour cibler les populations mais ne sont pas mis en œuvre; des achats et des prévisions de vaccins inadéquats entraînent des ruptures de stock régulières au niveau central et au niveau des districts",
               "2": "La mise en œuvre a commencé pour maintenir la chaîne du froid pour la distribution du vaccin, mais est disponible dans moins de 40% des districts du pays OU la livraison du vaccin (maintien de la chaîne du froid) est disponible pour moins de 40% de la population cible dans le pays ; des achats et des prévisions de vaccins inadéquats entraînent des ruptures de stock occasionnelles au niveau central et au niveau des districts",
@@ -5949,7 +5949,7 @@
         "indicators": [
           {
             "id": "d.1.1",
-            "name": "D.1.1 Essais de laboratoire pour la détection de maladies prioritaires",
+            "name": "Essais de laboratoire pour la détection de maladies prioritaires",
             "score_descriptions": {
               "1": "Le système de laboratoire national n'est pas capable de réaliser des essais de base.",
               "2": "Le système de laboratoire national est capable de réaliser un ou deux tests de base",
@@ -6580,7 +6580,7 @@
           },
           {
             "id": "d.1.2",
-            "name": "D.1.2 Système de référence pour le transfert et le transport d’échantillons",
+            "name": "Système de référence pour le transfert et le transport d’échantillons",
             "score_descriptions": {
               "1": "Aucun système n'est en place pour le transport des échantillons des niveaux intermédiaires / districts vers les laboratoires nationaux, à part un transport ad hoc.",
               "2": "Le système est en place pour le transport des échantillons vers les laboratoires nationaux à partir de moins de 50% du niveau intermédiaire / des districts du pays pour des diagnostics avancés",
@@ -6611,7 +6611,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -6845,7 +6845,7 @@
           },
           {
             "id": "d.1.3",
-            "name": "D.1.3 Point de soin moderne efficace et diagnostic en laboratoire",
+            "name": "Point de soin moderne efficace et diagnostic en laboratoire",
             "score_descriptions": {
               "1": "Aucune preuve de l'utilisation rapide et précise des diagnostics des points de soins et de laboratoire. Aucune stratégie de test de diagnostic spécifique à un niveau n'est documentée.",
               "2": "La capacité de diagnostic de laboratoire est minimale dans le pays, mais aucune stratégie de test de diagnostic spécifique à un niveau n'est documentée. Les diagnostics aux points de service sont utilisés pour les maladies prioritaires du pays",
@@ -6904,7 +6904,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -7315,7 +7315,7 @@
           },
           {
             "id": "d.1.4",
-            "name": "D.1.4 Système de contrôle-qualité de laboratoire",
+            "name": "Système de contrôle-qualité de laboratoire",
             "score_descriptions": {
               "1": "Il n'y a pas de normes nationales de qualité de laboratoire.",
               "2": "Des normes de qualité nationales ont été élaborées mais il n'existe aucun système de vérification de leur mise en œuvre",
@@ -7346,7 +7346,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -7594,7 +7594,7 @@
         "indicators": [
           {
             "id": "d.2.1",
-            "name": "D.2.1 Systèmes de surveillance fondés sur des indicateurs et des événements",
+            "name": "Systèmes de surveillance fondés sur des indicateurs et des événements",
             "score_descriptions": {
               "1": "Aucun indicateur ou système de surveillance événementielle n'existe.",
               "2": "Système (s) de surveillance événementielle et basée sur les indicateurs dont le démarrage est prévu dans l'année",
@@ -7687,7 +7687,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 officier",
                         "custom_multiplier_2": "",
-                        "references": "Équivalent du salaire annuel des spécialistes de la santé publique servant d'épidémiologiste de l'unité de surveillance intermédiaire 1. Par défaut: salaire de l'WHO-CHOICE pour un spécialiste de la santé publique en USD2017 ; Présumer un déploiement immédiat",
+                        "references": "Équivalent du salaire annuel des spécialistes de la santé publique servant d'épidémiologiste de l'unité de surveillance intermédiaire 1. Par défaut: salaire de l'WHO-CHOICE pour un spécialiste de la santé publique en USD2017 ; Présumer un déploiement immédiat. Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les salaires au niveau intermédiaire seulement.",
                         "where_find_base_cost": "Salaire par année: saisir le salaire moyen d'un spécialiste en santé publique en fonction de votre grille salariale nationale et ajuster le multiplicateur de base (nombre de spécialistes).",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -8128,8 +8128,8 @@
                         "country_multiplier": "intermediate_1_and_2_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 atelier",
-                        "custom_multiplier_2": "5 jours",
-                        "references": "Ne comprend pas les per diem et les déplacements",
+                        "custom_multiplier_2": "1 jour",
+                        "references": "Ne comprend pas les per diem et les déplacements. Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -8152,8 +8152,8 @@
                         "staff_multiplier": "gsm.0",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 atelier",
-                        "custom_multiplier_2": "5 jours",
-                        "references": "",
+                        "custom_multiplier_2": "1 jour",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -8209,7 +8209,7 @@
                         "function_tag": "Opérations / mise en œuvre",
                         "base_cost": "gbc.10",
                         "base_cost_modified": false,
-                        "country_multiplier": "central_chw_count",
+                        "country_multiplier": "central_hospitals_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 copie par travailleur",
                         "custom_multiplier_2": "",
@@ -8605,7 +8605,7 @@
           },
           {
             "id": "d.2.2",
-            "name": "D.2.2 Système interopérable, interconnecté, de notification électronique en temps réel",
+            "name": "Système interopérable, interconnecté, de notification électronique en temps réel",
             "score_descriptions": {
               "1": "Il n'existe aucun système interopérable et interconnecté de rapports électroniques en temps réel.",
               "2": "Le pays est en train de mettre au point un système de notification électronique en temps réel interopérable et interconnecté, pour les systèmes de surveillance de la santé publique ou vétérinaire.",
@@ -8681,7 +8681,7 @@
                         "country_multiplier": "intermediate_1_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "2 forfaits",
-                        "custom_multiplier_2": "1,0 fraction des zones participantes",
+                        "custom_multiplier_2": "1.0 fraction des zones participantes",
                         "references": "Valeur par défaut: coûts régionaux moyens par utilisateur de smartphone de l'UIT (<http://www.itu.int/en/ITU-D/Statistics/Documents/publications/misr2016/MISR2016-w4.pdf>).",
                         "where_find_base_cost": "Coûts d'utilisation des smartphones / téléphones mobiles : déterminer les coûts des forfait pour données locales / SMS / vocal en fonction des données de marché des fournisseurs de services de téléphonie mobile locaux et ajuster le multiplicateur de base (nombre de téléphones) pour refléter le nombre d'agents de surveillance.",
                         "user_included_in_costing": false,
@@ -8966,7 +8966,7 @@
           },
           {
             "id": "d.2.3",
-            "name": "D.2.3 Intégration et analyse des données de surveillance",
+            "name": "Intégration et analyse des données de surveillance",
             "score_descriptions": {
               "1": "Aucun rapport lié à la collecte de données",
               "2": "Rapports sporadiques liés à la collecte de données, avec retard",
@@ -9053,7 +9053,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "2 formateurs",
                         "custom_multiplier_2": "3 jours",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -9083,7 +9083,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "2 superviseurs",
                         "custom_multiplier_2": "2 jours",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les évaluations de superviseur au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -9204,7 +9204,7 @@
           },
           {
             "id": "d.2.4",
-            "name": "D.2.4 Systèmes de surveillance syndromique",
+            "name": "Systèmes de surveillance syndromique",
             "score_descriptions": {
               "1": "Aucun système de surveillance syndromique n'existe",
               "2": "Le (s) système (s) de surveillance syndromique devrait commencer au cours de la prochaine année; une politique / législation est en place pour permettre la surveillance syndromique",
@@ -9286,7 +9286,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 spécialiste",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Présumer que les documents pertinents sont distribués électroniquement après la réunion",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
@@ -9413,7 +9413,7 @@
         "indicators": [
           {
             "id": "d.3.1",
-            "name": "D.3.1 Système de notification efficace à l'OMS, à la FAO et à l'OIE",
+            "name": "Système de notification efficace à l'OMS, à la FAO et à l'OIE",
             "score_descriptions": {
               "1": "Aucun point focal national RSI, Délégué de l'OIE et / ou point focal national WAHIS n'a été identifié et / ou point focal /délégué identifié n'a accès au module d'apprentissage et aux meilleures pratiques fournies par l'OMS, l'OIE et la FAO.",
               "2": "Le pays a identifié le point focal national du RSI, les délégués de l'OIE et les points focaux nationaux du WAHIS; Le point focal est lié au programme d'apprentissage et aux meilleures pratiques fournis par l'OMS, l'OIE et la FAO.",
@@ -9659,7 +9659,7 @@
           },
           {
             "id": "d.3.2",
-            "name": "D.3.2 Réseau de notification et de protocoles dans le pays",
+            "name": "Réseau de notification et de protocoles dans le pays",
             "score_descriptions": {
               "1": "Le pays ne dispose pas de protocoles ou de processus de notification à l'OMS, à l'OIE ou à la FAO; n'a pas l'intention d'établir dans l'année à venir des plans et des protocoles pour les rapports",
               "2": "Le pays est en train d'élaborer et d'établir des protocoles, des processus, des règlements et / ou des lois régissant les rapports pour débuter leurs mises en œuvre d'ici un an.",
@@ -9853,7 +9853,7 @@
         "indicators": [
           {
             "id": "d.4.1",
-            "name": "D.4.1 Des ressources humaines sont disponibles pour mettre en œuvre les exigences de capacité de base du RSI",
+            "name": "Des ressources humaines sont disponibles pour mettre en œuvre les exigences de capacité de base du RSI",
             "score_descriptions": {
               "1": "Le pays n'a pas de capacité RH multidisciplinaire requise pour la mise en œuvre des capacités de base du RSI",
               "2": "Le pays a une capacité multidisciplinaire en ressources humaines (épidémiologistes, vétérinaires, cliniciens et spécialistes ou techniciens de laboratoire) au niveau national",
@@ -10013,7 +10013,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 directeur",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Équivalent de 3 mois (0,25 années) de travail à temps plein par un employé de saisie de données salarié ou un personnel de soutien SI / TI ou équivalent.",
                         "where_find_base_cost": "Salaire par année: entrer le coût moyen du professionnel de la santé publique de niveau approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -10034,7 +10034,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 employé",
-                        "custom_multiplier_2": "0,5 années",
+                        "custom_multiplier_2": "0.5 années",
                         "references": "Équivalent de 1 mois (0,08333 années) de travail à temps plein par employé de saisie de données salarié ou équivalent.",
                         "where_find_base_cost": "Salaire par année: entrer le coût moyen du professionnel de la santé publique de niveau approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -10181,7 +10181,7 @@
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 spécialiste de la formation",
-                        "custom_multiplier_2": "0,25 années",
+                        "custom_multiplier_2": "0.25 années",
                         "references": "Équivalent de 3 mois (0,25 années) de travail à plein temps par un éducateur salarié / expert en formation.",
                         "where_find_base_cost": "Salaire par année: entrer le coût moyen du professionnel de la santé publique de niveau approprié en fonction de la grille salariale nationale et ajuster avec le multiplicateur de base (mois exprimés en fraction d'années).",
                         "user_included_in_costing": false,
@@ -10201,7 +10201,7 @@
           },
           {
             "id": "d.4.2",
-            "name": "D.4.2 Programme de formation en épidémiologie appliquée tel que le Programme de Formation en Epidémiologie de Terrain (FETP en Anglais)",
+            "name": "Programme de formation en épidémiologie appliquée tel que le Programme de Formation en Epidémiologie de Terrain (FETP en Anglais)",
             "score_descriptions": {
               "1": "Aucun programme de formation en épidémiologie de terrain (FETP) ou en épidémiologie appliquée n'a été établi",
               "2": "Aucun programme FETP ou de formation en épidémiologie appliquée n'est mis en place dans le pays, mais le personnel participe à un programme organisé dans un autre pays à travers un accord existant (au niveau de base, intermédiaire et / ou avancé)",
@@ -10553,7 +10553,7 @@
           },
           {
             "id": "d.4.3",
-            "name": "D.4.3 Stratégie de ressources humaines",
+            "name": "Stratégie de ressources humaines",
             "score_descriptions": {
               "1": "Aucune stratégie en personnel de santé n'existe",
               "2": "Une stratégie pour les personnels de santé existe mais n'inclut pas les professions de santé publique (par exemple les épidémiologistes, les vétérinaires et les techniciens de laboratoire)",
@@ -10584,7 +10584,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "1 employé",
                         "references": "",
                         "where_find_base_cost": "",
@@ -10669,7 +10669,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "1 employé",
                         "references": "",
                         "where_find_base_cost": "",
@@ -10952,7 +10952,7 @@
         "indicators": [
           {
             "id": "r.1.1",
-            "name": "R.1.1 Un plan national de préparation et d'intervention en cas d'urgence sanitaire multirisque est élaboré et mis en œuvre",
+            "name": "Un plan national de préparation et d'intervention en cas d'urgence sanitaire multirisque est élaboré et mis en œuvre",
             "score_descriptions": {
               "1": "Le plan national de préparation et d'intervention en cas d'urgence de santé publique n'est pas disponible pour répondre aux exigences de capacité de base du RSI (Annexe 1A Article 2)",
               "2": "Un plan national de préparation et d'intervention en cas d'urgence de santé publique multirisque pour intervenir aux principales exigences de capacité du RSI a été élaboré (annexe 1A, article 2)",
@@ -11011,7 +11011,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "",
                         "references": "Présumer 6 mois d'effort à plein temps pour rédiger un plan d'intervention initial",
                         "where_find_base_cost": "",
@@ -11116,7 +11116,7 @@
                     "type": "input",
                     "line_items": [
                       {
-                        "name": "Frais pour réunion",
+                        "name": "Frais de réunion",
                         "description": "Frais d'un atelier moyen d'une journée dans chaque zone intermédiaire pour des consultations multisectorielles au niveau infranational afin de dresser un inventaire des dangers référencés dans le RSI pour éclairer la planification nationale et locale. Comprend la location d'installations, la papeterie, les rafraîchissements et autres frais accessoires.",
                         "category_tag": "Outils et processus",
                         "function_tag": "Planification incluant l'évaluation, la conception, la planification, la réglementation, la législation",
@@ -11138,7 +11138,7 @@
                         "id": "r.1.1.2.1.1"
                       },
                       {
-                        "name": "Frais pour réunion",
+                        "name": "Per diem",
                         "description": "Per diem pour un atelier moyen d'une journée dans chaque zone intermédiaire pour des consultations multisectorielles au niveau infranational afin de dresser un inventaire des risques liés au RSI afin d'informer la planification nationale et locale",
                         "category_tag": "Outils et processus",
                         "function_tag": "Planification incluant l'évaluation, la conception, la planification, la réglementation, la législation",
@@ -11175,7 +11175,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -11224,7 +11224,7 @@
                     "line_items": [
                       {
                         "name": "Frais pour réunion",
-                        "description": "",
+                        "description": "Dépenses pour une réunion moyenne d'une journée dans chaque domaine intermédiaire pour des consultations multisectorielles au niveau infranational afin de dresser un inventaire des risques liés au RSI afin d'informer la planification nationale et locale. Comprend la location d'installations, la papeterie, les rafraîchissements et autres frais accessoires.",
                         "category_tag": "Outils et processus",
                         "function_tag": "Planification incluant l'évaluation, la conception, la planification, la réglementation, la législation",
                         "base_cost": "gbc.13",
@@ -11244,7 +11244,7 @@
                         "id": "r.1.1.2.4.1"
                       },
                       {
-                        "name": "Frais pour réunion",
+                        "name": "Per diems",
                         "description": "Per diem pour un atelier moyen d'une journée dans chaque zone intermédiaire pour des consultations multisectorielles au niveau infranational afin de dresser un inventaire des risques liés au RSI afin d'informer la planification nationale et locale",
                         "category_tag": "Outils et processus",
                         "function_tag": "Planification incluant l'évaluation, la conception, la planification, la réglementation, la législation",
@@ -11288,7 +11288,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "Présumer 3 mois d'effort à plein temps pour rédiger un plan d'intervention initial",
                         "where_find_base_cost": "",
@@ -11496,7 +11496,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
                         "custom_multiplier_2": "1 jour",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -11519,7 +11519,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
                         "custom_multiplier_2": "1 jour",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -11619,34 +11619,6 @@
                 "inputs": [
                   {
                     "id": "r.1.1.5.1",
-                    "name": "Engager un consultant national pour fournir des conseils d'experts",
-                    "type": "input",
-                    "line_items": [
-                      {
-                        "name": "Frais quotidiens (total)",
-                        "description": "Honoraires pour 60 jours de temps de consultation pour fournir des conseils d'expert concernant la réaffectation des ressources du niveau national ou régional au niveau local",
-                        "category_tag": "Outils et processus",
-                        "function_tag": "Planification incluant l'évaluation, la conception, la planification, la réglementation, la législation",
-                        "base_cost": "gbc.3",
-                        "base_cost_modified": false,
-                        "country_multiplier": "central_area_count",
-                        "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "60 jours",
-                        "custom_multiplier_2": "",
-                        "references": "",
-                        "where_find_base_cost": "",
-                        "user_included_in_costing": false,
-                        "type": "line_item",
-                        "score_step_to": [
-                          "4"
-                        ],
-                        "unique_id": "388",
-                        "id": "r.1.1.5.1.1"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "r.1.1.5.2",
                     "name": "Rédiger des procédures opérationnelles normalisées pour la réaffectation des ressources des niveaux national et intermédiaire aux niveaux locaux",
                     "type": "input",
                     "line_items": [
@@ -11659,7 +11631,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -11669,12 +11641,12 @@
                           "4"
                         ],
                         "unique_id": "389",
-                        "id": "r.1.1.5.2.1"
+                        "id": "r.1.1.5.1.1"
                       }
                     ]
                   },
                   {
-                    "id": "r.1.1.5.3",
+                    "id": "r.1.1.5.2",
                     "name": "Atelier au niveau national pour examiner les procédures opérationnelles normalisées pour la réaffectation des ressources des niveaux national et intermédiaire aux niveaux locaux",
                     "type": "input",
                     "line_items": [
@@ -11697,7 +11669,7 @@
                           "4"
                         ],
                         "unique_id": "390",
-                        "id": "r.1.1.5.3.1"
+                        "id": "r.1.1.5.2.1"
                       },
                       {
                         "name": "Per diem pour ateliers",
@@ -11719,12 +11691,12 @@
                           "4"
                         ],
                         "unique_id": "391",
-                        "id": "r.1.1.5.3.2"
+                        "id": "r.1.1.5.2.2"
                       }
                     ]
                   },
                   {
-                    "id": "r.1.1.5.4",
+                    "id": "r.1.1.5.3",
                     "name": "Atelier d'examen des procédures opérationnelles normalisées pour la réaffectation des ressources des niveaux national et intermédiaire aux niveaux locaux",
                     "type": "input",
                     "line_items": [
@@ -11747,7 +11719,7 @@
                           "4"
                         ],
                         "unique_id": "392",
-                        "id": "r.1.1.5.4.1"
+                        "id": "r.1.1.5.3.1"
                       },
                       {
                         "name": "Per diem pour ateliers",
@@ -11769,7 +11741,7 @@
                           "4"
                         ],
                         "unique_id": "393",
-                        "id": "r.1.1.5.4.2"
+                        "id": "r.1.1.5.3.2"
                       }
                     ]
                   }
@@ -11780,7 +11752,7 @@
           },
           {
             "id": "r.1.2",
-            "name": "R.1.2 Les risques et les ressources prioritaires en matière de santé publique sont cartographiés et utilisés",
+            "name": "Les risques et les ressources prioritaires en matière de santé publique sont cartographiés et utilisés",
             "score_descriptions": {
               "1": "La cartographie des risques pour la santé publique et des ressources n'est pas faite",
               "2": "Une évaluation nationale des risques a été menée pour identifier les «événements urgents de santé publique» et la cartographie des ressources a été effectuée",
@@ -12111,7 +12083,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "intermediate_1_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -12202,7 +12174,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "1 personnel",
                         "references": "",
                         "where_find_base_cost": "",
@@ -12312,46 +12284,11 @@
               },
               {
                 "id": "r.1.2.5",
-                "name": "Infrastructure pour la distribution des stocks nationaux",
-                "type": "action",
-                "inputs": [
-                  {
-                    "id": "r.1.2.5.1",
-                    "name": "Camion de livraison pour transporter des matériaux de stockage vers un centre de transit ou une installation locale",
-                    "type": "input",
-                    "line_items": [
-                      {
-                        "name": "Camion",
-                        "description": "Un camion de livraison pour le programme de stockage (ou équivalent via flotte partagée ou location) pour transporter des matériaux de stockage vers un centre de transit ou une installation locale",
-                        "category_tag": "Équipement durable",
-                        "function_tag": "Opérations / mise en œuvre",
-                        "base_cost": "gbc.22",
-                        "base_cost_modified": false,
-                        "country_multiplier": "central_area_count",
-                        "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "1 camion",
-                        "custom_multiplier_2": "",
-                        "references": "Présumer que l'infrastructure régionale existante est utilisée une fois que les documents sont distribués au niveau intermédiaire",
-                        "where_find_base_cost": "",
-                        "user_included_in_costing": false,
-                        "type": "line_item",
-                        "score_step_to": [
-                          "3"
-                        ],
-                        "unique_id": "417",
-                        "id": "r.1.2.5.1.1"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "r.1.2.6",
                 "name": "Examiner la cartographie nationale des ressources sur une base annuelle",
                 "type": "action",
                 "inputs": [
                   {
-                    "id": "r.1.2.6.1",
+                    "id": "r.1.2.5.1",
                     "name": "Salaire pour un individu pour coordonner les mises à jour de la cartographie des ressources au niveau national",
                     "type": "input",
                     "line_items": [
@@ -12364,7 +12301,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "1 coordinateur",
                         "references": "",
                         "where_find_base_cost": "",
@@ -12374,12 +12311,12 @@
                           "4"
                         ],
                         "unique_id": "418",
-                        "id": "r.1.2.6.1.1"
+                        "id": "r.1.2.5.1.1"
                       }
                     ]
                   },
                   {
-                    "id": "r.1.2.6.2",
+                    "id": "r.1.2.5.2",
                     "name": "Salaire pour un individu pour coordonner les mises à jour de la cartographie des ressources au niveau intermédiaire",
                     "type": "input",
                     "line_items": [
@@ -12392,7 +12329,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "intermediate_1_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "1 coordinateur",
                         "references": "",
                         "where_find_base_cost": "",
@@ -12402,19 +12339,19 @@
                           "4"
                         ],
                         "unique_id": "419",
-                        "id": "r.1.2.6.2.1"
+                        "id": "r.1.2.5.2.1"
                       }
                     ]
                   }
                 ]
               },
               {
-                "id": "r.1.2.7",
+                "id": "r.1.2.6",
                 "name": "S'assurer que les stocks existants pour intervenir aux événements biologiques, chimiques et radiologiques prioritaires et autres urgences soient accessibles",
                 "type": "action",
                 "inputs": [
                   {
-                    "id": "r.1.2.7.1",
+                    "id": "r.1.2.6.1",
                     "name": "Salaire pour un individu pour superviser la logistique des ressources de stockage",
                     "type": "input",
                     "line_items": [
@@ -12437,7 +12374,7 @@
                           "4"
                         ],
                         "unique_id": "420",
-                        "id": "r.1.2.7.1.1"
+                        "id": "r.1.2.6.1.1"
                       }
                     ]
                   }
@@ -12461,7 +12398,7 @@
         "indicators": [
           {
             "id": "r.2.1",
-            "name": "R.2.1 Capacité d'activer les interventions d'urgence",
+            "name": "Capacité d'activer les interventions d'urgence",
             "score_descriptions": {
               "1": "Aucune procédure identifiée n'a été élaborée pour déterminer quand activer les opérations d'urgence en santé publique",
               "2": "Le point de contact du COU est disponible 24h / 24 et 7j / 7 pour guider l'intervention",
@@ -12492,7 +12429,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "1 employé",
                         "references": "Présumer trois heures de travail",
                         "where_find_base_cost": "",
@@ -12913,7 +12850,7 @@
                         "country_multiplier": "intermediate_1_area_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "5 employés",
-                        "custom_multiplier_2": "0,02 années",
+                        "custom_multiplier_2": "0.02 années",
                         "references": "Présumer une semaine d'activation par année et par zone ; Source: Estimations des coûts du COU du PMSS",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
@@ -12933,7 +12870,7 @@
           },
           {
             "id": "r.2.2",
-            "name": "R.2.2 Procédures et plan opérationel du Centre des Opérations d'Urgence",
+            "name": "Procédures et plan opérationel du Centre des Opérations d'Urgence",
             "score_descriptions": {
               "1": "Aucun plan / procédure du COU pour la structure de gestion des incidents (ou l'équivalent) n'est en place",
               "2": "Les plans / procédures du COU qui décrivent la structure de gestion des incidents (SGI) ou une structure équivalente sont en place; le plan décrit les éléments structurels et opérationnels clés pour les rôles de base (y compris la gestion des incidents ou le commandement, les opérations, la planification, la logistique et les finances)",
@@ -12992,7 +12929,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -13372,7 +13309,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -13400,7 +13337,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -13449,7 +13386,7 @@
           },
           {
             "id": "r.2.3",
-            "name": "R.2.3 Programme d'interventions d'urgence",
+            "name": "Programme d'interventions d'urgence",
             "score_descriptions": {
               "1": "Aucun exercice n'a été complété",
               "2": "Un exercice de simulation a été complété pour tester les systèmes et la prise de décision",
@@ -13884,7 +13821,7 @@
           },
           {
             "id": "r.2.4",
-            "name": "R.2.4 Des procédures de prise en charge de cas sont mises en œuvre pour les dangers relevant au RSI",
+            "name": "Des procédures de prise en charge de cas sont mises en œuvre pour les dangers relevant au RSI",
             "score_descriptions": {
               "1": "Aucune directive de gestion de cas n'est disponible pour les maladies à potentiel épidémique prioritaire",
               "2": "Des directives de gestion de cas sont disponibles pour les maladies à potentiel épidémique prioritaires",
@@ -14342,7 +14279,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
                         "custom_multiplier_2": "1 jour",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -14364,7 +14301,7 @@
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "1 réunion",
                         "custom_multiplier_2": "1 jour",
-                        "references": "",
+                        "references": "Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les séances de formation au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -14396,7 +14333,7 @@
         "indicators": [
           {
             "id": "r.3.1",
-            "name": "R.3.1 Les autorités chargées de la santé publique et de la sécurité (par exemple, l'application de la loi, le contrôle des frontières, les douanes) sont en liaison lors d'un événement biologique suspect ou confirmé",
+            "name": "Les autorités chargées de la santé publique et de la sécurité (par exemple, l'application de la loi, le contrôle des frontières, les douanes) sont en liaison lors d'un événement biologique suspect ou confirmé",
             "score_descriptions": {
               "1": "Il n'existe pas d'antécédents juridiques, de relations, de protocoles, de protocoles d'entente ou d'autres accords entre les autorités de santé publique, de santé animale et de sécurité",
               "2": "Des points de contact et des déclencheurs pour la notification et le partage d'informations ont été identifiés et partagés entre les autorités de santé publique, de santé animale et de sécurité",
@@ -14427,7 +14364,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14553,7 +14490,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14588,7 +14525,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14708,7 +14645,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14821,7 +14758,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14906,7 +14843,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,5 années",
+                        "custom_multiplier_1": "0.5 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -14998,7 +14935,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -15090,7 +15027,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -15301,7 +15238,7 @@
         "indicators": [
           {
             "id": "r.4.1",
-            "name": "R.4.1 Le système est en place pour l'envois et la réception de moyens médicaux lors d'une urgence de santé publique",
+            "name": "Le système est en place pour l'envois et la réception de moyens médicaux lors d'une urgence de santé publique",
             "score_descriptions": {
               "1": "Aucun plan national de contre-mesures n'a été rédigé",
               "2": "Des plans ont été rédigés qui définissent un système d'envoi et de réception de contre-mesures médicales lors d'urgences de santé publique",
@@ -15524,7 +15461,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "population",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,000001 kits de réserve par population",
+                        "custom_multiplier_1": "0.000001 kits de réserve par population",
                         "custom_multiplier_2": "",
                         "references": "",
                         "where_find_base_cost": "",
@@ -15730,7 +15667,7 @@
           },
           {
             "id": "r.4.2",
-            "name": "R.4.2 Le système est en place pour l'envois et la réception de personnels de santé pendant une urgence de santé publique",
+            "name": "Le système est en place pour l'envois et la réception de personnels de santé pendant une urgence de santé publique",
             "score_descriptions": {
               "1": "Aucun plan national de déploiement du personnel n'a été rédigé",
               "2": "Des plans ont été rédigés qui définissent un système pour l'envoi et la réception de personnel de santé pendant les urgences de santé publique",
@@ -16072,7 +16009,7 @@
         "indicators": [
           {
             "id": "r.5.1",
-            "name": "R.5.1 Systèmes de communication des risques (plans, mécanismes, etc.)",
+            "name": "Systèmes de communication des risques (plans, mécanismes, etc.)",
             "score_descriptions": {
               "1": "Pas d'arrangement formel de communication sur les risques du gouvernement",
               "2": "Un arrangement officiel du gouvernement comprenant un plan national de communication sur les risques d'urgence multirisques (révisé au cours des 24 derniers mois) est en place et une équipe de base spécialisée responsable de ce domaine de travail est établie ; mais des lacunes importantes persistent dans la capacité en ressources humaines, les plateformes et ressources pour faire face à une situation d'urgence à grande échelle",
@@ -16566,7 +16503,7 @@
           },
           {
             "id": "r.5.2",
-            "name": "R.5.2 Communication et coordination internes et avec les partenaires",
+            "name": "Communication et coordination internes et avec les partenaires",
             "score_descriptions": {
               "1": "Pas de plateforme de coordination et de mécanismes de communication interne et de partenariat pour impliquer les principales parties prenantes nationales, intermédiaires, locales et internationales (y compris les agents de santé)",
               "2": "Coordination faible de communication ad hoc telle que des réunions avec certains partenaires et / ou un partage d'informations irrégulier",
@@ -16798,7 +16735,7 @@
           },
           {
             "id": "r.5.3",
-            "name": "R.5.3 Communication publique",
+            "name": "Communication publique",
             "score_descriptions": {
               "1": "Pas d'unité centrale ou de lieu pour la communication publique, réactive, pour une sensibilisation ad hoc des médias",
               "2": "Une unité de communication publique ou équipe est existante, un porte-parole du gouvernement identifié et formé, des procédures de communication publique en place",
@@ -17037,7 +16974,7 @@
           },
           {
             "id": "r.5.4",
-            "name": "R.5.4 Communication pour faire participer les communautés touchées",
+            "name": "Communication pour faire participer les communautés touchées",
             "score_descriptions": {
               "1": "Aucun arrangement n'existe pour engager systématiquement les populations au niveau communautaire en cas d'urgence. Il peut y avoir une mobilisation sociale, une promotion de la santé ou un engagement communautaire sur les risques pour la santé maternelle, la vaccination, le paludisme, la tuberculose et le VIH / SIDA, la poliomyélite, les maladies tropicales négligées et d'autres programmes de développement, mais ils ne sont pas systématiquement utilisés lors d'urgences",
               "2": "Le système d'engagement au niveau communautaire est semi-formé avec la cartographie des processus, programmes, partenaires et parties prenantes existants. La mobilisation sociale, la communication sur le changement de comportement et l'engagement communautaire sont inclus dans la stratégie nationale de communication sur les risques dans le contexte des urgences sanitaires. Certaines parties prenantes clés dans ce domaine sont identifiées au niveau national et intermédiaire (provincial / régional)",
@@ -17242,8 +17179,8 @@
                         "country_multiplier": "intermediate_1_and_2_count",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "2 ateliers",
-                        "custom_multiplier_2": "0,5 jours",
-                        "references": "Présumer 2 demi-journées, de petits ateliers dans chaque zone intermédiaire",
+                        "custom_multiplier_2": "0.5 jours",
+                        "references": "Présumer 2 demi-journées, de petits ateliers dans chaque zone intermédiaire. Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les ateliers au niveau intermédiaire seulement.",
                         "where_find_base_cost": "Coûts de conférence: déterminer les coûts par personne pour un atelier d'une journée basé sur les tarifs des conférences locales (rafraîchissements, papeterie, accessoires et sale) au niveau INTERMÉDIAIRE. Multiplier par le nombre de participants pour déterminer le coût par atelier, et ajuster le multiplicateur de base (nombre d'ateliers) selon les besoins.",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -17264,8 +17201,8 @@
                         "staff_multiplier": "gsm.0",
                         "staff_multiplier_modified": false,
                         "custom_multiplier_1": "2 ateliers",
-                        "custom_multiplier_2": "0,5 jours",
-                        "references": "Présumer 2 demi-journées, de petits ateliers dans chaque zone intermédiaire",
+                        "custom_multiplier_2": "0.5 jours",
+                        "references": "Présumer 2 demi-journées, de petits ateliers dans chaque zone intermédiaire. Si le nombre de zones intermédiaires 2 est présumé être nul ou le nombre de zones intermédiaires 2 n'est pas spécifié, calculer les coûts en présumant les ateliers au niveau intermédiaire seulement.",
                         "where_find_base_cost": "",
                         "user_included_in_costing": false,
                         "type": "line_item",
@@ -17341,7 +17278,7 @@
           },
           {
             "id": "r.5.5",
-            "name": "R.5.5 Écoute dynamique et gestion des rumeurs",
+            "name": "Écoute dynamique et gestion des rumeurs",
             "score_descriptions": {
               "1": "Aucun système n'existe pour identifier ou répondre aux rumeurs et à la désinformation; ni pour comprendre et analyser les préoccupations et les craintes du public",
               "2": "Systèmes ad hoc pour l'écoute et la gestion des rumeurs, y compris par le biais des agents de santé, mais pas entièrement utilisés pour guider l'intervention",
@@ -17651,7 +17588,7 @@
         "indicators": [
           {
             "id": "poe.1",
-            "name": "PoE.1 Les capacités de routine sont établies aux points d'entrée",
+            "name": "Les capacités de routine sont établies aux points d'entrée",
             "score_descriptions": {
               "1": "Pas de capacité au Points d'Entrée pour des services médicaux appropriés",
               "2": "Les Points d'Entrée désignés ont accès à des services médicaux appropriés, y compris des services de diagnostic pour une évaluation et des soins rapides des voyageurs malades, ainsi que du personnel, de l'équipement et des locaux adéquats (Annexe 1B, 1a)",
@@ -18215,7 +18152,7 @@
           },
           {
             "id": "poe.2",
-            "name": "PoE.2 Intervention efficace en santé publique aux points d'entrée",
+            "name": "Intervention efficace en santé publique aux points d'entrée",
             "score_descriptions": {
               "1": "Il n'existe aucun plan national d'urgence en matière de santé publique pour intervenir aux urgences sanitaires survenant aux points d'entrée.",
               "2": "Plan national d'urgence en santé publique en place pour répondre aux urgences sanitaires se produisant aux points d'entrée, intégré avec les autres plans d'intervention de santé publique, couvrant tous les secteurs et services pertinents aux Points d'Entrée développés et diffusés à toutes les parties prenantes clés",
@@ -18295,7 +18232,7 @@
                         "base_cost_modified": false,
                         "country_multiplier": "central_area_count",
                         "staff_multiplier_modified": false,
-                        "custom_multiplier_1": "0,25 années",
+                        "custom_multiplier_1": "0.25 années",
                         "custom_multiplier_2": "",
                         "references": "Présumer trois mois de travail d'un employé salarié à temps plein",
                         "where_find_base_cost": "",
@@ -18846,7 +18783,7 @@
         "indicators": [
           {
             "id": "ce.1",
-            "name": "CE.1 Mécanismes fonctionnels en place pour la détection et la riposte à des événements/urgences\nd’origine chimique",
+            "name": "Mécanismes fonctionnels en place pour la détection et la riposte à des événements/urgences",
             "score_descriptions": {
               "1": "Aucun mécanisme en place",
               "2": "Des lignes directrices ou des manuels sur la surveillance, l'évaluation et la gestion des événements chimiques, l'intoxication et l'empoisonnement sont disponibles",
@@ -19613,7 +19550,7 @@
           },
           {
             "id": "ce.2",
-            "name": "CE.2 Un environnement favorable est en place pour la gestion des événements chimiques",
+            "name": "Un environnement favorable est en place pour la gestion des événements chimiques",
             "score_descriptions": {
               "1": "Les politiques ou plans nationaux ou la législation pour l'alerte et l'intervention à la surveillance des événements chimiques n'existent pas",
               "2": "Il existe des politiques ou des plans nationaux ou une législation pour l'alerte et la réponse à la surveillance des événements chimiques",
@@ -19793,7 +19730,7 @@
         "indicators": [
           {
             "id": "re.1",
-            "name": "RE.1 Mécanismes fonctionnels en place pour la détection et la riposte aux situations\nd’urgence radiologique et nucléaire.",
+            "name": "Mécanismes fonctionnels en place pour la détection et la riposte aux situations",
             "score_descriptions": {
               "1": "Pas de mécanisme de coordination et de communication entre les autorités nationales responsables des événements radiologiques et nucléaires avec le ministère de la santé et / ou le PFN du RSI",
               "2": "Les autorités nationales responsables des événements radiologiques et nucléaires ont un point focal désigné pour la coordination et la communication avec le ministère de la santé et / ou le point focal national RSI",
@@ -20523,7 +20460,7 @@
           },
           {
             "id": "re.2",
-            "name": "RE.2 Un environnement favorable est en place pour la gestion des urgences radiologiques",
+            "name": "Un environnement favorable est en place pour la gestion des urgences radiologiques",
             "score_descriptions": {
               "1": "Pas de mécanisme de coordination et de communication entre les autorités nationales responsables des événements radiologiques et nucléaires avec le ministère de la santé et / ou le PFN du RSI",
               "2": "Les autorités nationales responsables des événements radiologiques et nucléaires ont un point focal désigné pour la coordination et la communication avec le ministère de la santé et / ou le point focal national RSI",
