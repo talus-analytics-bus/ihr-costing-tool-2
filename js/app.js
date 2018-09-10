@@ -271,7 +271,7 @@ const App = {};
 	}
 
 	App.getNeededLineItems = (lineItems, score) => {
-		if (!score) return lineItems;
+		// if (!score) return lineItems;
 		if (User.targetScoreType === 'step') {
 			return lineItems.filter((li) => {
 				return li.score_step_to.includes(String(+score + 1));
@@ -287,6 +287,17 @@ const App = {};
 		}
 		return [];
 	}
+
+	/**
+	 * Returns TRUE if the line item is needed to achieve the target
+	 * score, and FALSE otherwise (including if current/target score(s) 
+	 * haven't been set yet)
+	 * @param  {object} lineItem The line item from the JEE Tree
+	 * @return {bool}          TRUE if needed, FALSE otherwise
+	 */
+	App.needLineItem = (lineItem) => {
+
+	};
 
 	// gets the score in the user data for the indicator specified
 	App.getIndicatorScore = (indId) => {
@@ -355,18 +366,36 @@ const App = {};
 					ind.capitalCost = 0;
 					ind.recurringCost = 0;
 
+					// action
 					ind.actions.forEach((a) => {
 						a.startupCost = 0;
 						a.capitalCost = 0;
 						a.recurringCost = 0;
+						// console.log('ind');
+						// console.log(ind);
 
+						// input
 						a.inputs.forEach((input) => {
 							input.startupCost = 0;
 							input.capitalCost = 0;
 							input.recurringCost = 0;
 
-							input.line_items.forEach((li) => {
+							const neededLineItems = App.getNeededLineItems(input.line_items, ind.score)
+							if (input.id === 'd.1.1.1.1') {
+								console.log('neededLineItems');
+								console.log(neededLineItems);
+							}
+							// console.log('neededLineItems');
+							// console.log(neededLineItems);
+							// console.log('ind.score');
+							// console.log(ind.score);
+							neededLineItems.forEach((li) => {
+							// input.line_items.forEach((li) => {
+								// if line item is not required to reach target score given
+								// user's current score, skip it
+								
 								li.cost = App.getLineItemCost(li, exchangeRate);
+								console.log(li.cost)
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
