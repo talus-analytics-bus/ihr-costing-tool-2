@@ -380,6 +380,7 @@ const App = {};
 							input.capitalCost = 0;
 							input.recurringCost = 0;
 
+							input.line_items.forEach(li => li.cost = App.getLineItemCost(li, exchangeRate));
 							const neededLineItems = App.getNeededLineItems(input.line_items, ind.score)
 							if (input.id === 'd.1.1.1.1') {
 								console.log('neededLineItems');
@@ -394,8 +395,8 @@ const App = {};
 								// if line item is not required to reach target score given
 								// user's current score, skip it
 								
-								li.cost = App.getLineItemCost(li, exchangeRate);
-								console.log(li.cost)
+								// li.cost = App.getLineItemCost(li, exchangeRate);
+								// console.log(li.cost)
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
