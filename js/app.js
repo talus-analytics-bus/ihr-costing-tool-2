@@ -382,21 +382,7 @@ const App = {};
 
 							input.line_items.forEach(li => li.cost = App.getLineItemCost(li, exchangeRate));
 							const neededLineItems = App.getNeededLineItems(input.line_items, ind.score)
-							if (input.id === 'd.1.1.1.1') {
-								console.log('neededLineItems');
-								console.log(neededLineItems);
-							}
-							// console.log('neededLineItems');
-							// console.log(neededLineItems);
-							// console.log('ind.score');
-							// console.log(ind.score);
 							neededLineItems.forEach((li) => {
-							// input.line_items.forEach((li) => {
-								// if line item is not required to reach target score given
-								// user's current score, skip it
-								
-								// li.cost = App.getLineItemCost(li, exchangeRate);
-								// console.log(li.cost)
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -419,11 +405,12 @@ const App = {};
 							}
 						});
 
-						if (App.isActionComplete(a, ind.score)) {
+						// if (App.isActionComplete(a, ind.score)) {
+						// if (App.isIndicatorComplete(ind) && App.isActionComplete(a, ind.score)) {
 							ind.startupCost += a.startupCost;
 							ind.capitalCost += a.capitalCost;
 							ind.recurringCost += a.recurringCost;
-						}
+						// }
 					});
 					cap.startupCost += ind.startupCost;
 					cap.capitalCost += ind.capitalCost;
