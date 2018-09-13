@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<title>Outil d'&#233;valuation des co&#251;ts du RSI</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="img/favicon.ico">
+
+	<!-- ----- CSS Files ----- -->
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">
+	<link href="//fonts.googleapis.com/css?family=Raleway:600,400" rel="stylesheet">
+	<link href="css/tether.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-multiselect.css" rel="stylesheet">
+	<link href="css/datatables.min.css" rel="stylesheet">
+	<link href="css/nprogress.min.css" rel="stylesheet">
+	<link href="css/tooltipster.bundle.min.css" rel="stylesheet">
+	<link href="css/tooltipster-sideTip-shadow.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+	<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="//unpkg.com/leaflet@1.1.0/dist/leaflet.css" integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw==" crossorigin="">
+</head>
+<body>
+	<!-- App logo and name -->
+	<div class="navbar-logo-container">
+		<img class="logo" src="img/logo-app.png" alt="IHR Costing Tool">
+		<div class="tool-name">Outil d'&#233;valuation des co&#251;ts du RSI</div>
+	</div>
+	<!-- Nav bar -->
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded ihr-navbar">
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item" page="">
+					<a class="nav-link">Accueil</a>
+				</li>
+				<li class="nav-item" page="country">
+					<a class="nav-link">Choisir un pays</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#201;valuation</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" page="overview">Instructions et Upload</a>
+						<a class="dropdown-item" page="scores">Entrer l'&#233;valuation</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Co&#251;t</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" page="costsinstructions">Instructions</a>
+						<a class="dropdown-item" page="costs/population">D&#233;finir les valeurs implicites</a>
+						<a class="dropdown-item" page="costs/p-1/1">Entrer les co&#251;ts</a>
+					</div>
+				</li>
+				<li class="nav-item" page="results">
+					<a class="nav-link">R&#233;sultats</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item" page="background">
+					<a class="nav-link">Contexte</a>
+				</li>
+				<li class="nav-item" page="contact">
+					<a class="nav-link">Contactez-nous</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<!-- Page content -->
+	<div id="page-content"></div>
+
+	<!-- Footer -->
+	<div class="footer">
+		<table>
+			<tbody>
+				<tr>
+					<th>
+						<a href="https://www.georgetown.edu/" target="_blank">
+							<img alt="Georgetown University" class="logo-georgetown" src="img/logo-georgetown.png">
+						</a>
+					</th>
+					<th>
+						<span class="built-by">Construit par</span>
+					</th>
+					<th>
+						<a href="http://www.talusanalytics.com" target="_blank">
+							<img alt="Talus Analytics" class="logo-talus" src="img/logo-talus.png">
+						</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<!-- TEMPLATES -->
+	<!-- Home page tempate -->
+	<script id="home-template-fr" type="text/x-handlebars-template-fr"><div class="home-container container container-text">
+			<div class="home-header"><h1>Bienvenue dans l'outil d'&#233;valuation des co&#251;ts du RSI</h1></div>
+			<div class="home-image"></div>
+			<div class="home-body">
+				<p>L'outil d'&#233;valuation des co&#251;ts du RSI aide les utilisateurs &#224; g&#233;n&#233;rer et r&#233;viser les estimations de co&#251;ts pour soutenir la planification pratique du d&#233;veloppement durable des capacit&#233;s afin de pr&#233;venir, d&#233;tecter et riposter aux menaces de sant&#233; publique, telles que d&#233;finies par le R&#232;glement sanitaire international (RSI).</p>
+				<p>Cet outil fournit un cadre pour calculer les co&#251;ts de mise en &#339;uvre et d'am&#233;lioration des capacit&#233;s de base du RSI. Les co&#251;ts sont estim&#233;s en appliquant des donn&#233;es d'entr&#233;e des utilisateurs sp&#233;cifiques aux pays aux calculs de co&#251;ts &#233;labor&#233;s en utilisant les meilleures pratiques pour atteindre les normes techniques sp&#233;cifi&#233;es dans l'outil d'&#233;valuation externe conjointe (EEC).</p>
+				<p class="home-instructions">Remarque: Cet outil est con&#231;u pour &#234;tre utilis&#233; dans Google Chrome ou Mozilla Firefox.</p>
+			</div>
+			<div class="enter-button-container">
+				<button type="button" class="btn btn-primary enter-site">Commencer</button>
+			</div>
+		</div>
+	</script>
+
+	<script id="country-template-fr" type="text/x-handlebars-template-fr"><div class="country-container container">
+			<h1>Choisir le pays</h1>
+			<p>Choisir votre pays en utilisant la carte, la liste d&#233;roulante ou la fonction de recherche. Ensuite, cliquer sur "Continuer l'&#233;valuation" pour commencer.</p>
+			<div class="country-control-container row">
+				<div class="col-6">
+					<div class="country-label country-country-label">Choisir un pays:</div>
+					<select class="country-dropdown form-control"></select>
+				</div>
+				<div class="col-6">
+					<div class="country-label">Rechercher un pays:</div>
+					<div class="country-search-container">
+						<input class="country-search-input form-control" placeholder="enter country name (e.g. Albania)...">
+						<div class="live-search-results-container">
+							<div class="live-search-no-results-text">Aucun r&#233;sultat trouv&#233;</div>
+							<div class="live-search-results-contents"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="map-container">
+				<div id="leaflet-map"></div>
+			</div>
+			<div class="next-button-container">
+				<button type="button" class="btn btn-primary go-to-assessment-button">Continuer l'&#233;valuation</button>
+			</div>
+		</div>
+	</script>
+
+
+	<!-- Overview/Assessment Instructions page tempate -->
+	<script id="overview-template-fr" type="text/x-handlebars-template-fr"><div class="overview-container container container-text">
+			<h1>Instructions d'&#233;valuation</h1>
+			<div>
+				<p><b>** L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas de donn&#233;es une fois que vous avez quitt&#233; le site Web. ** Pour enregistrer les entr&#233;es de score et d'&#233;tablissement des co&#251;ts et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Revenir &#224; cette page et suivre les instructions de upload de la session pr&#233;c&#233;dente pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b></p>
+				<p>Les scores d'&#233;valuation actuels, mesur&#233;s par l'outil d'&#233;valuation externe conjointe (EEC), sont n&#233;cessaires en tant que premi&#232;re &#233;tape de l'utilisation de l'outil d'&#233;valuation des co&#251;ts du RSI. Pour les pays qui ont d&#233;j&#224; termin&#233; le processus EEC formel, les scores d'&#233;valuation sont automatiquement remplis dans l'outil, bien que les utilisateurs puissent choisir de modifier ces scores pr&#233;-remplis. Pour effectuer une &#233;valuation pour un pays qui n'a pas encore termin&#233; une &#233;valuation EEC formelle, choisir parmi les options ci-dessous pour compl&#233;ter la saisie du score d'&#233;valuation.<a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank"></a></p>
+			</div>
+			<div class="overview-section">
+				<h2>Uploader la session pr&#233;c&#233;dente</h2>
+				<p>Si vous avez d&#233;j&#224; utilis&#233; l'outil d'&#233;valuation des co&#251;ts du RSI et export&#233; les r&#233;sultats vers votre ordinateur, suivez les &#233;tapes ci-dessous pour uploader les r&#233;sultats entr&#233;s pr&#233;c&#233;demment et les entr&#233;es de co&#251;ts.</p>
+				<ul>
+					<li>S&#233;lectionner un fichier de donn&#233;es RSI (se termine par .rsi) en utilisant le bouton ci-dessous. Vous verrez "T&#233;l&#233;chargement r&#233;ussi" une fois le t&#233;l&#233;chargement du fichier termin&#233;. Pour vous aider &#224; localiser ce fichier, notez que lors de son exportation &#224; partir de la page de r&#233;sultats, ce fichier a &#233;t&#233; stock&#233; dans le dossier de t&#233;l&#233;chargement utilis&#233; par votre navigateur Web.</li>
+					<li>Cliquez sur "Continuer vers les scores" pour revoir et entrer des scores suppl&#233;mentaires, au besoin.</li>
+</ul>
+				<div class="upload-button-container">
+				<input id="prior-session" class="input-prior-session" type="file">
+				<button type="button" class="btn btn-secondary btn-prior-session">S&#233;lectionner le fichier de la session pr&#233;c&#233;dente</button>
+				</div>
+			</div>
+			<div class="overview-section">
+				<h2>uploader les scores</h2>
+				<p>
+					<a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank"></a>
+
+					<img class="jee-tool-img" src="img/question-mark.png">
+				</p>
+				<ul>
+					<li><a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank"></a></li>
+					<li>S&#233;lectionner le fichier contenant les scores en utilisant le bouton ci-dessous. Vous verrez "Upload r&#233;ussi" une fois le t&#233;l&#233;chargement du fichier termin&#233;.</li>
+					<li>Cliquer sur "Continuer vers les scores" pour v&#233;rifier les scores upload&#233;s.</li>
+				</ul>
+				<div class="upload-button-container">
+					<a class="export-button-link" href="export/IHR%20Costing%20Tool%20-%20JEE%20Score%20Input%20Template.xlsx"><button type="button" class="btn btn-secondary">T&#233;l&#233;charger le rapport de score vierge</button></a>
+					<button type="button" class="btn btn-secondary btn-score-file">S&#233;lectionner le fichier de scores</button>
+					<input id="score-file-upload" class="input-score-file" type="file">
+				</div>
+			</div>
+			<div class="overview-section">
+				<h2>T&#233;l&#233;charger le mod&#232;le vierge</h2>
+				<p>Pour travailler hors ligne, vous pouvez t&#233;l&#233;charger un mod&#232;le vierge contenant tous les calculs de co&#251;ts et entrer les donn&#233;es d'&#233;tablissement des co&#251;ts dans un format de feuille de calcul. Vous pouvez utiliser cette feuille de calcul sous forme de liste pour identifier et collecter les informations n&#233;cessaires sur les co&#251;ts avant de retourner travailler dans l'outil en ligne. Apr&#232;s l'enregistrement des donn&#233;es dans le mod&#232;le de feuille de calcul, vous devrez retourner sur ce site Web et saisir manuellement les notes et les co&#251;ts pour utiliser le site Web de l'outil d'&#233;tablissement des co&#251;ts du RSI.</p>
+				<div class="upload-button-container">
+				<button type="button" class="btn btn-secondary btn-blank-template-fr">T&#233;l&#233;charger le mod&#232;le vierge</button>
+				</div>
+			</div>
+			<div class="overview-section">
+				<h2>Entr&#233;e de score manuelle</h2>
+				<p>Pour entrer manuellement les scores &#224; partir d'un mod&#232;le compl&#233;t&#233;, ou marquer un rapport dans n'importe quel format, cliquer sur "Continuer vers les scores" pour commencer l'entr&#233;e de score.</p>
+				<div class="next-button-container">
+					<button type="button" class="next-button btn btn-primary">Continuer vers les scores</button>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<!-- Scores page tempate -->
+	<script id="scores-template-fr" type="text/x-handlebars-template-fr"><div class="scores-container container container-wide">
+			<div class="block-link-container"></div>
+			<div class="block-container input-block-container">
+				<div class="block">
+					<h1>&#201;valuation</h1>
+					<div class="capacity-name-container">
+						<span class="capacity-name"></span>
+						<img class="capacity-tooltip-img" src="img/question-mark.png">
+					</div>
+					<div class="score-instructions instructions">
+						<p>Choisissez une note pour chaque indicateur ci-dessous en fonction de la capacit&#233; d'&#233;valuation actuelle de l'EEC. Tous les scores pr&#233;c&#233;demment t&#233;l&#233;charg&#233;s sont pr&#233;-remplis pour examen.</p>
+						<p>Utiliser les fl&#232;ches en bas de la page pour se d&#233;placer entre les indicateurs. Utiliser la barre de navigation de gauche pour suivre la progression des scores d'&#233;valuation EEC et passer rapidement d'une capacit&#233; &#224; l'autre.</p>
+					</div>
+					<div class="capacity-description-container"></div>
+					<div class="indicator-progress-container">
+						<h4 class="indicator-progress"></h4>
+						<div class="indicator-container"></div>
+					</div>
+					<h5 class="indicator-description"></h5>
+					<div class="score-picker-container">
+						<table class="score-picker-table table table-condensed">
+							<thead>
+								<tr>
+									<td></td>
+									<td>Scores</td>
+									<td>Descriptions des scores</td>
+									<td></td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class="nav-buttons-container">
+						<div class="btn-row row">
+							<div class="btn-col col-sm-12 center">
+								<button type="button" class="btn btn-secondary previous-score"><i class="material-icons"></i></button>
+								<button type="button" class="btn btn-primary next-score"><i class="material-icons"></i></button>
+							</div>
+						</div>
+						<div class="start-button-container center margin-top-20">
+							<button type="button" class="btn btn-secondary go-to-costing-button">Aller au calcul de co&#251;ts</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+
+	<!-- Cost Instructions page tempate -->
+	<script id="costs-instructions-template-fr" type="text/x-handlebars-template-fr"><div class="costs-instructions-container container container-text">
+			<div>
+				<h1>Instructions d'&#233;tablissement des co&#251;ts</h1>
+				<p><b>L'outil d'&#233;valuation des co&#251;ts du RSI ne stocke pas les donn&#233;es apr&#232;s votre d&#233;part du site Web. Pour enregistrer les entr&#233;es de score et de co&#251;t et continuer &#224; travailler ult&#233;rieurement, t&#233;l&#233;charger le fichier de donn&#233;es RSI &#224; partir de la page de r&#233;sultats. Retourner aux instructions d'&#233;valuation et &#224; la page de Upload pour uploader les donn&#233;es stock&#233;es et les donn&#233;es de co&#251;ts.</b></p>
+				<p>Les co&#251;ts associ&#233;s &#224; la mise en &#339;uvre du R&#232;glement Sanitaire International sont d&#233;termin&#233;s par le score cible qu'un pays souhaite atteindre, la taille de la population, le nombre de divisions g&#233;opolitiques et l'infrastructure de sant&#233; publique. Les co&#251;ts sont calcul&#233;s uniquement jusqu'au niveau 4 ; les co&#251;ts r&#233;currents ne sont calcul&#233;s que pour les nouvelles capacit&#233;s.</p>
+			</div>
+			<div class="instructions-section">
+				<h2>Pr&#233;sentation du processus</h2>
+				<p>L'&#233;tablissement des co&#251;ts comprend trois &#233;tapes majeures:</p>
+				<ol>
+					<li>Sur cette page, choisir une des approches ci-dessous pour d&#233;finir les scores cibles. Cela d&#233;termine les actions qui doivent &#234;tre chiffr&#233;es pour passer du niveau de capacit&#233; actuel au niveau de capacit&#233; cible pour chaque indicateur.</li>
+					<li>Cliquer sur "D&#233;marrer l'&#233;tablissement des co&#251;ts" pour passer &#224; la page suivante et entrer les d&#233;tails sp&#233;cifiques au pays, puis passer en revue et personnaliser une liste d'hypoth&#232;ses de co&#251;ts utilis&#233;es dans les calculs de co&#251;ts.</li>
+					<li>Apr&#232;s avoir entr&#233; ces donn&#233;es, l'outil fournit des estimations des co&#251;ts pour les actions sp&#233;cifiques n&#233;cessaires pour atteindre le score cible choisi pour chaque indicateur.<b>Les co&#251;ts estim&#233;s sont fournis &#224; titre de r&#233;f&#233;rence seulement. R&#233;viser et mettre &#224; jour chaque co&#251;t en utilisant les meilleures informations disponibles sp&#233;cifiques au pays. Tous les co&#251;ts non applicables peuvent &#234;tre exclus de l'analyse en entrant une valeur de co&#251;t nulle.</b>
+
+					</li>
+				</ol>
+			</div>
+			<div class="instructions-section">
+				<h2>S&#233;lectionner le score cible</h2>
+				<p class="target-score-description">Choisir une m&#233;thode pour d&#233;finir les scores cibles.</p>
+				<div class="target-score-section">
+					<div class="target-score-option" ind="target">
+						<input type="radio" checked>
+						<span>D&#233;finir un score cible de</span>
+						<div class="color-bar"></div>
+						<select class="target-score-select form-control">
+							<option value="2"></option>
+							<option value="3"></option>
+							<option value="4" selected></option>
+						</select>
+						<span>pour chaque indicateur</span>
+					</div>
+					<div class="target-score-option" ind="step">
+						<input type="radio">
+						<span>D&#233;finir le score cible 1 point plus &#233;lev&#233; pour chaque indicateur</span>
+					</div>
+				</div>
+			</div>
+			<div class="instructions-section">
+				<h2>T&#233;l&#233;charger le mod&#232;le vierge</h2>
+				<p>Pour travailler hors ligne, vous pouvez t&#233;l&#233;charger un mod&#232;le vierge contenant tous les calculs de co&#251;ts et entrer les donn&#233;es d'&#233;tablissement des co&#251;ts dans un format de feuille de calcul. Vous pouvez utiliser cette feuille de calcul sous forme de liste pour identifier et collecter les informations n&#233;cessaires sur les co&#251;ts avant de retourner travailler dans l'outil en ligne. Apr&#232;s l'enregistrement des donn&#233;es dans le mod&#232;le de feuille de calcul, vous devrez retourner sur ce site Web et saisir manuellement les notes et les co&#251;ts pour utiliser le site Web de l'outil d'&#233;tablissement des co&#251;ts du RSI.</p>
+				<div class="upload-button-container">
+				<button type="button" class="btn btn-secondary btn-blank-template-fr">T&#233;l&#233;charger le mod&#232;le vierge</button>
+				</div>
+			</div>
+			<div class="start-button-container">
+				<button type="button" class="btn btn-primary costs-instructions-start">D&#233;marrer le calcul des co&#251;ts</button>
+			</div>
+		</div>
+	</script>
+	
+	<!-- Who Am I? page tempate -->
+	<script id="who-template-fr" type="text/x-handlebars-template-fr"><div class="container container-wide who-container">
+			<!-- TODO add tabs (block links) -->
+			<div class="block-link-container block-link-costing"></div>
+			<div class="block-container input-block-container">
+			
+				<!--The population block -->
+				<div class="block population-block no-reset">
+					<div class="block-title">
+						<h1>Population du pays</h1>
+					</div>
+					<div class="block-content">
+						<div class="population-section">
+							<div class="block-description">La population totale estim&#233;e par d&#233;faut pour le pays s&#233;lectionn&#233; a &#233;t&#233; d&#233;termin&#233;e sur la base des estimations de 2018 tir&#233;es du World Population Prospects des Nations Unies. Pour modifier l'estimation, changer la population ci-dessous.<a target="_blank" href="https://esa.un.org/unpd/wpp/Download/Standard/ASCII/"></a>
+								
+							</div>
+							<div class="estimated-population">
+								<div><b>Population totale estim&#233;e:</b></div>
+								<div class="input-container">
+									<input id="population" class="population-input form-control">
+									<span>Personnes</span>
+								</div>
+								<div class="default-pop-text default-text"></div>
+							</div>
+						</div>
+						<div class="currency-section">
+							<h1>Devise</h1>
+							<div class="block-description">S&#233;lectionner une devise dans la liste d&#233;roulante &#224; utiliser pour l'&#233;tablissement des co&#251;ts.</div>
+							<div>
+								<div class="currency-select-label"><b>Devise pour le calcul des co&#251;ts:</b></div>
+								<div class="input-container">
+									<select class="currency-select form-control"></select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="next-button-container">
+						<button type="button" class="btn btn-primary next-button">Suivant</button>
+					</div>
+				</div>
+
+				<!-- Geographical Divisions -->
+				<div class="block country-details-block no-reset">
+					<div class="block-title">
+						<h1>Organisation administrative</h1>
+					</div>
+					<div class="block-content">
+						<div class="block-description">Ces entr&#233;es d&#233;crivent comment le pays est organis&#233; par zones g&#233;opolitiques. Les entr&#233;es interm&#233;diaires et locaux sont requises et la deuxi&#232;me zone interm&#233;diaire est facultative. Les d&#233;finitions et les r&#233;f&#233;rences sont fournies sur la page Contexte.<a href="#background/definitions"></a>
+						</div>
+						<table class="geo-division-table">
+							<tbody></tbody>
+						</table>
+					</div>
+
+					<!-- Public Health Information -->
+					<div class="phi-section">
+						<div class="block-title">
+							<h1>Infrastructure de sant&#233; publique</h1>
+						</div>
+						<div class="block-content">
+							<div class="block-description">Les informations de sant&#233; publique par d&#233;faut d&#233;crivent le nombre estim&#233; d'&#233;tablissements de sant&#233; publics participant aux activit&#233;s li&#233;es au RSI et le nombre estim&#233; d'agents de sant&#233; communautaires dans le pays. Ces entr&#233;es sont obligatoires. Pour modifier les param&#232;tres par d&#233;faut, modifier les d&#233;tails ci-dessous. Les d&#233;finitions et les r&#233;f&#233;rences sont fournies sur la page Contexte.<a href="#background/definitions"></a>
+							</div>
+							<table class="ph-table">
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="next-button-container">
+						<button type="button" class="btn btn-primary next-button">Suivant</button>
+					</div>
+				</div>
+
+				<div class="block default-costs-block no-reset">
+					<div class="block-title">
+						<h1>Hypoth&#232;ses de co&#251;ts</h1>
+					</div>
+					<div class="block-content">
+						<div class="block-description">Les valeurs de co&#251;t par d&#233;faut, ou implicite, pour les &#233;l&#233;ments fr&#233;quemment &#233;valu&#233;s sont list&#233;es ci-dessous. V&#233;rifier les valeurs par d&#233;faut pour les co&#251;ts et modifier-les au besoin. La modification de ces valeurs par d&#233;faut est facultative. Les d&#233;finitions et les r&#233;f&#233;rences sont fournies sur la page Contexte.<a href="#background/definitions"></a>
+						</div>
+						<div class="dv-container"></div>
+					</div>
+					<div class="next-button-container">
+						<button type="button" class="btn btn-primary proceed-button">Aller &#224; Calcul des co&#251;ts</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<!-- Costs page tempate -->
+	<script id="costs-template-fr" type="text/x-handlebars-template-fr"><div class="costs-container container container-wide">
+			<div class="block-link-container"></div>
+			<div class="block-container input-block-container">
+				<div class="block">
+					<h1>Co&#251;t</h1>
+					<div class="capacity-name-container">
+						<span class="capacity-name"></span>
+						<img class="capacity-tooltip-img" src="img/question-mark.png">
+					</div>
+					<div class="costing-instructions instructions">Pour les capacit&#233;s suivantes, examiner les co&#251;ts pour chaque indicateur. Les estimations de co&#251;ts pr&#233;remplies sont fournies &#224; titre de r&#233;f&#233;rence. Vous pouvez modifier n'importe quel co&#251;t en utilisant les meilleures informations disponibles sp&#233;cifiques au pays. Tous les co&#251;ts non applicables peuvent &#234;tre exclus de l'analyse en entrant une valeur de co&#251;t nulle. Ouvrir la description ci-dessous pour plus de d&#233;tails.</div>
+					<div class="capacity-description-container"></div>
+					<div class="indicator-progress-container">
+						<h4 class="indicator-progress"></h4>
+						<div class="indicator-container"></div>
+					</div>
+					<div class="item-section">
+						<div class="indicator-description-container">
+							<b>Indicateur:</b>
+							<div class="indicator-description"></div>
+						</div>
+						<div class="action-description-container">
+							<b>Action:</b>
+							<div class="action-description"></div>
+						</div>
+					</div>
+					<div class="nav-buttons-container">
+						<div class="btn-row row">
+							<div class="btn-col col-sm-12 center">
+								<button type="button" class="btn btn-secondary previous-cost"><i class="material-icons"></i></button>
+								<button type="button" class="btn btn-primary next-cost"><i class="material-icons"></i></button>
+							</div>
+						</div>
+						<div class="start-button-container center margin-top-20">
+							<button type="button" class="btn btn-secondary go-to-results-button">Aller aux r&#233;sultats</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<!-- Results page tempate -->
+	<script id="results-template-fr" type="text/x-handlebars-template-fr"><div class="results-container container">
+			<h1>R&#233;sultats</h1>
+			<div class="results-empty-content">Aucun indicateur n'a &#233;t&#233; compl&#232;tement not&#233; et chiffr&#233; pour le moment. Cliquer sur _ici_ pour aller &#224; la page de notation.<u>pour aller &#224; la page de notation.</u>
+			</div>
+			<div class="results-content">
+				<div class="results-button-container">
+					<button class="view-table-button btn btn-secondary">Afficher le tableau de donn&#233;es</button>
+					<button class="view-export-button btn btn-secondary">Exporter des donn&#233;es</button>
+				</div>
+				<div class="results-instructions results-section">
+					<div class="results-section-title">Instructions</div>
+					<p>Les r&#233;sultats ci-dessous comprennent ** des 48**  indicateurs totaux avec notation et co&#251;t pour ** des 19** capacit&#233;s.<b><span class="num-costed-indicators"></span></b><b><span class="num-costed-capacities"></span></b>
+					</p>
+					<p>Pour afficher des d&#233;tails suppl&#233;mentaires sur les calculs de co&#251;ts, utilisez le bouton Exporter le rapport d&#233;taill&#233; pour t&#233;l&#233;charger une feuille de calcul des r&#233;sultats. Le rapport d&#233;taill&#233; ne peut pas &#234;tre re-uploader dans l'outil. Pour continuer &#224; travailler ult&#233;rieurement, cliquez sur le bouton T&#233;l&#233;charger le fichier de donn&#233;es RSI pour stocker le fichier de donn&#233;es sur votre ordinateur. Les changements apport&#233;s au pointage et au co&#251;t doivent &#234;tre effectu&#233;s en uploadant le fichier de donn&#233;es sur la page Instructions d'&#233;valuation et t&#233;l&#233;chargement et en utilisant le site Web de l'outil d'&#233;valuation des co&#251;ts du RSI pour le modifier (aucun changement ne peut &#234;tre apport&#233; au fichier avant l'uploading).</p>
+				</div>
+				<div class="results-main-content">
+					<div class="score-improvement-section results-section">
+						<div class="results-section-title">R&#233;sum&#233; des co&#251;ts</div>
+						<div class="cost-chart-instructions">Le co&#251;t total ci-dessous r&#233;sume les co&#251;ts associ&#233;s au passage du score de niveau de capacit&#233; actuel au score cible s&#233;lectionn&#233; pour tous les indicateurs achev&#233;s, comme indiqu&#233; sur la barre color&#233;e. Les co&#251;ts sont ventil&#233;s pour les capacit&#233;s principales regroup&#233;es sous Pr&#233;vention, D&#233;tection, Ripostes et Autres risques r&#233;f&#233;renc&#233;s au RSI et aux points d'entr&#233;e.  Utiliser les boutons pour afficher les co&#251;ts par totaux de 1, 3 ou 5 ans, ou par co&#251;t de d&#233;marrage, co&#251;t d'investissement ou co&#251;t r&#233;current. Noter que les co&#251;ts r&#233;currents ne sont calcul&#233;s que pour les nouvelles fonctionnalit&#233;s.<br><br>
+						</div>
+						<div class="cost-type-filter-container">
+							<div class="cost-type-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="total">Co&#251;t total<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="startup">Co&#251;t de d&#233;marrage<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="capital">Co&#251;t d'investissement<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="recurring">Co&#251;t r&#233;current<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+								</div>
+							</div>
+							<div class="cost-duration-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="1">1 an</button>
+									<button class="btn btn-secondary" value="3">3 ans</button>
+									<button class="btn btn-secondary" value="5">5 ans</button>
+								</div>
+							</div>
+						</div>
+						<div class="score-improvement-content">
+							<div class="summary-text-total">
+								<div class="total-cost-number-text">Co&#251;t total</div>
+								<div class="total-cost-number"></div>
+							</div>
+							<div class="progress-chart-overall"></div>
+						</div>
+						<div class="summary-text-section"></div>
+					</div>
+					<div class="chart-section results-section">
+						<div class="chart-section-title results-section-title">Co&#251;ts par capacit&#233; principale et fonction</div>
+						<div class="cost-chart-instructions">Ce graphique montre les co&#251;ts par capacit&#233; ou fonction de base de l'outil d'&#233;valuation EEC (par exemple, gestion / mise en oeuvre). Les co&#251;ts sont repr&#233;sent&#233;s graphiquement par le co&#251;t absolu sur l'axe vertical, et chaque cercle est dimensionn&#233; par la contribution relative des co&#251;ts de cette capacit&#233; ou fonction de base. Utiliser les boutons pour voir par type de co&#251;t ou par totaux de 1, 3 ou 5 ans. Appliquer des filtres sous le graphique pour s&#233;lectionner un sous-ensemble d'&#233;l&#233;ments de base, de capacit&#233;s de base ou de fonctions.</div>
+						<div class="cost-type-filter-container">
+							<div class="cost-type-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="total">Co&#251;t total<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="startup">Co&#251;t de d&#233;marrage<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="capital">Co&#251;t d'investissement<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+									<button class="btn btn-secondary" value="recurring">Co&#251;t r&#233;current<img class="cost-tooltip-img" src="img/question-mark.png">
+									</button>
+								</div>
+							</div>
+							<div class="cost-duration-row">
+								<div class="btn-group">
+									<button class="btn btn-secondary active" value="1">1 an</button>
+									<button class="btn btn-secondary" value="3">3 ans</button>
+									<button class="btn btn-secondary" value="5">5 ans</button>
+								</div>
+							</div>
+						</div>
+						<div class="cost-chart-container"></div>
+						<div class="cost-chart-filter-container">
+							<div class="cost-chart-filter-box row">
+								<div class="view-cost-by-box col-3">
+									<div class="filter-label">Voir le co&#251;t par:</div>
+									<div class="filter-row" value="capacity">
+										<input type="radio" checked>
+									</div>
+									<div class="filter-row" value="category">
+										<input type="radio">
+									</div>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">&#201;l&#233;ment cl&#233;</div>
+									<select class="cc-select form-control" multiple></select>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">Capacit&#233; de base</div>
+									<select class="capacity-select form-control" multiple></select>
+								</div>
+								<div class="col-3">
+									<div class="filter-label">Fonction</div>
+									<select class="category-select form-control" multiple></select>
+								</div>
+							</div>
+							<div class="reset-button-container">
+								<button class="reset-button btn btn-secondary">R&#233;initialisation des diagrammes </button>
+							</div>
+						</div>
+					</div>
+					<!--<div class="bubble-section results-section">
+						<div class="results-section-title">Cost Distribution</div>
+						<div class="bubble-chart"></div>
+					</div>-->
+				</div>
+				<div class="results-table-content">
+					<div class="table-tab-container">
+						<div class="btn-group">
+							<button class="btn btn-secondary" value="core">&#201;l&#233;ments de base</button>
+							<button class="btn btn-secondary active" value="capacity">Capacit&#233;s</button>
+							<button class="btn btn-secondary" value="indicator">Indicateurs</button>
+							<button class="btn btn-secondary" value="action">Actions</button>
+						</div>
+					</div>
+					<div class="core-table-container table-container">
+						<table class="core-table table table-sm table-hover"></table>
+					</div>
+					<div class="capacity-table-container table-container">
+						<table class="capacity-table table table-sm table-hover"></table>
+					</div>
+					<div class="indicator-table-container table-container">
+						<table class="indicator-table table table-sm table-hover"></table>
+					</div>
+					<div class="action-table-container table-container">
+						<table class="action-table table table-sm table-hover"></table>
+					</div>
+				</div>
+				<div class="results-export-content">
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-data-button btn btn-primary">Exporter le rapport d&#233;taill&#233;</button>
+						</div>
+						<div class="export-button-text">Le rapport d&#233;taill&#233; contient tous les co&#251;ts saisis sur la page d'&#233;tablissement des co&#251;ts, les calculs complets utilis&#233;s pour les co&#251;ts par d&#233;faut et les descriptions pour chaque calcul. Ce fichier peut &#234;tre utilis&#233; pour effectuer des calculs de co&#251;ts dans Excel, mais il ne peut pas &#234;tre utilis&#233; pour uploader des donn&#233;es sur le site Web de l'outil d'&#233;valuation des co&#251;ts du RSI.<b></b>
+						</div>
+					</div>
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-empty-template-button btn btn-primary">T&#233;l&#233;charger le mod&#232;le vierge</button>
+						</div>
+						<div class="export-button-text">Pour travailler hors ligne, vous pouvez t&#233;l&#233;charger un mod&#232;le vierge contenant tous les calculs de co&#251;ts et entrer les donn&#233;es d'&#233;tablissement des co&#251;ts dans un format de feuille de calcul. Apr&#232;s l'enregistrement des donn&#233;es dans le mod&#232;le de feuille de calcul, vous devrez retourner sur ce site Web et saisir manuellement les scores et les co&#251;ts pour utiliser le site Web de ll'outil d'&#233;valuation des co&#251;ts du RSI.<b></b>
+						</div>
+					</div>
+					<div class="export-button-section">
+						<div class="export-button-container">
+							<button class="export-session-button btn btn-primary">T&#233;l&#233;charger le fichier de donn&#233;es du RSI</button>
+						</div>
+						<div class="export-button-text">Le fichier de donn&#233;es RSI stocke les informations sur les scores et les co&#251;ts sur votre ordinateur pour les uploader dans l'outil de calcul des co&#251;ts du RSI afin de poursuivre le travail &#224; une date ult&#233;rieure. Ce fichier ne peut pas &#234;tre modifi&#233; en utilisant d'autres programmes sur votre ordinateur et tous les changements de score et d'entr&#233;e des co&#251;ts doivent &#234;tre faits en uploadant le fichier de donn&#233;es sur la page Instructions d'&#233;valuation et t&#233;l&#233;chargement et en poursuivant le travail sur le site.<b></b>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<!-- Background page template -->
+	<script id="background-template-fr" type="text/x-handlebars-template-fr"><div class="background-container container container-text">
+			<h1>Contexte</h1>
+			<div>
+				<h2>Remerciements</h2>
+				<p>Nous remercions toute l'&#233;quipe de recherche du Centre pour la science et la s&#233;curit&#233; de la sant&#233; mondiale (Center for Global Health Science and Security) pour son soutien &#224; la recherche dans l'&#233;laboration de l'outil d'&#233;valuation des co&#251;ts du RSI. La recherche initiale et le d&#233;veloppement de l'outil ont &#233;t&#233; soutenus par l'Agence am&#233;ricaine pour la r&#233;duction des menaces &#224; la d&#233;fense, le Programme d'engagement biologique et le Programme d'engagement sur la bios&#233;curit&#233; du State Department (U.S. Defense Threat Reduction Agency- Cooperative, Biological Engagement Program and the Department of State Biosecurity Engagement Program). Le cadre conceptuel a &#233;t&#233; renforc&#233; gr&#226;ce &#224; la collaboration avec l'Organisation Mondiale de la Sant&#233; et ses partenaires techniques. Les efforts actuels ont &#233;t&#233; soutenus par le Open Philanthropy Project et le Centre M&#233;dical Universitaire de Georgetown. Nous remercions nos partenaires et coll&#232;gues pour leurs commentaires et leur soutien &#224; ce projet, notamment: l'Organisation Mondiale de la Sant&#233;, les Centres de pr&#233;vention et de contr&#244;le des maladies (CDC), la Banque Mondiale, McKinsey and Company, la Table ronde du secteur priv&#233; du PMSS, Tom Frieden et Peter Sands , Anas El Turabi et Phil Saynisch. Toutes les erreurs restantes dans l'outil sont de notre ressort.</p>
+			</div>
+			<div>
+				<h2>Aper&#231;u du projet</h2>
+				<p>En 2016, l'Organisation Mondiale de la Sant&#233; (OMS) a adopt&#233; l'outil d'Evaluation Externe Conjointe (EEC) pour mesurer les progr&#232;s sp&#233;cifiques des pays et aider &#224; d&#233;finir les objectifs de d&#233;veloppement des capacit&#233;s n&#233;cessaires pour pr&#233;venir, d&#233;tecter et intervenir aux menaces de sant&#233; publique, tel que stipul&#233; dans le R&#232;glement Sanitaire International (RSI). Cette &#233;valuation externe volontaire, utilisant des indicateurs standardis&#233;s, vise &#224; aider les pays &#224; identifier et prioriser les besoins de renforcement des capacit&#233;s. Toutefois, cibler les ressources de mani&#232;re efficace pour cr&#233;er et maintenir des capacit&#233;s exige que les parties prenantes &#233;laborent des plans r&#233;alisables et contiennent suffisamment d'informations sur les co&#251;ts pour soutenir des efforts de mise en &#339;uvre rationnels et durables.</p>
+				<p>Depuis l'entr&#233;e en vigueur du RSI en 2007, les parties prenantes nationales et leurs partenaires internationaux ont lutt&#233; pour d&#233;finir les co&#251;ts de renforcement et de maintien des syst&#232;mes de s&#233;curit&#233; sanitaire qui traversent les diff&#233;rents niveaux et les organes gouvernementaux, et s'appuient sur une coordination multisectorielle pour agir. Sans une &#233;valuation des co&#251;ts n&#233;cessaires &#224; la mise en &#339;uvre du RSI, les pays ne sont pas en mesure d'&#233;laborer des budgets et des plans coh&#233;rents sur lesquels fonder un dossier avec les d&#233;cideurs nationaux ou des partenaires externes pour les cr&#233;dits, subventions ou pr&#234;ts. Nous avons commenc&#233; avec des co&#251;ts des mod&#232;les d&#233;velopp&#233;s par notre &#233;quipe de recherche apr&#232;s une &#233;tude de cas de la mise en &#339;uvre du RSI dans 14 pays couvrant plusieurs r&#233;gions, affin&#233;s par les commentaires des pays sur les besoins des utilisateurs pour le calcul des co&#251;ts du RSI recueillis tout en soutenant l'Organisation Mondiale de la Sant&#233; dans le d&#233;veloppement et l'essai -pilote d'un cadre conceptuel pour l'&#233;tablissement des co&#251;ts du RSI dans 6 pays. &#201;tant donn&#233; que l'EEC contient beaucoup plus d'indicateurs que le pr&#233;c&#233;dent cadre de suivi des capacit&#233;s de base du RSI, l'&#233;quipe a examin&#233; les directives publi&#233;es par l'OMS, l'OIE et d'autres autorit&#233;s internationales pour les besoins sp&#233;cifiques de renforcement des capacit&#233;s et de mise en &#339;uvre. Enfin, l'&#233;quipe a examin&#233; toutes les &#233;valuations EEC publi&#233;es pour identifier les activit&#233;s / capacit&#233;s sp&#233;cifiques que le processus d'&#233;valuation avait associ&#233;es aux scores attribu&#233;s dans chaque indicateur (c.-&#224;-d. quelles activit&#233;s / capacit&#233;s cumulatives &#233;taient sp&#233;cifiquement identifi&#233;es comme constituant un score de 2, 3, 4 ou 5 pour chaque indicateur sp&#233;cifique). Sur la base de cette approche, nous avons mis au point un outil d'&#233;valuation des co&#251;ts disponible sur le Web pour aider les pays &#224; estimer les co&#251;ts de la mise en &#339;uvre compl&#232;te des principales capacit&#233;s du RSI pour atteindre les objectifs du processus de planification lanc&#233; par l'EEC.</p>
+				<p>L'outil &#233;valuation des co&#251;ts du RSI d'acc&#232;s-libre bas&#233; sur le WebI int&#232;gre des donn&#233;es fournies par les utilisateurs et sp&#233;cifiques a chaques pays dans un mod&#232;le d&#233;riv&#233; des pratiques de terrain et des conseils pour atteindre les capacit&#233;s techniques qui contribuent &#224; la conformit&#233; au RSI. L'outil fournit une interface intuitive li&#233;e &#224; un cadre de calcul des co&#251;ts qui permet aux utilisateurs d'uploader ou d'attribuer leurs scores d'&#233;valuation EEC pr&#233;c&#233;demment d&#233;termin&#233;s et de les am&#233;liorer pour atteindre leurs objectifs pour chacune des 19 capacit&#233;s de base du RSI, bas&#233;es sur les indicateurs EEC. Parce que le RSI a besoin de capacit&#233;s pour d&#233;tecter, &#233;valuer et rapporter les &#233;v&#233;nements inhabituels aux niveaux local, interm&#233;diaire et national, l'outil inclut des multiplicateurs pour chaque niveau administratif.<a href="http://csr.qlik.com/a/sense/app/a05810ed-e3ca-427a-b734-5ef689d1b5b4" target="_blank"></a>
+				</p>
+				<p>Une fois les scores d'&#233;valuation EEC actuels saisis, les utilisateurs choisissent leur niveau d'am&#233;lioration cible (par exemple, une &#233;tape am&#233;lior&#233;e pour tous les indicateurs, ou progr&#232;s vers le niveau 4 pour tous les indicateurs). L'utilisateur est ensuite dirig&#233; vers des pages d'&#233;tablissement des co&#251;ts pour chaque indicateur EEC, avec des options &#224; s&#233;lectionner et &#224; modifier si n&#233;cessaire. Ces co&#251;ts incluent ceux pour &#233;tablir la base l&#233;gale / politique et l'infrastructure pour soutenir les capacit&#233;s de base, aussi bien que les co&#251;ts de fonctionnement pour le personnel, la formation, les processus, et les consommables bas&#233;s sur des ensembles de donn&#233;es au niveau national. Les co&#251;ts pour chaque indicateur comprennent ceux requis pour le d&#233;marrage (par exemple, le co&#251;t d'&#233;tablissement du cadre juridique), l'investissement (par exemple, la construction de b&#226;timents, les biens durables) et les co&#251;ts r&#233;currents (par exemple, les salaires). Une fois compl&#233;t&#233;s, les co&#251;ts totaux requis peuvent &#234;tre visualis&#233;s par indicateur ; par cat&#233;gorie ; par type de co&#251;t ; et pour les premi&#232;re, troisi&#232;me et cinqui&#232;me ann&#233;es suivant la mise en &#339;uvre. En outre, les co&#251;ts peuvent &#234;tre consult&#233;s pour aider les pays &#224; comprendre les d&#233;penses requises du RSI et les r&#233;sultats comparatifs des co&#251;ts entre les principales capacit&#233;s et niveaux de capacit&#233; (performance), y compris l'option de t&#233;l&#233;charger les r&#233;sultats sous forme de feuille de calcul. Les indicateurs pour lesquels des outils d'&#233;tablissement des co&#251;ts ont d&#233;j&#224; &#233;t&#233; d&#233;finis ailleurs sont li&#233;s et align&#233;s dans la mesure du possible pour &#233;viter les doublons ou la confusion.</p>
+				<p>L'outil inclut des liens pour vos commentaires (Contactez-nous). Nous pr&#233;voyons qu'une fois que les pays et les autres partenaires commenceront &#224; utiliser l'outil, nous recevrons des commentaires sur les indicateurs et leur facilit&#233; d'utilisation. Nous essaierons de faire des adaptations &#224; l'outil dans la mesure du possible, afin de r&#233;pondre aux besoins des pays et des partenaires.</p>
+				<p>A travers la compr&#233;hension des co&#251;ts associ&#233;s au RSI, les dirigeants nationaux peuvent mieux faire correspondre les ressources aux priorit&#233;s urgentes et planifier la viabilit&#233; &#224; long terme des syst&#232;mes complexes. Cet outil d'&#233;valuation des co&#251;ts, en combinaison avec l'EEC et les outils de financement d&#233;j&#224; disponibles et en cours de d&#233;veloppement, repr&#233;sente une &#233;tape importante pour aider les d&#233;cideurs nationaux et internationaux &#224; &#233;laborer et mettre en &#339;uvre des plans pratiques pour am&#233;liorer la s&#233;curit&#233; sanitaire mondiale.</p>
+				<p>Une affiche d&#233;crivant le projet d'outil d'&#233;valuation des co&#251;ts du RSI est disponible [ici] (./ export / IHR-Costing-Tool-poster_September-2017.pdf).<a href="./export/IHR-Costing-Tool-poster_September-2017.pdf" target="_blank"></a>
+				</p>
+			</div>
+			<div>
+				<h2 id="definitions">D&#233;finitions et r&#233;f&#233;rences</h2>
+				<p>Les d&#233;finitions des termes cl&#233;s et des r&#233;f&#233;rences utilis&#233;s pour d&#233;finir les hypoth&#232;ses de co&#251;ts par d&#233;faut peuvent &#234;tre t&#233;l&#233;charg&#233;es [ici] (./export / IHR Costing Tool - D&#233;finitions et r&#233;f&#233;rences.pdf).<a target="_blank" href="./export/IHR%20Costing%20Tool%20-%20Definitions%20and%20References.pdf"></a></p>
+			</div>
+		</div>
+	</script>
+
+	<!-- Contact page template -->
+	<script id="contact-template-fr" type="text/x-handlebars-template-fr"><div class="contact-container container container-text">
+			<h1>Contactez-nous</h1>
+			<div class="contact-description">Nous encourageons les questions et commentaires des utilisateurs. Veuillez envoyer vos commentaires sur l'outil de calcul des co&#251;ts du RSI par courrier &#233;lectronique &#224; l'adresse [ihrcosting@georgetown.edu] (mailto: ihrcosting@georgetown.edu).<a href="mailto:ihrcosting@georgetown.edu" target="_blank"></a>
+			</div>
+		</div>
+	</script>
+
+	<!-- Capacity Description Component -->
+	<script id="capacity-description-template-fr" type="text/x-handlebars-template-fr"><div class="capacity-description-header">
+			<svg id="chevron" viewbox="0 0 24 24" class="capacity-description-header-chevron">
+				<path d="M8 5v14l11-7z"></path>
+			</svg>
+			<h4>Description de la capacit&#233;</h4>
+		</div>
+		<div class="capacity-description-details">
+			<p class="capacity-target-container">
+				<b>Cible:</b><span class="capacity-target"></span>
+			</p>
+			<p class="capacity-desired-impact-container">
+				<b>Impact d&#233;sir&#233;:</b><span class="capacity-desired-impact"></span>
+			</p>
+			<p class="capacity-additional-notes-container">
+				<b>Notes compl&#233;mentaires:</b><span class="capacity-additional-notes"></span>
+			</p>
+		</div>
+	</script>
+
+	<!-- General Libraries -->
+	<!--<script src="lib/jquery-3.1.1.min.js"></script>
+	<script src="lib/jquery.color.js"></script>
+	<script src="lib/d3.min.js"></script>
+	<script src="lib/underscore-min.js"></script>-->
+
+	<!-- Routing Libraries -->
+	<!--<script src="lib/signals.min.js"></script>
+	<script src="lib/crossroads.min.js"></script>
+	<script src="lib/hasher.min.js"></script>
+	<script src="lib/handlebars-v3.0.0.js"></script>-->
+
+	<!-- Mapping Libraries -->
+	<!--<script src="lib/topojson.v2.min.js"></script>
+	<script src="lib/albers-usa-pr.js"></script>-->
+	<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js" integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA==" crossorigin=""></script>
+
+	<!-- Other -->
+	<!--<script src="lib/wrap.js"></script>
+	<script src="lib/bullet.js"></script>
+	<script src="lib/popper.js"></script>
+	<script src="lib/fuse.min.js"></script>
+	<script src="lib/tether.min.js"></script>
+	<script src="lib/bootstrap.min.js"></script>
+	<script src="lib/bootstrap-multiselect.js"></script>
+	<script src="lib/tooltipster.bundle.min.js"></script>
+	<script src="lib/datatables.min.js"></script>
+	<script src="lib/jquery.noty.packaged.min.js"></script>
+	<script src="lib/nprogress.min.js"></script>
+	<script src="lib/datatables.min.js"></script>
+	<script src="lib/cpexcel.js"></script>
+	<script src="lib/jszip.js"></script>
+	<script src="lib/xlsx.min.js"></script>-->
+
+	<script src="build/lib.min.js"></script>
+
+	<!-- Project Specific Files -->
+	<script src="js/utility.js"></script>
+	<script src="js/user.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/components/capacityDescription.js"></script>
+	<script src="js/components/colors.js"></script>
+	<script src="js/components/charts.js"></script>
+	<script src="js/components/definitions.js"></script>
+	<script src="js/components/export.js"></script>
+	<script src="js/components/map.js"></script>
+	<script src="js/components/tabNavigation.js"></script>
+	<script src="js/pages/background.js"></script>
+	<script src="js/pages/contact.js"></script>
+	<script src="js/pages/costing.js"></script>
+	<script src="js/pages/costsInstructions.js"></script>
+	<script src="js/pages/country.js"></script>
+	<script src="js/pages/home.js"></script>
+	<script src="js/pages/overview.js"></script>
+	<script src="js/pages/results.js"></script>
+	<script src="js/pages/scores.js"></script>
+	<script src="js/pages/who.js"></script>
+	<script src="js/routing.js"></script>
+	<script src="js/init.js"></script>
+	<!-- <script src="build/bundle.min.js"></script> -->
+</body>
+</html>

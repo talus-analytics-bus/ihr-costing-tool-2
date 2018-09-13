@@ -36,6 +36,10 @@
 		text-align: center;
 
 		button { margin: 0 5px; }
+
+		&.hidden {
+			display: none;
+		}
 	}
 	input {
 		display: inline-block;
@@ -71,13 +75,13 @@
 		border-top: $light-border;
 		padding-top: 30px;
 
-		.info-img {
-			position: relative;
-			top: -1px;
-			width: 13px;
-			height: 13px;
-			margin-left: 5px;
-		}
+	}
+	.info-img {
+		position: relative;
+		top: -1px;
+		width: 13px;
+		height: 13px;
+		margin-left: 5px;
 	}
 }
 .geo-division-table {
@@ -89,7 +93,7 @@
 .ph-table {
 	td:first-child {
 		position: relative;
-		top: 5px;
+		// top: 5px;
 	}
 	input {
 		width: 140px;

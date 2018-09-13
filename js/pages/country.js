@@ -3,11 +3,18 @@
 		App.createLeafletMap();
 
 		// populate country dropdown
-		const countryData = App.countryParams.slice(0);
-		Util.sortByKey(countryData, 'name');
-		countryData.unshift({ name: '--- choose a country ---', abbreviation: '' });
+		let countryData = App.countryParams.slice(0);
+		const nameKey = App.lang === 'fr' ? 'name_fr' : 'name';
+		const defaultVal = App.lang === 'fr' ? '--- choisir un pays ---' : '--- choose a country ---';
+		
+		countryData = countryData.filter(country => {
+			return country.name !== "French Guiana";
+		});
+
+		Util.sortByKey(countryData, nameKey);
+		countryData.unshift({ name: defaultVal, name_fr: defaultVal, abbreviation: '' });
 		Util.populateSelect('.country-dropdown', countryData, {
-			nameKey: 'name',
+			nameKey: nameKey,
 			valKey: 'abbreviation',
 		});
 		$('.country-dropdown').on('change', function() {
@@ -58,10 +65,13 @@
 			}
 			
 			// show live search box under search bar
-			const fuse = new Fuse(App.countryParams, {
+			const searchCountries = App.countryParams.filter(country => {
+				return country.name !== "French Guiana";
+			});
+			const fuse = new Fuse(searchCountries, {
 				threshold: 0.3,
 				distance: 1e5,
-				keys: ['abbreviation', 'name', 'currency_iso'],
+				keys: ['abbreviation', nameKey, 'currency_iso'],
 			});
 			const results = fuse.search(searchVal);
 			
@@ -94,11 +104,28 @@
 						// update dropdown and map
 						App.updateCountry(d.abbreviation);
 					});
-				boxes.select('.live-search-results-title').text(d => d.name);
+				boxes.select('.live-search-results-title').text(d => d[nameKey]);
 				boxes.select('.live-search-results-subtitle')
 					.text(d => `Population: ${Util.comma(d.multipliers.population)}`);
 			}
 		}
+
+		App.setDefaultJeeScores = () => {
+			const jeeScores = App.jeeScoreData[App.whoAmI.abbreviation];
+			if (jeeScores === undefined) {
+				App.jeeTree.forEach(ce => { ce.capacities.forEach(cc => { cc.indicators.forEach(indicator => {
+					indicator.score = null;
+				})})});
+			} else {
+				App.jeeTree.forEach(ce => { ce.capacities.forEach(cc => { cc.indicators.forEach(indicator => {
+					const match = jeeScores.find(d => {
+						const id = d.indicator.split(' ')[0].toLowerCase();
+						return id === indicator.id;
+					});
+					indicator.score = match.score;
+				})})});
+			}
+		};
 
 		App.updateCountry = (countryCode) => {
 			// set dropdown
@@ -112,7 +139,12 @@
 			App.whoAmI = JSON.parse(JSON.stringify(country));
 
 			// update all costs
+			App.jeeTree = App.cleanJeeTree.map(d => $.extend(true, {}, d));
+			App.changeLanguage(App.lang, {reset: false});
 			App.updateAllCosts();
+
+			// add pre-populated JEE scores
+			App.setDefaultJeeScores();
 		}
 
 		// next button behavior

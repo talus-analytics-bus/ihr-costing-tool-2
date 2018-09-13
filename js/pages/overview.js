@@ -2,12 +2,6 @@
 	App.initOverview = () => {
 		$('.next-button').click(() => { hasher.setHash('scores/'); });
 
-		// jee tool tooltip
-		$('.jee-tool-img').tooltipster({
-			trigger: 'hover',
-			content: 'The <b>JEE Technology Tool</b> is a separate, open-access tool developed by the Global Health Security Agenda Private Sector Roundtable Technology and Analytics Working Group and powered by Qlik Technologies.',
-		});
-
 		/* ------------------ Uploading Session File --------------- */
 		// clicking "select file from previous session" triggers file selection
 		$('.btn-prior-session').on('click', () => { 
@@ -31,21 +25,29 @@
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					NProgress.start();
-					const success = App.loadSessionData(e.target.result);
-					if (success) {
-						App.updateAllCosts();
-						noty({
-							timeout: 4000,
-							type: 'success',
-							text: '<b>Upload Successful!</b><br>Your previous session has been restored.',
-						});
-					} else {
-						noty({
-							timeout: 5000,
-							text: '<b>Error!</b><br>There was an error uploading your previous session.',
-						})
-					}
-					NProgress.done();
+					App.loadSessionData(e.target.result, (success, oldVersion) => {
+						if (success) {
+							let text;
+							if (oldVersion) {
+								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée. Veuillez confirmer vos sélections sur la page <a href="#costs/population">Définir les valeurs implicites</a> car elles n\'ont peut-être pas été enregistrées par les versions antérieures de l\'outil.' : '<b>Upload Successful!</b><br>Your previous session has been restored. Please review your selections on the <a href="#costs/population">Set Default Values page</a>, as they may not have been saved by earlier versions of the tool.';
+							} else {
+								text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Votre session précédente a été restaurée.' : '<b>Upload Successful!</b><br>Your previous session has been restored.';
+							}
+							App.updateAllCosts();
+							noty({
+								timeout: 4000,
+								type: 'success',
+								text: text,
+							});
+						} else {
+							const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement de votre session précédente.' : '<b>Error!</b><br>There was an error loading your previous session.';
+							noty({
+								timeout: 5000,
+								text: text,
+							})
+						}
+						NProgress.done();
+					});
 				}
 				reader.readAsBinaryString(file);
 			}
@@ -73,6 +75,7 @@
 				const fileNameArr = file.name.split('.');
 				const fileType = fileNameArr[fileNameArr.length - 1];
 				if (fileType !== 'xlsx' && fileType !== 'xls') {
+					const text = App.lang === 'fr' ? '<b>Veuillez sélectionner un fichier avec une extension de type de fichier de <i>.xlsx</i></b>' : '<b>Please select a file with a file type extension of <i>.xlsx</i>';
 					noty({
 						timeout: 5000,
 						text: '<b>Please select a file with a file type extension of <i>.xlsx</i>',
@@ -86,16 +89,18 @@
 					NProgress.start();
 					const success = App.loadQlickScoreData(e.target.result);
 					if (success) {
+						const text = App.lang === 'fr' ? '<b>Upload réussi!</b><br>Les données de score ont été téléchargées.' : '<b>Upload Successful!</b><br>Score data has been uploaded.';
 						App.updateAllCosts();
 						noty({
 							timeout: 4000,
 							type: 'success',
-							text: '<b>Upload Successful!</b><br>Score data has been uploaded.',
+							text: text,
 						});
 					} else {
+						const text = App.lang === 'fr' ? '<b>Erreur!</b><br>Une erreur s\'est produite lors du téléchargement des données de score. Veuillez vérifier le format de fichier.' : '<b>Error!</b><br>There was an error uploading the score data. Please check the file format.';
 						noty({
 							timeout: 5000,
-							text: '<b>Error!</b><br>There was an error uploading the score data. Please check the file format.',
+							text: text,
 						})
 					}
 					NProgress.done();

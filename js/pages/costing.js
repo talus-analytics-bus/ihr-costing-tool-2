@@ -24,7 +24,8 @@
 
 		// add the capacity description content
 		function buildCapacityDescription() {
-			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			const pageLang = App.lang === 'fr' ? 'capacity-description-fr' : 'capacity-description';
+			$('.capacity-description-container').html(Routing.templates[pageLang]());
 			App.buildCapacityDescription(capId);
 
 			// hard-code tooltip for "Immunization"
@@ -74,12 +75,12 @@
 				.attr('class', 'indicator-score')
 				.html((d) => {
 					const score = App.getIndicatorScore(d.id);
-					if (!score) return '<i>No Score</i>';
+					if (!score) return App.lang === 'fr' ? '<i>Pas de score</i>' : '<i>No Score</i>';
 
 					const targetScore = (User.targetScoreType === 'step') ? score + 1 : User.targetScore;
 					let scoreStr = `<img class="rp-score" src="img/rp-${score}.png" alt=${score} />`;
 					if (targetScore > score && score < 4) {
-						scoreStr += '<span> to </span>' +
+						scoreStr += (App.lang === 'fr' ? '<span> à </span>' : '<span> to </span>') +
 							`<img class="rp-score" src="img/rp-${targetScore}.png" alt=${targetScore} />`;
 					}
 					return scoreStr;
@@ -95,7 +96,7 @@
 			if (!indicator.score) {
 				indSlotContainer.append('div')
 					.attr('class', 'no-score-container')
-					.html('This indicator has not been <b>scored</b> yet. Click <u>here</u> to enter a score.')
+					.html(App.lang === 'fr' ? 'Cet indicateur n\'a pas encore été noté. Cliquez <u>ici</u> pour entrer un score.' : 'This indicator has not been scored yet. Click <u>here</u> to enter a score.')
 					.on('click', () => {
 						hasher.setHash(`scores/${capClass}/${indClass}`);
 					});
@@ -105,11 +106,11 @@
 
 			// if no actions (bc score is 4 or 5), display text saying so
 			if (!actions.length) {
-				let noActionText = 'There are no actions needed to increase the current score for this indicator';
+				let noActionText = App.lang === 'fr' ? 'Aucune action n\'est requise pour augmenter le score actuel de cet indicateur' : 'There are no actions needed to increase the current score for this indicator';
 				if (indicator.score === 4) {
-					noActionText = 'Costs to increase from score <b>4</b> to <b>5</b> are highly country-specific and are not included in the IHR Costing Tool.';
+					noActionText = App.lang === 'fr' ? 'Les coûts pour passer du score 4 au score 5 sont très spécifiques au pays et ne sont pas inclus dans l\'outil d\'évaluation des coûts du RSI.' : 'Costs to increase from score <b>4</b> to <b>5</b> are highly country-specific and are not included in the IHR Costing Tool.';
 				} else if (indicator.score === 5) {
-					noActionText = 'Indicators with a score of <b>5</b> do not require costing (no new actions required).';
+					noActionText = App.lang === 'fr' ? 'Les indicateurs avec un score de 5 ne nécessitent pas de coûts (aucune nouvelle action n\'est requise).' : 'Indicators with a score of <b>5</b> do not require costing (no new actions required).';
 				}
 				indSlotContainer.append('div')
 					.attr('class', 'no-actions-container')
@@ -148,7 +149,7 @@
 			// add arrows for each item block container and progress text
 			itemContainers.append('div')
 				.attr('class', 'item-block-progress-text')
-				.text(d => `Item 1 of ${App.getNeededInputs(d.inputs, indicator.score).length}`);
+				.text(d => App.lang === 'fr' ? `Élément 1 sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item 1 of ${App.getNeededInputs(d.inputs, indicator.score).length}`);
 			itemContainers.append('div')
 				.attr('class', 'item-block-arrow-prev item-block-arrow')
 				.style('display', 'none')
@@ -166,7 +167,7 @@
 					// update progress text
 					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
 					$container.find('.item-block-progress-text')
-						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+						.text(App.lang === 'fr' ? `Élément ${d.itemShownIndex + 1} sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item ${d.itemShownIndex + 1} of ${numItems}`);
 
 					// hide previous button if at beginning
 					if (d.itemShownIndex === 0) $(this).hide();
@@ -196,7 +197,7 @@
 					// update progress text
 					const numItems = App.getNeededInputs(d.inputs, indicator.score).length;
 					$container.find('.item-block-progress-text')
-						.text(`Item ${d.itemShownIndex + 1} of ${numItems}`);
+						.text(App.lang === 'fr' ? `Élément ${d.itemShownIndex + 1} sur ${App.getNeededInputs(d.inputs, indicator.score).length}` : `Item ${d.itemShownIndex + 1} of ${numItems}`);
 
 					// hide next button if at end
 					if (d.itemShownIndex + 1 >= numItems) $(this).hide();
@@ -206,7 +207,7 @@
 				})
 				.append('img')
 					.attr('src', 'img/next-arrow.png')
-					.attr('alt', 'Next');
+					.attr('alt', App.lang === 'fr' ? 'Suivant' : 'Next');
 
 			// build the item blocks for each action
 			let items = itemContainers.selectAll('.item-block')
@@ -233,7 +234,7 @@
 				.attr('class', 'item-startup-cost-container');
 			startupContainer.append('div')
 				.attr('class', 'item-cost-name')
-				.text('Startup Cost: ');
+				.text(App.lang === 'fr' ? 'Coût de démarrage: ' : 'Startup Cost: ');
 			startupContainer.append('input')
 				.attr('class', 'startup-cost-input form-control')
 				.attr('value', (d) => {
@@ -259,14 +260,14 @@
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: App.definitions.startupCost });
+					$(this).tooltipster({ content: App.definitions[App.lang].startupCost });
 				});
 			
 			const recurringContainer = itemFront.append('div')
 				.attr('class', 'item-recurring-cost-container');
 			recurringContainer.append('div')
 				.attr('class', 'item-cost-name')
-				.text('Recurring Cost: ');
+				.text(App.lang === 'fr' ? 'Coût récurrent: ' : 'Recurring Cost: ');
 			recurringContainer.append('input')
 				.attr('class', 'recurring-cost-input form-control')
 				.attr('value', (d) => {
@@ -287,25 +288,26 @@
 				});
 			recurringContainer.append('div')
 				.attr('class', 'item-cost-currency')
-				.text(`${App.whoAmI.currency_iso}/yr`);
+				.text(App.lang === 'fr' ? `${App.whoAmI.currency_iso}/an` : `${App.whoAmI.currency_iso}/yr`);
 			recurringContainer.append('img')
 				.attr('class', 'item-cost-tooltip-img')
 				.attr('src', 'img/question-mark.png')
 				.each(function addTooltip(d) {
-					$(this).tooltipster({ content: App.definitions.recurringCost });
+					$(this).tooltipster({ content: App.definitions[App.lang].recurringCost });
 				});
 
 			itemFront.append('div')
 				.attr('class', 'item-save-cost-text')
-				.text('Costs Saved!');
+				.text(App.lang === 'fr' ? 'Sauvegardés!' : 'Costs Saved!');
 
 			const itemFooters = itemFront.append('div').attr('class', 'item-footer');
 			itemFooters.append('div')
 				.attr('class', 'item-save-button')
 				.classed('primary', d => !d.costed)
-				.text('Save Costs')
+				.text(App.lang === 'fr' ? 'Sauvegarder les coûts' : 'Save Costs')
 				.on('click', function(d) {
-					if (!d.costed) {
+					if (true) {
+					// if (!d.costed) {
 						d.costed = true;
 						$(this)
 							.removeClass('primary')
@@ -330,7 +332,7 @@
 				});
 			itemFooters.append('div')
 				.attr('class', 'item-view-details-button')
-				.text('View Details')
+				.text(App.lang === 'fr' ? 'Voir les détails' : 'View Details')
 				.on('click', function() {
 					$(this).closest('.item-block').toggleClass('active');
 				});
@@ -372,7 +374,7 @@
 						contentStr += `</div>`;
 						$(this).tooltipster({
 							interactive: true,
-							trigger: 'click',
+							trigger: 'hover',
 							content: contentStr,
 						});
 					});
@@ -391,10 +393,10 @@
 			}
 
 			// add startup and recurring cost tables
-			const sContent = buildTableInContent('Default Startup/Capital Costs', (li) => {
+			const sContent = buildTableInContent(App.lang === 'fr' ? 'Coûts de démarrage / d\'investissement par défaut' : 'Default Startup/Capital Costs', (li) => {
 				return li.line_item_type === 'start-up' || li.line_item_type === 'capital';
 			});
-			const rContent = buildTableInContent('Default Recurring Costs', (li) => {
+			const rContent = buildTableInContent(App.lang === 'fr' ? 'Coûts récurrents par défaut' : 'Default Recurring Costs', (li) => {
 				return li.line_item_type === 'recurring';
 			});
 
@@ -413,7 +415,7 @@
 				.attr('class', 'item-footer')
 				.append('div')
 					.attr('class', 'item-return-to-front-button')
-					.text('Return to Edit Cost')
+					.text(App.lang === 'fr' ? 'Revenir à modifier les coûts' : 'Return to Edit Cost')
 					.on('click', function() {
 						$(this).closest('.item-block').toggleClass('active');
 					});
@@ -453,13 +455,12 @@
 			}
 		}
 
-
 		// updates message on how many indicators have been scored
 		function updateIndicatorProgress() {
 			const numInds = capacity.indicators.length;
 			const numScored = App.getNumIndicatorsCosted(capacity);
 			d3.select('.indicator-progress')
-				.text(`Review costs for each indicator (${numScored} of ${numInds}):`);
+				.text(App.lang === 'fr' ? `Vérifier les coûts pour chaque indicateur (${numScored} sur ${numInds}) :` : `Review costs for each indicator (${numScored} of ${numInds}):`);
 		};
 
 		// updates message on number of inputs scored for each action
@@ -467,20 +468,23 @@
 			d3.selectAll('.action-progress').text((d) => {
 				const inputs = App.getNeededInputs(d.inputs, indicator.score);
 				const numInputsCosted = inputs.filter(input => input.costed).length;
-				return `${numInputsCosted} of ${inputs.length} items costed`;
+				return App.lang === 'fr' ? `${numInputsCosted} sur ${inputs.length} éléments évalués` : `${numInputsCosted} of ${inputs.length} items costed`;
 			});
 		}
 
 		// define the behavior for the "previous" and "next" button
 		function attachNextButtonBehavior() {
 			d3.select('.next-cost').on('click', () => {
-				const nextIndId = App.getNextIndicator(capId, indId).id;
-				if (!nextIndId) hasher.setHash('results');
-
-				const lastDotIndex = nextIndId.lastIndexOf('.');
-				const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
-				const nextIndClass = nextIndId.slice(lastDotIndex + 1)
-				hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
+				const nextInd = App.getNextIndicator(capId, indId)
+				if (nextInd === null) {
+					hasher.setHash('results');
+				} else {
+					const nextIndId = nextInd.id;
+					const lastDotIndex = nextIndId.lastIndexOf('.');
+					const nextCapClass = nextIndId.slice(0, lastDotIndex).replace('.', '-');
+					const nextIndClass = nextIndId.slice(lastDotIndex + 1)
+					hasher.setHash(`costs/${nextCapClass}/${nextIndClass}`);
+				}
 			});
 
 			d3.select('.previous-cost').on('click', function() {

@@ -87,6 +87,9 @@ const Routing = {};
 			window.scrollTo(0, 0);
 		});
 
+		// crossroads settings
+		crossroads.ignoreState = true; // refresh the page even if hash is unchanged
+
 		// setup hasher for subscribing to hash changes and browser history
 		hasher.prependHash = '';
 		hasher.initialized.add(parseHash);
@@ -103,9 +106,10 @@ const Routing = {};
 		// user must have set country before proceeding to costing
 		if (!App.whoAmI.abbreviation && blockedPages.includes(pageName)) {
 			hasher.setHash('country');
+			const text = App.lang === 'fr' ? '<b>Aucun pays sélectionné!</b><br>Veuillez sélectionner un pays et compléter l\'évaluation avant de entrer les coûts.</b>' : '<b>No country selected!</b><br>Please select a country and complete assessment before entering costs.</b>';
 			noty({
 				timeout: 5000,
-				text: '<b>No country selected!</b><br>Please select a country and complete assessment before entering costs.</b>',
+				text: text,
 			});
 			return;
 		}
@@ -128,6 +132,49 @@ const Routing = {};
 	}
 
 	function loadTemplate(page, data) {
-		$('#page-content').html(Routing.templates[page](data));
+		const pageLanguage = App.lang !== 'en' ? `${page}-${App.lang}` : page;
+		$('#page-content').html(Routing.templates[pageLanguage](data));
+
+		loadNav(data);
+		loadFooter(data);
+
+		// show language chooser if needed
+		if (App.choseLang === false) {
+			$('.language-modal').modal('show');
+			App.choseLang = true;
+		}
 	}
+
+	// load the nav bar using HB
+	function loadNav(data = {}) {
+		const navLang = App.lang !== 'en' ? 'nav-fr' : 'nav';
+
+		$('#nav-content').html(Routing.templates[navLang](data));
+		$('.nav-item').click(function() {
+			// dropdown lists do not have associated pages
+			const page = $(this).attr('page');
+			if (typeof page !== 'undefined') hasher.setHash(page);
+		});
+
+		// initiate behavior for navigation links
+		$('.tool-name').click(() => hasher.setHash(''));
+		
+
+		// add the hrefs to the dropdown menu items
+		$('.evaluation-dropdown .dropdown-item, .costing-dropdown .dropdown-item').click(function() {
+			hasher.setHash($(this).attr('page'));
+		});
+
+		$('.language-dropdown .dropdown-item').click(function() {
+			App.changeLanguage(d3.select(this).attr('lang'));
+		})
+	};
+
+	// load the footer using HB
+	function loadFooter(data = {}) {
+		const footerLang = App.lang !== 'en' ? 'footer-fr' : 'footer';
+
+		$('#footer-content').html(Routing.templates[footerLang](data));
+	};
+
 })();

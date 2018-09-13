@@ -31,18 +31,30 @@ if (useHTTPSRedirection === 'true') {
     });
 }
 
-app.use(bodyParser.json({limit: '50Mb'}));
+app.use(bodyParser.json({limit: '500Mb'}));
 
 // lineItemExport
 // Routine to read line item export template XLS, write user line items,
 // and download result to browser
 app.post('/lineItemExport', function(req, res) {
-
+    // get user data
+    const User = req.body.User;
+    
     // if exporting user session data, use detailed report template
     // if exporting entire blank worksheet template, use costing worksheet template
     const exportType = req.body.exportType;
     const exportOnlyCostedData = exportType === 'userData';
-    const fromFileAsyncFn = (exportOnlyCostedData) ? "./export/IHR Costing Tool - Detailed Report Template.xlsx" : "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
+
+    let worksheetFn, detailedFn;
+    if (User.lang === 'fr') {
+        detailedFn = "./export/IHR Costing Tool - Detailed Report Template - FR.xlsx";
+        worksheetFn = "./export/IHR Costing Tool - Costing Worksheet Template - FR.xlsx";
+    } else {
+        detailedFn = "./export/IHR Costing Tool - Detailed Report Template.xlsx";
+        worksheetFn = "./export/IHR Costing Tool - Costing Worksheet Template.xlsx";
+    }
+
+    const fromFileAsyncFn = (exportOnlyCostedData) ? detailedFn : worksheetFn;
 
     // Load line item export template XLS
     XlsxPopulate.fromFileAsync(fromFileAsyncFn)
@@ -78,9 +90,10 @@ app.post('/lineItemExport', function(req, res) {
             prepareWorksheet = (indicators, sheetName) => {
                 // get costs sheet
                 const costsSheet = workbook.sheet(sheetName);
+                console.log('sheetName = ' + sheetName)
 
                 // sheet type user specific?
-                const userSpecific = sheetName === "Costs - Scores Entered";
+                const userSpecific = sheetName === "Costs - Scores Entered" || sheetName === "Coûts - Scores entrés";
 
                 // specify currency in final two col headers
                 const  currencyCodeWasSpecified = req.body.currencyCode !== undefined;
@@ -91,43 +104,64 @@ app.post('/lineItemExport', function(req, res) {
                 const recCell = isDetailedReport ? "V1" : "V2";
                 const baseCostCell = isDetailedReport ? "1" : "2";
 
-
-                costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Base cost amount (' + currencyCode + ')');
-                costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
-                costsSheet.cell(recCell).value('Annual recurring costs (' + currencyCode + ')');
-
+                if (User.lang === 'fr') {
+                    costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Montant du coût de base (' + currencyCode + ')');
+                    costsSheet.cell(suCapCell).value('Coûts de démarrage / d\'investissement (' + currencyCode + ')');
+                    costsSheet.cell(recCell).value('Coûts récurrents annuels (' + currencyCode + ')');
+                } else {
+                    costsSheet.cell(`${cost_amount_col}${baseCostCell}`).value('Base cost amount (' + currencyCode + ')');
+                    costsSheet.cell(suCapCell).value('Start-up/Capital costs (' + currencyCode + ')');
+                    costsSheet.cell(recCell).value('Annual recurring costs (' + currencyCode + ')');
+                }
 
 
                 // if user targets, then change C1 to "Target Score"; otherwise show "Target Score(s) Applicable"
                 const targetScoreCell = isDetailedReport ? "C1" : "C2";
-                if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Target score (Chosen in tool)');
-                else costsSheet.cell(targetScoreCell).value('Target score(s) applicable');
+                if (User.lang === 'fr') {
+                    if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Score cible (Choisi dans l\'outil)');
+                    else costsSheet.cell(targetScoreCell).value('Score (s) cible (s) applicable (s)');
+                } else {
+                    if (userSpecific || isDetailedReport) costsSheet.cell(targetScoreCell).value('Target score (Chosen in tool)');
+                    else costsSheet.cell(targetScoreCell).value('Target score(s) applicable');
+                }
 
                 // get multipliers
                 const gbc = req.body.gbc;
                 const gsm = req.body.gsm;
 
-                // get user data
-                const User = req.body.User;
-
                 // get country params
-                const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":"Country","intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
+                const countryLang = User.lang === 'fr' ? 'Pays' : 'Country';
+                const unspecWhoAmI = {"name":null,"abbreviation":null,"central_area_name":countryLang,"intermediate_1_area_name":null,"intermediate_2_area_name":null,"local_area_name":null,"staff_overhead_perc":0.6,"currency_iso":"USD","multipliers":{"population":null,"central_area_count":1,"intermediate_1_area_count":null,"intermediate_2_area_count":null,"local_area_count":null,"central_hospitals_count":null,"central_chw_count":null,"central_epi_count":null}};
                 const whoAmIWasSpecified = req.body.whoAmI.abbreviation !== undefined;
                 const whoAmI = (whoAmIWasSpecified) ? req.body.whoAmI : unspecWhoAmI;
 
                 // get exchange rate
-
                 const exchangeRate = req.body.exchangeRate;
 
                 // hash table for line item type
-                const lineItemTypeHash = {
+                const lineItemTypeHash = User.lang === 'fr' ? {
+                    "start-up": "Démarrage",
+                    "recurring": "Récurrent",
+                    "capital": "Investissement",
+                } : {
                     "start-up": "Start-up",
                     "recurring": "Recurring",
-                    "capital": "Capital"
-                }
+                    "capital": "Capital",
+                };
 
                 // hash table for country parameters
-                const countryParamHash = {
+                const countryParamHash = User.lang === 'fr' ? {
+                      "population": "Population",
+                      "central_area_count": "Comptage de la zone centrale",
+                      "intermediate_1_area_count": "Comptage par zone intermédiaire 1",
+                      "intermediate_2_area_count": "Comptage par zone intermédiaire 2",
+                      "local_area_count": "Comptage par zones locales",
+                      "intermediate_1_and_2_count": "Comptage par zone intermédiaire 1 et zone intermédiaire 2",
+                      "intermediate_1_and_local_area_count": "Comptage par zone intermédiaire 1 et zone locale",
+                      "central_hospitals_count": "Comptage par hôpital",
+                      "central_chw_count": "Comptage par agents de santé communautaires centraux",
+                      "null": ""
+                } : {
                     "population": "Population",
                     "central_area_count": "Central area count",
                     "intermediate_1_area_count": "Intermediate 1 area count",
@@ -139,9 +173,7 @@ app.post('/lineItemExport', function(req, res) {
                     "central_chw_count": "Central community health workers count",
                     "central_epi_count": "Central epidemiologists count",
                     "null": ""
-                }
-
-
+                };
 
                 // track sheet row
                 // let n = 1;
@@ -246,11 +278,19 @@ app.post('/lineItemExport', function(req, res) {
                                 // n++;
                                 costsSheet.cell(input_col + n).value(input.name);
 
-                                // input cost: SU/C
-                                costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+                                if (User.lang === 'fr') {
+                                    // input cost: SU/C
+                                    costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Démarrage",$G' + n + '="Investissement"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
 
-                                // input cost: Rec
-                                costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+                                    // input cost: Rec
+                                    costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Démarrage",$G' + n + '="inve"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+                                } else {
+                                    // input cost: SU/C
+                                    costsSheet.cell(startup_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),1,0)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+
+                                    // input cost: Rec
+                                    costsSheet.cell(recurring_col + n).formula('=IFERROR(IF(OR($G' + n + '="Start-up",$G' + n + '="Capital"),0,1)*IF($M' + n + '="",1,$M' + n + ')*IF($O' + n + '="",1,$O' + n + ')*IF($Q' + n + '="",1,$Q' + n + ')*IF($S' + n + '="",1,$S' + n + ')*IF($K' + n + '="",0,$K' + n + ')*IF($G' + n + '="",0,1),"")');
+                                }
 
                                 // line item name
                                 // n++;
@@ -277,7 +317,11 @@ app.post('/lineItemExport', function(req, res) {
                                 const isSalary = curGbc.name.indexOf('salary') > -1;
                                 let base_cost_name = curGbc.name;
                                 if (isSalary) {
-                                    base_cost_name = base_cost_name + ' plus overhead (' + whoAmI.staff_overhead_perc_str + ')';
+                                    if (User.lang === 'fr') {
+                                        base_cost_name = base_cost_name + ' plus les frais généraux (' + whoAmI.staff_overhead_perc_str + ')';
+                                    } else {
+                                        base_cost_name = base_cost_name + ' plus overhead (' + whoAmI.staff_overhead_perc_str + ')';
+                                    }
                                 }
                                 costsSheet.cell(base_cost_col + n).value(base_cost_name);
 
@@ -403,19 +447,19 @@ app.post('/lineItemExport', function(req, res) {
                 if (userRelevantInd.length > 0) {
                     // use the two tabs:
                     // "Costs - User-specified"
-                    prepareWorksheet(userRelevantInd, "Costs - Scores Entered");
+                    prepareWorksheet(userRelevantInd, User.lang === 'fr' ? "Coûts - Scores entrés" : "Costs - Scores Entered");
 
                     // "Costs - All Score Combinations"
-                    prepareWorksheet(allIndicators, "Costs - All Score Combinations");
+                    prepareWorksheet(allIndicators, User.lang === 'fr' ? "Coûts - Combinaison de tous..." : "Costs - All Score Combinations");
                 } else {
                     // keep one tab and call it "Costs - All Score Combinations"
-                    prepareWorksheet(allIndicators, "Costs - All Score Combinations");
+                    prepareWorksheet(allIndicators, User.lang === 'fr' ? "Coûts - Combinaison de tous..." : "Costs - All Score Combinations");
 
                     // delete other tab
-                    workbook.deleteSheet("Costs - Scores Entered");
+                    workbook.deleteSheet(User.lang === 'fr' ? "Coûts - Scores entrés" : "Costs - Scores Entered");
                 }
             } else {
-                prepareWorksheet(allIndicators, "Costs");
+                prepareWorksheet(allIndicators, User.lang === 'fr' ? "Coûts" : "Costs");
             }
 
             workbook.outputAsync()
