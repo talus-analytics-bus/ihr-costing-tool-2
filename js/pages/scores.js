@@ -137,6 +137,7 @@
 							scoreContainer.selectAll('img').style('display', 'none');
 						}
 
+						App.updateAllCosts();
 						updateIndicatorProgress();
 					});
 
