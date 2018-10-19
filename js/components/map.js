@@ -4,18 +4,27 @@
 
 	App.createLeafletMap = () => {
 
-		const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
+		const accessToken = 'pk.eyJ1IjoibXZhbm1hZWxlIiwiYSI6ImNpeWx0ZnZzYTAwM2YzMmw3cTYwdGt1ejIifQ.Ja_TgAIXRhED-PXg8XXHVg';
+		// const accessToken = 'pk.eyJ1Ijoibmljb2xhaXZhc3F1ZXoiLCJhIjoiY2o2MWNlaWk3MG5ycTJ3bndmZWs4NWFyNSJ9.h0XBCKm965_UoB4oRS_3eA';
+		const urlLang = {
+			en: 'https://api.mapbox.com/styles/v1/mvanmaele/cjhi7ddzm08p12sne2e1jsms7/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibXZhbm1hZWxlIiwiYSI6ImNpeWx0ZnZzYTAwM2YzMmw3cTYwdGt1ejIifQ.Ja_TgAIXRhED-PXg8XXHVg',
+			fr: 'https://api.mapbox.com/styles/v1/mvanmaele/cjhi7eqd71ob62rped5yb63yy/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibXZhbm1hZWxlIiwiYSI6ImNpeWx0ZnZzYTAwM2YzMmw3cTYwdGt1ejIifQ.Ja_TgAIXRhED-PXg8XXHVg',
+		};
+		const attrLang = {
+			en: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			fr: 'Données cartographiques &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributeurs, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagerie © <a href="http://mapbox.com">Mapbox</a>',
+		};
 		App.mapConfig = {
 			divId: 'leaflet-map',
 			view: {
 				coordinates: [20, 0],
 				zoom: 2,
 			},
-			url: 'https://api.mapbox.com/styles/v1/jpecht/cj6qlfi5m3lg62rmz8svshi43/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlY2h0IiwiYSI6ImNpdHhlMTc5NzAwczEydHFtbnZnankzNmEifQ.79pr8-kMwzRaEzUhvvgzsw',
+			url: urlLang[App.lang],
 			options: {
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+				attribution: attrLang[App.lang],
 				maxZoom: 8,
-				minZoom: 1,
+				minZoom: 2,
 				id: 'mapbox.light',
 				accessToken,
 			},

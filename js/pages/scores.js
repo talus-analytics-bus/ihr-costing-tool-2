@@ -6,6 +6,19 @@
 		const capacity = App.getCapacity(capId);
 		const indicator = App.getIndicator(indId);
 
+		App.scoreLabels = App.lang === 'fr' ? {
+			1: 'Pas de capacité',
+			2: 'Capacité limitée',
+			3: 'Capacité développée',
+			4: 'Capacité démontrée',
+			5: 'Capacité durable',
+		} : { 
+			1: 'No Capacity',
+			2: 'Limited Capacity',
+			3: 'Developed Capacity',
+			4: 'Demonstrated Capacity',
+			5: 'Sustainable Capacity',
+		}; 
 
 		/* --------------- Input Block Overview and Links -------------- */		
 		function buildContent() {
@@ -21,8 +34,17 @@
 
 		// add the capacity description content
 		function buildCapacityDescription() {
-			$('.capacity-description-container').html(Routing.templates['capacity-description']());
+			const langPage = App.lang === 'fr' ? 'capacity-description-fr' : 'capacity-description';
+			$('.capacity-description-container').html(Routing.templates[langPage]());
 			App.buildCapacityDescription(capId);
+
+			// hard-code tooltip for "Immunization"
+			if (capacity.name === 'Immunization') {
+				$('.capacity-tooltip-img').show().tooltipster({
+					interactive: true,
+					content: 'An alternative method to estimate vaccination costs is available using the <a href="http://www.avenirhealth.org/software-onehealth.php" target="_blank">OneHealth Tool</a>',
+				});
+			}
 		}
 
 		// build the indicator tabs
@@ -52,7 +74,7 @@
 			scoreContainer.append('span')
 				.attr('class', 'score-none')
 				.style('display', d => App.getIndicatorScore(d.id) ? 'none' : 'inline')
-				.html('<i>No Score</i>');
+				.html(App.lang === 'fr' ? '<i>Pas de score</i>' : '<i>No Score</i>');
 			for (let i = 1; i <= 5; i++) {
 				scoreContainer.append('img')
 					.attr('class', `rp-score`)
@@ -81,15 +103,24 @@
 						const newScore = wasChecked ? undefined : d;
 
 						// deactivate all rows and unselect radio buttons
-						d3.selectAll('.score-row')
-							.classed('active', false)
-							.selectAll('input')
-								.property('checked', false);
+						const allRows = d3.selectAll('.score-row')
+							.classed('active', false);
+						allRows.select('input')
+							.property('checked', false);
+						allRows.select('.score-description-cell')
+							.text((d) => {
+								const desc = indicator.score_descriptions[d];
+								return desc.length > 300 ? `${desc.slice(0, 300)}...` : desc;
+							});
 
 						// toggle row clicked
 						currRow.classed('active', !wasChecked)
-							.select('input')
-								.property('checked', !wasChecked);
+						currRow.select('input')
+							.property('checked', !wasChecked);
+
+						// show full descriptions for active scores
+						d3.select('.score-row.active .score-description-cell')
+							.text(d => indicator.score_descriptions[d]);
 
 						// save user score
 						App.setIndicatorScore(indId, newScore);
@@ -106,6 +137,7 @@
 							scoreContainer.selectAll('img').style('display', 'none');
 						}
 
+						App.updateAllCosts();
 						updateIndicatorProgress();
 					});
 
@@ -122,11 +154,15 @@
 				.attr('class', 'rp-score-table-img rp-score')
 				.attr('src', d => `img/rp-${d}.png`);
 			scoreLabels.append('span')
+				.attr('class', 'score-label')
 				.text(d => App.scoreLabels[d]);
 
 			scoreRows.append('td')
 				.attr('class', 'score-description-cell')
-				.text(d => indicator.score_descriptions[d]);
+				.text((d) => {
+					const desc = indicator.score_descriptions[d];
+					return desc.length > 300 ? `${desc.slice(0, 300)}...` : desc;
+				});
 			scoreRows.append('td');
 		};
 		
@@ -134,8 +170,9 @@
 		function updateIndicatorProgress() {
 			const numInds = capacity.indicators.length;
 			const numScored = capacity.indicators.filter(ind => ind.score).length;
+			const selectText = App.lang === 'fr' ? `Sélectionnez un score pour chaque indicateur (${numScored} of ${numInds}) :` : `Select a score for each indicator (${numScored} of ${numInds}):`;
 			d3.select('.indicator-progress')
-				.text(`Select a score for each indicator (${numScored} of ${numInds}):`);
+				.text(selectText);
 
 			// update color bar in tab navigation
 			d3.select('.block-link-subtitle.active').text(`${numScored} of ${numInds}`);

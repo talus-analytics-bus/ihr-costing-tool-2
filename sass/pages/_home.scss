@@ -17,11 +17,23 @@
 }
 .home-instructions {
 	margin-top: 20px;
-	color: #e53935;
+	color: #aa0000;
 	font-style: italic;
+	font-weight: 600;
 	text-align: center;
 }
 .enter-button-container {
 	margin-top: 10px;
 	text-align: center;
+}
+
+.language-modal {
+	.modal-title {
+		font-weight: bold;
+	}
+	.modal-body {
+		button.french {
+			margin-left: 20px;
+		}
+	}
 }

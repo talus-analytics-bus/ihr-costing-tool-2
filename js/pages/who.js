@@ -1,37 +1,72 @@
 (() => {
 	const inputNonDefaultColor = '#fff3cd';
-	const blocks = [
-		{
-			abbr: 'population',
-			name: 'Population and Currency',
-		}, {
-			abbr: 'country-details',
-			name: 'Country Details',
-		}, {
-			abbr: 'default-costs',
-			name: 'Cost Assumptions (optional)',
-			children: ['personnel', 'technology', 'printing', 'meetings'],
-		}, {
-			abbr: 'personnel',
-			tabName: 'Personnel compensation',
-			name: 'Personnel Compensation',
-			level: 1,
-		}, {
-			abbr: 'technology',
-			name: 'Technology and Infrastructure',
-			level: 1,
-		}, {
-			abbr: 'printing',
-			name: 'Printing',
-			level: 1,
-		}, {
-			abbr: 'meetings',
-			name: 'Meetings',
-			level: 1,
-		}
-	];
+	let blocks;
 
 	App.initWho = (whoTab) => {
+		const blocks_en = [
+			{
+				abbr: 'population',
+				name: 'Population and Currency',
+			}, {
+				abbr: 'country-details',
+				name: 'Country Details',
+			}, {
+				abbr: 'default-costs',
+				name: 'Cost Assumptions (optional)',
+				children: ['personnel', 'technology', 'printing', 'meetings'],
+			}, {
+				abbr: 'personnel',
+				tabName: 'Personnel compensation',
+				name: 'Personnel Compensation',
+				level: 1,
+			}, {
+				abbr: 'technology',
+				name: 'Technology and Infrastructure',
+				level: 1,
+			}, {
+				abbr: 'printing',
+				name: 'Printing',
+				level: 1,
+			}, {
+				abbr: 'meetings',
+				name: 'Meetings',
+				level: 1,
+			}
+		];
+
+		const blocks_fr = [
+			{
+				abbr: 'population',
+				name: 'Population et devise',
+			}, {
+				abbr: 'country-details',
+				name: 'Détails du pays',
+			}, {
+				abbr: 'default-costs',
+				name: 'Hypothèses de coûts (facultatif)',
+				children: ['personnel', 'technology', 'printing', 'meetings'],
+			}, {
+				abbr: 'personnel',
+				tabName: 'Rémunération du personnel',
+				name: 'Rémunération du personnel',
+				level: 1,
+			}, {
+				abbr: 'technology',
+				name: 'Technologie et infrastructure',
+				level: 1,
+			}, {
+				abbr: 'printing',
+				name: 'Travaux d\'impression',
+				level: 1,
+			}, {
+				abbr: 'meetings',
+				name: 'Réunions',
+				level: 1,
+			}
+		];
+
+		blocks = App.lang === 'en' ? blocks_en : blocks_fr;
+
 		if (whoTab === 'default-costs') {
 			hasher.setHash('costs/personnel');
 			return;
@@ -119,11 +154,16 @@
 		// show the correct block content
 		$(`.population-block`).slideDown();
 
+		// Get the current user-selected population of the country;
+		// if it's different from the default, then flag it as different
+		// in the user interface
 		const defaultPop = App.countryParams.find(d => d.name === App.whoAmI.name).multipliers.population;
+		const userPop = App.whoAmI.multipliers.population;
+		checkIfDefault(); // is it different?
 
 		// set population defaults and behavior
 		$('.population-input')
-			.val(Util.comma(defaultPop))
+			.val(Util.comma(userPop))
 			.on('change', function() {
 				App.whoAmI.multipliers.population = Util.getInputNumVal(this);
 				checkIfDefault();
@@ -131,13 +171,15 @@
 			});
 
 		// set currency defaults and behavior
+		const nameKey = App.lang === 'fr' ? 'name_fr' : 'name';
 		const currencyData = [];
 		for (let ind in App.currencies) {
 			currencyData.push({
-				name: App.currencies[ind].name,
+				name: App.currencies[ind][nameKey],
 				code: App.currencies[ind].iso.code,
 			});
 		}
+
 		Util.sortByKey(currencyData, 'name');
 		Util.populateSelect('.currency-select', currencyData, {
 			nameKey: 'name',
@@ -157,55 +199,92 @@
 			if (isDefault) {
 				$('.default-pop-text').slideUp();
 			} else {
+				const defaultText = App.lang === 'fr' ? 'Défaut : ' : 'Default: ';
 				$('.default-pop-text')
-					.text(`Default: ${Util.comma(defaultPop)}`)
+					.text(`${defaultText} ${Util.comma(defaultPop)}`)
 					.slideDown();
 			}
 		}
 
-		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
+		$('.next-button').click(() => hasher.setHash('costs/country-details'));
 	}
 
 	const initCountryDetailsTab = () => {
 		// show the correct block content
 		$(`.country-details-block`).slideDown();
 
-		const geoDivisions = [
+		const geoDivisions = App.lang === 'fr' ? [
+			{
+				nameAttr: 'intermediate_1_area_name',
+				valueAttr: 'intermediate_1_area_count',
+				description: 'Intermédiaire (par exemple, province, district)',
+				nameValues: ['Province', 'Municipalité', 'District', 'Etat'],
+				optional: false,
+			}, {
+				nameAttr: 'intermediate_2_area_name',
+				valueAttr: 'intermediate_2_area_count',
+				description: 'Intermédiaire 2 (facultatif)',
+				tooltipContent: "Dans les pays ayant plusieurs niveaux intermédiaires qui participent à des activités liées au RSI, les zones intermédiaires 2 sont plus petites que le premier niveau intermédiaire mais plus grand que les unités géopolitiques locales. Cette valeur est facultative. Si le nombre de zones intermédiaires 2 n'est pas fournie, cette valeur sera supposée être nulle et aucune activité ne sera chiffrée pour les zones intermédiaires 2.",
+				nameValues: ['Province', 'Municipalité', 'District', 'Etat', 'Commune'],
+				optional: true,
+			}, {
+				nameAttr: 'local_area_name',
+				valueAttr: 'local_area_count',
+				description: 'Local (par exemple, commune, ville)',
+				nameValues: ['Barangay', 'Ville', 'Circonscription électorale', 'Commune', 'District'],
+				optional: false,
+			}
+		] : [
 			{
 				nameAttr: 'intermediate_1_area_name',
 				valueAttr: 'intermediate_1_area_count',
 				description: 'Intermediate (e.g., province, district)',
 				nameValues: ['Province', 'Municipality', 'District', 'State'],
+				optional: false,
 			}, {
 				nameAttr: 'intermediate_2_area_name',
 				valueAttr: 'intermediate_2_area_count',
 				description: 'Intermediate 2 (optional)',
+				tooltipContent: 'In countries with multiple intermediate levels that participate in IHR-related activities, intermediate 2 areas are smaller than the first intermediate level but larger than local areas. This value is optional. Unless a number of intermediate 2 areas is specified, this value will be assumed to be zero and no activities will be costed for intermediate 2 areas.',
 				nameValues: ['Province', 'Municipality', 'District', 'State', 'County'],
+				optional: true,
 			}, {
 				nameAttr: 'local_area_name',
 				valueAttr: 'local_area_count',
 				description: 'Local (e.g., county, city)',
 				nameValues: ['Barangay', 'City', 'Constituency', 'County', 'District'],
+				optional: false,
 			}
 		];
-		const emptyOptionText = '-- select one --';
+		const geoHashFr = {"District":"District","Country":"Pays","Province":"Province","Barangay":"Barangay","County":"Commune","Municipality":"Municipalité","State":"Etat","City":"Ville","Constituency":"Circonscription électorale"};
+		const geoHashEn = _.invert(geoHashFr);
+		const emptyOptionText = App.lang === 'fr' ? '-- sélectionnez un --' : '-- select one --';
 
 		const geoRows = d3.select('.geo-division-table tbody').selectAll('tr')
 			.data(geoDivisions)
 			.enter().append('tr');
-		geoRows.append('td').text(d => `${d.description}:`);
+		geoRows.append('td').html(d => {
+			let content = `${d.description}${App.lang === 'fr' ? ' ' : ''}:`;
+			if (d.tooltipContent) content += ` <img class="info-img admin-help tooltipstered" title="${d.tooltipContent}" src="img/info.png">`;
+			return content;
+		});
 		geoRows.append('td').append('select')
 			.attr('class', 'form-control')
+			.classed('french', App.lang === 'fr')
 			.each(function(d) {
 				const nameValues = [emptyOptionText].concat(d.nameValues);
 				Util.populateSelect(this, nameValues);
 
 				const currNameVal = App.whoAmI[d.nameAttr];
-				if (currNameVal) $(this).val(currNameVal);
+				if (currNameVal) $(this).val(App.lang === 'fr' ? geoHashFr[currNameVal] : currNameVal);
 			})
 			.on('change', function(d) {
 				const val = $(this).val();
-				App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : val;
+				if (App.lang === 'fr') {
+					App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : geoHashEn[val];
+				} else {
+					App.whoAmI[d.nameAttr] = (val === emptyOptionText) ? '' : val;
+				}
 			});
 		geoRows.append('td').append('input')
 			.attr('class', 'form-control')
@@ -217,25 +296,34 @@
 
 
 		// public health section
-		const phMults = [
+		const phMults = App.lang === 'fr' ? [
 			{
 				name: 'central_hospitals_count',
-				description: 'Number of health care facilities in the country',
-				unit: 'health care facilities / country',
-			},/* {
-				name: 'central_epi_count',
-				description: 'Estimated total number of epidemiologists in the country',
-				unit: 'people',
-			}, */{
-				name: 'central_chw_count',
-				description: 'Number of community health workers in the country',
-				unit: 'community health workers / country',
-			}
+				description: 'Nombre d\'établissements de santé dans le pays : <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
+				unit: 'établissements / pays',
+			},
+			// {
+			// 	name: 'central_chw_count',
+			// 	description: 'Nombre d\'agents de santé communautaires dans le pays :',
+			// 	unit: 'agents / pays',
+			// }
+		] : [
+			{
+				name: 'central_hospitals_count',
+				description: 'Number of healthcare facilities in the country: <img class="committed-info-img info-img tooltipstered" id="healthcare-help" src="img/info.png">',
+				unit: 'healthcare facilities / country',
+			},
+			// {
+			// 	name: 'central_chw_count',
+			// 	description: 'Number of community health workers in the country:',
+			// 	unit: 'community health workers / country',
+			// }
 		];
 		const phRows = d3.select('.ph-table tbody').selectAll('tr')
 			.data(phMults)
 			.enter().append('tr');
-		phRows.append('td').text(d => `${d.description}:`);
+		//phRows.append('td').text(d => `${d.description}:`);
+        phRows.append('td').html(d => `${d.description}`);
 		const phInputCell = phRows.append('td');
 		phInputCell.append('input')
 			.attr('class', 'form-control')
@@ -249,7 +337,18 @@
 			});
 		phInputCell.append('span').text(d => d.unit);
 
+        const content = App.lang === 'fr' ? `Préciser le nombre d'établissements de santé publics participant aux activités liées au RSI, y compris les diagnostics au point de service pour les maladies prioritaires, et les programmes de biosécurité et de biosécurité.` : `Specify the number of public healthcare facilities participating in IHR-related activities, including point-of-care diagnostics for priority diseases, and biosafety and biosecurity programs.`;
+        $('#healthcare-help').tooltipster({
+            content: content,
+            trigger: 'hover',
+            side: 'top',
+        });
+        $('.admin-help').tooltipster({
+            trigger: 'hover',
+            side: 'top',
+        });
 		// previous and next buttons
+		$('.next-button').click(() => hasher.setHash('costs/personnel'));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 
@@ -269,8 +368,10 @@
 		});
 
 		// add overhead percentage if personnel page
+		let nextTab = 'personnel';
 		if (whoTab === 'personnel') {
-			defaultCosts.push({
+			nextTab = 'technology';
+			const overhead_en = {
 				cost: 0.6,
 				cost_unit: "% per year",
 				description: "Additional amount that will be budgeted for employee overhead expenses, as a percentage of the employee's annual salary",
@@ -278,23 +379,55 @@
 				name: "Overhead percentage",
 				tab_name: "Personnel compensation",
 				subheading_name: "Salaries",
-			});
+			};
+			const overhead_fr = {
+				cost: 0.6,
+				cost_unit: "% par an",
+				description: "Montant additionnel qui sera budgété pour les frais généraux des employés, en pourcentage du salaire annuel de l'employé",
+				id: "gbc.overhead",
+				name: "Pourcentage de frais généraux",
+				tab_name: "Rémunération du personnel",
+				subheading_name: "Salaires",
+			};
+
+			defaultCosts.push(App.lang === 'en' ? overhead_en : overhead_fr);
 		}
 
 		// add buy/lease option if technology and infrastructure
 		if (whoTab === 'technology') {
-			defaultCosts.push({
+			nextTab = 'printing';
+			const buyLease_en = {
 				type: "radio",
 				values: ["Buy", "Lease"],
 				description: "Choice of either buying or leasing facility space",
 				name: "Buy or lease facility space",
 				tab_name: "Technology and Infrastructure",
 				subheading_name: "Infrastructure",
-			});
+			};
+
+			const buyLease_fr = {
+				type: "radio",
+				values: ["Acheter", "Louer"],
+				description: "Choix d'achat ou de location de l'installation",
+				name: "Acheter ou louer un espace d'installation",
+				tab_name: "Technologie et infrastructure",
+				subheading_name: "Infrastructure",
+			};
+			defaultCosts.push(App.lang === 'fr' ? buyLease_fr : buyLease_en);
 		}
+
+		if (whoTab === 'printing') nextTab = 'meetings';
+		const buyLeaseHash = {
+			"Buy": "Buy",
+			"Lease": "Lease",
+			"Acheter": "Buy",
+			"Louer": "Lease"
+		};
 
 		// add meeting attendee data
 		if (whoTab === 'meetings') {
+			$('.next-button').addClass('hidden');
+			$('.proceed-button').removeClass('hidden');
 			for (let i = 0; i < App.globalStaffMultipliers.length; i++) {
 				defaultCosts.push(App.globalStaffMultipliers[i]);
 			}
@@ -430,7 +563,7 @@
 						if (itemNode.id.indexOf('gbc') > -1) {
 							// add label for input currency, if item is not
 							// "overhead percentage"
-							if (itemName !== "Overhead percentage") {
+							if (itemName !== "Overhead percentage" && itemName !== "Pourcentage de frais généraux") {
 								inputGroup.append('span')
 									.attr('class','dv-currency');
 							}
@@ -443,7 +576,7 @@
 							// add label for input unit
 							inputGroup.append('span')
 								.attr('class','dv-cost-unit')
-								.text(" attendees");
+								.text(App.lang === 'en' ? " attendees" : ' participants');
 						}
 
 						// add default text warning
@@ -456,12 +589,12 @@
 							.data(itemNode.values)
 							.enter().append('div')
 								.attr('class', 'btn btn-secondary')
-								.classed('active', d => d.toLowerCase() === User.buyOrLease)
+								.classed('active', d => buyLeaseHash[d].toLowerCase() === User.buyOrLease)
 								.text(d => d)
 								.on('click', function(d) {
 									$(this).addClass('active')
 										.siblings().removeClass('active');
-									User.buyOrLease = d.toLowerCase();
+									User.buyOrLease = buyLeaseHash[d].toLowerCase();
 									App.updateAllCosts();
 								});
 					}
@@ -520,7 +653,7 @@
 			const input = d3.select(selector);
 
 			let isDefault = true;
-			let defaultText = 'Default: ';
+			let defaultText = App.lang === 'fr' ? 'Défaut: ' : 'Default: ';
 			if (gbcId.indexOf('gbc') > -1) {
 				if (gbcId === 'gbc.overhead') {
 					isDefault = App.whoAmI.staff_overhead_perc === 0.6;
@@ -552,8 +685,8 @@
 
 		updateCostDisplay();
 
-
-		// behavior for next button
+		// previous and next buttons
+		$('.next-button').click(() => hasher.setHash('costs/' + nextTab));
 		$('.proceed-button').click(() => hasher.setHash('costs/p-1/1'));
 	}
 })();

@@ -1,48 +1,65 @@
 const App = {};
 
 (() => {
-	App.demoMode = false;
-	App.scoreLabels = {
+
+	App.lang = 'en';
+	App.choseLang = false;
+	App.demoMode = true;
+	App.cookieDomain = "";
+
+	App.scoreLabels = App.lang === 'fr' ? {
+		1: 'Pas de capacité',
+		2: 'Capacité limitée',
+		3: 'Capacité développée',
+		4: 'Capacité démontrée',
+		5: 'Capacité durable',
+	} : { 
 		1: 'No Capacity',
 		2: 'Limited Capacity',
 		3: 'Developed Capacity',
 		4: 'Demonstrated Capacity',
 		5: 'Sustainable Capacity',
-	};
-
+	}; 
+	
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
+		let cookie = Util.getCookie('lang'); // you can retieve the cookie like this.
+		if (cookie === "") {
+			$('.language-modal').modal('show');
+		} else {
+			App.lang = cookie;
+			App.choseLang = true;
+		}
+
+		// $('button.english, button.french').click(function() {
+		// 	const lang = d3.select(this).attr('lang');
+		// 	Util.setCookie('lang', lang); // Set the cookie here
+		// 	App.lang = lang;
+		// 	App.changeLanguage(App.lang);
+		// 	$('.language-modal').modal('hide');
+		// });
+
 		// give a warning if user is not using Chrome or Firefox
 		const browser = navigator.userAgent;
 		if (browser.search('Chrome') === -1 && browser.search('Firefox') === -1) {
 			noty({
 				timeout: false,
 				maxWidth: 400,
-				text: '<b>Warning!</b><br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.',
+				text: '<b>Warning!<br>This tool is designed to be used in Google Chrome or Mozilla Firefox! Please switch to one of these browsers for optimal performance.</b>',
 			});
 		}
-
-		// initiate behavior for navigation links
-		$('.tool-name').click(() => hasher.setHash(''));
-		$('.nav-item').click(function() {
-			// dropdown lists do not have associated pages
-			const page = $(this).attr('page');
-			if (typeof page !== 'undefined') hasher.setHash(page);
-		});
-
-		// add the hrefs to the dropdown menu items
-		$('.dropdown-item').click(function() {
-				hasher.setHash($(this).attr('page'));
-		});
 
 		// load country params data
 		d3.queue()
 			.defer(d3.json, 'data/country_specific_parameters.json')
-			.defer(d3.json, 'data/jee_costing_data.json')
+			.defer(d3.json, 'data/jee_costing_data.json') // v15
+			.defer(d3.json, 'data/jee_score_data.json')
 			.defer(d3.json, 'data/currencies.json')
 			.defer(d3.json, 'data/global_base_costs.json')
 			.defer(d3.json, 'data/global_staff_multipliers.json')
-			.await((error, countryParams, jeeTree, currencies, globalBaseCosts, globalStaffMultipliers) => {
+			.defer(d3.json, 'data/country_names_en_fr.json')
+			.defer(d3.json, 'data/currency_names_en_fr.json')
+			.await((error, countryParams, jeeTree, jeeScoreData, currencies, globalBaseCosts, globalStaffMultipliers, country_names_en_fr, currency_names_en_fr) => {
 				if (error) {
 					noty({
 						type: 'error',
@@ -51,20 +68,44 @@ const App = {};
 					return;
 				}
 
-				App.countryParams = countryParams;
-				App.jeeTree = jeeTree;
-				App.currencies = currencies;
-				App.globalBaseCosts = globalBaseCosts;
-				App.globalStaffMultipliers = globalStaffMultipliers;
-				App.whoAmI = {};
+			App.countryParams = countryParams;
+			App.jeeScoreData = _.groupBy(jeeScoreData, 'code');;
 
-				if (App.demoMode) {
+			// add french names to country params
+			App.countryParams.forEach((country) => {
+				const iso2 = country.abbreviation;
+				const match = country_names_en_fr.find(d => d.iso2 === iso2);
+				if (match) country.name_fr = match.fr;
+			});
+
+			App.jeeTree = jeeTree;
+			App.cleanJeeTree = jeeTree.map(d => $.extend(true, {}, d));
+			App.currencies = currencies;
+			// add french names to currency params
+			App.currencies = _.mapObject(App.currencies, (val, key) => {
+				const iso3 = key;
+				const match = currency_names_en_fr.find(d => d.iso3 === iso3);
+				if (match) {
+					val.name_fr = match.fr;
+				} 
+				return val;
+			});
+
+			App.globalBaseCosts = globalBaseCosts;
+			App.globalStaffMultipliers = globalStaffMultipliers;
+			App.whoAmI = {};
+
+			// Update language of JEE tree
+			App.changeLanguage(App.lang);
+
+			if (App.demoMode) {
 					// default to Kenya
 					d3.text('data/KE20170904-demo.ihr', (error, text) => {
-						const demoDataLoaded = App.loadSessionData(text);
-						if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
-						App.updateAllCosts();
-						callback();
+						App.loadSessionData(text, (demoDataLoaded, oldVersion) => {
+							if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
+							App.updateAllCosts();
+							callback();
+						});
 					});
 
 					// default to Switzerland
@@ -231,7 +272,7 @@ const App = {};
 	}
 
 	App.getNeededLineItems = (lineItems, score) => {
-		if (!score) return lineItems;
+		// if (!score) return lineItems;
 		if (User.targetScoreType === 'step') {
 			return lineItems.filter((li) => {
 				return li.score_step_to.includes(String(+score + 1));
@@ -247,6 +288,17 @@ const App = {};
 		}
 		return [];
 	}
+
+	/**
+	 * Returns TRUE if the line item is needed to achieve the target
+	 * score, and FALSE otherwise (including if current/target score(s) 
+	 * haven't been set yet)
+	 * @param  {object} lineItem The line item from the JEE Tree
+	 * @return {bool}          TRUE if needed, FALSE otherwise
+	 */
+	App.needLineItem = (lineItem) => {
+
+	};
 
 	// gets the score in the user data for the indicator specified
 	App.getIndicatorScore = (indId) => {
@@ -315,18 +367,23 @@ const App = {};
 					ind.capitalCost = 0;
 					ind.recurringCost = 0;
 
+					// action
 					ind.actions.forEach((a) => {
 						a.startupCost = 0;
 						a.capitalCost = 0;
 						a.recurringCost = 0;
+						// console.log('ind');
+						// console.log(ind);
 
+						// input
 						a.inputs.forEach((input) => {
 							input.startupCost = 0;
 							input.capitalCost = 0;
 							input.recurringCost = 0;
 
-							input.line_items.forEach((li) => {
-								li.cost = App.getLineItemCost(li, exchangeRate);
+							input.line_items.forEach(li => li.cost = App.getLineItemCost(li, exchangeRate));
+							const neededLineItems = App.getNeededLineItems(input.line_items, ind.score)
+							neededLineItems.forEach((li) => {
 
 								if (li.line_item_type === 'start-up') {
 									input.startupCost += li.cost;
@@ -349,11 +406,12 @@ const App = {};
 							}
 						});
 
-						if (App.isActionComplete(a, ind.score)) {
+						// if (App.isActionComplete(a, ind.score)) {
+						// if (App.isIndicatorComplete(ind) && App.isActionComplete(a, ind.score)) {
 							ind.startupCost += a.startupCost;
 							ind.capitalCost += a.capitalCost;
 							ind.recurringCost += a.recurringCost;
-						}
+						// }
 					});
 					cap.startupCost += ind.startupCost;
 					cap.capitalCost += ind.capitalCost;
@@ -365,6 +423,41 @@ const App = {};
 			});
 		});
 	}
+
+
+	/**
+	 * Given the data field name of a country multiplier (e.g., 'intermediate_1_area_count')
+	 * returns the value of the multiplier by which the base cost should be multiplied
+	 * @param  {string} name Data field name of country multiplier
+	 * @return {double}      Value by which the base cost should be multiplied
+	 */
+	const getCountryMultiplier = (name) => {
+
+		/**
+		 * Given the data field name of a country multiplier (e.g., 'intermediate_1_area_count')
+	 	 * returns its value if it defined and valid, and 0 otherwise		
+		 * @param  {string} name Data field name of country multiplier
+	 	 * @return {double}      Value if it defined and valid, and 0 otherwise
+		 */
+		const returnSimpleMultiplier = (name) => {
+			const rawValue = App.whoAmI.multipliers[name];
+			if (rawValue === undefined || rawValue === null || rawValue === '') return 0;
+			else {
+				return rawValue;
+			};
+		};
+		switch (name) {
+			case 'intermediate_1_and_2_count':
+				return (returnSimpleMultiplier('intermediate_1_area_count') + returnSimpleMultiplier('intermediate_2_area_count'));
+				break;
+			case 'intermediate_1_and_local_area_count':
+				return (returnSimpleMultiplier('intermediate_1_area_count') + returnSimpleMultiplier('local_area_count'));
+				break;
+			default:
+				return returnSimpleMultiplier(name);
+				break;
+		}	
+	};
 
 	// gets the cost of a line item
 	App.getLineItemCost = (li, exchangeRate) => {
@@ -383,10 +476,13 @@ const App = {};
 			// change line item type and target score according to user's choice of buy/lease
 			if (User.buyOrLease === 'buy') {
 				li.line_item_type = 'start-up';
-				li.score_step_to = [d3.min(li.score_step_to)];  // keep lowest score
+				li.score_step_to = [String(d3.min(li.score_step_to))];  // keep lowest score
 			} else {
 				li.line_item_type = 'recurring';
-				li.score_step_to = d3.range(d3.min(li.score_step_to), 5);  // lowest score to 4 (including)
+				const score_step_to = [];  // lowest score to 4 (including)
+				const minScore = +d3.min(li.score_step_to);
+				for (let i = minScore; i < 5; i++) score_step_to.push(String(i));
+					li.score_step_to = score_step_to.slice(0);
 			}
 		}
 
@@ -406,15 +502,26 @@ const App = {};
 			});
 			if (multiplierObj) cost *= multiplierObj.count;
 		}
+
 		if (li.country_multiplier && App.whoAmI.name) {
-			let multiplier = 1;
-			if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
-				multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
-			} else {
-				multiplier = App.whoAmI.multipliers[li.country_multiplier];
-			}
-			if (multiplier) cost *= multiplier;
+			cost *= getCountryMultiplier(li.country_multiplier);
 		}
+		// if (li.country_multiplier && App.whoAmI.name) {
+		// 	let multiplier = 1;
+		// 	if (li.country_multiplier === 'intermediate_1_and_local_area_count') {
+		// 		multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.local_area_count;
+
+
+
+		// 	} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
+		// 		let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
+		// 		if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
+		// 		multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
+		// 	} else {
+		// 		multiplier = App.whoAmI.multipliers[li.country_multiplier];
+		// 	}
+		// 	if (multiplier) cost *= multiplier;
+		// }
 		if (li.custom_multiplier_1) {
 			cost *= App.getMultiplierValue(li.custom_multiplier_1);
 		}
@@ -448,14 +555,14 @@ const App = {};
 	App.getCustomCostText = (input) => {
 		if (!input.isCustomCost) return '';
 		return `${App.moneyFormat(input.customStartupCost)} + ` +
-			`${App.moneyFormat(input.customRecurringCost)}/yr`;
+		`${App.moneyFormat(input.customRecurringCost)}/yr`;
 	}
 
 	// returns the number of indicators the user has fully costed
 	App.getNumIndicatorsCosted = (capacity) => {
 		return capacity.indicators
-			.filter(ind => App.isIndicatorComplete(ind))
-			.length;
+		.filter(ind => App.isIndicatorComplete(ind))
+		.length;
 	}
 
 	// gets the exchange rate for the selected currency to USD
@@ -493,6 +600,139 @@ const App = {};
 
 
 	/* ------------------ Misc Functions ------------------- */
+	// Updates the language used to match the choice (2-character code)
+	// @langeChoice	2-character code representing the choice of language,
+	// currently 'en' or 'fr'
+	App.changeLanguage = (langChoice = 'fr', params ={}) => {
+		langChoice = langChoice.toLowerCase().trim();
+		App.lang = langChoice; // update global variable specifying language choice
+		User.lang = langChoice; // update session data so language reloaded w IHR file
+
+		App.jeeTree.forEach(ce => {
+			// CORE ELEMENTS
+			// name
+			ce.name = ce[`name_${App.lang}`];
+
+			// cc fields to copy
+			const ccFields = [
+			'name',
+			'target_description',
+			'as_measured_by',
+			'desired_impact',
+			'notes',
+			];
+			ce.capacities.forEach(cc => {
+				// CORE CAPACITIES
+				ccFields.forEach(field => {
+					cc[field] = cc[`${field}_${App.lang}`];
+				});
+
+				const indFields = [
+				'name',
+				'score_descriptions',
+				];
+
+				cc.indicators.forEach(ind => {
+					// INDICATORS
+					indFields.forEach(field => {
+						ind[field] = ind[`${field}_${App.lang}`];
+					});
+
+					ind.actions.forEach(action => {
+						// ACTIONS
+						action.name = action[`name_${App.lang}`]
+
+						action.inputs.forEach(input => {
+							// INPUTS
+							input.name = input[`name_${App.lang}`]
+
+							const liFields = [
+							'name',
+							'description',
+							'category_tag',
+							'function_tag',
+							'custom_multiplier_1',
+							'custom_multiplier_2',
+							'references',
+							'where_find_base_cost',
+							];
+							input.line_items.forEach(li => {
+								liFields.forEach(field => {
+									li[field] = li[`${field}_${App.lang}`]
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+
+		App.globalBaseCosts.forEach(gbc => {
+			const fields = [
+			'name',
+			'description',
+			'tab_name',
+			'subheading_name',
+			'cost_unit',
+			];
+			fields.forEach(field => {
+				gbc[field] = gbc[`${field}_${App.lang}`];
+			});
+		});
+
+		App.globalStaffMultipliers.forEach(gsm => {
+			const fields = [
+			'name',
+			'description',
+			'tab_name',
+			'subheading_name',
+			];
+			fields.forEach(field => {
+				gsm[field] = gsm[`${field}_${App.lang}`];
+			});
+		});
+
+		// update number format defaults
+		if (App.lang === 'fr') {
+			// d3.formatDefaultLocale({
+			//   "decimal": ",",
+			//   "thousands": "\u00a0",
+			//   "grouping": [3],
+			//   "currency": ["", "\u00a0€"],
+			//   "percent": "\u202f%"
+			// });
+			d3.formatDefaultLocale({
+				"decimal": ",",
+				"thousands": "\u00a0",
+				"grouping": [3],
+				"currency": ["", "$"]
+			});
+			
+		} else {
+			// rounds down and adds commas appropriately
+			d3.formatDefaultLocale({
+				"decimal": ".",
+				"thousands": ",",
+				"grouping": [3],
+				"currency": ["$", ""]
+			});
+		}
+		Util.loadNumberFormatters();
+
+		// update cookie to store language preference
+		Util.setCookie("lang", App.lang);
+		
+		// Once the new language is chosen, reload the page.
+		if (params.reset === false) {
+
+		} else {
+			crossroads.parse(hasher.getHash());
+		}
+		
+		// set page title
+		$('title').text(App.lang === 'fr' ? 'Outil d\'évaluation des coûts du RSI' : 'IHR Costing Tool');
+	};
+
 	// retrieves a copy of all complete indicators and all levels below
 	App.getCompleteIndicatorTree = () => {
 		const completeIndicators = [];
@@ -532,6 +772,65 @@ const App = {};
 			});
 		});
 		return completeIndicators;
+	}
+
+	// retrieves a copy of all scored indicators and all levels below (i.e., the needed
+	// costing actions / inputs / line items for that indicator score and the user's goal)
+	App.getScoredIndicatorTree = () => {
+		const scoredIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					if (ind.score) {
+					// if (App.isIndicatorComplete(ind)) {
+						const indCopy = Object.assign({}, ind);
+						const actions = App.getNeededActions(indCopy);
+						indCopy.targetScore = App.getTargetScore(indCopy);
+						indCopy.actions = [];
+
+						actions.forEach((action) => {
+							if (true) {
+							// if (App.isActionComplete) {
+								const actionCopy = Object.assign({}, action);
+								const actionInputs = actionCopy.inputs
+								// const costedInputs = actionCopy.inputs.filter(input => input.costed);
+								const inputs = App.getNeededInputs(actionInputs, ind.score);
+								actionCopy.inputs = [];
+
+								inputs.forEach((input) => {
+									const inputCopy = Object.assign({}, input);
+									const lineItems = App.getNeededLineItems(inputCopy.line_items, ind.score);
+									inputCopy.line_items = [];
+
+									lineItems.forEach((li) => {
+										const liCopy = Object.assign({}, li);
+										inputCopy.line_items.push(liCopy);
+									});
+									actionCopy.inputs.push(inputCopy);
+								});
+								indCopy.actions.push(actionCopy);
+							}
+						});
+						scoredIndicators.push(indCopy);
+					}
+				});
+			});
+		});
+		return scoredIndicators;
+	}
+
+	// retrieves a copy of all indicators and all levels below, regardless of whether
+	// completed or not
+	App.getAllIndicatorTree = () => {
+		const allIndicators = [];
+		App.jeeTree.forEach((cc) => {
+			cc.capacities.forEach((cap) => {
+				cap.indicators.forEach((ind) => {
+					allIndicators.push(ind);
+				});
+			});
+		});
+		return allIndicators;
 	}
 
 	App.downloadText = (fileName, data) => {

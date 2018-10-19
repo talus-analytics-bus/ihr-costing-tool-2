@@ -2,16 +2,16 @@
   "name": "ihr-costing-tool-2",
   "version": "1.0.0",
   "description": "IHR Costing Tool v2",
-  "main": "index.js",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/talus-analytics/ihr-costing-tool-2.git"
   },
-  "author": "",
+  "author": "rfink",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/talus-analytics/ihr-costing-tool-2/issues"
@@ -19,18 +19,22 @@
   "homepage": "https://github.com/talus-analytics/ihr-costing-tool-2#readme",
   "dependencies": {
     "axios": "^0.16.2",
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "http": "0.0.0",
-    "nodecli": "0.0.1",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "express-rate-limit": "^2.9.0",
+    "express-session": "^1.15.6",
+    "http-server": "^0.11.1",
+    "jsonwebtoken": "^8.1.0",
+    "nodemon": "^1.15.1",
     "path": "^0.12.7",
-    "xlsx-populate": "^1.10.0"
+    "xlsx-populate": "^1.14.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "eslint": "^4.6.1",
-    "eslint-config-airbnb": "^15.1.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "~6.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.1",

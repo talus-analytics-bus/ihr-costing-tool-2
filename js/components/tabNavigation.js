@@ -12,7 +12,7 @@
 		const blockHeaders = blockCategories.append('div')
 			.attr('class', 'block-link-capabilities-header')
 			.classed('active', (d) => {
-				if (d.name === 'Other') {
+				if (d.name === 'Other' || d.name === 'Autre') {
 					return d.active = !App.normalCcIds.includes(ccId);
 				}
 				return d.active = d.id === ccId;

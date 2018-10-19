@@ -1,10 +1,17 @@
 (() => {
 	App.definitions = {
-		totalCost: 'The <b>total cost</b>, depending on the duration selected, is the sum of the startup cost, capital cost, and recurring costs.',
-		startupCost: 'The <b>startup cost</b> refers to non-recurring costs.',
-		capitalCost: 'The <b>capital cost</b> refers to salary related capital expenditures.',
-		recurringCost: 'The <b>recurring cost</b> refers to annual operating costs.',
-		exportReport: 'The <b>detailed report</b> contains all costs entered on the costing page, full calculations used for default costs, and descriptions for each calculation. This file can be used to work with costing calculations in Excel, but it can not be used to upload data to the IHR Costing Tool website.',
-		exportSession: 'The <b>IHR data file</b> stores score and costing information on your computer for upload into the IHR Costing Tool to continue work at a later date. This file can not be edited using other programs on your computer and all changes to score and costing inputs must be made by uploading the data file on the Assessment Instructions and Upload page and continuing work using the website.',
+		'en': {
+			totalCost: 'The <b>total cost</b>, depending on the duration selected, is the sum of the startup cost, capital cost, and recurring costs.',
+			startupCost: '<b>Startup costs</b> are one-time expenses incurred in the first year, excluding construction and durable equipment costs.',
+			capitalCost: '<b>Capital costs</b> are non-recurring costs incurred in the first year for construction and durable equipment.',
+			recurringCost: '<b>Recurring costs</b> are annual operating expenses, including salaries.',
+		},
+		'fr': {
+			totalCost: 'Le <b>coût total</b>, en fonction de la durée sélectionnée, est la somme du coût de démarrage, du coût d\'investissement et des coûts récurrents.',
+			startupCost: 'Les <b>coûts de démarrage</b> sont des dépenses ponctuelles engagées la première année, à l\'exclusion des coûts de construction et d\'équipement.',
+			capitalCost: 'Les <b>coûts d\'investissement</b> sont des coûts non récurrents engagés la première année pour la construction et l\'équipement durable.',
+			recurringCost: 'Les <b>coûts récurrents</b> sont les charges d\'exploitation annuelles, y compris les salaires.',
+		},
 	};
 })();
+

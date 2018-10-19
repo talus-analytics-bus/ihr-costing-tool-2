@@ -1,9 +1,15 @@
 const Charts = {};
 
 (() => {
+
+	const typeHash = {
+		"indicator":"indicateur",
+		"core capacity":"capacité de base",
+		"core element": "élément clé",
+	};
 	Charts.buildProgressChart = (selector, data, param={}) => {
-		const margin = { top: 35, right: 45, bottom: 35, left: 5 };
-		const width = param.width || 660;
+		const margin = { top: 35, right: 45, bottom: 35, left: 50 };
+		const width = param.width || 630;
 		const height = param.height || 36;
 		const chartContainer = d3.selectAll(selector).append('svg')
 			.classed('progress-chart', true)
@@ -45,9 +51,9 @@ const Charts = {};
 
 		// draw rectangles
 		const rectData = [
-			{ x0: 1, x1: 2, color: 'rgb(200, 33, 39)' },
-			{ x0: 2, x1: 4, color: 'rgb(247, 236, 19)' },
-			{ x0: 4, x1: 5, color: 'rgb(21, 108, 55)' }
+			{ x0: 1, x1: 1.5, color: 'rgb(200, 33, 39)' },
+			{ x0: 1.5, x1: 3.5, color: 'rgb(247, 236, 19)' },
+			{ x0: 3.5, x1: 5, color: 'rgb(21, 108, 55)' }
 		];
 		chart.selectAll('.color-bar')
 			.data(rectData)
@@ -105,7 +111,7 @@ const Charts = {};
 			.attr('x', x(data[0]))
 			.attr('y', -21)
 			.attr('dy', '.35em')
-			.text('Current Score');
+			.text(App.lang === 'fr' ? 'Score actuel' : 'Current Score');
 		chart.append('line')
 			.attr('class', 'label-line')
 			.attr('x1', x(data[1]))
@@ -117,7 +123,7 @@ const Charts = {};
 			.attr('x', x(data[1]))
 			.attr('y', height + 21)
 			.attr('dy', '.35em')
-			.text('Target Score')
+			.text(App.lang === 'fr' ? 'Score cible' : 'Target Score')
 
 		return chart;
 	}
@@ -175,17 +181,20 @@ const Charts = {};
 			.attr('clip-path', 'url(#chart-clip)');
 
 		// add axes labels
-		const xAxisLabel = chart.append('text')
+		const gAxisLabels = chart.append('g')
+			.attr('class','axis-labels')
+			.attr('transform','translate(-100,0)');
+		const xAxisLabel = gAxisLabels.append('text')
 			.attr('class', 'axis-label x-axis-label')
-			.attr('x', 5)
+			.attr('x', 85)
 			.attr('y', height + 60);
-		const yAxisLabel = chart.append('text')
+		const yAxisLabel = gAxisLabels.append('text')
 			.attr('class', 'axis-label y-axis-label-1')
 			.attr('y', -32);
-		chart.append('text')
+		gAxisLabels.append('text')
 			.attr('class', 'axis-label y-axis-label-2')
 			.attr('y', -15)
-			.text(`(in ${App.whoAmI.currency_iso})`);
+			.text(App.lang === 'fr' ? `(en ${App.whoAmI.currency_iso})` : `(in ${App.whoAmI.currency_iso})`);
 
 
 		// update functions
@@ -275,9 +284,9 @@ const Charts = {};
 						.style('fill', d => colorScale(x(xValFunc(d))))
 						.each(function addTooltip(d, i) {
 							const costData = [
-								{ name: 'Startup Cost', value: d.startupCost },
-								{ name: 'Capital Cost', value: d.capitalCost },
-								{ name: 'Recurring Cost', value: d.recurringCost, unit: '/yr' }
+								{ name: App.lang === 'fr' ? 'Coût de démarrage' : 'Startup Cost', value: d.startupCost },
+								{ name: App.lang === 'fr' ? 'Coût d\'investissement' : 'Capital Cost', value: d.capitalCost },
+								{ name: App.lang === 'fr' ? 'Coût récurrent' : 'Recurring Cost', value: d.recurringCost, unit: App.lang === 'fr' ? '/an' : '/yr' }
 							];
 
 							const contentContainer = d3.select(document.createElement('div'));
@@ -285,10 +294,10 @@ const Charts = {};
 								.attr('class', 'cc-tooltip');
 							content.append('div')
 								.attr('class', 'cc-tooltip-title')
-								.text(`${Util.capitalize(d.type)} (${d.id.toUpperCase()})`);
+								.text(App.lang === 'fr' ? `${Util.capitalize(typeHash[d.type])} (${d.id.toUpperCase()})` : `${Util.capitalize(d.type)} (${d.id.toUpperCase()})`);
 							content.append('div')
 								.attr('class', 'cc-tooltip-subtitle')
-								.text(d.name);
+								.text(App.lang === 'fr' ? d.name : d.name);
 
 							const costBlocks = content.selectAll('.cc-tooltip-block')
 								.data(costData)
@@ -307,7 +316,7 @@ const Charts = {};
 								.attr('class', 'cc-tooltip-button-container')
 								.append('button')
 									.attr('class', 'cc-tooltip-button btn btn-secondary')
-										.text('Go to Costing');
+										.text(App.lang === 'fr' ? 'Aller au calcul de coûts' : 'Go to Costing');
 
 							// attach url redirect when clicking tooltip "go to costing" button
 							if (d.type === 'indicator') {
@@ -343,7 +352,15 @@ const Charts = {};
 		// define color scale
 		// const bubbleColorArr = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486']; // purples
 		// http://colorbrewer2.org/#type=sequential&scheme=Purples&n=7
-		const bubbleColorScale = {
+		const bubbleColorScale = App.lang === 'fr' ? {
+		  "Coordination / leadership": "#f2f0f7",
+		  "Planning including assessment, design, planning, policy, legislation": "#dadaeb",
+		  "Strengthening HR capacity": "#bcbddc",
+		  "Strengthening infrastructure": "#9e9ac8",
+		  "Operations / implementation": "#807dba",
+		  "Analysis including data quality and dissemination": "#6a51a3",
+		  "Use and review mechanisms": "#4a1486"
+		} : {
 		  "Coordination / leadership": "#f2f0f7",
 		  "Planning including assessment, design, planning, policy, legislation": "#dadaeb",
 		  "Strengthening HR capacity": "#bcbddc",
@@ -471,7 +488,7 @@ const Charts = {};
 			.attr('xlink:href', d => `#${d.id}`);
 
 		node.append('title')
-			.text(d => (d.name + '\n' + format(d.value)));
+			.text(d =>(d.name + '\n' + format(d.value)));
 
 		node.on('mouseover', function(currentNode) {
 			// black ring

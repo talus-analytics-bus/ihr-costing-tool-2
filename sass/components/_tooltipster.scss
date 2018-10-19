@@ -1,0 +1,37 @@
+.tooltipster-sidetip.tooltipster-shadow .tooltipster-content,
+.tooltipster-follower.tooltipster-shadow .tooltipster-content {
+  padding: 12px 20px;
+  color: #444;
+  font-size: 1em !important;
+}
+.tooltip-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  text-align: center;
+}
+.tooltip-score-text {
+  text-align: center;
+  margin-top: 5px;
+}
+.tooltip-profile-type {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 0.95em;
+}
+.tooltip-main-value {
+  margin-top: 20px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.9em;
+  text-align: center;
+}
+.tooltip-main-value-label {
+  margin: 15px 0 5px;
+  text-align: center;
+}
+.tooltip-row-content {
+  margin-top: 10px;
+}
+.info-img,
+img.tooltipstered {
+  cursor: pointer;
+}

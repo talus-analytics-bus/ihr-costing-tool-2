@@ -1,0 +1,41 @@
+[
+  {
+    "id": "gsm.0",
+    "name_en": "Meeting attendees - Small",
+    "name_fr": "Participants à la réunion - Petite",
+    "description": "Number of attendees for a small meeting",
+    "description_fr": "Nombre de participants pour une petite réunion",
+    "count": 15,
+    "default_count": 15,
+    "tab_name": "Meetings",
+    "tab_name_fr": "Réunions",
+    "subheading_name": "Attendee counts",
+    "subheading_name_fr": "Nombre de participants"
+  },
+  {
+    "id": "gsm.1",
+    "name": "Meeting attendees - Medium",
+    "name_fr": "Participants à la réunion - Moyenne",
+    "description": "Number of attendees for a medium meeting",
+    "description_fr": "Nombre de participants pour une réunion moyenne",
+    "count": 30,
+    "default_count": 30,
+    "tab_name": "Meetings",
+    "tab_name_fr": "Réunions",
+    "subheading_name": "Attendee counts",
+    "subheading_name_fr": "Nombre de participants"
+  },
+  {
+    "id": "gsm.2",
+    "name": "Meeting attendees - Large",
+    "name_fr": "Participants à la réunion - Importante",
+    "description": "Number of attendees for a large meeting",
+    "description_fr": "Nombre de participants pour une grande réunion",
+    "count": 85,
+    "default_count": 85,
+    "tab_name": "Meetings",
+    "tab_name_fr": "Réunions",
+    "subheading_name": "Attendee counts",
+    "subheading_name_fr": "Nombre de participants"
+  }
+]

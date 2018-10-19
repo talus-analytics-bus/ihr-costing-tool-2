@@ -1,5 +1,5 @@
 .overview-container {
-	& > div:nth-child(n+2) {
+	.overview-section {
 		margin-top: 15px;
 	}
   .upload-button-container {
@@ -21,4 +21,5 @@
   .input-score-file {
     display: none;
   }
+  button { margin-right: 10px; }
 }

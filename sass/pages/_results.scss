@@ -224,3 +224,27 @@
 		}
 	}
 }
+
+
+/* --- Export Section --- */
+.results-export-content {
+	margin-top: 40px;
+
+	.export-button-section {
+		border-top: $light-border;
+		padding: 20px 0 30px;
+	}
+	.export-button-container {
+		display: inline-block;
+		width: 240px;
+		&.french {
+			width: 360px;
+		}
+		vertical-align: top;
+	}
+	.export-button-text {
+		display: inline-block;
+		width: 600px;
+		vertical-align: top;
+	}
+}
