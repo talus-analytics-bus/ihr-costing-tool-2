@@ -1,6 +1,6 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/Users/mikevanmaele/anaconda3/bin/node',
-1 verbose cli   '/Users/mikevanmaele/anaconda3/bin/npm',
+1 verbose cli [ '/usr/local/Cellar/node/9.3.0_1/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'start' ]
 2 info using npm@3.10.10
 3 info using node@v6.10.3
@@ -9,25 +9,25 @@
 6 silly lifecycle ihr-costing-tool-2@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle ihr-costing-tool-2@1.0.0~start: ihr-costing-tool-2@1.0.0
 8 verbose lifecycle ihr-costing-tool-2@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle ihr-costing-tool-2@1.0.0~start: PATH: /Users/mikevanmaele/anaconda3/lib/node_modules/npm/bin/node-gyp-bin:/Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2/node_modules/.bin:/Users/mikevanmaele/anaconda3/envs/myenv/bin:~/Library/Python/3.4/bin:/Users/mikevanmaele/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/PostgreSQL/10/bin:~/Library/Python/3.4/bin:/Users/mikevanmaele/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-10 verbose lifecycle ihr-costing-tool-2@1.0.0~start: CWD: /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2
+9 verbose lifecycle ihr-costing-tool-2@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/mikevanmaele/WebstormProjects/ihr-costing-tool-2/node_modules/.bin:/usr/local/Cellar/node/9.3.0_1/bin:~/Library/Python/3.4/bin:/Users/mikevanmaele/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/PostgreSQL/10/bin:~/Library/Python/3.4/bin:/Users/mikevanmaele/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+10 verbose lifecycle ihr-costing-tool-2@1.0.0~start: CWD: /Users/mikevanmaele/WebstormProjects/ihr-costing-tool-2
 11 silly lifecycle ihr-costing-tool-2@1.0.0~start: Args: [ '-c', 'node server.js' ]
 12 silly lifecycle ihr-costing-tool-2@1.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle ihr-costing-tool-2@1.0.0~start: Failed to exec start script
 14 verbose stack Error: ihr-costing-tool-2@1.0.0 start: `node server.js`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/Users/mikevanmaele/anaconda3/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (/Users/mikevanmaele/anaconda3/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
 14 verbose stack     at maybeClose (internal/child_process.js:886:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid ihr-costing-tool-2@1.0.0
-16 verbose cwd /Users/mikevanmaele/Documents/GitHub/ihr-costing-tool-2
-17 error Darwin 17.4.0
-18 error argv "/Users/mikevanmaele/anaconda3/bin/node" "/Users/mikevanmaele/anaconda3/bin/npm" "start"
+16 verbose cwd /Users/mikevanmaele/WebstormProjects/ihr-costing-tool-2
+17 error Darwin 18.2.0
+18 error argv "/usr/local/Cellar/node/9.3.0_1/bin/node" "/usr/local/bin/npm" "start"
 19 error node v6.10.3
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
