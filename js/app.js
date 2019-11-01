@@ -13,14 +13,14 @@ const App = {};
 		3: 'Capacité développée',
 		4: 'Capacité démontrée',
 		5: 'Capacité durable',
-	} : { 
+	} : {
 		1: 'No Capacity',
 		2: 'Limited Capacity',
 		3: 'Developed Capacity',
 		4: 'Demonstrated Capacity',
 		5: 'Sustainable Capacity',
-	}; 
-	
+	};
+
 	// initialize basic app behaviors
 	App.initialize = (callback) => {
 		let cookie = Util.getCookie('lang'); // you can retieve the cookie like this.
@@ -87,9 +87,10 @@ const App = {};
 				const match = currency_names_en_fr.find(d => d.iso3 === iso3);
 				if (match) {
 					val.name_fr = match.fr;
-				} 
+				}
 				return val;
 			});
+
 
 			App.globalBaseCosts = globalBaseCosts;
 			App.globalStaffMultipliers = globalStaffMultipliers;
@@ -100,7 +101,7 @@ const App = {};
 
 			if (App.demoMode) {
 					// default to Kenya
-					d3.text('data/KE20170904-demo.ihr', (error, text) => {
+					d3.text('data/KE20191101-demo.ihr', (error, text) => {
 						App.loadSessionData(text, (demoDataLoaded, oldVersion) => {
 							if (!demoDataLoaded) noty({ text: 'There was an issue loading the demo data.' });
 							App.updateAllCosts();
@@ -291,7 +292,7 @@ const App = {};
 
 	/**
 	 * Returns TRUE if the line item is needed to achieve the target
-	 * score, and FALSE otherwise (including if current/target score(s) 
+	 * score, and FALSE otherwise (including if current/target score(s)
 	 * haven't been set yet)
 	 * @param  {object} lineItem The line item from the JEE Tree
 	 * @return {bool}          TRUE if needed, FALSE otherwise
@@ -435,7 +436,7 @@ const App = {};
 
 		/**
 		 * Given the data field name of a country multiplier (e.g., 'intermediate_1_area_count')
-	 	 * returns its value if it defined and valid, and 0 otherwise		
+	 	 * returns its value if it defined and valid, and 0 otherwise
 		 * @param  {string} name Data field name of country multiplier
 	 	 * @return {double}      Value if it defined and valid, and 0 otherwise
 		 */
@@ -456,7 +457,7 @@ const App = {};
 			default:
 				return returnSimpleMultiplier(name);
 				break;
-		}	
+		}
 	};
 
 	// gets the cost of a line item
@@ -515,7 +516,7 @@ const App = {};
 
 		// 	} else if (li.country_multiplier === 'intermediate_1_and_2_count') {
 		// 		let int2Count = App.whoAmI.multipliers.intermediate_2_area_count;
-		// 		if (int2Count === undefined || int2Count === null) int2Count = 0.0; 
+		// 		if (int2Count === undefined || int2Count === null) int2Count = 0.0;
 		// 		multiplier = App.whoAmI.multipliers.intermediate_1_area_count + App.whoAmI.multipliers.intermediate_2_area_count;
 		// 	} else {
 		// 		multiplier = App.whoAmI.multipliers[li.country_multiplier];
@@ -707,7 +708,7 @@ const App = {};
 				"grouping": [3],
 				"currency": ["", "$"]
 			});
-			
+
 		} else {
 			// rounds down and adds commas appropriately
 			d3.formatDefaultLocale({
@@ -721,14 +722,14 @@ const App = {};
 
 		// update cookie to store language preference
 		Util.setCookie("lang", App.lang);
-		
+
 		// Once the new language is chosen, reload the page.
 		if (params.reset === false) {
 
 		} else {
 			crossroads.parse(hasher.getHash());
 		}
-		
+
 		// set page title
 		$('title').text(App.lang === 'fr' ? 'Outil d\'évaluation des coûts du RSI' : 'IHR Costing Tool');
 	};

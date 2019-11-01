@@ -13648,7 +13648,7 @@
               },
               {
                 "id": "r.2.3.3",
-                "name": "Effectuer un exercice fonctionnel dans lequel le COU est activé avec succès (y compris ses opérations, la logistique et les fonctions de planification) dans les 20 minutes suivant l'identification d'une urgence sanitaire",
+                "name": "Effectuer un exercice fonctionnel dans lequel le COU est activé avec succès (y compris ses fonctions operationelles, de logistique et de planification) dans les 120 minutes suivant l'identification d'une urgence sanitaire",
                 "type": "action",
                 "inputs": [
                   {
@@ -13678,16 +13678,9 @@
                         "id": "r.2.3.3.1.1"
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "id": "r.2.3.4",
-                "name": "Effectuer un exercice fonctionnel dans lequel le COU est activé avec succès (y compris ses fonctions operationelles, de logistique et de planification) dans les 120 minutes suivant l'identification d'une urgence sanitaire",
-                "type": "action",
-                "inputs": [
+                  },
                   {
-                    "id": "r.2.3.4.1",
+                    "id": "r.2.3.3.2",
                     "name": "Tenir une séance d'orientation avant l'exercice pour les participants à l'exercice fonctionnel",
                     "type": "input",
                     "line_items": [
@@ -13710,7 +13703,7 @@
                           "4"
                         ],
                         "unique_id": "464",
-                        "id": "r.2.3.4.1.1"
+                        "id": "r.2.3.3.2.1"
                       },
                       {
                         "name": "Per diem pour réunions",
@@ -13732,12 +13725,12 @@
                           "4"
                         ],
                         "unique_id": "465",
-                        "id": "r.2.3.4.1.2"
+                        "id": "r.2.3.3.2.2"
                       }
                     ]
                   },
                   {
-                    "id": "r.2.3.4.2",
+                    "id": "r.2.3.3.3",
                     "name": "Recrutez des acteurs pour un exercice fonctionnel",
                     "type": "input",
                     "line_items": [
@@ -13760,12 +13753,12 @@
                           "4"
                         ],
                         "unique_id": "466",
-                        "id": "r.2.3.4.2.1"
+                        "id": "r.2.3.3.3.1"
                       }
                     ]
                   },
                   {
-                    "id": "r.2.3.4.3",
+                    "id": "r.2.3.3.4",
                     "name": "Tenir un exercice fonctionnel",
                     "type": "input",
                     "line_items": [
@@ -13788,7 +13781,7 @@
                           "4"
                         ],
                         "unique_id": "467",
-                        "id": "r.2.3.4.3.1"
+                        "id": "r.2.3.3.4.1"
                       },
                       {
                         "name": "Per diem pour réunions",
@@ -13810,7 +13803,7 @@
                           "4"
                         ],
                         "unique_id": "468",
-                        "id": "r.2.3.4.3.2"
+                        "id": "r.2.3.3.4.2"
                       }
                     ]
                   }
