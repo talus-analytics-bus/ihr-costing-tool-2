@@ -23261,7 +23261,7 @@
               },
               {
                 "id": "r.2.3.3",
-                "name": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 20 minutes\nof the identification of a public health emergency",
+                "name": "Conduct functional exercise in which EOC is successfully activated (including operations, logistic and planning functions) within 120 minutes of the identification of a public health emergency.",
                 "type": "action",
                 "inputs": [
                   {
@@ -23311,18 +23311,9 @@
                     ],
                     "name_fr": "Engager un consultant national pour développer un exercice fonctionnel de simulation et faciliter l'exercice",
                     "name_en": "Hire national consultant to develop functional exercise scenario and facilitate exercise"
-                  }
-                ],
-                "name_fr": "Effectuer un exercice fonctionnel dans lequel le COU est activé avec succès (y compris ses opérations, la logistique et les fonctions de planification) dans les 20 minutes suivant l'identification d'une urgence sanitaire",
-                "name_en": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 20 minutes\nof the identification of a public health emergency"
-              },
-              {
-                "id": "r.2.3.4",
-                "name": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 120 minutes of the identification of a public health emergency",
-                "type": "action",
-                "inputs": [
+                  },
                   {
-                    "id": "r.2.3.4.1",
+                    "id": "r.2.3.3.2",
                     "name": "Hold pre-exercise orientation for functional exercise participants",
                     "type": "input",
                     "line_items": [
@@ -23347,7 +23338,7 @@
                           "4"
                         ],
                         "unique_id": "464",
-                        "id": "r.2.3.4.1.1",
+                        "id": "r.2.3.3.2.1",
                         "name_fr": "Frais pour réunion",
                         "name_en": "Meeting expenditures",
                         "description_fr": "Dépenses pour une grande réunion nationale d'une journée pour l'orientation d'exercices fonctionnels. Comprend la location d'installations, la papeterie, les rafraîchissements et autres frais accessoires.",
@@ -23386,7 +23377,7 @@
                           "4"
                         ],
                         "unique_id": "465",
-                        "id": "r.2.3.4.1.2",
+                        "id": "r.2.3.3.2.2",
                         "name_fr": "Per diem pour réunions",
                         "name_en": "Meeting per diems",
                         "description_fr": "Per diem pour une grande réunion nationale d'une journée pour l'orientation de l'exercice fonctionnel",
@@ -23409,7 +23400,7 @@
                     "name_en": "Hold pre-exercise orientation for functional exercise participants"
                   },
                   {
-                    "id": "r.2.3.4.2",
+                    "id": "r.2.3.3.3",
                     "name": "Hire actors for functional exercise",
                     "type": "input",
                     "line_items": [
@@ -23434,7 +23425,7 @@
                           "4"
                         ],
                         "unique_id": "466",
-                        "id": "r.2.3.4.2.1",
+                        "id": "r.2.3.3.3.1",
                         "name_fr": "Frais quotidiens (total)",
                         "name_en": "Daily fees (total)",
                         "description_fr": "Honoraires de 20 jours de temps de consultant pour que les acteurs puissent jouer un rôle lors d'un exercice fonctionnel (10 acteurs pendant 2 jours)",
@@ -23457,7 +23448,7 @@
                     "name_en": "Hire actors for functional exercise"
                   },
                   {
-                    "id": "r.2.3.4.3",
+                    "id": "r.2.3.3.4",
                     "name": "Hold functional exercise",
                     "type": "input",
                     "line_items": [
@@ -23482,7 +23473,7 @@
                           "4"
                         ],
                         "unique_id": "467",
-                        "id": "r.2.3.4.3.1",
+                        "id": "r.2.3.3.4.1",
                         "name_fr": "Frais pour réunion",
                         "name_en": "Meeting expenditures",
                         "description_fr": "Frais d'une grande réunion nationale d'une journée pour tenir un exercice fonctionnel. Comprend la location d'installations, la papeterie, les rafraîchissements et autres frais accessoires.",
@@ -23521,7 +23512,7 @@
                           "4"
                         ],
                         "unique_id": "468",
-                        "id": "r.2.3.4.3.2",
+                        "id": "r.2.3.3.4.2",
                         "name_fr": "Per diem pour réunions",
                         "name_en": "Meeting per diems",
                         "description_fr": "Per diem pour une grande réunion nationale d'une journée pour tenir un exercice fonctionnel",
@@ -23545,7 +23536,7 @@
                   }
                 ],
                 "name_fr": "Effectuer un exercice fonctionnel dans lequel le COU est activé avec succès (y compris ses fonctions operationelles, de logistique et de planification) dans les 120 minutes suivant l'identification d'une urgence sanitaire",
-                "name_en": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 120 minutes of the identification of a public health emergency"
+                "name_en": "Conduct functional exercise in which EOC is successfully activated (including operations, logistic and planning functions) within 120 minutes of the identification of a public health emergency."
               }
             ],
             "type": "indicator",
