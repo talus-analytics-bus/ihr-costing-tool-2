@@ -14451,7 +14451,7 @@
               },
               {
                 "id": "r.2.3.3",
-                "name": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 20 minutes\nof the identification of a public health emergency",
+                "name": "Conduct functional exercise in which EOC is successfully activated (including operations, logistic and planning functions) within 120 minutes of the identification of a public health emergency.",
                 "type": "action",
                 "inputs": [
                   {
@@ -14483,16 +14483,9 @@
                         "id": "r.2.3.3.1.1"
                       }
                     ]
-                  }
-                ]
-              },
-              {
-                "id": "r.2.3.4",
-                "name": "Conduct functional exercise in which EOC is successfully activated (including operations,\nlogistic and planning functions) within 120 minutes of the identification of a public health emergency",
-                "type": "action",
-                "inputs": [
+                  },
                   {
-                    "id": "r.2.3.4.1",
+                    "id": "r.2.3.3.2",
                     "name": "Hold pre-exercise orientation for functional exercise participants",
                     "type": "input",
                     "line_items": [
@@ -14517,7 +14510,7 @@
                           "4"
                         ],
                         "unique_id": "464",
-                        "id": "r.2.3.4.1.1"
+                        "id": "r.2.3.3.2.1"
                       },
                       {
                         "name": "Meeting per diems",
@@ -14540,12 +14533,12 @@
                           "4"
                         ],
                         "unique_id": "465",
-                        "id": "r.2.3.4.1.2"
+                        "id": "r.2.3.3.2.2"
                       }
                     ]
                   },
                   {
-                    "id": "r.2.3.4.2",
+                    "id": "r.2.3.3.3",
                     "name": "Hire actors for functional exercise",
                     "type": "input",
                     "line_items": [
@@ -14570,12 +14563,12 @@
                           "4"
                         ],
                         "unique_id": "466",
-                        "id": "r.2.3.4.2.1"
+                        "id": "r.2.3.3.3.1"
                       }
                     ]
                   },
                   {
-                    "id": "r.2.3.4.3",
+                    "id": "r.2.3.3.4",
                     "name": "Hold functional exercise",
                     "type": "input",
                     "line_items": [
@@ -14600,7 +14593,7 @@
                           "4"
                         ],
                         "unique_id": "467",
-                        "id": "r.2.3.4.3.1"
+                        "id": "r.2.3.3.4.1"
                       },
                       {
                         "name": "Meeting per diems",
@@ -14623,7 +14616,7 @@
                           "4"
                         ],
                         "unique_id": "468",
-                        "id": "r.2.3.4.3.2"
+                        "id": "r.2.3.3.4.2"
                       }
                     ]
                   }
