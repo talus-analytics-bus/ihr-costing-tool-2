@@ -1,67 +1,90 @@
 /* --- Custom Dropdowns --- */
 .dropdown-item {
-	cursor: pointer;
-	@include noselect;
-	&:active {
-		background-color: lightsteelblue;
-	}
+  cursor: pointer;
+  @include noselect;
+  &:active {
+    background-color: lightsteelblue;
+  }
 }
-
 
 /* --- Tooltipster --- */
 .tooltipster-sidetip.tooltipster-shadow.tooltipster-top .tooltipster-box {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 .tooltipster-sidetip .tooltipster-content {
-	line-height: 1.3;
+  line-height: 1.3;
 }
-
 
 /* --- Bootstrap Multiselect --- */
-.btn b.caret { margin-left: 3px; }
+.btn b.caret {
+  margin-left: 3px;
+}
 .multiselect {
-	background-color: steelblue;
-	border-color: #666;
-	color: white;
+  background-color: steelblue;
+  border-color: #666;
+  color: white;
 }
 .multiselect-container {
-	a {
-		color: #333;
-		white-space: nowrap;
-	}
-	a label {
-		padding-left: 20px !important;
-		@include noselect;
-	}
+  a {
+    color: #333;
+    white-space: nowrap;
+  }
+  a label {
+    padding-left: 20px !important;
+    @include noselect;
+  }
 }
-
 
 /* --- Bootstrap Buttons --- */
-.btn { cursor: pointer; }
+.btn {
+  border: 2px solid #023f88;
+  border-radius: 5px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: $primary-dark-blue;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  &:hover {
+    background-color: #f4f4f4;
+  }
+  &:active {
+    box-shadow: 5px 5px 15px 0 #b3b3b3;
+    -webkit-box-shadow: 5px 5px 15px 0 #b3b3b3;
+  }
+  cursor: pointer;
+}
 .btn-primary {
-	@include gradient(#4a8bc3, #3071a9);
-	border-color: darken(#7c81b8, 8%);
-	&:hover {
-		background-color: rgb(1, 41, 76);
-		border-color: darken(#7c81b8, 16%);
-	}
+  background: linear-gradient(180deg, rgba(2, 63, 136, 0.85) 0%, #023f88 100%);
+  color: white;
+  &:hover {
+    background: white;
+    color: $primary-dark-blue;
+  }
 }
 .btn-secondary {
-	background-color: #fbfbfb;
-	border-color: #bbb;
-	color: #333;
-	padding: .5rem 1rem;
-	&:hover,
-	&.active {
-		background-color: #e6e6e6;
-		border-color: #adadad;
-		color: #333;
-	}
-	&.active {
-		@include box-shadow(inset 0 4px 6px rgba(0,0,0,.125));
-	}
+  background-color: #fbfbfb;
+  border-color: #bbb;
+  color: #333;
+  padding: 0.5rem 1rem;
+  &:hover,
+  &.active {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    color: #333;
+  }
+  &.active {
+    @include box-shadow(inset 0 4px 6px rgba(0, 0, 0, 0.125));
+  }
 }
 
 /* --- Noty --- */
-.noty_message { padding: 15px !important; }
-.noty_text { font-size: 1.1em; }
+.noty_message {
+  padding: 15px !important;
+}
+.noty_text {
+  font-size: 1.1em;
+}

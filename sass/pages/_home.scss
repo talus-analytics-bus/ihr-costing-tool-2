@@ -1,39 +1,39 @@
 .home-header {
-	-webkit-box-pack: start;
-	-ms-flex-pack: start;
-	justify-content: flex-start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 .home-image {
-	margin-top: 10px;
-	height: 200px;
-	width: 100%;
-	background: url("../img/foc.d648643d.jpg");
-	background-attachment: fixed;
-	background-size: cover;
-	background-position: 0 48%;
+  margin-top: 10px;
+  height: 200px;
+  width: 100%;
+  background: url("../img/foc.d648643d.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 0 48%;
 }
 .home-body {
-	margin-top: 30px;
+  margin-top: 30px;
 }
 .home-instructions {
-	margin-top: 20px;
-	color: #aa0000;
-	font-style: italic;
-	font-weight: 600;
-	text-align: center;
+  margin-top: 20px;
+  color: $primary-dark-blue;
+  font-style: italic;
+  font-weight: 600;
+  text-align: left;
 }
 .enter-button-container {
-	margin-top: 10px;
-	text-align: center;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .language-modal {
-	.modal-title {
-		font-weight: bold;
-	}
-	.modal-body {
-		button.french {
-			margin-left: 20px;
-		}
-	}
+  .modal-title {
+    font-weight: bold;
+  }
+  .modal-body {
+    button.french {
+      margin-left: 20px;
+    }
+  }
 }

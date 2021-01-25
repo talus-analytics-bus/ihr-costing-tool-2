@@ -1,13 +1,18 @@
 .overview-container {
-	.overview-section {
-		margin-top: 15px;
-	}
+  .overview-section {
+    margin-top: 15px;
+  }
   .upload-button-container {
     margin-bottom: 25px;
+    display: flex;
+    flex-direction: row;
+    a {
+      text-decoration: none;
+    }
   }
   div.next-button-container {
-  	text-align: center;
-  	margin-top: 30px;
+    text-align: center;
+    margin-top: 30px;
   }
   .jee-tool-img {
     position: relative;
@@ -21,5 +26,7 @@
   .input-score-file {
     display: none;
   }
-  button { margin-right: 10px; }
+  button {
+    margin-right: 15px;
+  }
 }

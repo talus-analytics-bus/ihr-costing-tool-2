@@ -1,88 +1,100 @@
-@import 'helpers/classes';
-@import 'helpers/colors';
-@import 'helpers/mixins';
-@import 'helpers/vendors';
+@import "helpers/classes";
+@import "helpers/colors";
+@import "helpers/mixins";
+@import "helpers/vendors";
 
-@import 'components/blocks';
-@import 'components/capacityDescription';
-@import 'components/charts';
-@import 'components/footer';
-@import 'components/headers';
-@import 'components/indicatorProgress';
-@import 'components/images';
-@import 'components/item';
-@import 'components/map';
-@import 'components/images';
-@import 'components/navbar';
-@import 'components/tooltipster';
+@import "components/blocks";
+@import "components/capacityDescription";
+@import "components/charts";
+@import "components/footer";
+@import "components/headers";
+@import "components/indicatorProgress";
+@import "components/images";
+@import "components/item";
+@import "components/map";
+@import "components/images";
+@import "components/navbar";
+@import "components/tooltipster";
 
-@import 'pages/background';
-@import 'pages/contact';
-@import 'pages/costing';
-@import 'pages/costsInstructions';
-@import 'pages/country';
-@import 'pages/home';
-@import 'pages/overview';
-@import 'pages/results';
-@import 'pages/scores';
-@import 'pages/who';
+@import "pages/background";
+@import "pages/contact";
+@import "pages/costing";
+@import "pages/costsInstructions";
+@import "pages/country";
+@import "pages/home";
+@import "pages/overview";
+@import "pages/results";
+@import "pages/scores";
+@import "pages/who";
 
-body { 
-	//font-family: Georgia, serif;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 15px;
+body {
+  //font-family: Georgia, serif;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  color: $black;
+  a {
+    color: $primary-dark-blue;
+    &:hover {
+      color: $primary-light-blue;
+    }
+  }
 }
 
 #page-content {
-	position: relative;
-	min-height: 100px;
-	z-index: 10;
+  position: relative;
+  min-height: 100px;
+  z-index: 10;
 }
 .link {
-	cursor: pointer;
-	&:hover { text-decoration: underline; }
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 .radio {
-	display: inline-block;
-	margin-bottom: 5px;
+  display: inline-block;
+  margin-bottom: 5px;
 }
 .instructions {
-	font-style: italic;
-	max-width: 750px;
+  font-style: italic;
+  max-width: 750px;
 }
 
-select.form-control { 
-	width: auto;
-	&.french {
-		width: 206px;
-	}
+select.form-control {
+  width: auto;
+  &.french {
+    width: 206px;
+  }
 }
 .container {
-	position: relative; 
-	padding: 25px 50px 30px;
+  position: relative;
+  padding: 25px 50px 30px;
 }
 .container-wide {
-	display: inline-block;
-	max-width: none;
-	border: none;
+  display: inline-block;
+  max-width: none;
+  border: none;
 }
 .container-text {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: column;
-	flex-direction: column;
-	max-width: 900px;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-width: 900px;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
-
 
 /* Scrollable dropdown menus */
 .scrollable-dropdown {
-	height: auto;
-	max-height: 300px;
-	overflow-x: hidden;
+  height: auto;
+  max-height: 300px;
+  overflow-x: hidden;
+}
+
+h1 {
+  color: $black;
 }
