@@ -66,13 +66,20 @@ select.form-control {
     width: 206px;
   }
 }
+.content-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
 .container {
   position: relative;
-  padding: 25px 50px 30px;
+  padding: 30px 20px;
+  margin-left: 0;
+  margin-right: auto;
 }
 .container-wide {
   display: inline-block;
-  max-width: none;
+  max-width: 1120px;
   border: none;
 }
 .container-text {
@@ -83,9 +90,7 @@ select.form-control {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  max-width: 900px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  max-width: 800px;
 }
 
 /* Scrollable dropdown menus */

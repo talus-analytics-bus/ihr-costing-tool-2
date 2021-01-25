@@ -1,109 +1,119 @@
 .scores-container {
-	.btn {
-		padding: .5rem 1.1rem;
-	}
+  .btn {
+    padding: 0.5rem 1.1rem;
+  }
 }
 .score-instructions {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 .score-picker-container {
-	margin-left: 20px;
-	width: 100%;
+  margin-left: 30px;
 }
 .score-picker-table {
-	font-family: Helvetica;
-	margin-top: 20px;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 20px;
+  max-width: 650px;
 
-	thead td {
-		font-weight: 600;
-		border-top: none;
-		padding-bottom: 6px;
-	}
-	td:first-child { padding-right: 6px; }
-	td:nth-child(2) { width: 350px; }
-	td:last-child {
-		padding: 0;
-		width: 10px;
-		border-top: none;
-	}
+  thead td {
+    font-weight: 600;
+    border-top: none;
+    padding-bottom: 6px;
+  }
+  td:first-child {
+    padding-right: 6px;
+    width: 20px;
+  }
+  td:nth-child(2) {
+    width: 260px;
+  }
+  td:nth-child(3) {
+    width: 300px;
+  }
+  td:last-child {
+    padding: 0;
+    width: 10px;
+    border-top: none;
+  }
 }
 .score-row {
-	cursor: pointer;
-	vertical-align: top;
+  cursor: pointer;
+  vertical-align: top;
 
-	&.active .score-label { font-weight: 600; }
-	&:first-child.active,
-	&:first-child:hover {
-		@include gradient(rgba($jeeRed, 0.1), rgba($jeeRed, 0.4));
-	}
-	&:nth-child(2).active,
-	&:nth-child(2):hover,
-	&:nth-child(3).active,
-	&:nth-child(3):hover{
-		@include gradient(rgba($jeeYellow, 0.2), rgba($jeeYellow, 0.6));
-	}
-	&:nth-child(4).active,
-	&:nth-child(4):hover,
-	&:nth-child(5).active,
-	&:nth-child(5):hover {
-		@include gradient(rgba($jeeGreen, 0.2), rgba($jeeGreen, 0.8));
-	}
+  &.active .score-label {
+    font-weight: 600;
+  }
+  &:first-child.active,
+  &:first-child:hover {
+    @include gradient(rgba($jeeRed, 0.1), rgba($jeeRed, 0.4));
+  }
+  &:nth-child(2).active,
+  &:nth-child(2):hover,
+  &:nth-child(3).active,
+  &:nth-child(3):hover {
+    @include gradient(rgba($jeeYellow, 0.2), rgba($jeeYellow, 0.6));
+  }
+  &:nth-child(4).active,
+  &:nth-child(4):hover,
+  &:nth-child(5).active,
+  &:nth-child(5):hover {
+    @include gradient(rgba($jeeGreen, 0.2), rgba($jeeGreen, 0.8));
+  }
 
-	&:first-child td:last-child {
-		background-color: rgba($jeeRed, 0.9);
-	}
-	&:nth-child(2) td:last-child,
-	&:nth-child(3) td:last-child {
-		background-color: rgba($jeeYellow, 0.9);
-	}
-	&:nth-child(4) td:last-child,
-	&:nth-child(5) td:last-child {
-		background-color: rgba($jeeGreen, 0.9);
-	}
+  &:first-child td:last-child {
+    background-color: rgba($jeeRed, 0.9);
+  }
+  &:nth-child(2) td:last-child,
+  &:nth-child(3) td:last-child {
+    background-color: rgba($jeeYellow, 0.9);
+  }
+  &:nth-child(4) td:last-child,
+  &:nth-child(5) td:last-child {
+    background-color: rgba($jeeGreen, 0.9);
+  }
 
-	&:first-child:hover td:last-child,
-	&:first-child.active td:last-child {
-		background-color: $jeeRed;
-	}
-	&:nth-child(2):hover td:last-child,
-	&:nth-child(2).active td:last-child,
-	&:nth-child(3):hover td:last-child,
-	&:nth-child(3).active td:last-child {
-		background-color: $jeeYellow;
-	}
-	&:nth-child(4):hover td:last-child,
-	&:nth-child(4).active td:last-child,
-	&:nth-child(5):hover td:last-child,
-	&:nth-child(5).active td:last-child {
-		background-color: $jeeGreen;
-	}
+  &:first-child:hover td:last-child,
+  &:first-child.active td:last-child {
+    background-color: $jeeRed;
+  }
+  &:nth-child(2):hover td:last-child,
+  &:nth-child(2).active td:last-child,
+  &:nth-child(3):hover td:last-child,
+  &:nth-child(3).active td:last-child {
+    background-color: $jeeYellow;
+  }
+  &:nth-child(4):hover td:last-child,
+  &:nth-child(4).active td:last-child,
+  &:nth-child(5):hover td:last-child,
+  &:nth-child(5).active td:last-child {
+    background-color: $jeeGreen;
+  }
 
-	td:first-child input {
-		position: relative;
-		top: 2px;
-	}
-	td:nth-child(2) span {
-		position: relative;
-		top: 0px;
-	}
-	.rp-score-table-img {
-		position: relative;
-		top: -1px;
-		width: 28px;
-		height: 28px;
-		margin-right: 12px;
-	}
+  td:first-child input {
+    position: relative;
+    top: 2px;
+  }
+  td:nth-child(2) span {
+    position: relative;
+    top: 0px;
+  }
+  .rp-score-table-img {
+    position: relative;
+    top: -1px;
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+  }
 }
 .indicator-description {
-	font-family: 'Open Sans', sans-serif;
-	line-height: inherit;
+  font-family: "Open Sans", sans-serif;
+  line-height: inherit;
 }
 .nav-buttons-container {
-	margin-top: 30px;
+  margin-top: 30px;
 
-	.btn-col {
-		padding-left: 5px;
-		padding-right: 5px;
-		min-height: none;
-	}
+  .btn-col {
+    padding-left: 5px;
+    padding-right: 5px;
+    min-height: none;
+  }
 }

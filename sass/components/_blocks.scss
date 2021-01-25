@@ -8,18 +8,18 @@
   color: black;
   padding: 15px 30px 15px 25px;
   border: $border;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   @include border-left-radius(15px);
   @include gradient(white, #e6e6e6);
-  @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
+  @include box-shadow(-2px 0px 3px rgba(0, 0, 0, 0.2));
   @include noselect;
 
   &.active {
     @include gradient(white, $light-blue);
-    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
+    @include box-shadow(inset 2px 2px 5px rgba(0, 0, 0, 0.4));
   }
   .chevron {
     top: 3px;
@@ -37,21 +37,25 @@
   border-right: $border;
   border-bottom: $border;
   border-left: $border;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 0.85rem;
   color: black;
   cursor: pointer;
   @include border-left-radius(15px);
   @include gradient(white, #e6e6e6);
-  @include box-shadow(-2px 0px 3px rgba(0,0,0,0.2));
+  @include box-shadow(-2px 0px 3px rgba(0, 0, 0, 0.2));
   @include noselect;
-  
-  &:first-child { border-top: $border; }
-  &.hidden { display: none; }
+
+  &:first-child {
+    border-top: $border;
+  }
+  &.hidden {
+    display: none;
+  }
   &.active {
     font-weight: bold;
     @include gradient(white, $light-blue);
-    @include box-shadow(inset 2px 2px 5px rgba(0,0,0,0.4));
+    @include box-shadow(inset 2px 2px 5px rgba(0, 0, 0, 0.4));
   }
 }
 .block-link-cover {
@@ -63,7 +67,7 @@
   @include border-left-radius(15px);
   background-color: transparent;
   &:hover {
-    @include hori-gradient(rgba(0,0,0,0.1), transparent);
+    @include hori-gradient(rgba(0, 0, 0, 0.1), transparent);
   }
 }
 .block-link-title {
@@ -81,17 +85,20 @@
   color: #333;
 }
 
-
 /* --- Block Content --- */
-.block-container { border-top: $light-border; }
 .block {
   position: relative;
   padding: 30px 30px 30px 0px;
   text-align: left;
   border-bottom: $light-border;
   @include box-sizing();
+  &.special {
+    padding: 0px 0px 30px 0px;
+  }
 }
-.block-content { margin-top: 5px; }
+.block-content {
+  margin-top: 5px;
+}
 .block-description {
   margin: 20px 0px 0px 0px;
   max-width: 750px;
@@ -99,12 +106,18 @@
 }
 .input-block-container {
   margin-left: 350px;
-  padding-left: 75px;
-  width: 90%;
+  padding-left: 40px;
+  &.special {
+    max-width: 700px;
+  }
   .block {
     padding-bottom: 70px;
     border-bottom: none;
-    &.no-reset { padding-bottom: 30px; }
+    &.no-reset {
+      padding-bottom: 30px;
+    }
   }
-  .block-description { font-style: italic; }
+  .block-description {
+    font-style: italic;
+  }
 }
