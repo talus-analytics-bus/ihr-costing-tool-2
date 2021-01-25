@@ -112,8 +112,23 @@
   margin-top: 30px;
 
   .btn-col {
-    padding-left: 5px;
     padding-right: 5px;
     min-height: none;
+    display: flex;
+    flex-direction: row;
+    .previous-score {
+      margin-right: 30px;
+    }
+    .previous-score,
+    .next-score {
+      i {
+        font-size: 40px;
+      }
+      padding: 0px 10px;
+    }
+  }
+  .go-to-costing-button {
+    margin-top: 30px;
+    padding: 10px 30px;
   }
 }
