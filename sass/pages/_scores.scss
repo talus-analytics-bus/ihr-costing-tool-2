@@ -116,11 +116,14 @@
     min-height: none;
     display: flex;
     flex-direction: row;
-    .previous-score {
+    .previous-score,
+    .previous-cost {
       margin-right: 30px;
     }
     .previous-score,
-    .next-score {
+    .next-score,
+    .previous-cost,
+    .next-cost {
       i {
         font-size: 40px;
       }
