@@ -19,7 +19,7 @@
   "homepage": "https://github.com/talus-analytics/ihr-costing-tool-2#readme",
   "dependencies": {
     "axios": "^0.16.2",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "express-rate-limit": "^2.9.0",
