@@ -1,5 +1,9 @@
 .background-container {
-	& > div:nth-child(n+2) {
-		margin-top: 20px;
-	}
+  & > div:nth-child(n + 2) {
+    margin-top: 10px;
+  }
+  .citation {
+    font-style: italic;
+    margin-left: 40px;
+  }
 }
