@@ -74,8 +74,7 @@ select.form-control {
 .container {
   position: relative;
   padding: 30px 20px;
-  margin-left: 0;
-  margin-right: auto;
+  margin: 0 auto;
 }
 .container-wide {
   display: inline-block;
@@ -92,7 +91,7 @@ select.form-control {
   flex-direction: column;
   max-width: 800px;
   &.background-container {
-    max-width: 640px;
+    max-width: 740px;
   }
 }
 

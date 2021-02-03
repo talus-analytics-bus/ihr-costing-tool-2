@@ -112,10 +112,9 @@
   margin-top: 30px;
 
   .btn-col {
-    padding-right: 5px;
-    min-height: none;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     .previous-score,
     .previous-cost {
       margin-right: 30px;
@@ -130,8 +129,13 @@
       padding: 0px 10px;
     }
   }
-  .go-to-costing-button {
-    margin-top: 30px;
-    padding: 10px 30px;
+  .start-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .go-to-costing-button {
+      margin-top: 10px;
+      padding: 10px 30px;
+    }
   }
 }

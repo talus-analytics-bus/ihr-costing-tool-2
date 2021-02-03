@@ -7,7 +7,11 @@
 	}
   div.start-button-container {
   	text-align: center;
-  	margin-top: 25px;
+	  margin-top: 25px;
+	  button {
+		margin-right: auto;
+		margin-left: auto;
+	  }
   }
 	li {
 		padding-left: 5px;
