@@ -236,8 +236,8 @@
 			const $this = $(this);
 			$this.toggleClass('table-view');
 			const isActive = $this.hasClass('table-view');
-			const chartsText = App.lang === 'fr' ? 'Voir les graphiques' : 'View Charts';
-			const tableText = App.lang === 'fr' ? 'Afficher le tableau de données' : 'View Data Table';
+			const chartsText = App.lang === 'fr' ? 'Voir les graphiques' : 'View charts';
+			const tableText = App.lang === 'fr' ? 'Afficher le tableau de données' : 'View data table';
 			$this.text(isActive ? chartsText : tableText);
 			$('.results-main-content, .results-table-content').slideToggle();
 		});
@@ -258,7 +258,7 @@
 					$('.results-main-content').slideDown();
 				}
 				$('.view-table-button').show();
-				$this.html(App.lang === 'fr' ? 'Exporter des données' : 'Export Data');
+				$this.html(App.lang === 'fr' ? 'Exporter des données' : 'Export data');
 			}
 		});
 

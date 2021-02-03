@@ -115,7 +115,7 @@
           </div>
           <div class="nav-item" page="country">
             <a class="nav-link">
-              Choose Country
+              Choose country
             </a>
           </div>
           <div class="nav-item dropdown">
@@ -132,10 +132,10 @@
               aria-labelledby="navbarDropdownMenuLink"
             >
               <a class="dropdown-item" page="overview">
-                Instructions and Upload
+                Instructions and upload
               </a>
               <a class="dropdown-item" page="scores">
-                Enter Assessment
+                Enter assessment
               </a>
             </div>
           </div>
@@ -156,10 +156,10 @@
                 Instructions
               </a>
               <a class="dropdown-item" page="costs/population">
-                Set Default Values
+                Set default values
               </a>
               <a class="dropdown-item" page="costs/p-1/1">
-                Enter Costs
+                Enter costs
               </a>
             </div>
           </div>
@@ -229,10 +229,10 @@
     <script id="country-template" type="text/x-handlebars-template">
       <div class="country-container container">
         <h1>
-          Enter Country
+          Enter country
         </h1>
         <p>
-          Choose your country using the map, drop-down list, or search function. Then, click “Continue to Assessment” to begin.
+          Choose your country using the map, drop-down list, or search function. Then, click “Continue to assessment” to begin.
         </p>
         <div class="country-control-container row">
           <div class="col-6">
@@ -264,7 +264,7 @@
         </div>
         <div class="next-button-container">
           <button type="button" class="btn btn-primary go-to-assessment-button">
-            Continue to Assessment
+            Continue to assessment
           </button>
         </div>
       </div>
@@ -272,53 +272,53 @@
     <!-- Overview/Assessment Instructions page tempate -->
     <script id="overview-template" type="text/x-handlebars-template">
       <div class="overview-container container container-text">
-          <h1>Assessment Instructions</h1>
+          <h1>Assessment instructions</h1>
           <div>
-              <p><b>The IHR Costing Tool does not store data after you leave the website.</b> To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
+              <p><b>The IHR Costing Tool does not store data after you leave the website.</b> To save score and costing inputs and continue work at a later time, download the IHR data file from the results page. Return to this page and follow the Upload Prior Session instructions to upload stored score and costing data.</p>
               <p> Current assessment scores, as measured by the <a href="http://apps.who.int/iris/bitstream/10665/204368/1/9789241510172_eng.pdf" target="_blank">Joint External Evaluation Tool</a> (JEE), are needed as the first step to use the IHR Costing Tool. For countries that have already completed the formal JEE process, assessment scores are automatically populated within the tool, though users may choose to modify these prepopulated scores. If you are completing an assessment for a country that has not yet completed a formal JEE evaluation, choose from among the options below to complete assessment score entry.</p>
           </div>
           <div class="overview-section">
-              <h2>Upload Prior Session</h2>
+              <h2>Upload prior session</h2>
               <p>If you have previously used the IHR Costing tool and exported results to your computer, follow the steps below to upload previously entered scores and cost inputs.</p>
               <ul>
                   <li>Select an IHR data file (ends with .ihr) using the button below. You will see “Upload Successful” once the file upload is complete. To help locate this file, note that when exported from the results page, this file was stored in the downloads folder used by your web browser. </li>
-                  <li>Click “Continue to Scores” to review and enter additional scores, as needed.
+                  <li>Click “Continue to scores” to review and enter additional scores, as needed.
               </ul>
               <div class="upload-button-container">
                   <input id="prior-session" class="input-prior-session" type="file" />
-                  <button type="button" class="btn btn-secondary btn-prior-session">Select File from Prior Session</button>
+                  <button type="button" class="btn btn-secondary btn-prior-session">Select file from prior session</button>
               </div>
           </div>
           <div class="overview-section">
-              <h2>Upload Scores</h2>
+              <h2>Upload scores</h2>
               <p>
                   Scores can be uploaded in spreadsheet format by following the steps below.
               </p>
               <ul>
-                  <li>Use the button Download Blank Score Report below to download a blank report, and add scores to the report.</li>
+                  <li>Use the "Download blank score report" button below to download a blank report, and add scores to the report.</li>
                   <li>Select the file containing scores using the button below. You will see “Upload Successful” once the file upload is complete.</li>
-                  <li>Click “Continue to Scores” to review uploaded scores.</li>
+                  <li>Click “Continue to scores” to review uploaded scores.</li>
               </ul>
               <div class="upload-button-container">
                   <a class="export-button-link" href="export/IHR Costing Tool - JEE Score Input Template.xlsx">
-                      <button type="button" class="btn btn-secondary">Download Blank Score Report</button>
+                      <button type="button" class="btn btn-secondary">Download blank score report</button>
                   </a>
-                  <button type="button" class="btn btn-secondary btn-score-file">Select Score File</button>
+                  <button type="button" class="btn btn-secondary btn-score-file">Select score file</button>
                   <input id="score-file-upload" class="input-score-file" type="file" />
               </div>
           </div>
           <div class="overview-section">
-              <h2>Download Blank Template</h2>
+              <h2>Download blank template</h2>
               <p>To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. You can use this spreadsheet as a list to identify and collect needed cost information before returning to work in the online tool. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.</p>
               <div class="upload-button-container">
-                  <button type="button" class="btn btn-secondary btn-blank-template">Download Blank Template</button>
+                  <button type="button" class="btn btn-secondary btn-blank-template">Download blank template</button>
               </div>
           </div>
           <div class="overview-section">
-              <h2>Manual Score Entry</h2>
-              <p>To manually enter scores from a completed template, or score report in any format, click “Continue to Scores” to begin score entry.</p>
+              <h2>Manual score entry</h2>
+              <p>To manually enter scores from a completed template, or score report in any format, click “Continue to scores” to begin score entry.</p>
               <div class="next-button-container">
-                  <button type="button" class="next-button btn btn-primary">Continue to Scores</button>
+                  <button type="button" class="next-button btn btn-primary">Continue to scores</button>
               </div>
           </div>
       </div>
@@ -390,7 +390,7 @@
                   type="button"
                   class="btn btn-secondary go-to-costing-button"
                 >
-                  Go to Costing
+                  Go to costing
                 </button>
               </div>
             </div>
@@ -403,13 +403,13 @@
       <div class="costs-instructions-container container container-text">
         <div>
           <h1>
-            Costing Instructions
+            Costing instructions
           </h1>
           <p>
             <b>
               The IHR Costing Tool does not store data after you leave the website.
             </b>
-            To save score and costing inputs and continue work at a later time, download the IHR Data File from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.
+            To save score and costing inputs and continue work at a later time, download the IHR data file from the results page. Return to the Assessment Instructions and Upload page to upload stored score and costing data.
           </p>
           <p>
             Costs associated with implementing the International Health Regulations are determined by the target score a country wants to achieve, population size, number of geopolitical divisions, and public health infrastructure. Costs are calculated only up to a level 4; recurring costs are only calculated for new capabilities.
@@ -417,7 +417,7 @@
         </div>
         <div class="instructions-section">
           <h2>
-            Process Overview
+            Process overview
           </h2>
           <p>
             Costing includes three major steps:
@@ -427,7 +427,7 @@
               On this page, choose an approach below to set target scores. This determines what actions need to be costed to move from the current to target capacity level on each indicator.
             </li>
             <li>
-              Click “Start Costing” to advance to the next page and enter country-specific details and review and customize a list of cost assumptions used across cost calculations.
+              Click “Start costing” to advance to the next page and enter country-specific details and review and customize a list of cost assumptions used across cost calculations.
             </li>
             <li>
               After entering these data, the tool provides estimated costs for specific actions needed to reach the chosen target score for each indicator.
@@ -439,7 +439,7 @@
         </div>
         <div class="instructions-section">
           <h2>
-            Select Target Score
+            Select target score
           </h2>
           <p class="target-score-description">
             Choose a method to set target scores.
@@ -476,14 +476,14 @@
         </div>
         <div class="instructions-section">
           <h2>
-            Download Blank Template
+            Download blank template
           </h2>
           <p>
             To work offline, you can download a blank template containing all costing calculations and enter costing data in a spreadsheet format. ou can use this spreadsheet as a list to identify and collect needed cost information before returning to work in the online tool. After recording data in the spreadsheet template, you will need to return to this website and manually enter scores and costs to use the IHR Costing Tool website.
           </p>
           <div class="upload-button-container">
             <button type="button" class="btn btn-secondary btn-blank-template">
-              Download Blank Template
+              Download blank template
             </button>
           </div>
         </div>
@@ -492,7 +492,7 @@
             type="button"
             class="btn btn-primary costs-instructions-start"
           >
-            Start Costing
+            Start costing
           </button>
         </div>
       </div>
@@ -637,7 +637,7 @@
                 type="button"
                 class="btn btn-primary proceed-button hidden"
               >
-                Go to Costing
+                Go to costing
               </button>
             </div>
           </div>
@@ -699,7 +699,7 @@
                   type="button"
                   class="btn btn-secondary go-to-results-button"
                 >
-                  Go to Results
+                  Go to results
                 </button>
               </div>
             </div>
@@ -723,10 +723,10 @@
         <div class="results-content">
           <div class="results-button-container">
             <button class="view-table-button btn btn-secondary">
-              View Data Table
+              View data table
             </button>
             <button class="view-export-button btn btn-secondary">
-              Export Data
+              Export data
             </button>
           </div>
           <div class="results-instructions results-section">
@@ -747,13 +747,13 @@
               capacities.
             </p>
             <p>
-              To view additional details for costing calculations, use the Export Detailed Report button to download a results spreadsheet. The detailed report can not be uploaded back into the tool. To continue work at a later date, click the Download IHR Data File button to store the data file on your computer. Changes to score and cost inputs must be made by uploading the data file on the Assessment Instructions and Upload page and using the IHR Costing Tool website to edit (changes can not be made to the file before uploading).
+              To view additional details for costing calculations, use the "Export detailed report" button to download a results spreadsheet. The detailed report can not be uploaded back into the tool. To continue work at a later date, click the Download IHR data file button to store the data file on your computer. Changes to score and cost inputs must be made by uploading the data file on the Assessment Instructions and Upload page and using the IHR Costing Tool website to edit (changes can not be made to the file before uploading).
             </p>
           </div>
           <div class="results-main-content">
             <div class="score-improvement-section results-section">
               <div class="results-section-title">
-                Cost Summary
+                Cost summary
               </div>
               <div class="cost-chart-instructions">
                 Total cost below summarizes costs associated with moving from the current capacity level score to the selected target score for all completed indicators, as shown on the colored bar. Costs are broken out for core capacities grouped under Prevent, Detect, Respond, and Other IHR-related hazards and Points of Entry.
@@ -821,7 +821,7 @@
             </div>
             <div class="chart-section results-section">
               <div class="chart-section-title results-section-title">
-                Costs by Core Capacity and Function
+                Costs by core capacity and function
               </div>
               <div class="cost-chart-instructions">
                 This graph shows costs either by JEE Assessment Tool core capacity or function (e.g. operations/implementation). Costs are graphed by absolute cost on the vertical axis, and each circle is sized by the relative cost contribution of that core capacity or function. Use the buttons to view by cost type or by 1, 3, or 5 year totals. Apply filters below the graph to a select a subset of Core Elements, Core Capacities, or functions.
@@ -919,7 +919,7 @@
                 </div>
                 <div class="reset-button-container">
                   <button class="reset-button btn btn-secondary">
-                    Reset Chart
+                    Reset chart
                   </button>
                 </div>
               </div>
@@ -963,7 +963,7 @@
             <div class="export-button-section">
               <div class="export-button-container">
                 <button class="export-data-button btn btn-primary">
-                  Export Detailed Report
+                  Export detailed report
                 </button>
               </div>
               <div class="export-button-text">
@@ -977,7 +977,7 @@
             <div class="export-button-section">
               <div class="export-button-container">
                 <button class="export-empty-template-button btn btn-primary">
-                  Download Blank Template
+                  Download blank template
                 </button>
               </div>
               <div class="export-button-text">
@@ -991,7 +991,7 @@
             <div class="export-button-section">
               <div class="export-button-container">
                 <button class="export-session-button btn btn-primary">
-                  Download IHR Data File
+                  Download IHR data file
                 </button>
               </div>
               <div class="export-button-text">
