@@ -51,6 +51,62 @@
   </head>
 
   <body>
+    <div
+      id="deprecated-warning"
+      style="
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 100;
+      "
+    >
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+          padding: 50px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        "
+      >
+        <h1>
+          This site uses JEE 1.0. Please contact us for updated data and usage
+          notes.
+        </h1>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+          "
+        >
+          <p>
+            Contact us at:
+            <a href="mailto:ihrcosting@georgetown.edu"
+              >ihrcosting@georgetown.edu</a
+            >
+          </p>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="document.getElementById('deprecated-warning').style.display = 'none';"
+          >
+            Continue to site
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Nav bar content -->
     <div id="nav-content"></div>
     <!-- Page content -->
